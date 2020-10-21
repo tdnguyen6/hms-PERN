@@ -14,11 +14,24 @@
     "type": "git",
     "url": "git+https://github.com/tidunguyen/hms-PERN.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "heroku",
+    "hospital",
+    "PERN",
+    "hms"
+  ],
+  "author": "Nguyen Tien Duc - Cap Kim Quang - Phan Tien Tai",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/tidunguyen/hms-PERN/issues"
   },
-  "homepage": "https://github.com/tidunguyen/hms-PERN#readme"
+  "homepage": "https://github.com/tidunguyen/hms-PERN#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-flash": "0.0.2",
+    "express-promise-router": "^4.0.1",
+    "express-session": "^1.17.1",
+    "pg": "^8.4.1",
+    "pg-promise": "^10.7.0"
+  }
 }
