@@ -1,0 +1,24 @@
+{
+  "name": "hms",
+  "version": "1.0.0",
+  "description": "Group Project for Software Engineering Course at International University - HCM National University",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tidunguyen/hms-PERN.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tidunguyen/hms-PERN/issues"
+  },
+  "homepage": "https://github.com/tidunguyen/hms-PERN#readme"
+}
