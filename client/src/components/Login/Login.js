@@ -1,29 +1,32 @@
-import React, { Component }   from 'react';
-import Avatar                 from '@material-ui/core/Avatar';
-import Button                 from '@material-ui/core/Button';
-import CssBaseline            from '@material-ui/core/CssBaseline';
-import TextField              from '@material-ui/core/TextField';
-import FormControlLabel       from '@material-ui/core/FormControlLabel';
-import Checkbox               from '@material-ui/core/Checkbox';
-import Link                   from '@material-ui/core/Link';
-import Paper                  from '@material-ui/core/Paper';
-import Box                    from '@material-ui/core/Box';
-import Grid                   from '@material-ui/core/Grid';
-import LockOutlinedIcon       from '@material-ui/icons/LockOutlined';
-import Typography             from '@material-ui/core/Typography';
-import { withStyles }         from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import React, { Component }               from 'react';
+import Avatar                             from '@material-ui/core/Avatar';
+import Button                             from '@material-ui/core/Button';
+import CssBaseline                        from '@material-ui/core/CssBaseline';
+import TextField                          from '@material-ui/core/TextField';
+import FormControlLabel                   from '@material-ui/core/FormControlLabel';
+import Checkbox                           from '@material-ui/core/Checkbox';
+import Link                               from '@material-ui/core/Link';
+import Paper                              from '@material-ui/core/Paper';
+import Box                                from '@material-ui/core/Box';
+import Grid                               from '@material-ui/core/Grid';
+import LockOutlinedIcon                   from '@material-ui/icons/LockOutlined';
+import Typography                         from '@material-ui/core/Typography';
+import { withStyles }                     from '@material-ui/core/styles';
+import Container                          from '@material-ui/core/Container';
+import Dialog                             from '@material-ui/core/Dialog';
+import DialogActions                      from '@material-ui/core/DialogActions';
+import DialogContent                      from '@material-ui/core/DialogContent';
+import DialogContentText                  from '@material-ui/core/DialogContentText';
+import DialogTitle                        from '@material-ui/core/DialogTitle';
+import { BrowserRouter, Route, Switch }   from 'react-router-dom';
+import { Link as RouteLink }              from 'react-router-dom';
 
 const style = (theme) => ({
   root: {
     height: '100vh'
   },
   image: {
-    backgroundImage: 'url(https://source.unsplash.com/random)',
+    backgroundImage: 'url(https://images.unsplash.com/photo-1551076805-e1869033e561?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2980&q=80)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -117,13 +120,18 @@ class Login extends Component {
       if (this.state.email.hasError) {
         dialogStatus.dialogHasError = true;
         dialogStatus.dialogMessage = 'The given email is invalid. Please input the valid email.';
+        this.setState({
+          button: {
+            open: dialogStatus.dialogHasError,
+            error: dialogStatus.dialogMessage
+          }
+        });
+      } else if (
+        this.state.email.value == "test@gmail.com" &&
+        this.state.password.value == "test"
+      ) {
+        this.props.history.push("/loginTest");
       }
-      this.setState({
-        button: {
-          open: dialogStatus.dialogHasError,
-          error: dialogStatus.dialogMessage
-        }
-      });
     };
 
   render() {
@@ -181,7 +189,8 @@ class Login extends Component {
                 variant       = "contained"
                 color         = "primary"
                 className     = { classes.submit }
-                onClick       = { this.handleSubmit }>
+                onClick       = { this.handleSubmit }
+              >
                 Sign In
               </Button>
               <Dialog
@@ -202,12 +211,12 @@ class Login extends Component {
               </Dialog>
               <Grid container>
                 <Grid item xs>
-                  <Link href = "#">
+                  <Link>
                     <Typography variant = "body2" align = "left">Forgot password</Typography>
                   </Link>
                 </Grid>
                 <Grid item xs>
-                  <Link href = "#">
+                  <Link component = { RouteLink } to = "/register">
                     <Typography variant = "body2" align = "right">Don't have an account?</Typography>
                   </Link>
                 </Grid>

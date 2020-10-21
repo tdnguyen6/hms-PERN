@@ -1,22 +1,25 @@
-import React, { Component } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import React, { Component }               from 'react';
+import Avatar                             from '@material-ui/core/Avatar';
+import Button                             from '@material-ui/core/Button';
+import CssBaseline                        from '@material-ui/core/CssBaseline';
+import TextField                          from '@material-ui/core/TextField';
+import FormControlLabel                   from '@material-ui/core/FormControlLabel';
+import Checkbox                           from '@material-ui/core/Checkbox';
+import Link                               from '@material-ui/core/Link';
+import Paper                              from '@material-ui/core/Paper';
+import Box                                from '@material-ui/core/Box';
+import Grid                               from '@material-ui/core/Grid';
+import LockOutlinedIcon                   from '@material-ui/icons/LockOutlined';
+import Typography                         from '@material-ui/core/Typography';
+import { withStyles }                     from '@material-ui/core/styles';
+import Container                          from '@material-ui/core/Container';
+import Dialog                             from '@material-ui/core/Dialog';
+import DialogActions                      from '@material-ui/core/DialogActions';
+import DialogContent                      from '@material-ui/core/DialogContent';
+import DialogContentText                  from '@material-ui/core/DialogContentText';
+import DialogTitle                        from '@material-ui/core/DialogTitle';
+import { BrowserRouter, Route, Switch }   from 'react-router-dom';
+import { Link as RouteLink }              from 'react-router-dom';
 
 /*
 can't use hooks because this is a component.
@@ -207,6 +210,9 @@ class Register extends Component {
         error: dialogStatus.dialogMessage
       }
     });
+    if (!dialogStatus.dialogHasError) {
+      this.props.history.push("/login");
+    }
     //else {}
   };
 
@@ -336,8 +342,10 @@ class Register extends Component {
             </Dialog>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
+                <Link component = { RouteLink } to = '/login'>
+                  <Typography variant = "body2" align = "right">
+                    Already have an account? Sign in
+                  </Typography>
                 </Link>
               </Grid>
             </Grid>
