@@ -12,6 +12,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 /*
 can't use hooks because this is a component.
@@ -64,11 +69,15 @@ class Register extends Component {
       value: '',
       hasError: false,
       error: ''
+    },
+    button: {
+      open: false,
+      error: ''
     }
   };
 
   handleNameInput = (event) => {
-    const regexp = /^[A-Za-z]+$/;
+    const regexp = /^[a-zA-ZàáâãèéêìíòóôõùúýÀÁÂÈÉÊÌÍÒÓÔÙÚÝ ]+$/u;
     const checkingResult = {
       hasError: regexp.exec(event.target.value),
       error: ''
@@ -78,14 +87,14 @@ class Register extends Component {
       checkingResult.error = '';
     } else {
       checkingResult.hasError = true;
-      checkingResult.error = 'are you a daughter of Elon Musk?';
+      checkingResult.error = 'Are you a daughter of Elon Musk?';
     }
     this.setState({
       name: {
-        value: event.target.value,
-        hasError: checkingResult.hasError,
-        error: checkingResult.error
-      }
+          value: event.target.value,
+          hasError: checkingResult.hasError,
+          error: checkingResult.error
+        }
     });
   };
 
@@ -100,14 +109,14 @@ class Register extends Component {
       checkingResult.error = '';
     } else {
       checkingResult.hasError = true;
-      checkingResult.error = 'invalid email address';
+      checkingResult.error = 'Invalid email address';
     }
     this.setState({
       email: {
-        value: event.target.value,
-        hasError: checkingResult.hasError,
-        error: checkingResult.error
-      }
+          value: event.target.value,
+          hasError: checkingResult.hasError,
+          error: checkingResult.error
+        }
     });
   };
 
@@ -122,24 +131,24 @@ class Register extends Component {
       checkingResult.error = '';
     } else {
       checkingResult.hasError = true;
-      checkingResult.error = 'must have 10 numbers';
+      checkingResult.error = 'Must have 10 numbers';
     }
     this.setState({
       phone: {
-        value: event.target.value,
-        hasError: checkingResult.hasError,
-        error: checkingResult.error
-      }
+          value: event.target.value,
+          hasError: checkingResult.hasError,
+          error: checkingResult.error
+        }
     });
   }
 
   handlePasswordInput = (event) => {
     this.setState({
       password: {
-        value: event.target.value,
-        hasError: false,
-        error: ''
-      }
+          value: event.target.value,
+          hasError: false,
+          error: ''
+        }
     });
   };
 
@@ -153,15 +162,52 @@ class Register extends Component {
       checkingResult.error = '';
     } else {
       checkingResult.hasError = true;
-      checkingResult.error = 'password doesn\'t match.';
+      checkingResult.error = 'Password doesn\'t match.';
     }
     this.setState({
       confirmedPassword: {
-        value: event.target.value,
-        hasError: checkingResult.hasError,
-        error: checkingResult.error
+          value: event.target.value,
+          hasError: checkingResult.hasError,
+          error: checkingResult.error
+        }
+    });
+  };
+
+  handleDialogClose = () => {
+    this.setState({
+      button: {
+        open: false,
+        error: ''
+      }
+    })
+  }
+
+  handleSubmit = () => {
+    const dialogStatus = {
+      dialogMessage: '',
+      dialogHasError: false
+    };
+
+    if (this.state.name.hasError) {
+      dialogStatus.dialogHasError = true;
+      dialogStatus.dialogMessage = 'The given name is invalid. Name must not contain numbers and special characters.';
+    } else if (this.state.email.hasError) {
+      dialogStatus.dialogHasError = true;
+      dialogStatus.dialogMessage = 'The given email is invalid. Please input the valid email';
+    } else if (this.state.phone.hasError) {
+      dialogStatus.dialogHasError = true;
+      dialogStatus.dialogMessage = 'Phone number is invalid. Phone number must contain 10 numbers.';
+    } else if (this.state.confirmedPassword.hasError) {
+      dialogStatus.dialogHasError = true;
+      dialogStatus.dialogMessage = 'Please confirm the password again. Confirmed password should be the same with password.';
+    }
+    this.setState({
+      button: {
+        open: dialogStatus.dialogHasError,
+        error: dialogStatus.dialogMessage
       }
     });
+    //else {}
   };
 
   render() {
@@ -262,23 +308,32 @@ class Register extends Component {
                   onChange      = { this.handleConfirmedPasswordInput }
                 />
               </Grid>
-              {/*
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
-              */}
             </Grid>
-            <Button className = {classes.submit}
-              type="submit"
+            <Button
+              className         = { classes.submit }
               fullWidth
-              variant="contained"
-              color="primary"
+              variant           = "contained"
+              color             = "primary"
+              onClick           = { this.handleSubmit }
             >
               Sign Up
             </Button>
+            <Dialog
+              open              = { this.state.button.open }
+              onClose           = { this.handleDialogClose }
+              aria-describedby  = "alert-dialog-description"
+            >
+              <DialogContent>
+                <DialogContentText id = "alert-dialog-description">
+                  { this.state.button.error }
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick = { this.handleDialogClose } color = "primary">
+                  Got it!
+                </Button>
+              </DialogActions>
+            </Dialog>
             <Grid container justify="flex-end">
               <Grid item>
                 <Link href="#" variant="body2">

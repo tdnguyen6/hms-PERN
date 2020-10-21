@@ -12,6 +12,11 @@ import Grid                   from '@material-ui/core/Grid';
 import LockOutlinedIcon       from '@material-ui/icons/LockOutlined';
 import Typography             from '@material-ui/core/Typography';
 import { withStyles }         from '@material-ui/core/styles';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const style = (theme) => ({
   root: {
@@ -55,6 +60,10 @@ class Login extends Component {
       value: '',
       hasError: false,
       error: ''
+    },
+    button: {
+      open: false,
+      error: ''
     }
   };
 
@@ -89,6 +98,33 @@ class Login extends Component {
       }
     });
   };
+
+  handleDialogClose = () => {
+      this.setState({
+        button: {
+          open: false,
+          error: ''
+        }
+      })
+    }
+
+  handleSubmit = () => {
+      const dialogStatus = {
+        dialogMessage: '',
+        dialogHasError: false
+      };
+
+      if (this.state.email.hasError) {
+        dialogStatus.dialogHasError = true;
+        dialogStatus.dialogMessage = 'The given email is invalid. Please input the valid email.';
+      }
+      this.setState({
+        button: {
+          open: dialogStatus.dialogHasError,
+          error: dialogStatus.dialogMessage
+        }
+      });
+    };
 
   render() {
     const { classes } = this.props;
@@ -141,11 +177,29 @@ class Login extends Component {
                 label         = "Remember me"
               />
               <Button
-                type          = "submit"
                 fullWidth
                 variant       = "contained"
                 color         = "primary"
-                className     = { classes.submit }> Sign In </Button>
+                className     = { classes.submit }
+                onClick       = { this.handleSubmit }>
+                Sign In
+              </Button>
+              <Dialog
+                open              = { this.state.button.open }
+                onClose           = { this.handleDialogClose }
+                aria-describedby  = "alert-dialog-description"
+              >
+                <DialogContent>
+                  <DialogContentText id = "alert-dialog-description">
+                    { this.state.button.error }
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick = { this.handleDialogClose } color = "primary">
+                    Got it!
+                  </Button>
+                </DialogActions>
+              </Dialog>
               <Grid container>
                 <Grid item xs>
                   <Link href = "#">
