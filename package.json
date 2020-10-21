@@ -1,0 +1,38 @@
+{
+  "name": "hms",
+  "version": "1.0.0",
+  "description": "Group Project for Software Engineering Course at International University - HCM National University",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tidunguyen/hms-PERN.git"
+  },
+  "keywords": [
+    "heroku",
+    "hospital",
+    "PERN",
+    "hms"
+  ],
+  "author": "Nguyen Tien Duc - Cap Kim Quang - Phan Tien Tai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tidunguyen/hms-PERN/issues"
+  },
+  "homepage": "https://github.com/tidunguyen/hms-PERN#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-flash": "0.0.2",
+    "express-promise-router": "^4.0.1",
+    "express-session": "^1.17.1",
+    "pg": "^8.4.1",
+    "pg-promise": "^10.7.0"
+  }
+}
