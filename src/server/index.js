@@ -4,11 +4,11 @@ const session = require('express-session');
 const app = express();
 const path = require('path');
 const db = require('./db');
-const md5 = require('crypto').createHash('md5');
+const crypto = require('crypto');
 const port = process.env.PORT || 3000;
 
 // functions
-do_hash = (s) => md5.update(s).digest('hex');
+do_hash = (s) => crypto.createHash('md5').update(s).digest('hex');
 
 app.use(express.json());
 app.use(session({
