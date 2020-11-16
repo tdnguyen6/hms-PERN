@@ -29,8 +29,10 @@
   "homepage": "https://github.com/tidunguyen/hms-PERN#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
     "mailgen": "^2.0.14",
-    "nodemailer": "^6.4.15",
+    "nodemailer": "^6.4.16",
     "pg": "^8.4.1",
     "pg-promise": "^10.7.0"
   },
