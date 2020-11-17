@@ -20,6 +20,8 @@ import DialogContentText                  from '@material-ui/core/DialogContentT
 import DialogTitle                        from '@material-ui/core/DialogTitle';
 import { BrowserRouter, Route, Switch }   from 'react-router-dom';
 import { Link as RouteLink }              from 'react-router-dom';
+import { login } from "../../testapi";
+import axios from 'axios';
 
 const style = (theme) => ({
   root: {
@@ -70,6 +72,15 @@ class Login extends Component {
     }
   };
 
+  // login = async (username, password) => {
+  //   let data = {
+  //     email: username,
+  //     password: password
+  //   }
+  //   let res = await axios.post('http://localhost:3001/user/login', data);
+  //   console.log(res);
+  // }
+
   handleEmailInput = (event) => {
     const regexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     const checkingResult = {
@@ -91,7 +102,6 @@ class Login extends Component {
       }
     });
   };
-
   handlePasswordInput = (event) => {
     this.setState({
       password: {
@@ -101,7 +111,6 @@ class Login extends Component {
       }
     });
   };
-
   handleDialogClose = () => {
       this.setState({
         button: {
@@ -110,7 +119,6 @@ class Login extends Component {
         }
       })
     }
-
   handleSubmit = () => {
       const dialogStatus = {
         dialogMessage: '',
@@ -126,13 +134,18 @@ class Login extends Component {
             error: dialogStatus.dialogMessage
           }
         });
-      } else if (
-        this.state.email.value == "test@gmail.com" &&
-        this.state.password.value == "test"
-      ) {
-        this.props.history.push("/loginTest");
       }
-    };
+
+      let res = axios.post('http://localhost:3001/user/login', {
+        email: this.state.email.value,
+        password: this.state.password.value
+      });
+      
+      console.log(res);
+      // login(this.state.email.value, this.state.password.value);
+        // this.props.history.push("/loginTest");
+      };
+
 
   render() {
     const { classes } = this.props;
@@ -211,7 +224,7 @@ class Login extends Component {
               </Dialog>
               <Grid container>
                 <Grid item xs>
-                  <Link>
+                  <Link component = { RouteLink } to = "/forgetPassword">
                     <Typography variant = "body2" align = "left">Forgot password</Typography>
                   </Link>
                 </Grid>

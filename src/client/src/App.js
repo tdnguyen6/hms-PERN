@@ -3,6 +3,7 @@ import logo                               from './logo.svg';
 import Login                              from './components/Login/Login';
 import Register                           from './components/Register/Register';
 import Home                               from './components/Home/Home';
+import ForgetPassword                     from './components/ForgetPassword/ForgetPassword';
 import loginTest                          from './components/Test/loginTest';
 import { BrowserRouter, Route, Switch }   from 'react-router-dom';
 
@@ -16,6 +17,7 @@ function App() {
         <Route path = "/login" component = { Login }/>
         <Route path = "/register" component = { Register } />
         <Route path = "/loginTest" component = { loginTest } />
+        <Route path = "/forgetPassword" component = { ForgetPassword } />
         <Route path = "/" component = { Home } />
       </Switch>
     </BrowserRouter>
