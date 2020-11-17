@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const jwtDecode = require('jwt-decode');
 const db = require('../db');
 const crypto = require('crypto');
-const nodeMailer = require('../modules/mailer')
+const Mailer = require('../modules/mailer')
 const port = process.env.PORT || 3001;
 const cors = require('cors');
 
@@ -30,6 +30,16 @@ app.post("/user/register", registerAccount);
 app.post("/user/login", loginAccount);
 app.post("/user/forget", forgetPassword);
 app.post("/user/reset", resetPassword);
+app.post("/user/checkEmailExist", checkEmailExist);
+
+app.post("/apointment/create", createAppointment);
+
+
+async function checkEmailExist(req, res) {
+	let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
+	if (user.rows.length == 1) return res.status(200).json({emailExist: true})
+	return res.status(404).json({emailExist: false})
+}
 
 async function registerAccount(req, res) {
 	let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
@@ -37,9 +47,9 @@ async function registerAccount(req, res) {
 
 	try {
 		const result = await db.query(`INSERT INTO accounts (name, email, password, phone) VALUES($1,$2,$3,$4)`, [req.body.name, req.body.email, do_hash(req.body.password), req.body.phone]);
-		res.status(200).send("Successfully create an account");
+		res.status(200).json({registerSuccessful: true});
 	} catch (error) {
-		res.status(500).send("Errors in the server");
+		res.status(500).json({registerSuccessful: false});
 		console.log(error);
 	}
 }
@@ -48,10 +58,10 @@ async function loginAccount(req, res) {
 	try {
 		const result = await db.query(`SELECT * FROM accounts where email = $1 and password = $2`, [req.body.email, do_hash(req.body.password)]);
 		if (result.rows.length == 1) {
-			res.status(200).send("Account login successful");
+			res.status(200).json({loginSuccessful: true});
 			console.log(req.body);
 		}
-		else res.status(401).send("Email or password is incorrect");
+		else res.status(401).json({loginSuccessful: false});
 	} catch (error) {
 		console.log(error);
 	}
@@ -59,9 +69,8 @@ async function loginAccount(req, res) {
 }
 
 async function forgetPassword(req, res) {
-
 	let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
-	if (user.rows.length < 1) return res.status(401).send("User does not exist")
+	if (user.rows.length < 1) return res.status(401).json({userExist: false})
 
 	const token = jwt.sign(
 		{ data : {email: req.body.email}},
@@ -70,14 +79,39 @@ async function forgetPassword(req, res) {
 	);
 
 	console.log(token)
-	const msg = '<p> Please click the link to reset password: <a href = "https://auth-with-react.herokuapp.com/reset?index=' + token + '">Click me!!</a></p>'
-	console.log(msg)
-	await nodeMailer.transporter.sendMail({
-		from: '"Fred Foo 👻" <foo@example.com>',
-		to: "bar@example.com, baz@example.com",
-		subject: 'Reset password',
-		text: 'Hello',
-		html: msg
+	
+	let email = {
+		body: {
+			name: "TiDu Nguyen",
+			intro: 'Welcome to Hospital it seems that you have alzheimer',
+			action: {
+				instructions: 'To reset password please click here:',
+				button: {
+					color: '#22bc66', 
+					text: 'Reset link',
+					link: 'http://localhost:3001/user/reset?token=' + token
+				}
+			},
+			outro: 'Need help, or have questions? Just reply to this email, we\'d love to help.'
+		}
+	};
+	
+	let mail = Mailer.mailGenerator.generate(email);
+	
+	let message = {
+		from: Mailer.transporter.options.auth.user,
+		to: req.body.email,
+		subject: "Forget password Hospital Management System",
+		html: mail,
+	};
+	
+	Mailer.transporter
+	.sendMail(message, function (error, info) {
+		if (error) {
+			console.log(error);
+		} else {
+			console.log('Email sent: ' + info.response);
+		}
 	});
 }
 
@@ -90,12 +124,20 @@ async function resetPassword(req, res) {
 
 	try {
 		let result = await db.query(`UPDATE accounts SET password = $1 WHERE email = $2`, [password, email])
-		res.status(200).send("Password was reseted")
+		res.status(200).json({resetPasswordSuccessful : true})
 	} catch (err) {
-		res.status(500).send("Some error in server")
+		res.status(500).json({resetPasswordSuccessful : false})
 	}
+}
 
-
+async function createAppointment(req, res) {
+	try {
+		let result = await db.query(`INSERT INTO appointments (practitioner_id, patient_id, room_id, at, status, log, prescription, next_appointment_period, next_appointment_service, last_appointment) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`, [req.body.practitioner_id, req.body.patient_id, req.body.room_id, req.body.at, req.body.status, req.body.log, req.body.prescription, req.body.next_appointment_period, req.body.next_appointment_service, req.body.last_appointment])
+		res.status(200).json({createAppointmentSuccessful : true})
+	} catch (err) {
+		console.log(err)
+		res.status(500).json({createAppointmentSuccessful : false})
+	}
 }
 
 app.listen(port, () => {
