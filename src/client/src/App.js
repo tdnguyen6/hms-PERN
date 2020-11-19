@@ -9,7 +9,8 @@ import ForgetPassword                     from './containers/Authentication/Forg
 import loginTest                          from './containers/Authentication/loginTest';
 
 import PatientDashboard                   from './containers/Dashboard/PatientDashboard';
-
+import PractitionerDashboard              from './containers/Dashboard/PractitionerDashboard';
+import AdminDashboard                     from './containers/Dashboard/AdminDashboard';
 
 import './App.css';
 
@@ -18,12 +19,14 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path = "/login" component = { Login }/>
-        <Route path = "/register" component = { Register } />
-        <Route path = "/loginTest" component = { loginTest } />
-        <Route path = "/forgetPassword" component = { ForgetPassword } />
-        <Route path = "/patientDashboard" component = { PatientDashboard } />
-        <Route path = "/" component = { Home } />
+        <Route path = "/login"              component = { Login }/>
+        <Route path = "/register"           component = { Register } />
+        <Route path = "/loginTest"          component = { loginTest } />
+        <Route path = "/forgetPassword"     component = { ForgetPassword } />
+        <Route path = "/patientDashboard"   component = { PatientDashboard } />
+        <Route path = "/dashboard"          component = { PractitionerDashboard } />
+        <Route path = "/adminDashboard"     component = { AdminDashboard } />
+        <Route path = "/"                   component = { Home } />
       </Switch>
     </BrowserRouter>
   );

@@ -157,7 +157,7 @@ class Login extends Component {
       //   loginStatus: api.response
       // )
         // this.props.history.push("/loginTest");
-      if (this.state.loginStatus) this.props.history.push("/patientDashboard");
+      if (this.state.loginStatus) this.props.history.push("/dashboard");
       };
 
 
