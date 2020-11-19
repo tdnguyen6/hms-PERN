@@ -36,6 +36,8 @@ app.post("/apointment/create", createAppointment);
 
 
 async function checkEmailExist(req, res) {
+	res.setHeader('content-type', 'application/json')
+	
 	let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
 	if (user.rows.length == 1) res.status(200).json({emailStatus: true})
 	else res.status(404).json({emailStatus: false})
@@ -43,6 +45,7 @@ async function checkEmailExist(req, res) {
 
 async function registerAccount(req, res) {
 	try {
+		res.setHeader('content-type', 'application/json')
 		const result = await db.query(`INSERT INTO accounts (name, email, password, phone) VALUES($1,$2,$3,$4)`, [req.body.name, req.body.email, do_hash(req.body.password), req.body.phone]);
 		res.status(200).json({registerStatus: true});
 	} catch (error) {
@@ -53,6 +56,7 @@ async function registerAccount(req, res) {
 
 async function loginAccount(req, res) {
 	try {
+		res.setHeader('content-type', 'application/json')
 		const result = await db.query(`SELECT * FROM accounts where email = $1 and password = $2`, [req.body.email, do_hash(req.body.password)]);
 		if (result.rows.length == 1) {
 			res.status(200).json({loginStatus: true});
@@ -120,6 +124,7 @@ async function resetPassword(req, res) {
 	if (user.rows.length < 1) return res.status(401).send("User does not exist")
 
 	try {
+		res.setHeader('content-type', 'application/json')
 		let result = await db.query(`UPDATE accounts SET password = $1 WHERE email = $2`, [password, email])
 		res.status(200).json({resetPasswordSuccessful : true})
 	} catch (err) {
