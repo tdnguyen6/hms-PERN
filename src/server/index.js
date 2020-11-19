@@ -28,6 +28,7 @@ app.use(function (req, res, next) {
         'content-type': 'application/json',
         'access-control-allow-origin:': '*'
     });
+    next();
 });
 
 // api
