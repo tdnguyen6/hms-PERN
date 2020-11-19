@@ -1,10 +1,11 @@
 import React                              from 'react';
 import logo                               from './logo.svg';
-import Login                              from './components/Login/Login';
-import Register                           from './components/Register/Register';
-import Home                               from './components/Home/Home';
-import ForgetPassword                     from './components/ForgetPassword/ForgetPassword';
-import loginTest                          from './components/Test/loginTest';
+import Login                              from './containers/Login';
+import Register                           from './containers/Register';
+import Home                               from './containers/Home';
+import ForgetPassword                     from './containers/ForgetPassword';
+import PatientDashboard                   from './containers/PatientDashboard';
+import loginTest                          from './containers/loginTest';
 import { BrowserRouter, Route, Switch }   from 'react-router-dom';
 
 import './App.css';
@@ -18,6 +19,7 @@ function App() {
         <Route path = "/register" component = { Register } />
         <Route path = "/loginTest" component = { loginTest } />
         <Route path = "/forgetPassword" component = { ForgetPassword } />
+        <Route path = "/patientDashboard" component = { PatientDashboard } />
         <Route path = "/" component = { Home } />
       </Switch>
     </BrowserRouter>

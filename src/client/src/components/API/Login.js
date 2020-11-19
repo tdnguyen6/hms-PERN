@@ -5,6 +5,7 @@ export const login = async (username, password) => {
     email: username,
     password: password
   }
+
   let res = await axios.post('http://localhost:3001/user/login', data);
-  console.log(res);
+  return res.data.loginStatus;
 }

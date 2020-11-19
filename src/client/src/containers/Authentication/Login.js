@@ -20,7 +20,7 @@ import DialogContentText                  from '@material-ui/core/DialogContentT
 import DialogTitle                        from '@material-ui/core/DialogTitle';
 import { BrowserRouter, Route, Switch }   from 'react-router-dom';
 import { Link as RouteLink }              from 'react-router-dom';
-import { login } from "../../testapi";
+import { login } from "../testapi";
 import axios from 'axios';
 
 const style = (theme) => ({
@@ -69,7 +69,8 @@ class Login extends Component {
     button: {
       open: false,
       error: ''
-    }
+    },
+    loginStatus: false
   };
 
   // login = async (username, password) => {
@@ -118,7 +119,7 @@ class Login extends Component {
           error: ''
         }
       })
-    }
+  };
   handleSubmit = () => {
       const dialogStatus = {
         dialogMessage: '',
@@ -136,14 +137,24 @@ class Login extends Component {
         });
       }
 
-      let res = axios.post('http://localhost:3001/user/login', {
-        email: this.state.email.value,
-        password: this.state.password.value
-      });
-      
-      console.log(res);
-      // login(this.state.email.value, this.state.password.value);
+      // let res = axios.post('http://localhost:3001/user/login', {
+      //   email: this.state.email.value,
+      //   password: this.state.password.value
+      // }).then(res => this.setState({
+      //   loginStatus: res.data.loginStatus
+      // }));
+      //
+      // console.log(this.state.loginStatus);
+      let api = login(this.state.email.value, this.state.password.value)
+                .then(message => this.setState({
+                  loginStatus: message
+                }));
+      console.log(this.state.loginStatus);
+      // this.setState(
+      //   loginStatus: api.response
+      // )
         // this.props.history.push("/loginTest");
+      if (this.state.loginStatus) this.props.history.push("/patientDashboard");
       };
 
 
@@ -159,7 +170,7 @@ class Login extends Component {
             <Avatar className = { classes.avatar }>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component = "h1" variant = "h5"> Sign in </Typography>
+            <Typography component = "h1" variant = "h5"> Login </Typography>
             <form className = { classes.form }>
               <TextField
                 variant       = "outlined"
@@ -204,7 +215,7 @@ class Login extends Component {
                 className     = { classes.submit }
                 onClick       = { this.handleSubmit }
               >
-                Sign In
+                Login
               </Button>
               <Dialog
                 open              = { this.state.button.open }

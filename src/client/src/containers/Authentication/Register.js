@@ -1,4 +1,9 @@
+
 import React, { Component }               from 'react';
+
+import { BrowserRouter, Route, Switch }   from 'react-router-dom';
+import { Link as RouteLink }              from 'react-router-dom';
+
 import Avatar                             from '@material-ui/core/Avatar';
 import Button                             from '@material-ui/core/Button';
 import CssBaseline                        from '@material-ui/core/CssBaseline';
@@ -9,7 +14,6 @@ import Link                               from '@material-ui/core/Link';
 import Paper                              from '@material-ui/core/Paper';
 import Box                                from '@material-ui/core/Box';
 import Grid                               from '@material-ui/core/Grid';
-import LockOutlinedIcon                   from '@material-ui/icons/LockOutlined';
 import Typography                         from '@material-ui/core/Typography';
 import { withStyles }                     from '@material-ui/core/styles';
 import Container                          from '@material-ui/core/Container';
@@ -18,8 +22,8 @@ import DialogActions                      from '@material-ui/core/DialogActions'
 import DialogContent                      from '@material-ui/core/DialogContent';
 import DialogContentText                  from '@material-ui/core/DialogContentText';
 import DialogTitle                        from '@material-ui/core/DialogTitle';
-import { BrowserRouter, Route, Switch }   from 'react-router-dom';
-import { Link as RouteLink }              from 'react-router-dom';
+
+import LockOutlinedIcon                   from '@material-ui/icons/LockOutlined';
 
 /*
 can't use hooks because this is a component.

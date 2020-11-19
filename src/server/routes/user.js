@@ -37,8 +37,8 @@ app.post("/apointment/create", createAppointment);
 
 async function checkEmailExist(req, res) {
 	let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
-	if (user.rows.length == 1) return res.status(200).json({emailExist: true})
-	return res.status(404).json({emailExist: false})
+	if (user.rows.length == 1) return res.status(200).json({emailStatus: true})
+	return res.status(404).json({emailStatus: false})
 }
 
 async function registerAccount(req, res) {
@@ -47,9 +47,9 @@ async function registerAccount(req, res) {
 
 	try {
 		const result = await db.query(`INSERT INTO accounts (name, email, password, phone) VALUES($1,$2,$3,$4)`, [req.body.name, req.body.email, do_hash(req.body.password), req.body.phone]);
-		res.status(200).json({registerSuccessful: true});
+		res.status(200).json({registerStatus: true});
 	} catch (error) {
-		res.status(500).json({registerSuccessful: false});
+		res.status(500).json({registerStatus: false});
 		console.log(error);
 	}
 }
@@ -58,10 +58,10 @@ async function loginAccount(req, res) {
 	try {
 		const result = await db.query(`SELECT * FROM accounts where email = $1 and password = $2`, [req.body.email, do_hash(req.body.password)]);
 		if (result.rows.length == 1) {
-			res.status(200).json({loginSuccessful: true});
+			res.status(200).json({loginStatus: true});
 			console.log(req.body);
 		}
-		else res.status(401).json({loginSuccessful: false});
+		else res.status(401).json({loginStatus: false});
 	} catch (error) {
 		console.log(error);
 	}
@@ -79,7 +79,7 @@ async function forgetPassword(req, res) {
 	);
 
 	console.log(token)
-	
+
 	let email = {
 		body: {
 			name: "TiDu Nguyen",
@@ -87,7 +87,7 @@ async function forgetPassword(req, res) {
 			action: {
 				instructions: 'To reset password please click here:',
 				button: {
-					color: '#22bc66', 
+					color: '#22bc66',
 					text: 'Reset link',
 					link: 'http://localhost:3001/user/reset?token=' + token
 				}
@@ -95,16 +95,16 @@ async function forgetPassword(req, res) {
 			outro: 'Need help, or have questions? Just reply to this email, we\'d love to help.'
 		}
 	};
-	
+
 	let mail = Mailer.mailGenerator.generate(email);
-	
+
 	let message = {
 		from: Mailer.transporter.options.auth.user,
 		to: req.body.email,
 		subject: "Forget password Hospital Management System",
 		html: mail,
 	};
-	
+
 	Mailer.transporter
 	.sendMail(message, function (error, info) {
 		if (error) {

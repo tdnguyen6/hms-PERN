@@ -46,29 +46,9 @@ const style = theme => ({
   }
 });
 
-class Register extends Component {
+class ForgetPassword extends Component {
   state = {
-    name: {
-      value: '',
-      hasError: false,
-      error: ''
-    },
     email: {
-      value: '',
-      hasError: false,
-      error: ''
-    },
-    phone: {
-      value: '',
-      hasError: false,
-      error: ''
-    },
-    password: {
-      value: '',
-      hasError: false,
-      error: ''
-    },
-    confirmedPassword: {
       value: '',
       hasError: false,
       error: ''
@@ -201,4 +181,4 @@ class Register extends Component {
   };
 }
 
-export default withStyles(style, { withTheme: true })(Register);
+export default withStyles(style, { withTheme: true })(ForgetPassword);
