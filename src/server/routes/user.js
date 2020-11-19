@@ -37,14 +37,11 @@ app.post("/apointment/create", createAppointment);
 
 async function checkEmailExist(req, res) {
 	let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
-	if (user.rows.length == 1) return res.status(200).json({emailStatus: true})
-	return res.status(404).json({emailStatus: false})
+	if (user.rows.length == 1) res.status(200).json({emailStatus: true})
+	else res.status(404).json({emailStatus: false})
 }
 
 async function registerAccount(req, res) {
-	let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
-	if (user.rows.length > 0) return res.status(401).send("User already exist")
-
 	try {
 		const result = await db.query(`INSERT INTO accounts (name, email, password, phone) VALUES($1,$2,$3,$4)`, [req.body.name, req.body.email, do_hash(req.body.password), req.body.phone]);
 		res.status(200).json({registerStatus: true});

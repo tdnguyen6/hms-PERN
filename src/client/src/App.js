@@ -1,12 +1,15 @@
 import React                              from 'react';
 import logo                               from './logo.svg';
-import Login                              from './containers/Login';
-import Register                           from './containers/Register';
-import Home                               from './containers/Home';
-import ForgetPassword                     from './containers/ForgetPassword';
-import PatientDashboard                   from './containers/PatientDashboard';
-import loginTest                          from './containers/loginTest';
 import { BrowserRouter, Route, Switch }   from 'react-router-dom';
+
+import Login                              from './containers/Authentication/Login';
+import Register                           from './containers/Authentication/Register';
+import Home                               from './containers/Authentication/Home';
+import ForgetPassword                     from './containers/Authentication/ForgetPassword';
+import loginTest                          from './containers/Authentication/loginTest';
+
+import PatientDashboard                   from './containers/Dashboard/PatientDashboard';
+
 
 import './App.css';
 

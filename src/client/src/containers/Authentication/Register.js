@@ -25,6 +25,11 @@ import DialogTitle                        from '@material-ui/core/DialogTitle';
 
 import LockOutlinedIcon                   from '@material-ui/icons/LockOutlined';
 
+import { validate }                       from '../../components/Services/Validate';
+
+// API -----------------------------------
+import { checkEmailExist }                from '../../components/API/CheckEmailExist';
+import { register }                       from '../../components/API/Register';
 /*
 can't use hooks because this is a component.
 so we can't useStyles API from Material UI
@@ -60,6 +65,7 @@ class Register extends Component {
     email: {
       value: '',
       hasError: false,
+      exist: false,
       error: ''
     },
     phone: {
@@ -80,71 +86,47 @@ class Register extends Component {
     button: {
       open: false,
       error: ''
-    }
+    },
+    registerStatus: false
   };
 
   handleNameInput = (event) => {
-    const regexp = /^[a-zA-ZàáâãèéêìíòóôõùúýÀÁÂÈÉÊÌÍÒÓÔÙÚÝ ]+$/u;
-    const checkingResult = {
-      hasError: regexp.exec(event.target.value),
-      error: ''
-    };
-    if (checkingResult.hasError !== null) {
-      checkingResult.hasError = false;
-      checkingResult.error = '';
-    } else {
-      checkingResult.hasError = true;
-      checkingResult.error = 'Are you a daughter of Elon Musk?';
-    }
+    let validateStatus = validate("name", event.target.value);
     this.setState({
       name: {
           value: event.target.value,
-          hasError: checkingResult.hasError,
-          error: checkingResult.error
+          hasError: validateStatus.name,
+          error: (validateStatus.name) ? 'Are you a daughter of Elon Musk?' : ''
         }
     });
   };
 
   handleEmailInput = (event) => {
-    const regexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    const checkingResult = {
-      hasError: regexp.exec(event.target.value),
-      error: ''
-    };
-    if (checkingResult.hasError !== null) {
-      checkingResult.hasError = false;
-      checkingResult.error = '';
-    } else {
-      checkingResult.hasError = true;
-      checkingResult.error = 'Invalid email address';
-    }
+    let validateStatus = validate("email", event.target.value);
+    let existStatus = false;
+    let api = checkEmailExist(event.target.value)
+              .then(message => this.setState({
+                email: {
+                  exist: message
+                }
+              }));
+    console.log(this.state.email.exist);
     this.setState({
       email: {
           value: event.target.value,
-          hasError: checkingResult.hasError,
-          error: checkingResult.error
+          hasError: validateStatus.email,
+          error: (validateStatus.email) ? 'Invalid email address' : ''
         }
     });
   };
 
   handlePhoneInput = (event) => {
-    const regexp = /^\d{10}$/;
-    const checkingResult = {
-      hasError: regexp.exec(event.target.value),
-      error: ''
-    };
-    if (checkingResult.hasError !== null) {
-      checkingResult.hasError = false;
-      checkingResult.error = '';
-    } else {
-      checkingResult.hasError = true;
-      checkingResult.error = 'Must have 10 numbers';
-    }
+    let validateStatus = validate("phone", event.target.value);
     this.setState({
       phone: {
           value: event.target.value,
-          hasError: checkingResult.hasError,
-          error: checkingResult.error
+          hasError: validateStatus.phone,
+          error: (validateStatus.phone) ? 'Must have 10 numbers' : ''
         }
     });
   }
@@ -160,22 +142,12 @@ class Register extends Component {
   };
 
   handleConfirmedPasswordInput = (event) => {
-    const checkingResult = {
-      hasError: false,
-      error: ''
-    };
-    if (event.target.value === this.state.password.value) {
-      checkingResult.hasError = false;
-      checkingResult.error = '';
-    } else {
-      checkingResult.hasError = true;
-      checkingResult.error = 'Password doesn\'t match.';
-    }
+    let passwordStatus = (event.target.value === this.state.password.value);
     this.setState({
       confirmedPassword: {
           value: event.target.value,
-          hasError: checkingResult.hasError,
-          error: checkingResult.error
+          hasError: !passwordStatus,
+          error: (!passwordStatus) ? 'Password doesn\'t match.' : ''
         }
     });
   };
@@ -214,6 +186,13 @@ class Register extends Component {
         error: dialogStatus.dialogMessage
       }
     });
+
+    let api = register(this.state.name.value, this.state.email.value, this.state.password.value, this.state.phone.value)
+              .then(message => this.setState({
+                registerStatus: message
+              }));
+    console.log(this.state.registerStatus);
+
     if (!dialogStatus.dialogHasError) {
       this.props.history.push("/login");
     }

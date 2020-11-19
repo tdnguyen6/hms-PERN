@@ -1,4 +1,9 @@
 import React, { Component }               from 'react';
+import { BrowserRouter, Route, Switch }   from 'react-router-dom';
+import { Link as RouteLink }              from 'react-router-dom';
+
+import axios                              from 'axios';
+
 import Avatar                             from '@material-ui/core/Avatar';
 import Button                             from '@material-ui/core/Button';
 import CssBaseline                        from '@material-ui/core/CssBaseline';
@@ -18,10 +23,8 @@ import DialogActions                      from '@material-ui/core/DialogActions'
 import DialogContent                      from '@material-ui/core/DialogContent';
 import DialogContentText                  from '@material-ui/core/DialogContentText';
 import DialogTitle                        from '@material-ui/core/DialogTitle';
-import { BrowserRouter, Route, Switch }   from 'react-router-dom';
-import { Link as RouteLink }              from 'react-router-dom';
-import { login } from "../testapi";
-import axios from 'axios';
+
+import { login }                          from "../../components/API/Login";
 
 const style = (theme) => ({
   root: {
