@@ -2,9 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf56df8a-943a-457c-9ee6-2b1c5276090b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/react_builds" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/public/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/public/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/public/logo192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/public/logo512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/public/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/public/robots.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/routes/user.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,10 +40,18 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/client" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\TiDu\Documents\code\hms\src\client" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\TiDu\Documents\code\hms\src\client" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="mailer.js" type="NodeJSConfigurationType" temporary="true" path-to-node="wsl://UBUNTU2004@node" nameIsGenerated="true" path-to-js-file="mailer.js" working-dir="$PROJECT_DIR$/src/server/modules">
