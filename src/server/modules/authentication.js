@@ -1,3 +1,9 @@
+const db = require('../db');
+const jwt = require('jsonwebtoken');
+const jwtDecode = require('jwt-decode');
+const {do_hash} = require('./helper');
+const Mailer = require('./mailer')
+
 exports.checkEmailExist = async function (req, res) {
     let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
     if (user.rows.length == 1) res.status(200).json({emailStatus: true})
@@ -50,7 +56,7 @@ exports.forgetPassword = async function (req, res) {
             name: user.rows[0].name,
             intro: 'You received this email because you forgot your account password',
             action: {
-                instructions: 'To reset password please click here:',
+                instructions: 'To reset password please click here',
                 button: {
                     color: '#22bc66',
                     text: 'Click to reset password',

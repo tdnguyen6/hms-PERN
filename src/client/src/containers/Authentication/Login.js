@@ -123,7 +123,7 @@ class Login extends Component {
         }
       })
   };
-  handleSubmit = () => {
+  handleSubmit = async () => {
       const dialogStatus = {
         dialogMessage: '',
         dialogHasError: false
@@ -148,16 +148,20 @@ class Login extends Component {
       // }));
       //
       // console.log(this.state.loginStatus);
-      let api = login(this.state.email.value, this.state.password.value)
-                .then(message => this.setState({
-                  loginStatus: message
-                }));
-      console.log(this.state.loginStatus);
+      let api_res = await login(this.state.email.value, this.state.password.value);
+
+      console.log(api_res);
+
+      // this.setState({
+      //             loginStatus: api_res['loginStatus'];
+      //           }));
+      //
+      // console.log(this.state.loginStatus);
       // this.setState(
       //   loginStatus: api.response
       // )
         // this.props.history.push("/loginTest");
-      if (this.state.loginStatus) this.props.history.push("/dashboard");
+      // if (this.state.loginStatus) this.props.history.push("/dashboard");
       };
 
 

@@ -3,17 +3,9 @@ const {Hash} = require('crypto');
 const app = express();
 const session = require('express-session');
 const path = require('path');
-const jwt = require('jsonwebtoken');
-const jwtDecode = require('jwt-decode');
-const crypto = require('crypto');
-const db = require('./db');
-const Mailer = require('./modules/mailer')
 const auth = require('./modules/authentication');
 const appointment = require('./modules/appointment');
 const port = process.env.PORT || 3001;
-
-// functions
-do_hash = (s) => crypto.createHash('md5').update(s).digest('hex');
 
 app.use(express.json());
 app.use(session({
@@ -26,7 +18,9 @@ app.use(express.static(path.join(__dirname, '../../root')));
 app.use(function (req, res, next) {
     res.set({
         'content-type': 'application/json',
-        'access-control-allow-origin:': '*'
+        'access-control-allow-headers': 'origin, x-requested-with, content-type, accept',
+        'access-control-allow-origin': '*',
+        // 'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT'
     });
     next();
 });
@@ -38,7 +32,7 @@ app.post("/user/forget", auth.forgetPassword);
 app.post("/user/reset", auth.resetPassword);
 app.post("/user/checkEmailExist", auth.checkEmailExist);
 
-app.post("/apointment/create", appointment.createAppointment);
+app.post("/appointment/create", appointment.createAppointment);
 
 
 app.listen(port, () => {
