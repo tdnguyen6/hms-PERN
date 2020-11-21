@@ -26,8 +26,9 @@ app.use(function (req, res, next) {
 });
 
 // api
-app.post("/user/register", auth.registerAccount);
-app.post("/user/login", auth.loginAccount);
+app.post("/user/register", auth.redirectHome, auth.registerAccount);
+app.post("/user/login", auth.redirectHome, auth.loginAccount);
+app.post("/user/logout", auth.logout);
 app.post("/user/forget", auth.forgetPassword);
 app.post("/user/reset", auth.resetPassword);
 app.post("/user/checkEmailExist", auth.checkEmailExist);

@@ -23,6 +23,7 @@ exports.registerAccount = async function (req, res) {
 exports.loginAccount = async function (req, res) {
     try {
         const result = await db.query(`SELECT * FROM accounts where email = $1 and password = $2`, [req.body.email, do_hash(req.body.password)]);
+        console.log(result)
         if (result.rows.length == 1) {
             res.status(200).json({loginStatus: true});
             console.log(req.body);
@@ -31,6 +32,18 @@ exports.loginAccount = async function (req, res) {
         console.log(error);
     }
 
+}
+
+exports.redirectHome = function(req, res, next) {
+    if (req.session.userID) {
+        res.redirect('/dashboard')
+    } else next()
+}
+
+exports.logout = function(req, res, next) {
+    req.session.destroy(err => console.log(err))
+    res.status(200).json({logOutStatus: true}).redirect('/user/login')
+    
 }
 
 exports.forgetPassword = async function (req, res) {
