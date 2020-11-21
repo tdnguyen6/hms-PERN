@@ -8,9 +8,9 @@ import Home                               from './containers/Authentication/Home
 import ForgetPassword                     from './containers/Authentication/ForgetPassword';
 import loginTest                          from './containers/Authentication/loginTest';
 
-import PatientDashboard                   from './containers/Dashboard/PatientDashboard';
-import PractitionerDashboard              from './containers/Dashboard/PractitionerDashboard';
-import AdminDashboard                     from './containers/Dashboard/AdminDashboard';
+import PatientDashboard                   from './containers/Dashboard/Patient/PatientDashboard';
+import PractitionerDashboard              from './containers/Dashboard/Practitioner/PractitionerDashboard';
+import AdminDashboard                     from './containers/Dashboard/Admin/AdminDashboard';
 
 import './App.css';
 
