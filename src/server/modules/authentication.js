@@ -73,7 +73,7 @@ exports.forgetPassword = async function (req, res) {
                 button: {
                     color: '#22bc66',
                     text: 'Click to reset password',
-                    link: 'http://localhost:3001/user/reset?token=' + token
+                    link: 'http://localhost:3001/user/reset/' + token
                 }
             },
             outro: 'If you did not make this request, simply ignore this email.'
@@ -93,17 +93,19 @@ exports.forgetPassword = async function (req, res) {
         .sendMail(message, function (error, info) {
             if (error) {
                 console.log(error);
+                res.status(500).json({mailSent: false})
             } else {
                 console.log('Email sent: ' + info.response);
+                res.status(200).json({mailSent: true})
             }
         });
 }
 
 exports.resetPassword = async function (req, res) {
     const password = req.body.newPassword
-    const email = jwtDecode(req.body.token).data.email
+    const email = jwtDecode(req.params.userToken).data.email
 
-    let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
+    let user = await db.query(`SELECT * FROM accounts where email = $1`, [email])
     if (user.rows.length < 1) return res.status(401).send("User does not exist")
 
     try {
