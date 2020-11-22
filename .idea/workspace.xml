@@ -3,12 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="cf56df8a-943a-457c-9ee6-2b1c5276090b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Authentication/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Authentication/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/modules/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/modules/authentication.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/root/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/root/react_builds" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,7 +15,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="UML Sequence" />
         <option value="JavaScript File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -31,18 +30,24 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="DefaultPlantUmlFileTemplate" value="UML Sequence" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/client" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/client/public/docs/reveal.js" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.intentionPowerPack" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\TiDu\Documents\code\hms\src\client\public\docs\reveal.js" />
+      <recent name="C:\Users\TiDu\Documents\code\hms\root" />
       <recent name="C:\Users\TiDu\Documents\code\hms\src\client" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\TiDu\Documents\code\hms\src\client\public\docs" />
+      <recent name="C:\Users\TiDu\Documents\code\hms\src\client\public\docs\reveal.js" />
       <recent name="C:\Users\TiDu\Documents\code\hms\src\client" />
     </key>
   </component>
@@ -66,7 +71,10 @@
       <updated>1605062911820</updated>
       <workItem from="1605062913038" duration="8321000" />
       <workItem from="1605798289255" duration="639000" />
-      <workItem from="1605842729433" duration="5099000" />
+      <workItem from="1605842729433" duration="6051000" />
+      <workItem from="1605849293246" duration="994000" />
+      <workItem from="1605946804732" duration="2872000" />
+      <workItem from="1606025112197" duration="7094000" />
     </task>
     <servers />
   </component>
@@ -94,9 +102,18 @@
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state x="2518" y="286" key="MultipleFileMergeDialog/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1605794993938" />
+    <state x="2381" y="170" key="SettingsEditor" timestamp="1606032205049">
+      <screen x="1920" y="0" width="1920" height="1050" />
+    </state>
+    <state x="461" y="170" key="SettingsEditor/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1605849285761" />
+    <state x="2381" y="170" key="SettingsEditor/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1606032205049" />
     <state x="2596" y="345" key="jetbrains.nodejs.interpreters-dialog" timestamp="1605065003063">
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state x="2596" y="345" key="jetbrains.nodejs.interpreters-dialog/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1605065003063" />
+    <state x="2543" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1606032212240">
+      <screen x="1920" y="0" width="1920" height="1050" />
+    </state>
+    <state x="2543" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1606032212240" />
   </component>
 </project>
