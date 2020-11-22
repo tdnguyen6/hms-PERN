@@ -13,7 +13,7 @@ app.use(session({
     secret: 'ShigeoTokuda',
     cookie: {maxAge: 31536000000}
 }));
-app.use(express.static(path.join(__dirname, 'root')));
+app.use('/', express.static(path.join(__dirname, 'root')));
 app.use(function (req, res, next) {
     res.set({
         'content-type': 'application/json',
