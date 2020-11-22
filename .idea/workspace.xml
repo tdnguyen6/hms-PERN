@@ -3,29 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cf56df8a-943a-457c-9ee6-2b1c5276090b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/asset-manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/docs/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/logo192.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/logo512.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/precache-manifest.239986ad46466303641493d6cd8d7f5b.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/robots.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/service-worker.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/static/css/main.435d5fe5.chunk.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/static/css/main.435d5fe5.chunk.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/static/js/2.0cfee8e5.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/static/js/2.0cfee8e5.chunk.js.LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/static/js/2.0cfee8e5.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/static/js/main.14197660.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/static/js/main.14197660.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/static/js/runtime-main.09b85ec0.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/static/js/runtime-main.09b85ec0.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/root/static/media/logo.5d5d9eef.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +74,7 @@
       <workItem from="1605842729433" duration="6051000" />
       <workItem from="1605849293246" duration="994000" />
       <workItem from="1605946804732" duration="2872000" />
-      <workItem from="1606025112197" duration="10489000" />
+      <workItem from="1606025112197" duration="10686000" />
     </task>
     <servers />
   </component>
