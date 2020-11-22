@@ -1,8 +1,7 @@
 const express = require('express');
 const app = express();
 const session = require('express-session');
-const MemoryStore = require('memorystore')(session)
-const path = require('path');
+const MemoryStore = require('memorystore')(session);
 const auth = require('./modules/authentication');
 const appointment = require('./modules/appointment');
 const port = process.env.PORT || 3001;
@@ -17,7 +16,7 @@ app.use(session({
     resave: true,
     secret: 'Shigeo Tokuda'
 }))
-app.use(express.static(path.join(__dirname, '../client/build')));
+app.use(express.static('../client/build'));
 app.use(function (req, res, next) {
     res.set({
         'content-type': 'application/json',
