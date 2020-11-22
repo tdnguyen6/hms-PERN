@@ -56,7 +56,7 @@ exports.forgetPassword = async function (req, res) {
                 email: req.body.email
             }
         },
-        "YuaMikami",
+        "Yua Mikami",
         {
             expiresIn: 604800
         }

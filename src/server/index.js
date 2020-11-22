@@ -1,17 +1,20 @@
 const express = require('express');
 const app = express();
 const session = require('express-session');
+const MemoryStore = require('memorystore')(session)
 const auth = require('./modules/authentication');
 const appointment = require('./modules/appointment');
 const port = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(session({
-    resave: true,
-    saveUninitialized: true,
-    secret: 'ShigeoTokuda',
-    cookie: {maxAge: 31536000000}
-}));
+    cookie: { maxAge: 86400000 },
+    store: new MemoryStore({
+        checkPeriod: 86400000 // prune expired entries every 24h
+    }),
+    resave: false,
+    secret: 'Shigeo Tokuda'
+}))
 app.use(express.static('../client/build'));
 app.use(function (req, res, next) {
     res.set({

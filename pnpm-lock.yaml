@@ -5,6 +5,7 @@ dependencies:
   jsonwebtoken: 8.5.1
   jwt-decode: 3.1.2
   mailgen: 2.0.14
+  memorystore: 1.6.4
   nodemailer: 6.4.15
   pg: 8.4.1_pg@8.4.1
   pg-promise: 10.7.0
@@ -472,6 +473,19 @@ packages:
     dev: true
     resolution:
       integrity: sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ==
+  /debug/4.3.1:
+    dependencies:
+      ms: 2.1.2
+    dev: false
+    engines:
+      node: '>=6.0'
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    resolution:
+      integrity: sha512-doEwdvm4PCeK4K3RQN2ZC2BYUBaxwLARCqZmMjtF8a51J2Rb0xpVloFRnCODwqjpwnAoao4pelN8l3RJdv3gRQ==
   /decompress-response/3.3.0:
     dependencies:
       mimic-response: 1.0.1
@@ -1262,6 +1276,13 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-tqNXrS78oMOE73NMxK4EMLQsQowWf8jKooH9g7xPavRT706R6bkQJ6DY2Te7QukaZsulxa30wQ7bk0pm4XiHmA==
+  /lru-cache/4.1.5:
+    dependencies:
+      pseudomap: 1.0.2
+      yallist: 2.1.2
+    dev: false
+    resolution:
+      integrity: sha512-sWZlbEP2OsHNkXrMl5GYk/jKk70MBng6UU4YI/qGDYbgf6YbP4EvmqISbXCoJiRKs+1bSpFHVgQxvJ17F2li5g==
   /mailgen/2.0.14:
     dependencies:
       ejs: 2.7.4
@@ -1283,6 +1304,15 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
+  /memorystore/1.6.4:
+    dependencies:
+      debug: 4.3.1
+      lru-cache: 4.1.5
+    dev: false
+    engines:
+      node: '>=0.10'
+    resolution:
+      integrity: sha512-51j4kUedbqkWGby44hAhf5f/hj8GOvHoLX00/YHURBNxOMf5k8JbPuGfmeNpZEXhc3vrmfnFben4+rOOx3HjEQ==
   /mensch/0.3.4:
     dev: false
     resolution:
@@ -1666,6 +1696,10 @@ packages:
       node: '>= 0.10'
     resolution:
       integrity: sha512-dh/frvCBVmSsDYzw6n926jv974gddhkFPfiN8hPOi30Wax25QZyZEGveluCgliBnqmuM+UJmBErbAUFIoDbjOw==
+  /pseudomap/1.0.2:
+    dev: false
+    resolution:
+      integrity: sha1-8FKijacOYYkX7wqKw0wa5aaChrM=
   /psl/1.8.0:
     dev: false
     resolution:
@@ -2234,6 +2268,10 @@ packages:
       node: '>=0.4'
     resolution:
       integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
+  /yallist/2.1.2:
+    dev: false
+    resolution:
+      integrity: sha1-HBH5IY8HYImkfdUS+TxmmaaoHVI=
 specifiers:
   connect-pg-simple: ^6.2.1
   express: ^4.17.1
@@ -2241,6 +2279,7 @@ specifiers:
   jsonwebtoken: ^8.5.1
   jwt-decode: ^3.1.2
   mailgen: ^2.0.14
+  memorystore: ^1.6.4
   nodemailer: ^6.4.16
   nodemon: ^2.0.6
   pg: ^8.4.1
