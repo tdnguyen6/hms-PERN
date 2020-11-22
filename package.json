@@ -2,15 +2,15 @@
   "name": "hms",
   "version": "1.0.0",
   "description": "Group Project for Software Engineering Course at International University - HCM National University",
-  "main": "index.js",
+  "main": "src/server/index.js",
   "directories": {
     "doc": "docs",
     "test": "test"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "daemon": "nodemon index.js"
+    "start": "node src/server/index.js",
+    "daemon": "nodemon src/server/index.js"
   },
   "repository": {
     "type": "git",
