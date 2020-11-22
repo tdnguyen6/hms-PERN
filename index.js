@@ -1,9 +1,9 @@
+const path = require('path');
 const express = require('express');
 const app = express();
 const session = require('express-session');
-const path = require('path');
-const auth = require('./modules/authentication');
-const appointment = require('./modules/appointment');
+const auth = require('./src/server/modules/authentication');
+const appointment = require('./src/server/modules/appointment');
 const port = process.env.PORT || 3001;
 
 app.use(express.json());
@@ -13,7 +13,7 @@ app.use(session({
     secret: 'ShigeoTokuda',
     cookie: {maxAge: 31536000000}
 }));
-app.use(express.static(path.join(__dirname, '../../root')));
+app.use(express.static(path.join(__dirname, 'root')));
 app.use(function (req, res, next) {
     res.set({
         'content-type': 'application/json',
