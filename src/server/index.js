@@ -1,5 +1,4 @@
 const express = require('express');
-const {Hash} = require('crypto');
 const app = express();
 const session = require('express-session');
 const path = require('path');
