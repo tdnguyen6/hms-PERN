@@ -1,4 +1,4 @@
-const path = require('path');
+// const path = require('path');
 const express = require('express');
 const app = express();
 const session = require('express-session');
@@ -13,7 +13,7 @@ app.use(session({
     secret: 'ShigeoTokuda',
     cookie: {maxAge: 31536000000}
 }));
-app.use('/', express.static(path.join(__dirname, 'root')));
+app.use(express.static('root'));
 app.use(function (req, res, next) {
     res.set({
         'content-type': 'application/json',
