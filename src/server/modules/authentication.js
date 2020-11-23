@@ -23,10 +23,12 @@ exports.registerAccount = async function (req, res) {
 exports.loginAccount = async function (req, res) {
     try {
         const result = await db.query(`SELECT * FROM accounts where email = $1 and password = $2`, [req.body.email, do_hash(req.body.password)]);
-        console.log(result)
         if (result.rows.length == 1) {
-            res.status(200).json({loginStatus: true});
-            console.log(req.body);
+            res.status(200).json({
+                loginStatus: true,
+                isPractitioner: Number.isInteger(result.rows[0].practitioner_id),
+                isPatient: Number.isInteger(result.rows[0].patient_id)
+            });
         } else res.status(500).json({loginStatus: false});
     } catch (error) {
         console.log(error);
