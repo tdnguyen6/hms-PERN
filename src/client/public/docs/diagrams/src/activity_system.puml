@@ -1,0 +1,50 @@
+@startuml
+title HMS Activity Diagram
+start
+:Home Page;
+if (want to sign in?) then (yes)
+    if (have an account ?) then (yes)
+        if (forget password ?) then (yes)
+            :Reset password via email;
+        endif
+    else (no)
+        :Register;
+    endif
+    :Sign In;
+    :Dashboard;
+    fork
+        :Patient;
+            fork
+                :Book an Appointment;
+            fork again
+                :Get his Appointments;
+            fork again
+                :Delay/Cancel an Appointment;
+            fork again
+                :Make Payments;
+            end fork
+    fork again
+        :Practitioner;
+            fork
+                :Get his Appointments;
+            fork again
+                :CheckIn/Delay/Cancel an Appointment;
+            end fork
+    fork again
+        :Admin;
+            fork
+                :CRUD all Patients;
+            fork again
+                :CRUD all Practitioner;
+            fork again
+                :CRUD all Appointments;
+            end fork
+    end fork
+else (no)
+    if (Disease by Symptoms ?) then (yes)
+        :Disease by Symptoms;
+    endif
+    stop
+endif
+stop
+@enduml
