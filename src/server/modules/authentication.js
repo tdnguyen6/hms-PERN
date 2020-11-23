@@ -7,7 +7,7 @@ const Mailer = require('./mailer')
 exports.checkEmailExist = async function (req, res) {
     let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
     if (user.rows.length == 1) res.status(200).json({emailStatus: true})
-    else res.status(404).json({emailStatus: false})
+    else res.status(500).json({emailStatus: false})
 }
 
 exports.registerAccount = async function (req, res) {
@@ -27,7 +27,7 @@ exports.loginAccount = async function (req, res) {
         if (result.rows.length == 1) {
             res.status(200).json({loginStatus: true});
             console.log(req.body);
-        } else res.status(401).json({loginStatus: false});
+        } else res.status(500).json({loginStatus: false});
     } catch (error) {
         console.log(error);
     }
@@ -48,7 +48,7 @@ exports.logout = function(req, res, next) {
 
 exports.forgetPassword = async function (req, res) {
     let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
-    if (user.rows.length < 1) return res.status(401).json({userExist: false})
+    if (user.rows.length < 1) return res.status(500).json({userExist: false})
 
     const token = jwt.sign(
         {
