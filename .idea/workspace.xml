@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf56df8a-943a-457c-9ee6-2b1c5276090b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,9 +13,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="UML Sequence" />
         <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="UML Activity" />
+        <option value="UML Sequence" />
       </list>
     </option>
   </component>
@@ -33,7 +35,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/client/public/docs/reveal.js" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.intentionPowerPack" />
+    <property name="settings.editor.selected.configurable" value="org.plantuml.idea.lang.settings.PlantUmlSettingsPage" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -73,7 +75,8 @@
       <workItem from="1605842729433" duration="6051000" />
       <workItem from="1605849293246" duration="994000" />
       <workItem from="1605946804732" duration="2872000" />
-      <workItem from="1606025112197" duration="12293000" />
+      <workItem from="1606025112197" duration="15245000" />
+      <workItem from="1606097756786" duration="3454000" />
     </task>
     <servers />
   </component>
@@ -89,6 +92,10 @@
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state x="2501" y="104" key="CommitChangelistDialog2/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1606033367237" />
+    <state x="740" y="280" key="FileChooserDialogImpl" timestamp="1606105667438">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="740" y="280" key="FileChooserDialogImpl/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1606105667438" />
     <state width="1899" height="285" key="GridCell.Tab.0.bottom" timestamp="1605065016361">
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
@@ -109,10 +116,10 @@
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state x="2518" y="286" key="MultipleFileMergeDialog/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1605794993938" />
-    <state x="2381" y="170" key="SettingsEditor" timestamp="1606032205049">
-      <screen x="1920" y="0" width="1920" height="1050" />
+    <state x="461" y="170" key="SettingsEditor" timestamp="1606105736717">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="461" y="170" key="SettingsEditor/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1605849285761" />
+    <state x="461" y="170" key="SettingsEditor/0.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1606105736717" />
     <state x="2381" y="170" key="SettingsEditor/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1606032205049" />
     <state x="2596" y="345" key="jetbrains.nodejs.interpreters-dialog" timestamp="1605065003063">
       <screen x="1920" y="0" width="1920" height="1050" />
