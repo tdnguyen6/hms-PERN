@@ -6,7 +6,6 @@ import Login                              from './containers/Authentication/Logi
 import Register                           from './containers/Authentication/Register';
 import Home                               from './containers/Authentication/Home';
 import ForgetPassword                     from './containers/Authentication/ForgetPassword';
-import loginTest                          from './containers/Authentication/loginTest';
 
 import PatientDashboard                   from './containers/Dashboard/Patient/PatientDashboard';
 import PractitionerDashboard              from './containers/Dashboard/Practitioner/PractitionerDashboard';
@@ -19,14 +18,13 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path = "/login"              component = { Login }/>
-        <Route path = "/register"           component = { Register } />
-        <Route path = "/loginTest"          component = { loginTest } />
-        <Route path = "/forgetPassword"     component = { ForgetPassword } />
-        <Route path = "/patientDashboard"   component = { PatientDashboard } />
-        <Route path = "/dashboard"          component = { PractitionerDashboard } />
-        <Route path = "/adminDashboard"     component = { AdminDashboard } />
-        <Route path = "/"                   component = { Home } />
+        <Route path = "/login"                          component = { Login }/>
+        <Route path = "/register"                       component = { Register } />
+        <Route path = "/forgetPassword"                 component = { ForgetPassword } />
+        <Route path = "/patientDashboard"               component = { PatientDashboard } />
+        <Route path = "/practitionerDashboard"          component = { PractitionerDashboard } />
+        <Route path = "/dashboard"                      component = { AdminDashboard } />
+        <Route path = "/"                               component = { Home } />
       </Switch>
     </BrowserRouter>
   );
