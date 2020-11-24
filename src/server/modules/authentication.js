@@ -20,14 +20,26 @@ exports.registerAccount = async function (req, res) {
     }
 }
 
+/* this will return json object with format
+{
+    loginStatus: true | false
+    role: Patient | Practitioner | Admin
+}
+*/
 exports.loginAccount = async function (req, res) {
     try {
         const result = await db.query(`SELECT * FROM accounts where email = $1 and password = $2`, [req.body.email, do_hash(req.body.password)]);
         if (result.rows.length == 1) {
+            let isPatient = Number.isInteger(result.rows[0].patient_id)
+            let isPractitioner = Number.isInteger(result.rows[0].practitioner_id)
+            let position
+            if (isPatient) position = "Patient"
+            else if (isPractitioner) position = "Practitioner"
+            else position = "Admin"
+            console.log(position)
             res.status(200).json({
                 loginStatus: true,
-                isPractitioner: Number.isInteger(result.rows[0].practitioner_id),
-                isPatient: Number.isInteger(result.rows[0].patient_id)
+                role: position
             });
         } else res.status(500).json({loginStatus: false});
     } catch (error) {
@@ -44,8 +56,7 @@ exports.redirectHome = function(req, res, next) {
 
 exports.logout = function(req, res, next) {
     req.session.destroy(err => console.log(err))
-    res.status(200).json({logOutStatus: true}).redirect('/user/login')
-    
+    res.status(200).json({logOutStatus: true}).redirect('/user/login')
 }
 
 exports.forgetPassword = async function (req, res) {
