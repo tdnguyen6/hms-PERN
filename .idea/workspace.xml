@@ -20,25 +20,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="98c82667-d8bc-47d2-be46-b819c692b849" name="Default Changelist" comment="fix 404 page">
-      <change afterPath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_change_appointment_state.puml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/build/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/404.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/asset-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/activity_system.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/activity_system.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_sign_in.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_sign_in.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_sign_up.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_sign_up.puml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/precache-manifest.d4a2f960a769e927e56831da5d403345.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/precache-manifest.d86f76d7e508e08e43be7b360451158c.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/build/service-worker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/service-worker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/2.2f6a964d.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/2.2f6a964d.chunk.js.LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/2.2f6a964d.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/main.2a39c7bb.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/main.2a39c7bb.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/2.1e04cf26.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/2.1e04cf26.chunk.js.LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/2.1e04cf26.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/main.88fcd794.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/main.88fcd794.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/pnpm-lock.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/public/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/404.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/activity_system.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/activity_system.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_sign_in.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_sign_in.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_sign_up.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_sign_up.puml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Authentication/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Authentication/Home.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

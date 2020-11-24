@@ -1,7 +1,36 @@
 @startuml
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+title Sign In Sequence
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+actor user as U
+boundary website as W
+control api
+entity authentication as A
+database Postgres as P
+
+U -> W+: GET /sign-up
+return sign in form
+
+loop input is invalid
+U -> W+: submit sign-in form
+W -> W+: validate inputs
+W--
+U <-- W: invalid input warning
+end
+
+W -> api+: /POST /sign-in\nusername=...&password=...
+api -> A+: signIn(username, password)
+A -> P+: query
+return rows
+alt rows.length > 0
+    A -> A+: session.user_data=rows[0]
+    A--
+    api <-- A: data needed for dashboard
+    W <-- api: data needed for dashboard
+    U <-- W: dashboard
+else
+    api <-- A-: user not found
+    W <-- api-: error: user not found
+    U <-- W-: sign in form
+end
+
 @enduml

@@ -37,8 +37,8 @@
     "mailgen": "^2.0.14",
     "memorystore": "^1.6.4",
     "nodemailer": "^6.4.16",
-    "pg": "^8.4.1",
-    "pg-promise": "^10.7.0"
+    "pg": "^8.5.1",
+    "pg-promise": "^10.8.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"

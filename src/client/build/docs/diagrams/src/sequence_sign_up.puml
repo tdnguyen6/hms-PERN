@@ -1,7 +1,65 @@
 @startuml
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+title Sign Up Sequence
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+actor user as U
+boundary website as W
+control api
+entity authentication as A
+entity mailer as M
+database Postgres as P
+
+== Register account and receive email ==
+
+U -> W+: GET /sign-up
+return sign up form
+
+loop input is invalid
+U -> W+: submit sign-up form
+W -> W+: validate inputs
+W--
+U <-- W: invalid input warning
+W--
+end
+
+W -> api+: POST /register
+api -> A: register()
+api --
+A++
+A -> P+: insert
+return
+A -> M: send verification mail
+A--
+M++
+U <-- M: verification mail
+M--
+
+== Use Link From Email to Verify Account ==
+
+U -> W+: GET /verify?token=...
+W -> api ++: /validate-token
+api -> api ++: validate_token(token)
+api--
+alt token verified
+    api -> api++: decode_token(token)
+    api--
+    api -> api++: compare(now,token.expire_time)
+        alt token not expired
+            api -> A++: verify_account(email)
+            A -> P++: update query
+            return
+            return
+            W <-- api: verification successful
+            A--
+            U <-- W: reset successful announcement\nand redirect to login page
+        else token expired
+            W <-- api: invalid token
+            api--
+            U <-- W: invalid token announcement
+        end
+else token verifying failed
+    W <-- api: invalid token
+    api--
+    U <-- W-: invalid token announcement
+end
+
 @enduml

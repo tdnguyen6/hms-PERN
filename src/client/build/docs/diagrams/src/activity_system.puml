@@ -28,7 +28,9 @@ if (want to sign in?) then (yes)
             fork
                 :Get his Appointments;
             fork again
-                :CheckIn/Delay/Cancel an Appointment;
+                :Delay/Cancel an Appointment;
+            fork again
+                :CheckIn an Appointment;
             end fork
     fork again
         :Admin;

@@ -14,7 +14,10 @@
         sessionStorage.redirect += location.search
 
         location.replace(
-            location.pathname.split('/').slice(0, 1 + segment).join('/')
+            '/' + location.pathname.split('/').slice(1, segment).join('/')
+
+            // the line below is wrong when segment = 0
+            // location.pathname.split('/').slice(0, 1 + segment).join('/')
         )
     </script>
 </head>
