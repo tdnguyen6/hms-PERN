@@ -7,11 +7,11 @@ dependencies:
   mailgen: 2.0.14
   memorystore: 1.6.4
   nodemailer: 6.4.16
-  pg: 8.5.1_pg@8.5.1
+  pg: 8.5.1
   pg-promise: 10.8.0
 devDependencies:
   nodemon: 2.0.6
-lockfileVersion: 5.1
+lockfileVersion: 5.2
 packages:
   /@sindresorhus/is/0.14.0:
     dev: true
@@ -380,7 +380,7 @@ packages:
   /connect-pg-simple/6.2.1:
     dependencies:
       '@types/pg': 7.14.7
-      pg: 8.5.1_pg@8.5.1
+      pg: 8.5.1
     dev: false
     engines:
       node: '>=10.0.0'
@@ -1524,7 +1524,7 @@ packages:
       integrity: sha512-ujanxJJB9CSDUvlAOshtjdKAywOPR2vY0a7D+vvgk5rbrYcthZA7TjpN+Z+UwZsz/G/bUexYDT6huE33vYVN0g==
   /pg-pool/3.2.2_pg@8.5.1:
     dependencies:
-      pg: 8.5.1_pg@8.5.1
+      pg: 8.5.1
     dev: false
     peerDependencies:
       pg: '>=8.0'
@@ -1533,7 +1533,7 @@ packages:
   /pg-promise/10.8.0:
     dependencies:
       assert-options: 0.6.2
-      pg: 8.5.1_pg@8.5.1
+      pg: 8.5.1
       pg-minify: 1.6.1
       spex: 3.0.2
     dev: false
@@ -1557,7 +1557,7 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==
-  /pg/8.5.1_pg@8.5.1:
+  /pg/8.5.1:
     dependencies:
       buffer-writer: 2.0.0
       packet-reader: 1.0.0
@@ -1570,7 +1570,6 @@ packages:
     engines:
       node: '>= 8.0.0'
     peerDependencies:
-      pg: '*'
       pg-native: '>=2.0.0'
     peerDependenciesMeta:
       pg-native:
