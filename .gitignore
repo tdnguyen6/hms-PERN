@@ -104,4 +104,4 @@ dist
 .tern-port
 
 #test file for learning
-test[a-zA-Z]+.js
+test[a-zA-Z]*.js

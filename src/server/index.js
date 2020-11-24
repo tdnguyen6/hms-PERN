@@ -1,7 +1,7 @@
 const express = require('express');
-const {Hash} = require('crypto');
 const app = express();
 const session = require('express-session');
+const MemoryStore = require('memorystore')(session)
 const path = require('path');
 const auth = require('./modules/authentication');
 const appointment = require('./modules/appointment');
@@ -9,12 +9,15 @@ const port = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(session({
-    resave: true,
+    cookie: { maxAge: 86400000 },
     saveUninitialized: true,
-    secret: 'ShigeoTokuda',
-    cookie: {maxAge: 31536000000}
-}));
-app.use(express.static(path.join(__dirname, '../../root')));
+    store: new MemoryStore({
+        checkPeriod: 86400000 // prune expired entries every 24h
+    }),
+    resave: true,
+    secret: 'Shigeo Tokuda'
+}))
+app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(function (req, res, next) {
     res.set({
         'content-type': 'application/json',
@@ -26,10 +29,11 @@ app.use(function (req, res, next) {
 });
 
 // api
-app.post("/user/register", auth.registerAccount);
-app.post("/user/login", auth.loginAccount);
+app.post("/user/register", auth.redirectHome, auth.registerAccount);
+app.post("/user/login", auth.redirectHome, auth.loginAccount);
+app.post("/user/logout", auth.logout);
 app.post("/user/forget", auth.forgetPassword);
-app.post("/user/reset", auth.resetPassword);
+app.post("/user/reset/:userToken", auth.resetPassword);
 app.post("/user/checkEmailExist", auth.checkEmailExist);
 
 app.post("/appointment/create", appointment.createAppointment);
