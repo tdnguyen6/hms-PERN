@@ -19,7 +19,24 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="98c82667-d8bc-47d2-be46-b819c692b849" name="Default Changelist" comment="fix 404 page" />
+    <list default="true" id="98c82667-d8bc-47d2-be46-b819c692b849" name="Default Changelist" comment="fix 404 page">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/asset-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/precache-manifest.ab58d0bcee83140e12e1b52aa714d4f2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/service-worker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/static/css/main.435d5fe5.chunk.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/static/css/main.435d5fe5.chunk.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/2.cc13d36e.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/2.cc13d36e.chunk.js.LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/2.cc13d36e.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/main.b6e10d2d.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/main.b6e10d2d.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/runtime-main.09b85ec0.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/runtime-main.09b85ec0.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/static/media/logo.5d5d9eef.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/package.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -109,6 +126,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="fix 404 page" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="2610" y="272" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1606230642404">
+      <screen x="1920" y="0" width="1920" height="1050" />
+    </state>
+    <state x="2610" y="272" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1606230642404" />
     <state x="466" y="101" width="426" height="537" key="FileChooserDialogImpl" timestamp="1606208457909">
       <screen x="0" y="0" width="1366" height="743" />
     </state>
