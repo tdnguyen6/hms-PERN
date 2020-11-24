@@ -35,33 +35,55 @@ let rows = [
   createData('8', 'A', 18, 'F', 'A', 'A1.104', '18:00', 'Aug 18', true),
   createData('9', 'A', 18, 'F', 'A', 'A1.104', '18:00', 'Aug 18', true),
   createData('10', 'A', 18, 'F', 'A', 'A1.104', '18:00', 'Aug 18', true),
+  createData('6', 'B', 18, 'F', 'B', 'A5.104', '16:00', 'Aug 20', false),
+  createData('7', 'B', 18, 'F', 'B', 'A5.104', '16:00', 'Aug 20', false),
+  createData('8', 'A', 18, 'F', 'A', 'A1.104', '18:00', 'Aug 18', true),
+  createData('9', 'A', 18, 'F', 'A', 'A1.104', '18:00', 'Aug 18', true),
+  createData('10', 'A', 18, 'F', 'A', 'A1.104', '18:00', 'Aug 18', true),
 ];
 
 class PractitionerAppointmentTable extends Component {
   state = {
-    button: {
-      open: false,
-      error: ''
-    }
+    editDialog: false,
+    newDialog: false
   };
   handleRowClick = (event, row) => {
     console.log("Row click", row);
     if (row.status) {
       this.setState({
-        button: {
-          open: true,
-          error: "Success"
-        }
+        editDialog: true
       });
     }
-  }
-  handleDialogClose = () => {
-      this.setState({
-        button: {
-          open: false,
-          error: ''
-        }
-      })
+  };
+  handleNewClick = () => {
+    this.setState({
+      newDialog: true
+    });
+  };
+  handleEditDialogClose = () => {
+    this.setState({
+      editDialog: false
+    });
+  };
+  handleNewDialogClose = () => {
+    this.setState({
+      newDialog: false
+    });
+  };
+  handleSave = () => {
+    this.setState({
+      editDialog: false
+    });
+  };
+  handleDelete = () => {
+    this.setState({
+      editDialog: false
+    });
+  };
+  handleNew = () => {
+    this.setState({
+      editDialog: false
+    });
   };
   render() {
     return (
@@ -81,7 +103,7 @@ class PractitionerAppointmentTable extends Component {
                   <Button variant       = "contained"
                           color         = "primary"
                           align         = "right"
-                          onClick       = { this.handleDialogClose }>
+                          onClick       = { this.handleNewClick }>
                     New
                   </Button>
                 </TableCell>
@@ -113,8 +135,8 @@ class PractitionerAppointmentTable extends Component {
             </TableBody>
         </Table>
         <Dialog
-          open              = { this.state.button.open }
-          onClose           = { this.handleDialogClose }
+          open              = { this.state.editDialog }
+          onClose           = { this.handleEditDialogClose }
           aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
           <DialogContent>
@@ -149,11 +171,52 @@ class PractitionerAppointmentTable extends Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick = { this.handleDialogClose } color = "primary" align = "right">
+            <Button onClick = { this.handleSave } color = "primary" align = "right">
               Save
             </Button>
-            <Button onClick = { this.handleDialogClose } color = "primary" align = "left">
+            <Button onClick = { this.handleDelete } color = "primary" align = "left">
               Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
+          open              = { this.state.newDialog }
+          onClose           = { this.handleNewDialogClose }
+          aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">Make new appointment</DialogTitle>
+          <DialogContent>
+            <DialogContentText id = "alert-dialog-description">
+              To make new appointment, please enter your information here.
+            </DialogContentText>
+            <TextField
+              autoFocus
+              variant       = "outlined"
+              margin        = "normal"
+              id            = "name"
+              label         = "Email Address"
+              type          = "email"
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              variant       = "outlined"
+              margin        = "normal"
+              id            = "name"
+              label         = "Name"
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              variant       = "outlined"
+              margin        = "normal"
+              id            = "name"
+              label         = "Date"
+              fullWidth
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick = { this.handleNew } color = "primary" align = "right">
+              Save
             </Button>
           </DialogActions>
         </Dialog>
