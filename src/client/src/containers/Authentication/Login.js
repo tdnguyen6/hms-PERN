@@ -149,7 +149,6 @@ class Login extends Component {
       //
       // console.log(this.state.loginStatus);
       let api_res = await login(this.state.email.value, this.state.password.value);
-
       console.log(api_res);
 
       // this.setState({
