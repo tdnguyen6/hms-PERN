@@ -47,6 +47,8 @@ import ChevronLeftIcon                          from '@material-ui/icons/Chevron
 import PatientAppointmentTable from '../../Table/PatientAppointmentTable';
 import PractitionerAppointmentTable from '../../Table/PractitionerAppointmentTable';
 
+import { AdminSidebar } from '../../../components/Services/Sidebar';
+
 const style = (theme) => ({
   root: {
     display: 'flex'
@@ -179,6 +181,7 @@ class AdminDashboard extends Component {
             </IconButton>
           </div>
           <Divider />
+          <List>{AdminSidebar}</List>
         </Drawer>
         <main className = { classes.content }>
           <div className = { classes.appBarSpacer } />
