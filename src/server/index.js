@@ -27,6 +27,11 @@ app.use(function (req, res, next) {
     });
     next();
 });
+app.get('*', function(req, res){
+    res.sendFile(path.join(__dirname + '/../client/public/404.html'));
+    res.status(404);
+    res.set({'content-type': 'text/html'});
+});
 
 // api
 app.post("/user/register", auth.redirectHome, auth.registerAccount);
@@ -37,7 +42,6 @@ app.post("/user/reset/:userToken", auth.resetPassword);
 app.post("/user/checkEmailExist", auth.checkEmailExist);
 
 app.post("/appointment/create", appointment.createAppointment);
-
 
 app.listen(port, () => {
     console.log(`Server started on port: ${port}`);
