@@ -19,12 +19,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="98c82667-d8bc-47d2-be46-b819c692b849" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/client/public/404.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/pnpm-lock.yaml" afterDir="false" />
+    <list default="true" id="98c82667-d8bc-47d2-be46-b819c692b849" name="Default Changelist" comment="fix 404 page">
+      <change beforePath="$PROJECT_DIR$/src/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,8 +62,16 @@
       <option name="presentableId" value="Default" />
       <updated>1606181741379</updated>
       <workItem from="1606181745695" duration="152000" />
-      <workItem from="1606181927432" duration="6463000" />
+      <workItem from="1606181927432" duration="6638000" />
     </task>
+    <task id="LOCAL-00001" summary="fix 404 page">
+      <created>1606190568588</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1606190568588</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -85,15 +89,19 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fix 404 page" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix 404 page" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="187" y="7" key="SettingsEditor" timestamp="1606182078239">
       <screen x="0" y="0" width="1366" height="743" />
     </state>
     <state x="187" y="7" key="SettingsEditor/0.0.1366.743@0.0.1366.743" timestamp="1606182078239" />
-    <state x="278" y="108" width="802" height="523" key="Vcs.Push.Dialog.v2" timestamp="1606190148545">
+    <state x="278" y="108" width="802" height="523" key="Vcs.Push.Dialog.v2" timestamp="1606190571383">
       <screen x="0" y="0" width="1366" height="743" />
     </state>
-    <state x="278" y="108" width="802" height="523" key="Vcs.Push.Dialog.v2/0.0.1366.743@0.0.1366.743" timestamp="1606190148545" />
+    <state x="278" y="108" width="802" height="523" key="Vcs.Push.Dialog.v2/0.0.1366.743@0.0.1366.743" timestamp="1606190571383" />
     <state x="498" y="288" width="369" height="168" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606190134968">
       <screen x="0" y="0" width="1366" height="743" />
     </state>
