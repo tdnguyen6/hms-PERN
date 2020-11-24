@@ -18,13 +18,19 @@ import LockOutlinedIcon                   from '@material-ui/icons/LockOutlined'
 import Typography                         from '@material-ui/core/Typography';
 import { withStyles }                     from '@material-ui/core/styles';
 import Container                          from '@material-ui/core/Container';
+
 import Dialog                             from '@material-ui/core/Dialog';
 import DialogActions                      from '@material-ui/core/DialogActions';
 import DialogContent                      from '@material-ui/core/DialogContent';
 import DialogContentText                  from '@material-ui/core/DialogContentText';
 import DialogTitle                        from '@material-ui/core/DialogTitle';
 
+import { validate }                       from '../../components/Services/Validate';
+
+// API -----------------------------------
+import { checkEmailExist }                from '../../components/API/CheckEmailExist';
 import { login }                          from "../../components/API/Login";
+
 
 const style = (theme) => ({
   root: {
@@ -86,24 +92,21 @@ class Login extends Component {
   // }
 
   handleEmailInput = (event) => {
-    const regexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    const checkingResult = {
-      hasError: regexp.exec(event.target.value),
-      error: ''
-    };
-    if (checkingResult.hasError !== null) {
-      checkingResult.hasError = false;
-      checkingResult.error = '';
-    } else {
-      checkingResult.hasError = true;
-      checkingResult.error = 'invalid email address';
-    }
+    let validateStatus = validate("email", event.target.value);
+    let existStatus = false;
+    let api = checkEmailExist(event.target.value)
+              .then(message => this.setState({
+                email: {
+                  exist: message
+                }
+              }));
+    console.log(this.state.email.exist);
     this.setState({
       email: {
-        value: event.target.value,
-        hasError: checkingResult.hasError,
-        error: checkingResult.error
-      }
+          value: event.target.value,
+          hasError: validateStatus.email,
+          error: (validateStatus.email) ? 'Invalid email address' : ''
+        }
     });
   };
   handlePasswordInput = (event) => {
@@ -196,10 +199,10 @@ class Login extends Component {
               <TextField
                 variant       = "outlined"
                 margin        = "normal"
-                name          = "password"
-                label         = "Password"
-                type          = "password"
                 id            = "password"
+                label         = "Password"
+                name          = "password"
+                type          = "password"
                 autoComplete  = "current-password"
                 required
                 fullWidth
@@ -219,15 +222,13 @@ class Login extends Component {
                 variant       = "contained"
                 color         = "primary"
                 className     = { classes.submit }
-                onClick       = { this.handleSubmit }
-              >
+                onClick       = { this.handleSubmit }>
                 Login
               </Button>
               <Dialog
                 open              = { this.state.button.open }
                 onClose           = { this.handleDialogClose }
-                aria-describedby  = "alert-dialog-description"
-              >
+                aria-describedby  = "alert-dialog-description">
                 <DialogContent>
                   <DialogContentText id = "alert-dialog-description">
                     { this.state.button.error }
