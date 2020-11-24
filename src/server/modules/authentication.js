@@ -60,7 +60,9 @@ exports.forgetPassword = async function (req, res) {
         },
         "Yua Mikami",
         {
-            expiresIn: 604800
+            expiresIn: 604800,
+            issuer: 'hms',
+            audience: 'hms-user'
         }
     );
 
@@ -104,7 +106,16 @@ exports.forgetPassword = async function (req, res) {
 }
 
 exports.resetPassword = async function (req, res) {
+    jwt.verify(req.params.userToken, 'Yua Mikami', {audience: 'hms-user', issuer: 'hms'}, function(err, decoded) {
+        if (err) {
+            console.log(err)
+            res.status(500).json({resetPasswordSuccessful: false})
+        }
+    })
+    
+    
     const password = req.body.newPassword
+    console.log(jwtDecode(req.params.userToken))
     const email = jwtDecode(req.params.userToken).data.email
 
     let user = await db.query(`SELECT * FROM accounts where email = $1`, [email])
