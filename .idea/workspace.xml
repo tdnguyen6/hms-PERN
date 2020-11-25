@@ -21,21 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="98c82667-d8bc-47d2-be46-b819c692b849" name="Default Changelist" comment="fix 404 page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/asset-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/precache-manifest.ab58d0bcee83140e12e1b52aa714d4f2.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/service-worker.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/css/main.435d5fe5.chunk.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/css/main.435d5fe5.chunk.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/2.cc13d36e.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/2.cc13d36e.chunk.js.LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/2.cc13d36e.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/main.b6e10d2d.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/main.b6e10d2d.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/runtime-main.09b85ec0.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/runtime-main.09b85ec0.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/media/logo.5d5d9eef.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_goes_here" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +33,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="UML Sequence" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -88,6 +76,7 @@
       <workItem from="1606181745695" duration="152000" />
       <workItem from="1606181927432" duration="7725000" />
       <workItem from="1606198876562" duration="9687000" />
+      <workItem from="1606314320685" duration="1231000" />
     </task>
     <task id="LOCAL-00001" summary="fix 404 page">
       <created>1606190568588</created>
