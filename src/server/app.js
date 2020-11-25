@@ -8,7 +8,7 @@ const appointment = require('./modules/appointment');
 
 app.use(express.json());
 app.use(session({
-    cookie: { maxAge: 86400000 },
+    cookie: { maxAge: 86400000, httpOnly: false },
     saveUninitialized: true,
     store: new MemoryStore({
         checkPeriod: 86400000 // prune expired entries every 24h

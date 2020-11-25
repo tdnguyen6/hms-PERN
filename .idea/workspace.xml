@@ -21,8 +21,9 @@
   <component name="ChangeListManager">
     <list default="true" id="98c82667-d8bc-47d2-be46-b819c692b849" name="Default Changelist" comment="fix 404 page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test_goes_here" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/app.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +77,7 @@
       <workItem from="1606181745695" duration="152000" />
       <workItem from="1606181927432" duration="7725000" />
       <workItem from="1606198876562" duration="9687000" />
-      <workItem from="1606314320685" duration="1231000" />
+      <workItem from="1606314320685" duration="4505000" />
     </task>
     <task id="LOCAL-00001" summary="fix 404 page">
       <created>1606190568588</created>
