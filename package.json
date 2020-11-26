@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test:client": "jest --config=test/client/jest.config.js --watch",
-    "test:server": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest --config=test/server/jest.config.js --watch --testTimeout=10000",
+    "test:server": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest --config=test/server/jest.config.js --watchAll --testTimeout=10000",
     "start": "node src/server/index.js",
     "daemon": "nodemon src/server/index.js"
   },

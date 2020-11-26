@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/server/authentication.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/authentication.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +50,7 @@
       <updated>1606396638325</updated>
       <workItem from="1606396639455" duration="14139000" />
       <workItem from="1606412286208" duration="692000" />
-      <workItem from="1606413024505" duration="10000" />
+      <workItem from="1606413024505" duration="118000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'authentication-page' of https://github.com/tidunguyen/hms-PERN into authentication-page&#10;&#10;# Conflicts:&#10;#&#9;src/server/modules/authentication.js">
       <created>1606406643270</created>
