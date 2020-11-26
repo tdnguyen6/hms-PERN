@@ -2,28 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/client/src/helper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/activity_system.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/activity_system.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_book_appointment.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_book_appointment.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_forget_password.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_forget_password.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_sign_in.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_sign_in.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_sign_up.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_sign_up.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/activity_system.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/activity_system.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_book_appointment.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_book_appointment.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_forget_password.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_forget_password.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_sign_in.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_sign_in.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_sign_up.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_sign_up.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/public/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/modules/appointment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/modules/appointment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/modules/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/modules/authentication.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/modules/helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/modules/helper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/client/app.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/client/app.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/server/app.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/app.test.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/server/authentication.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/authentication.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/server/jest.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/jest.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +50,8 @@
       <option name="presentableId" value="Default" />
       <updated>1606396638325</updated>
       <workItem from="1606396639455" duration="14139000" />
-      <workItem from="1606412286208" duration="589000" />
+      <workItem from="1606412286208" duration="692000" />
+      <workItem from="1606413024505" duration="10000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'authentication-page' of https://github.com/tidunguyen/hms-PERN into authentication-page&#10;&#10;# Conflicts:&#10;#&#9;src/server/modules/authentication.js">
       <created>1606406643270</created>

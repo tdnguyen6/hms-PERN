@@ -8,7 +8,7 @@ beforeAll(() => {
 });
 
 describe("GET /user/login", () => {
-    it.only.each([
+    it.each([
         ["tidu.nguyen.2000@gmail.com", 1, "Patient"],
         ["tidu@good.edu.vn", 2, "Practitioner"],
         ["tidu@idrive.vn", 3, "Admin"]
