@@ -3,8 +3,11 @@ const app = express();
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session)
 const path = require('path');
+
 const auth = require('./modules/authentication');
 const appointment = require('./modules/appointment');
+const disease = require('./modules/disease');
+const admin = require('./modules/admin');
 const port = process.env.PORT || 3001;
 
 app.use(express.json());
@@ -28,15 +31,19 @@ app.use(function (req, res, next) {
     next();
 });
 
-// api
+// api for user
 app.post("/user/register", auth.redirectHome, auth.registerAccount);
 app.post("/user/login", auth.redirectHome, auth.loginAccount);
 app.post("/user/logout", auth.logout);
 app.post("/user/forget", auth.forgetPassword);
 app.post("/user/reset/:userToken", auth.resetPassword);
 app.post("/user/checkEmailExist", auth.checkEmailExist);
+// api for admin
+app.post("/admin/listPatients", admin.listPatients)
+app.post("/admin/listPractioners", admin.listPractitioners)
 
 app.post("/appointment/create", appointment.createAppointment);
+app.post("/appointment/listDiseases", disease.listDiseases);
 
 
 app.listen(port, () => {
