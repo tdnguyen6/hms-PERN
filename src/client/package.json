@@ -18,8 +18,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "build-with-diagrams": "pnpm tree:diagrams && pnpm tree:diagrams-out && pnpm tree:diagrams-src && pnpm build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "build-with-diagrams": "npm run tree:diagrams && npm run tree:diagrams-out && npm run tree:diagrams-src && npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "tree:diagrams": "tree 'public/docs/diagrams' -H '.' -L 1 --noreport --charset utf-8 > public/docs/diagrams/index.html",

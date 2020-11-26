@@ -56,7 +56,8 @@ exports.redirectHome = function(req, res, next) {
 
 exports.logout = function(req, res, next) {
     req.session.destroy(err => console.log(err))
-    res.status(200).json({logOutStatus: true}).redirect('/user/login')
+    res.status(200).json({logOutStatus: true}).redirect('/user/login')
+
 }
 
 exports.forgetPassword = async function (req, res) {

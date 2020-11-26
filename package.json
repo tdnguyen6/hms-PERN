@@ -8,7 +8,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:client": "jest --config=test/client/jest.config.js --watch",
+    "test:server": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest --config=test/server/jest.config.js --watch --testTimeout=10000",
     "start": "node src/server/index.js",
     "daemon": "nodemon src/server/index.js"
   },
@@ -41,8 +42,12 @@
     "pg-promise": "^10.8.0"
   },
   "devDependencies": {
-    "jest": "^26.6.3",
+    "@testing-library/react": "^11.2.2",
+    "jest": "26.6.0",
     "nodemon": "^2.0.6",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-test-renderer": "^17.0.1",
     "supertest": "^6.0.1"
   }
 }
