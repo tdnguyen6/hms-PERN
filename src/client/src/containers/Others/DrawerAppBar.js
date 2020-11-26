@@ -145,9 +145,7 @@ class DrawerAppBar extends Component {
             </IconButton>
           </div>
           <Divider />
-          <List>{
-            <SidebarFunction type = { this.props.type } />
-          }</List>
+          <List>{ <SidebarFunction type = { this.props.type } /> }</List>
         </Drawer>
       </React.Fragment>
     );

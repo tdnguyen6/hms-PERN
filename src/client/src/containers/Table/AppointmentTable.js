@@ -21,10 +21,12 @@ import DialogTitle                        from '@material-ui/core/DialogTitle';
 
 import { Completed, Upcomming }           from '../../components/Services/AppointmentStatus';
 
+import EditAppointmentDialog              from '../Dialog/EditAppointmentDialog';
+import NewAppointmentDialog              from '../Dialog/EditAppointmentDialog';
+
 function createData(id, disease, practitioner, room, time, date, status) {
   return { id, disease, practitioner, room, time, date, status };
 };
-
 let rows = [
   createData('1', 'A', 'A', 'A1.104', '18:00', 'Aug 18', true),
   createData('2', 'B', 'B', 'A5.104', '16:00', 'Aug 20', false),
@@ -36,11 +38,11 @@ let rows = [
   createData('8', 'A', 'A', 'A1.104', '18:00', 'Aug 18', true),
   createData('9', 'A', 'A', 'A1.104', '18:00', 'Aug 18', true),
   createData('10', 'A', 'A', 'A1.104', '18:00', 'Aug 18', true),
-  createData('6', 'B', 'B', 'A5.104', '16:00', 'Aug 20', false),
-  createData('7', 'B', 'B', 'A5.104', '16:00', 'Aug 20', false),
-  createData('8', 'A', 'A', 'A1.104', '18:00', 'Aug 18', true),
-  createData('9', 'A', 'A', 'A1.104', '18:00', 'Aug 18', true),
-  createData('10', 'A', 'A', 'A1.104', '18:00', 'Aug 18', true)
+  createData('11', 'B', 'B', 'A5.104', '16:00', 'Aug 20', false),
+  createData('12', 'B', 'B', 'A5.104', '16:00', 'Aug 20', false),
+  createData('13', 'A', 'A', 'A1.104', '18:00', 'Aug 18', true),
+  createData('14', 'A', 'A', 'A1.104', '18:00', 'Aug 18', true),
+  createData('15', 'A', 'A', 'A1.104', '18:00', 'Aug 18', true)
 ];
 
 let columns = [
@@ -58,11 +60,14 @@ class PatientAppointmentTable extends Component {
     newDialog: false
   };
   handleRowClick = (event, row) => {
-    console.log("Row click", row);
     if (row.status) {
       this.setState({
         editDialog: true
       });
+    } else {
+      this.setState({
+        editDialog: false
+      })
     }
   };
   handleNewClick = () => {
@@ -70,31 +75,17 @@ class PatientAppointmentTable extends Component {
       newDialog: true
     });
   };
-  handleEditDialogClose = () => {
+  getOpenStateOfEditDialog = (openState) => {
     this.setState({
-      editDialog: false
+      editDialog: openState
     });
-  };
-  handleNewDialogClose = () => {
+  }
+
+  getOpenStateOfNewDialog = (openState) => {
     this.setState({
-      newDialog: false
+      newDialog: openState
     });
-  };
-  handleSave = () => {
-    this.setState({
-      editDialog: false
-    });
-  };
-  handleDelete = () => {
-    this.setState({
-      editDialog: false
-    });
-  };
-  handleNew = () => {
-    this.setState({
-      editDialog: false
-    });
-  };
+  }
   render() {
     return (
       <React.Fragment>
@@ -136,92 +127,13 @@ class PatientAppointmentTable extends Component {
             </TableBody>
           </Table>
         </TableContainer>
-        <Dialog
-          open              = { this.state.editDialog }
-          onClose           = { this.handleEditDialogClose }
-          aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
-          <DialogContent>
-            <DialogContentText id = "alert-dialog-description">
-            To subscribe to this website, please enter your email address here. We will send updates
-            occasionally.
-            </DialogContentText>
-            <TextField
-              autoFocus
-              variant       = "outlined"
-              margin        = "normal"
-              id            = "name"
-              label         = "Email Address"
-              type          = "email"
-              fullWidth
-            />
-            <TextField
-              autoFocus
-              variant       = "outlined"
-              margin        = "normal"
-              id            = "name"
-              label         = "Name"
-              fullWidth
-            />
-            <TextField
-              autoFocus
-              variant       = "outlined"
-              margin        = "normal"
-              id            = "name"
-              label         = "Date"
-              fullWidth
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick = { this.handleSave } color = "primary" align = "right">
-              Save
-            </Button>
-            <Button onClick = { this.handleDelete } color = "primary" align = "left">
-              Delete
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <Dialog
-          open              = { this.state.newDialog }
-          onClose           = { this.handleNewDialogClose }
-          aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Make new appointment</DialogTitle>
-          <DialogContent>
-            <DialogContentText id = "alert-dialog-description">
-              To make new appointment, please enter your information here.
-            </DialogContentText>
-            <TextField
-              autoFocus
-              variant       = "outlined"
-              margin        = "normal"
-              id            = "name"
-              label         = "Email Address"
-              type          = "email"
-              fullWidth
-            />
-            <TextField
-              autoFocus
-              variant       = "outlined"
-              margin        = "normal"
-              id            = "name"
-              label         = "Name"
-              fullWidth
-            />
-            <TextField
-              autoFocus
-              variant       = "outlined"
-              margin        = "normal"
-              id            = "name"
-              label         = "Date"
-              fullWidth
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick = { this.handleNew } color = "primary" align = "right">
-              Save
-            </Button>
-          </DialogActions>
-        </Dialog>
+        {/*
+          - open and close props will send data back to its child component: EditAppointmentDialog.
+          - getOpenState will receive data which been sent fron its child component EditAppointmentDialog.
+        */}
+        <EditAppointmentDialog open = { this.state.editDialog } close = { this.getOpenStateOfEditDialog }/>
+        <NewAppointmentDialog open = { this.state.newDialog } close = { this.getOpenStateOfNewDialog }/>
+
       </React.Fragment>
     );
   }
