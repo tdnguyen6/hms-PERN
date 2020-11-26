@@ -1,0 +1,76 @@
+@startuml
+title Book Appointment Sequence
+
+actor user as U
+boundary website as W
+control api
+entity appointment as A
+entity mailer as M
+entity payment_gateway as G
+database Postgres as P
+
+U -> W++: GET /book-appointment
+return prompt:\nDo you know your disease?
+alt no
+U -> W++: list of symptoms
+W -> api++: POST /diseases?symptoms=...
+api -> A++: diseasesBySymptoms(symptoms)
+A->P++: query
+return
+return list of diseases
+return list of diseases
+return list of diseases
+end
+
+U -> W++:  disease
+W -> api++: POST /practitioners?disease=...
+api -> A++: practitionersByDisease(disease)
+A -> P++: query
+return
+return list of practitioners
+return list of practitioners
+return prompt:\nchoose a practitioner
+
+U -> W++:  disease & practitioner
+W -> api++: POST /free_time?practitioner=...
+api -> A++: free_time(practitioner)
+A -> P++: query
+return
+return list of freetime
+return list of freetime
+return prompt:\nchoose a time
+
+U -> W++: disease & practitioner\n& time
+return form for other params
+
+U -> W++:  disease & practitioner\n& time & others args
+W -> api++: POST /invoice?disease=...
+api -> A++: invoice(disease)
+A -> A++: serviceByDisease(disease)
+A -> P++: query
+return service
+A--
+A -> A++: priceByService(service)
+A -> P++: query
+return price
+A--
+A -> A++: invoice(price)
+A--
+return invoice
+return invoice
+U <-- W: redirect to payment gateway
+
+U -> G++: make payment
+W <-- G--: success confirmation
+W -> api++: POST /book-appointment\n?disease=...&practitioner=...\n&time=...&...
+U <-- W--: success message
+api -> A: book_appointment(args)
+api--
+A++
+A -> P++: insert
+return
+A -> M: noti_mail(patient,practitioner)
+A--
+M++
+U <-- M--: email for booking notification to both patient and practitioner
+@enduml

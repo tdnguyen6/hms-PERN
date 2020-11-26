@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
+    "@material-ui/data-grid": "^4.0.0-alpha.10",
     "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -13,13 +14,17 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-with-diagrams": "pnpm tree:diagrams && pnpm tree:diagrams-out && pnpm tree:diagrams-src && pnpm build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "tree:diagrams": "tree 'public/docs/diagrams' -H '.' -L 1 --noreport --charset utf-8 > public/docs/diagrams/index.html",
+    "tree:diagrams-out": "tree 'public/docs/diagrams/out' -H '.' -L 1 --noreport --charset utf-8 > public/docs/diagrams/out/index.html",
+    "tree:diagrams-src": "tree 'public/docs/diagrams/src' -H '.' -L 1 --noreport --charset utf-8 > public/docs/diagrams/src/index.html"
   },
   "eslintConfig": {
     "extends": "react-app"

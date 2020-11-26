@@ -1,0 +1,20 @@
+@startuml
+title Get Appointment Lists
+
+actor user as U
+boundary website as W
+control api
+entity appointment as A
+database Postgres as P
+
+U -> W+: GET /appointments-list
+W -> api+: POST /appointments-list
+api -> api+: user_data=req.session.user_data
+api --
+api -> A+: get_appointments(user_data)
+A -> P+: query
+return rows
+return appointments list
+return appointments list
+return display appointments list
+@enduml
