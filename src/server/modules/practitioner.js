@@ -5,7 +5,7 @@ const db = require('../db');
 	symptoms: [1, 2, 3, 4, etc.]
 }
 */
-exports.findDiseasesBySymptoms = async function(req, res) {
+exports.findPractitioner = async function(req, res) {
 	try {
 		console.log(req.body.symptoms)
 		let arr = req.body.symptoms
@@ -47,16 +47,6 @@ exports.findDiseasesBySymptoms = async function(req, res) {
 	} catch (err) {
 		console.log(err)
 		res.status(500).json({findDiseasesBySymptomsSuccessfully: false})
-	}
-}
-
-exports.queryAllDiseases = async function(req, res) {
-	try {
-		let result = await db.query("select * from diseases")
-		res.status(200).json(result.rows)
-	} catch (err) {
-		console.log(err)
-		res.status(500).json({listDiseasesSuccessfully: false})
 	}
 }
 
