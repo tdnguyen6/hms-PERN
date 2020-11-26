@@ -43,7 +43,11 @@ app.post("/admin/listPatients", admin.listPatients)
 app.post("/admin/listPractioners", admin.listPractitioners)
 
 app.post("/appointment/create", appointment.createAppointment);
-app.post("/appointment/listDiseases", disease.listDiseases);
+
+app.post("/disease/findDisease", disease.findDiseasesBySymptoms);
+app.post("/disease/all", disease.queryAllDiseases);
+
+app.post("/practitioner/findPractitioner", disease.findDiseasesBySymptoms);
 
 app.listen(port, () => {
     console.log(`Server started on port: ${port}`);

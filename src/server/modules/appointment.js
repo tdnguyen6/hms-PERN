@@ -18,8 +18,8 @@ for example
         "name": "abdominal pain"
     },
     {
-    "id": 2,
-    "name": "chest pain"
+        "id": 2,
+        "name": "chest pain"
     }
 ]
 */
