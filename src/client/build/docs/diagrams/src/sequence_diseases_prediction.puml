@@ -1,0 +1,17 @@
+@startuml
+title Disease Prediction Sequence
+actor user as U
+boundary website as W
+control api
+entity appointment as A
+database Postgres as P
+
+U -> W++: list of symptoms
+W -> api++: POST /diseases?symptoms=...
+api -> A++: diseasesBySymptoms(symptoms)
+A->P++: query
+return
+return list of diseases
+return list of diseases
+return list of diseases
+@enduml
