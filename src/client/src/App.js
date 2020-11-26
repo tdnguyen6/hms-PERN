@@ -23,7 +23,7 @@ function App() {
         <Route path = "/forgetPassword"                 component = { ForgetPassword } />
         <Route path = "/patientDashboard"               component = { PatientDashboard } />
         <Route path = "/practitionerDashboard"          component = { PractitionerDashboard } />
-        <Route path = "/dashboard"                      component = { AdminDashboard } />
+        <Route path = "/admin"                          component = { AdminDashboard } />
         <Route path = "/"                               component = { Home } />
       </Switch>
     </BrowserRouter>

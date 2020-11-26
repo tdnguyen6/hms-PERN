@@ -72,27 +72,22 @@ const style = (theme) => ({
 });
 
 class AdminDashboard extends Component {
-  state = {
-    view: ''
-  }
-
-  getViewFromDrawerAppBar = (viewFromDrawerAppBar) => {
-    this.setState({ view: viewFromDrawerAppBar });
-  }
   render() {
     const { classes } = this.props;
 
     return (
       <div className = { classes.root }>
         <CssBaseline />
-        <DrawerAppBar type = "admin" view = { this.getViewFromDrawerAppBar } />
+        <DrawerAppBar type = "admin"/>
         <main className = { classes.content }>
           <div className = { classes.appBarSpacer } />
           <Container maxWidth = "lg" className = { classes.container }>
             <Grid container spacing = {3}>
               <Grid item xs = {12}>
                 <Paper className = { classes.paper }>
-                  <AppointmentTable />
+                  <Route path = "/admin/manageAppointment" exact component = { AppointmentTable } />
+                  <Route path = "/admin/managePractitioner" exact component = { PractitionerTable } />
+                  <Route path = "/admin/managePatient" exact component = { PatientTable } />
                 </Paper>
               </Grid>
             </Grid>

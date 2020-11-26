@@ -30,6 +30,7 @@ exports.loginAccount = async function (req, res) {
     try {
         const result = await db.query(`SELECT * FROM accounts where email = $1 and password = $2`, [req.body.email, do_hash(req.body.password)]);
         if (result.rows.length == 1) {
+            // identify users role
             let isPatient = Number.isInteger(result.rows[0].patient_id)
             let isPractitioner = Number.isInteger(result.rows[0].practitioner_id)
             let position
@@ -37,6 +38,12 @@ exports.loginAccount = async function (req, res) {
             else if (isPractitioner) position = "Practitioner"
             else position = "Admin"
             console.log(position)
+            // assign session to user
+            req.session.userID = result.rows[0].id
+            req.session.isAdmin = (position === 'Admin')
+            console.log(req.session)
+            
+            
             res.status(200).json({
                 loginStatus: true,
                 role: position
@@ -49,15 +56,26 @@ exports.loginAccount = async function (req, res) {
 }
 
 exports.redirectHome = function(req, res, next) {
-    if (req.session.userID) {
-        res.redirect('/dashboard')
-    } else next()
+    if (!req.session.userID) {
+        res.redirect('/user/login')
+    } else res.redirect('/dashboard')
+}
+
+exports.redirectHomeForAdmin = function(req, res, next) {
+    req.session.userID = 1
+    req.session.isAdmin = true
+    console.log(req.session)
+    console.log(req.session.userID && req.session.isAdmin)
+    if (req.session.userID && req.session.isAdmin) {
+        console.log("req.session.userID && req.session.isAdmin is called")
+        next()
+    } else if (req.session.userID) res.redirect('/dashboard')
+    else res.redirect('/user/login')
 }
 
 exports.logout = function(req, res, next) {
     req.session.destroy(err => console.log(err))
-    res.status(200).json({logOutStatus: true}).redirect('/user/login')
-
+    res.status(200).json({logOutStatus: true}).redirect('/user/login')
 }
 
 exports.forgetPassword = async function (req, res) {
