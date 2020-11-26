@@ -7,62 +7,53 @@ beforeAll(() => {
     agent = request(server);
 });
 
-describe("Test login API", () => {
-    it("should login on correct username and password", async () => {
-        try {
-            const res = await agent
-                .post("/user/login")
-                .send({
-                    email: "tidu@good.edu.vn",
-                    password: "tidu@good.edu.vn"
-                })
-                .set('Accept', 'application/json');
+describe("GET /user/login", () => {
+    it.only.each([
+        ["tidu.nguyen.2000@gmail.com", 1, "Patient"],
+        ["tidu@good.edu.vn", 2, "Practitioner"],
+        ["tidu@idrive.vn", 3, "Admin"]
+    ])("should login %s,  set cookie sid and return role=%s", async (email, expected_id, expected_role) => {
+        const res = await agent
+            .post("/user/login")
+            .send({
+                email: email,
+                password: email
+            })
+            .set('Accept', 'application/json');
 
-            expect(res.status).toBe(200);
-            expect(res.body).toEqual({
-                "id": true,
-                "role": "Practitioner"
-            });
-        } catch (e) {
-            expect(e).toMatch('error');
-            throw e;
-        }
+        expect(res.headers).toHaveProperty("set-cookie");
+        expect(res.headers['set-cookie'].some(c => c.includes("connect.sid="))).toBeTruthy();
+        expect(res.status).toBe(200);
+        expect(res.body.role).toEqual(expected_role);
     });
 
     it("should send reject code and empty body on wrong username or password", async () => {
-        try {
-            const res = await agent
-                .post("/user/login")
-                .send({
-                    email: "tidu@good.edu.vn",
-                    password: "tidu@good.edu.vn_"
-                })
-                .set('Accept', 'application/json');
+        const res = await agent
+            .post("/user/login")
+            .send({
+                email: "tidu@good.edu.vn",
+                password: "tidu@good.edu.vn_"
+            })
+            .set('Accept', 'application/json');
 
-            expect(res.status).toBe(401);
-            expect(res.body).toEqual("");
-        } catch (e) {
-            expect(e).toMatch('error');
-            throw e;
-        }
+        expect(res.status).toBe(401);
+        expect(res.body).toEqual("");
     });
 
-    it("should send reject code and empty body on wrong username or password", async () => {
-        try {
-            const res = await agent
-                .post("/user/login")
-                .send({
-                    email: "tidu@good.edu.vn",
-                    password: "tidu@good.edu.vn_"
-                })
-                .set('Accept', 'application/json');
+    it.each([
+        ["'' or ''=''"],
+        ["69 OR 1=1"]
+    ])("should prevent SQL Injection: %s", async (injection) => {
+        const res = await agent
+            .post("/user/login")
+            .send({
+                email: injection,
+                password: injection,
+            })
+            .set('Accept', 'application/json');
 
-            expect(res.status).toBe(401);
-            expect(res.body).toEqual("");
-        } catch (e) {
-            expect(e).toMatch('error');
-            throw e;
-        }
+        expect(res.status).toBe(401);
+        expect(res.body).toEqual("");
     });
 });
 

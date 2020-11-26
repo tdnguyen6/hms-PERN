@@ -2,24 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/client/src/helper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/asset-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/css/main.8c8b27cf.chunk.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/css/main.8c8b27cf.chunk.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/2.752fd08e.chunk.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/static/js/2.752fd08e.chunk.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/2.752fd08e.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/main.8fcb3383.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/main.8fcb3383.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/runtime-main.120840cb.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/static/js/runtime-main.120840cb.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/runtime-main.120840cb.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/activity_system.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/activity_system.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_book_appointment.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_book_appointment.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_forget_password.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_forget_password.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_sign_in.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_sign_in.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_sign_up.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_sign_up.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/build/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/activity_system.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/activity_system.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_book_appointment.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_book_appointment.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_forget_password.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_forget_password.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_sign_in.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_sign_in.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_sign_up.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_sign_up.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/public/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/modules/appointment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/modules/appointment.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/modules/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/modules/authentication.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/pnpm-lock.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/modules/helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/modules/helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/client/app.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/client/app.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/server/app.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/app.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/server/authentication.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/authentication.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/server/jest.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/jest.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,11 +69,34 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1606396638325</updated>
-      <workItem from="1606396639455" duration="8594000" />
+      <workItem from="1606396639455" duration="14139000" />
+      <workItem from="1606412286208" duration="589000" />
     </task>
+    <task id="LOCAL-00001" summary="Merge branch 'authentication-page' of https://github.com/tidunguyen/hms-PERN into authentication-page&#10;&#10;# Conflicts:&#10;#&#9;src/server/modules/authentication.js">
+      <created>1606406643270</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1606406643270</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge branch 'authentication-page' of https://github.com/tidunguyen/hms-PERN into authentication-page&#10;&#10;# Conflicts:&#10;#&#9;src/server/modules/authentication.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'authentication-page' of https://github.com/tidunguyen/hms-PERN into authentication-page&#10;&#10;# Conflicts:&#10;#&#9;src/server/modules/authentication.js" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2339" y="61" key="CommitChangelistDialog2" timestamp="1606406642160">
+      <screen x="1920" y="0" width="1920" height="1050" />
+    </state>
+    <state x="2339" y="61" key="CommitChangelistDialog2/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1606406642160" />
+    <state x="2518" y="286" key="MultipleFileMergeDialog" timestamp="1606406585430">
+      <screen x="1920" y="0" width="1920" height="1050" />
+    </state>
+    <state x="2518" y="286" key="MultipleFileMergeDialog/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1606406585430" />
   </component>
 </project>
