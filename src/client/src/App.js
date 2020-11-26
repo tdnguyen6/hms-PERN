@@ -15,13 +15,6 @@ import './App.css';
 
 
 function App() {
-    useEffect(() => {
-        if (sessionStorage.getItem("redirect") !== null)
-        {
-            history.push(sessionStorage.redirect);
-            sessionStorage.removeItem("redirect");
-        }
-    }, [])
   return (
     <BrowserRouter>
       <Switch>
