@@ -7,7 +7,7 @@ beforeAll(() => {
     agent = request(server);
 });
 
-describe("GET /user/login", () => {
+describe("POST /user/login", () => {
     it.each([
         ["tidu.nguyen.2000@gmail.com", 1, "Patient"],
         ["tidu@good.edu.vn", 2, "Practitioner"],
@@ -56,6 +56,11 @@ describe("GET /user/login", () => {
         expect(res.body).toEqual("");
     });
 });
+
+describe("POST /user/register", () => {
+
+});
+
 
 afterAll(() => {
     server.close();
