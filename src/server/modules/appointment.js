@@ -10,6 +10,16 @@ exports.createAppointment = async function (req, res) {
     }
 }
 
+exports.queryAllAppointments = async function(req, res) {
+    try {
+        let result = await db.query("select * from appointments")
+        res.status(200).json(result.rows)
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({listAllAppointmentsSuccessfully: false})
+    }
+} 
+
 /* return array of object of symptoms 
 for example
 [
