@@ -4,6 +4,8 @@ const session = require('express-session');
 const MemoryStore = require('memorystore')(session)
 const path = require('path');
 const auth = require('./modules/authentication');
+const disease = require('./modules/disease');
+const practitioner = require('./modules/practitioner');
 const appointment = require('./modules/appointment');
 
 app.use(express.json());
@@ -33,12 +35,18 @@ app.get('*', function(req, res){
 });
 
 // api
-app.post("/user/register", auth.redirectHome, auth.registerAccount);
-app.post("/user/login", auth.redirectHome, auth.loginAccount);
+app.post("/user/register", auth.registerAccount);
+app.post("/user/login", auth.loginAccount);
 app.post("/user/logout", auth.logout);
 app.post("/user/forget", auth.forgetPassword);
 app.post("/user/reset/:userToken", auth.resetPassword);
 app.post("/user/checkEmailExist", auth.checkEmailExist);
-app.post("/appointment/create", appointment.createAppointment);
 
+app.post("/appointment/create", appointment.createAppointment);
+app.post("/appointment/all", appointment.queryAllAppointments);
+
+app.post("/disease/findDiseases", disease.findDiseasesBySymptoms);
+app.post("/disease/all", disease.queryAllDiseases);
+
+app.post("/practitioner/all", practitioner.queryAllPractitioners)
 module.exports = app;
