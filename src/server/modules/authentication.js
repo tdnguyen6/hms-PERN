@@ -55,23 +55,23 @@ exports.loginAccount = async function (req, res) {
 
 }
 
-exports.redirectHome = function(req, res, next) {
-    if (!req.session.userID) {
-        res.redirect('/user/login')
-    } else res.redirect('/dashboard')
-}
-
-exports.redirectHomeForAdmin = function(req, res, next) {
-    req.session.userID = 1
-    req.session.isAdmin = true
-    console.log(req.session)
-    console.log(req.session.userID && req.session.isAdmin)
-    if (req.session.userID && req.session.isAdmin) {
-        console.log("req.session.userID && req.session.isAdmin is called")
-        next()
-    } else if (req.session.userID) res.redirect('/dashboard')
-    else res.redirect('/user/login')
-}
+//exports.redirectHome = function(req, res, next) {
+//    if (!req.session.userID) {
+//        res.redirect('/user/login')
+//    } else res.redirect('/dashboard')
+//}
+//
+//exports.redirectHomeForAdmin = function(req, res, next) {
+//    req.session.userID = 1
+//    req.session.isAdmin = true
+//    console.log(req.session)
+//    console.log(req.session.userID && req.session.isAdmin)
+//    if (req.session.userID && req.session.isAdmin) {
+//        console.log("req.session.userID && req.session.isAdmin is called")
+//        next()
+//    } else if (req.session.userID) res.redirect('/dashboard')
+//    else res.redirect('/user/login')
+//}
 
 exports.logout = function(req, res, next) {
     req.session.destroy(err => console.log(err))
