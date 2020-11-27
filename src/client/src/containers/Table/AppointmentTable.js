@@ -54,15 +54,33 @@ let columns = [
   { id: 'status', label: 'Status', align: 'right'}
 ]
 
-class PatientAppointmentTable extends Component {
+class AppointmentTable extends Component {
   state = {
     editAppointmentDialog: false,
-    newAppointmentDialog: false
+    newAppointmentDialog: false,
+    appointment: {
+      id: '',
+      disease: '',
+      practitioner: '',
+      room: '',
+      time: '',
+      date: '',
+      status: ''
+    }
   };
   handleRowClick = (event, row) => {
     this.setState({
-        editAppointmentDialog: row.status
-      });
+        editAppointmentDialog: row.status,
+        appointment: {
+          id: row.id,
+          disease: row.disease,
+          practitioner: row.practitioner,
+          room: row.room,
+          time: row.time,
+          date: row.date,
+          status: row.status
+        }
+    });
   };
   handleNewClick = () => {
     this.setState({
@@ -74,7 +92,6 @@ class PatientAppointmentTable extends Component {
       editAppointmentDialog: openState
     });
   }
-
   getOpenStateOfNewDialog = (openState) => {
     this.setState({
       newAppointmentDialog: openState
@@ -125,7 +142,9 @@ class PatientAppointmentTable extends Component {
           - open and close props will send data back to its child component: EditAppointmentDialog.
           - getOpenState will receive data which been sent fron its child component EditAppointmentDialog.
         */}
-        <EditAppointmentDialog open = { this.state.editAppointmentDialog } close = { this.getOpenStateOfEditDialog }/>
+        <EditAppointmentDialog open = { this.state.editAppointmentDialog }
+                               close = { this.getOpenStateOfEditDialog }
+                               { ...this.state.appointment }/>
         <NewAppointmentDialog open = { this.state.newAppointmentDialog } close = { this.getOpenStateOfNewDialog }/>
 
       </React.Fragment>
@@ -133,4 +152,4 @@ class PatientAppointmentTable extends Component {
   }
 }
 
-export default PatientAppointmentTable;
+export default AppointmentTable;

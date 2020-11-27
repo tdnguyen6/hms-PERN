@@ -3,8 +3,6 @@ import React, { Component }                     from 'react';
 import Typography                               from '@material-ui/core/Typography';
 import Button                                   from '@material-ui/core/Button';
 import TextField                                from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-
 
 import Dialog                             from '@material-ui/core/Dialog';
 import DialogActions                      from '@material-ui/core/DialogActions';
@@ -12,18 +10,7 @@ import DialogContent                      from '@material-ui/core/DialogContent'
 import DialogContentText                  from '@material-ui/core/DialogContentText';
 import DialogTitle                        from '@material-ui/core/DialogTitle';
 
-const dateAvailable = [
-  'Aug 18',
-  'Aug 20',
-  'Sep 19',
-  'Oct 17'
-];
-
-class EditAppointmentDialog extends Component {
-  state = {
-    date: '',
-    time: ''
-  }
+class EditPractitionerDialog extends Component {
   handleDialogClose = () => {
     // send close state back to parent: AppointmentTable
     this.props.close(false);
@@ -31,18 +18,12 @@ class EditAppointmentDialog extends Component {
 
   handleSave = () => {
     // send close state back to parent: AppointmentTable
-    this.handleDialogClose();
+    this.props.close(false);
   };
   handleDelete = () => {
     // send close state back to parent: AppointmentTable
-    this.handleDialogClose();
+    this.props.close(false);
   };
-
-  handleDateChange = (event) => {
-    this.setState({
-      date: event.target.value
-    })
-  }
 
   render() {
     return (
@@ -56,66 +37,30 @@ class EditAppointmentDialog extends Component {
           To subscribe to this website, please enter your email address here. We will send updates
           occasionally.
           </DialogContentText>
-          {/* Disease */}
           <TextField
             autoFocus
-            fullWidth
             variant       = "outlined"
             margin        = "normal"
-            id            = "disease"
-            label         = "Disease"
-            InputProps    = {{ readOnly: true, }}
-            value         = { this.props.disease }
+            id            = "name"
+            label         = "Email Address"
+            type          = "email"
+            fullWidth
           />
-          {/* Practitioner */}
           <TextField
             autoFocus
-            fullWidth
             variant       = "outlined"
             margin        = "normal"
-            id            = "practitioner"
-            label         = "Practitioner"
-            InputProps    = {{ readOnly: true, }}
-            value         = { this.props.practitioner }
+            id            = "name"
+            label         = "Name"
+            fullWidth
           />
-          {/* Room */}
           <TextField
             autoFocus
-            fullWidth
             variant       = "outlined"
             margin        = "normal"
-            id            = "room"
-            label         = "Room"
-            InputProps    = {{ readOnly: true, }}
-            value         = { this.props.room }
-          />
-          {/* Date */}
-          <TextField
-            autoFocus
-            fullWidth
-            select
-            variant       = "outlined"
-            margin        = "normal"
-            id            = "date"
+            id            = "name"
             label         = "Date"
-            value         = { this.props.date }
-            onChange      = { this.handleDateChange }>{
-              dateAvailable.map((option) => (
-                <MenuItem key = { option } value = { option }>
-                  { option }
-                </MenuItem>
-              ))}
-          </TextField>
-          {/* Time */}
-          <TextField
-            autoFocus
             fullWidth
-            select
-            variant       = "outlined"
-            margin        = "normal"
-            id            = "time"
-            label         = "Time"
-            value         = { this.props.time }
           />
         </DialogContent>
         <DialogActions>
@@ -131,4 +76,4 @@ class EditAppointmentDialog extends Component {
   }
 }
 
-export default EditAppointmentDialog;
+export default EditPractitionerDialog;
