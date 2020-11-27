@@ -1,15 +1,7 @@
-const express = require('express');
-const app = express();
-const session = require('express-session');
-const MemoryStore = require('memorystore')(session)
-const path = require('path');
-
-const auth = require('./modules/authentication');
-const appointment = require('./modules/appointment');
-const disease = require('./modules/disease');
-const admin = require('./modules/admin');
+const app = require('./app');
 const port = process.env.PORT || 3001;
 
+<<<<<<< HEAD
 app.use(express.json());
 app.use(session({
     cookie: { maxAge: 86400000 },
@@ -49,6 +41,8 @@ app.post("/disease/all", disease.queryAllDiseases);
 
 app.post("/practitioner/findPractitioner", disease.findDiseasesBySymptoms);
 
+=======
+>>>>>>> d79047a81ac5ca8cc418bf10f13577348c5705a1
 app.listen(port, () => {
     console.log(`Server started on port: ${port}`);
 });
