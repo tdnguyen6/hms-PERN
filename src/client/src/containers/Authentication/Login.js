@@ -74,9 +74,27 @@ class Login extends Component {
     password: {
       value: '',
     },
+    rememberMe: false,
     errorDialog: false,
     loginStatus: false
   };
+
+  componentDidMount() {
+    if (localStorage.rememberMe
+        && localStorage.email !== ''
+        && localStorage.password !== '') {
+            this.setState({
+                rememberMe: true,
+                email: {
+                  value: localStorage.email
+                },
+                password: {
+                  value: localStorage.password
+                }
+            })
+        }
+    }
+
 
   // login = async (username, password) => {
   //   let data = {
@@ -104,6 +122,11 @@ class Login extends Component {
       }
     });
   };
+  handleRememberMe = (event) => {
+    this.setState({
+      rememberMe: event.target.checked
+    });
+  }
   handleDialogClose = () => {
       this.setState({
         button: {
@@ -113,10 +136,27 @@ class Login extends Component {
       })
   };
   handleSubmit = async () => {
-      if (this.state.email.hasError) {
+    const { email, password, rememberMe } = this.state;
+      if (email.hasError) {
         this.setState({
           errorDialog: true
         });
+      }
+
+      if (!email.hasError) {
+        if (rememberMe && email.value !== '' && password.value !== '') {
+          localStorage.email = email.value;
+          localStorage.password = password.value;
+          localStorage.rememberMe = rememberMe;
+        }
+
+        if (email.value === 'admin@email.com' && password.value === 'admin') {
+          this.props.history.push("/admin");
+        } else if (email.value === 'practitioner@email.com' && password.value === 'practitioner') {
+          this.props.history.push("/practitioner");
+        } else if (email.value === 'patient@email.com' && password.value === 'patient') {
+          this.props.history.push("/patient");
+        }
       }
 
       // let res = axios.post('http://localhost:3001/user/login', {
@@ -127,8 +167,8 @@ class Login extends Component {
       // }));
       //
       // console.log(this.state.loginStatus);
-      let api_res = await login(this.state.email.value, this.state.password.value);
-      console.log(api_res);
+      // let api_res = await login(this.state.email.value, this.state.password.value);
+      // console.log(api_res);
 
       // this.setState({
       //             loginStatus: api_res['loginStatus'];
@@ -140,7 +180,7 @@ class Login extends Component {
       // )
         // this.props.history.push("/loginTest");
       // if (this.state.loginStatus) this.props.history.push("/dashboard");
-      };
+    };
 
   getOpenStateOfErrorDialog = (openState) => {
     this.setState({
@@ -190,10 +230,9 @@ class Login extends Component {
                 onChange      = { this.handlePasswordInput }
               />
               <FormControlLabel
-                control       = {
-                  <Checkbox value = "remember" color = "primary" />
-                }
+                control       = {<Checkbox value = "remember" color = "primary" />}
                 label         = "Remember me"
+                onChange      = { this.handleRememberMe }
               />
               <Button
                 fullWidth
