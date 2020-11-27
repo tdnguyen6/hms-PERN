@@ -31,6 +31,7 @@ import { validate }                       from '../../components/Services/Valida
 import { checkEmailExist }                from '../../components/API/CheckEmailExist';
 import { login }                          from "../../components/API/Login";
 
+import ErrorDialog                        from '../Dialog/ErrorDialog';
 
 const style = (theme) => ({
   root: {
@@ -72,13 +73,8 @@ class Login extends Component {
     },
     password: {
       value: '',
-      hasError: false,
-      error: ''
     },
-    button: {
-      open: false,
-      error: ''
-    },
+    errorDialog: false,
     loginStatus: false
   };
 
@@ -93,14 +89,6 @@ class Login extends Component {
 
   handleEmailInput = (event) => {
     let validateStatus = validate("email", event.target.value);
-    let existStatus = false;
-    let api = checkEmailExist(event.target.value)
-              .then(message => this.setState({
-                email: {
-                  exist: message
-                }
-              }));
-    console.log(this.state.email.exist);
     this.setState({
       email: {
           value: event.target.value,
@@ -113,8 +101,6 @@ class Login extends Component {
     this.setState({
       password: {
         value: event.target.value,
-        hasError: false,
-        error: ''
       }
     });
   };
@@ -127,19 +113,9 @@ class Login extends Component {
       })
   };
   handleSubmit = async () => {
-      const dialogStatus = {
-        dialogMessage: '',
-        dialogHasError: false
-      };
-
       if (this.state.email.hasError) {
-        dialogStatus.dialogHasError = true;
-        dialogStatus.dialogMessage = 'The given email is invalid. Please input the valid email.';
         this.setState({
-          button: {
-            open: dialogStatus.dialogHasError,
-            error: dialogStatus.dialogMessage
-          }
+          errorDialog: true
         });
       }
 
@@ -166,6 +142,11 @@ class Login extends Component {
       // if (this.state.loginStatus) this.props.history.push("/dashboard");
       };
 
+  getOpenStateOfErrorDialog = (openState) => {
+    this.setState({
+      errorDialog: openState
+    });
+  };
 
   render() {
     const { classes } = this.props;
@@ -188,7 +169,6 @@ class Login extends Component {
                 label         = "Email Address"
                 name          = "email"
                 autoComplete  = "email"
-                autoFocus
                 required
                 fullWidth
                 value         = { this.state.email.value }
@@ -207,8 +187,6 @@ class Login extends Component {
                 required
                 fullWidth
                 value         = { this.state.password.value }
-                error         = { this.state.password.hasError }
-                helperText    = { this.state.password.error }
                 onChange      = { this.handlePasswordInput }
               />
               <FormControlLabel
@@ -225,21 +203,9 @@ class Login extends Component {
                 onClick       = { this.handleSubmit }>
                 Login
               </Button>
-              <Dialog
-                open              = { this.state.button.open }
-                onClose           = { this.handleDialogClose }
-                aria-describedby  = "alert-dialog-description">
-                <DialogContent>
-                  <DialogContentText id = "alert-dialog-description">
-                    { this.state.button.error }
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick = { this.handleDialogClose } color = "primary">
-                    Got it!
-                  </Button>
-                </DialogActions>
-              </Dialog>
+              <ErrorDialog open = { this.state.errorDialog }
+                           close = { this.getOpenStateOfErrorDialog }
+                           error = { this.state.email.error } />
               <Grid container>
                 <Grid item xs>
                   <Link component = { RouteLink } to = "/forgetPassword">

@@ -7,5 +7,5 @@ export const login = async (username, password) => {
   }
 
   let res = await axios.post('http://localhost:3001/user/login', data);
-  return res.data.loginStatus;
+  return res;
 }

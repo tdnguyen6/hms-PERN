@@ -39,7 +39,6 @@ app.post("/user/logout", auth.logout);
 app.post("/user/forget", auth.forgetPassword);
 app.post("/user/reset/:userToken", auth.resetPassword);
 app.post("/user/checkEmailExist", auth.checkEmailExist);
-
 app.post("/appointment/create", appointment.createAppointment);
 
 module.exports = app;

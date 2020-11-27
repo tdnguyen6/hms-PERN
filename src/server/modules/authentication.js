@@ -9,7 +9,6 @@ exports.checkEmailExist = async function (req, res) {
     if (user.rows.length == 1) res.status(200).json({emailStatus: true})
     else res.status(500).json({emailStatus: false})
 }
-
 exports.registerAccount = async function (req, res) {
     try {
         const result = await db.query(`INSERT INTO accounts (name, email, password, phone) VALUES($1,$2,$3,$4)`, [req.body.name, req.body.email, do_hash(req.body.password), req.body.phone]);
@@ -19,14 +18,13 @@ exports.registerAccount = async function (req, res) {
         console.log(error);
     }
 }
-
-/* this will return json object with format
-{
-    loginStatus: true | false
-    role: Patient | Practitioner | Admin
-}
-*/
 exports.loginAccount = async function (req, res) {
+    /* this will return json object with format
+    {
+        loginStatus: true | false
+        role: Patient | Practitioner | Admin
+    }
+    */
     try {
         const result = await db.query(`SELECT * FROM accounts where email = $1 and password = $2`, [req.body.email, do_hash(req.body.password)]);
         if (result.rows.length == 1) {
@@ -42,8 +40,8 @@ exports.loginAccount = async function (req, res) {
             req.session.userID = result.rows[0].id
             req.session.isAdmin = (position === 'Admin')
             console.log(req.session)
-            
-            
+
+
             res.status(200).json({
                 loginStatus: true,
                 role: position
@@ -54,13 +52,11 @@ exports.loginAccount = async function (req, res) {
     }
 
 }
-
 exports.redirectHome = function(req, res, next) {
     if (!req.session.userID) {
         res.redirect('/user/login')
     } else res.redirect('/dashboard')
 }
-
 exports.redirectHomeForAdmin = function(req, res, next) {
     req.session.userID = 1
     req.session.isAdmin = true
@@ -72,13 +68,11 @@ exports.redirectHomeForAdmin = function(req, res, next) {
     } else if (req.session.userID) res.redirect('/dashboard')
     else res.redirect('/user/login')
 }
-
 exports.logout = function(req, res, next) {
     req.session.destroy(err => console.log(err))
     res.status(200).json({logOutStatus: true}).redirect('/user/login')
 
 }
-
 exports.forgetPassword = async function (req, res) {
     let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
     if (user.rows.length < 1) return res.status(500).json({userExist: false})
@@ -135,7 +129,6 @@ exports.forgetPassword = async function (req, res) {
             }
         });
 }
-
 exports.resetPassword = async function (req, res) {
     jwt.verify(req.params.userToken, 'Yua Mikami', {audience: 'hms-user', issuer: 'hms'}, function(err, decoded) {
         if (err) {
@@ -143,8 +136,8 @@ exports.resetPassword = async function (req, res) {
             res.status(500).json({resetPasswordSuccessful: false})
         }
     })
-    
-    
+
+
     const password = req.body.newPassword
     console.log(jwtDecode(req.params.userToken))
     const email = jwtDecode(req.params.userToken).data.email
@@ -159,4 +152,3 @@ exports.resetPassword = async function (req, res) {
         res.status(500).json({resetPasswordSuccessful: false})
     }
 }
-
