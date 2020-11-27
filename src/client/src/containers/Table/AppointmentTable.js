@@ -56,34 +56,28 @@ let columns = [
 
 class PatientAppointmentTable extends Component {
   state = {
-    editDialog: false,
-    newDialog: false
+    editAppointmentDialog: false,
+    newAppointmentDialog: false
   };
   handleRowClick = (event, row) => {
-    if (row.status) {
-      this.setState({
-        editDialog: true
+    this.setState({
+        editAppointmentDialog: row.status
       });
-    } else {
-      this.setState({
-        editDialog: false
-      })
-    }
   };
   handleNewClick = () => {
     this.setState({
-      newDialog: true
+      newAppointmentDialog: true
     });
   };
   getOpenStateOfEditDialog = (openState) => {
     this.setState({
-      editDialog: openState
+      editAppointmentDialog: openState
     });
   }
 
   getOpenStateOfNewDialog = (openState) => {
     this.setState({
-      newDialog: openState
+      newAppointmentDialog: openState
     });
   }
   render() {
@@ -131,8 +125,8 @@ class PatientAppointmentTable extends Component {
           - open and close props will send data back to its child component: EditAppointmentDialog.
           - getOpenState will receive data which been sent fron its child component EditAppointmentDialog.
         */}
-        <EditAppointmentDialog open = { this.state.editDialog } close = { this.getOpenStateOfEditDialog }/>
-        <NewAppointmentDialog open = { this.state.newDialog } close = { this.getOpenStateOfNewDialog }/>
+        <EditAppointmentDialog open = { this.state.editAppointmentDialog } close = { this.getOpenStateOfEditDialog }/>
+        <NewAppointmentDialog open = { this.state.newAppointmentDialog } close = { this.getOpenStateOfNewDialog }/>
 
       </React.Fragment>
     );
