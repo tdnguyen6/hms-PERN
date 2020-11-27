@@ -4,6 +4,8 @@ const session = require('express-session');
 const MemoryStore = require('memorystore')(session)
 const path = require('path');
 const auth = require('./modules/authentication');
+const disease = require('./modules/disease');
+const practitioner = require('./modules/practitioner');
 const appointment = require('./modules/appointment');
 
 app.use(express.json());
@@ -41,4 +43,8 @@ app.post("/user/reset/:userToken", auth.resetPassword);
 app.post("/user/checkEmailExist", auth.checkEmailExist);
 app.post("/appointment/create", appointment.createAppointment);
 
+app.post("/disease/findDiseases", disease.findDiseasesBySymptoms);
+app.post("/disease/all", disease.queryAllDiseases);
+
+app.post("/practitioner/all", practitioner.queryAllPractitioners)
 module.exports = app;
