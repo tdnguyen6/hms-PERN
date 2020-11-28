@@ -11,6 +11,10 @@ import DialogContentText                  from '@material-ui/core/DialogContentT
 import DialogTitle                        from '@material-ui/core/DialogTitle';
 
 class NewAppointmentDialog extends Component {
+  state: {
+    symptomsDialog: false
+  };
+
   handleDialogClose = () => {
     // send close state back to parent: AppointmentTable
     this.props.close(false);

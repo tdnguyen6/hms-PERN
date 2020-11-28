@@ -23,6 +23,7 @@ import { Completed, Upcomming }           from '../../components/Services/Appoin
 
 import EditAppointmentDialog              from '../Dialog/EditAppointmentDialog';
 import NewAppointmentDialog              from '../Dialog/EditAppointmentDialog';
+import YesNoDialog                       from "../Dialog/YesNoDialog";
 
 function createData(id, disease, practitioner, room, time, date, status) {
   return { id, disease, practitioner, room, time, date, status };
@@ -58,6 +59,8 @@ class AppointmentTable extends Component {
   state = {
     editAppointmentDialog: false,
     newAppointmentDialog: false,
+    yesNoDialog: false,
+    diseaseKnown: false,
     appointment: {
       id: '',
       disease: '',
@@ -84,7 +87,7 @@ class AppointmentTable extends Component {
   };
   handleNewClick = () => {
     this.setState({
-      newAppointmentDialog: true
+      yesNoDialog: true
     });
   };
   getOpenStateOfEditDialog = (openState) => {
@@ -96,6 +99,17 @@ class AppointmentTable extends Component {
     this.setState({
       newAppointmentDialog: openState
     });
+  }
+  getOpenStateOfYesNoDialog = (openState) => {
+    this.setState({
+      yesNoDialog: openState
+    });
+  }
+  getDiseaseKnown = (known) => {
+    this.setState({
+      diseaseKnown: known
+    });
+    console.log()
   }
   render() {
     return (
@@ -142,6 +156,10 @@ class AppointmentTable extends Component {
           - open and close props will send data back to its child component: EditAppointmentDialog.
           - getOpenState will receive data which been sent fron its child component EditAppointmentDialog.
         */}
+        <YesNoDialog open = { this.state.yesNoDialog }
+                     close =  { this.getOpenStateOfYesNoDialog }
+                     disease = { this.getDiseaseKnown }
+                     content = "Do you know your disease yet?" />
         <EditAppointmentDialog open = { this.state.editAppointmentDialog }
                                close = { this.getOpenStateOfEditDialog }
                                { ...this.state.appointment }/>
