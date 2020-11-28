@@ -46,7 +46,7 @@ exports.loginAccount = async function (req, res) {
                 loginStatus: true,
                 role: position
             });
-        } else res.status(500).json({loginStatus: false});
+        } else res.status(401).json({loginStatus: false});
     } catch (error) {
         console.log(error);
     }

@@ -5,6 +5,7 @@ const MemoryStore = require('memorystore')(session)
 const path = require('path');
 const auth = require('./modules/authentication');
 const disease = require('./modules/disease');
+const symptom = require('./modules/symptom');
 const practitioner = require('./modules/practitioner');
 const appointment = require('./modules/appointment');
 
@@ -44,6 +45,8 @@ app.post("/user/checkEmailExist", auth.checkEmailExist);
 
 app.post("/appointment/create", appointment.createAppointment);
 app.post("/appointment/all", appointment.queryAllAppointments);
+
+app.post("/symptom/all", symptom.queryAllSymptoms);
 
 app.post("/disease/findDiseases", disease.findDiseasesBySymptoms);
 app.post("/disease/all", disease.queryAllDiseases);
