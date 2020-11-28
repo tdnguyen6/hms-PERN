@@ -24,6 +24,7 @@ import { Completed, Upcomming }           from '../../components/Services/Appoin
 import EditAppointmentDialog              from '../Dialog/EditAppointmentDialog';
 import NewAppointmentDialog              from '../Dialog/EditAppointmentDialog';
 import YesNoDialog                       from "../Dialog/YesNoDialog";
+import SymptomsDialog                    from "../Dialog/SymptomsDialog";
 
 function createData(id, disease, practitioner, room, time, date, status) {
   return { id, disease, practitioner, room, time, date, status };
@@ -60,6 +61,7 @@ class AppointmentTable extends Component {
     editAppointmentDialog: false,
     newAppointmentDialog: false,
     yesNoDialog: false,
+    symptomsDialog: false,
     diseaseKnown: false,
     appointment: {
       id: '',
@@ -105,11 +107,23 @@ class AppointmentTable extends Component {
       yesNoDialog: openState
     });
   }
+  getOpenStateOfSymptomsDialog = (openState) => {
+    this.setState({
+      symptomsDialog: openState
+    });
+  }
   getDiseaseKnown = (known) => {
     this.setState({
-      diseaseKnown: known
+      diseaseKnown: known,
+      symptomsDialog: known
     });
-    console.log()
+  }
+  getDisease = (known) => {
+    this.setState({
+      appointment: {
+        disease: known
+      }
+    })
   }
   render() {
     return (
@@ -160,6 +174,9 @@ class AppointmentTable extends Component {
                      close =  { this.getOpenStateOfYesNoDialog }
                      disease = { this.getDiseaseKnown }
                      content = "Do you know your disease yet?" />
+        <SymptomsDialog open = { this.state.symptomsDialog }
+                        close = { this.getOpenStateOfSymptomsDialog }
+                        disease = { this.getDisease } />
         <EditAppointmentDialog open = { this.state.editAppointmentDialog }
                                close = { this.getOpenStateOfEditDialog }
                                { ...this.state.appointment }/>

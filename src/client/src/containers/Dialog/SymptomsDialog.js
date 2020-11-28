@@ -15,7 +15,7 @@ In NewAppointmentDialog, when user click disease textfield, this dialog is trigg
 This query all symptoms (API1) and displays as list of checkbox,
 This also request disease prediction after sending all checked symptoms (API2)
  */
-class ErrorDialog extends Component {
+class SymptomsDialog extends Component {
     handleDialogClose = () => {
         // send close state back to parent: AppointmentTable
         this.props.close(false);
@@ -30,7 +30,7 @@ class ErrorDialog extends Component {
                 <DialogContent>
                     <DialogTitle id="form-dialog-title">Error</DialogTitle>
                     <DialogContentText id = "alert-dialog-description">
-                        { this.props.error }
+                        Hello Hello
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -43,4 +43,4 @@ class ErrorDialog extends Component {
     }
 }
 
-export default ErrorDialog;
+export default SymptomsDialog;
