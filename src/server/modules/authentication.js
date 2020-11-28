@@ -70,8 +70,7 @@ exports.loginAccount = async function (req, res) {
 // }
 exports.logout = function(req, res, next) {
     req.session.destroy(err => console.log(err))
-    res.status(200).json({logOutStatus: true}).redirect('/user/login')
-
+    res.status(200).json({logOutStatus: true})
 }
 exports.forgetPassword = async function (req, res) {
     let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
