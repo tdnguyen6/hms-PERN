@@ -54,36 +54,47 @@ let columns = [
   { id: 'status', label: 'Status', align: 'right'}
 ]
 
-class PatientAppointmentTable extends Component {
+class AppointmentTable extends Component {
   state = {
-    editDialog: false,
-    newDialog: false
+    editAppointmentDialog: false,
+    newAppointmentDialog: false,
+    appointment: {
+      id: '',
+      disease: '',
+      practitioner: '',
+      room: '',
+      time: '',
+      date: '',
+      status: ''
+    }
   };
   handleRowClick = (event, row) => {
-    if (row.status) {
-      this.setState({
-        editDialog: true
-      });
-    } else {
-      this.setState({
-        editDialog: false
-      })
-    }
+    this.setState({
+        editAppointmentDialog: row.status,
+        appointment: {
+          id: row.id,
+          disease: row.disease,
+          practitioner: row.practitioner,
+          room: row.room,
+          time: row.time,
+          date: row.date,
+          status: row.status
+        }
+    });
   };
   handleNewClick = () => {
     this.setState({
-      newDialog: true
+      newAppointmentDialog: true
     });
   };
   getOpenStateOfEditDialog = (openState) => {
     this.setState({
-      editDialog: openState
+      editAppointmentDialog: openState
     });
   }
-
   getOpenStateOfNewDialog = (openState) => {
     this.setState({
-      newDialog: openState
+      newAppointmentDialog: openState
     });
   }
   render() {
@@ -131,12 +142,14 @@ class PatientAppointmentTable extends Component {
           - open and close props will send data back to its child component: EditAppointmentDialog.
           - getOpenState will receive data which been sent fron its child component EditAppointmentDialog.
         */}
-        <EditAppointmentDialog open = { this.state.editDialog } close = { this.getOpenStateOfEditDialog }/>
-        <NewAppointmentDialog open = { this.state.newDialog } close = { this.getOpenStateOfNewDialog }/>
+        <EditAppointmentDialog open = { this.state.editAppointmentDialog }
+                               close = { this.getOpenStateOfEditDialog }
+                               { ...this.state.appointment }/>
+        <NewAppointmentDialog open = { this.state.newAppointmentDialog } close = { this.getOpenStateOfNewDialog }/>
 
       </React.Fragment>
     );
   }
 }
 
-export default PatientAppointmentTable;
+export default AppointmentTable;
