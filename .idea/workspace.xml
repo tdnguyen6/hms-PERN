@@ -19,10 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/SymptomsDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/SymptomsDialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/YesNoDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/YesNoDialog.js" afterDir="false" />
+    <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="add yes/no dialog">
       <change beforePath="$PROJECT_DIR$/src/client/src/containers/Table/AppointmentTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Table/AppointmentTable.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -90,19 +87,36 @@
       <option name="project" value="LOCAL" />
       <updated>1606406643270</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add yes/no dialog">
+      <created>1606554126527</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1606554126527</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Merge branch 'authentication-page' of https://github.com/tidunguyen/hms-PERN into authentication-page&#10;&#10;# Conflicts:&#10;#&#9;src/server/modules/authentication.js" />
     <MESSAGE value="something something" />
-    <option name="LAST_COMMIT_MESSAGE" value="something something" />
+    <MESSAGE value="add yes/no dialog" />
+    <option name="LAST_COMMIT_MESSAGE" value="add yes/no dialog" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2339" y="61" key="CommitChangelistDialog2" timestamp="1606406642160">

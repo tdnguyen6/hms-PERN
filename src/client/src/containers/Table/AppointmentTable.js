@@ -118,10 +118,10 @@ class AppointmentTable extends Component {
       symptomsDialog: known
     });
   }
-  getDisease = (known) => {
+  getDisease = (disease) => {
     this.setState({
       appointment: {
-        disease: known
+        disease: disease
       }
     })
   }
