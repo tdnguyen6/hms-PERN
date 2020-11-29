@@ -46,7 +46,6 @@ let rows = [
   createData('14', 'A', 'A', 'A1.104', '18:00', 'Aug 18', true),
   createData('15', 'A', 'A', 'A1.104', '18:00', 'Aug 18', true)
 ];
-
 let columns = [
   { id: 'disease', label: 'Disease' },
   { id: 'practitioner', label: 'Practitioner' },
@@ -114,8 +113,8 @@ class AppointmentTable extends Component {
   }
   getDiseaseKnown = (known) => {
     this.setState({
-      diseaseKnown: known,
-      symptomsDialog: known
+      diseaseKnown: !known,
+      symptomsDialog: !known
     });
   }
   getDisease = (disease) => {
@@ -168,7 +167,7 @@ class AppointmentTable extends Component {
         </TableContainer>
         {/*
           - open and close props will send data back to its child component: EditAppointmentDialog.
-          - getOpenState will receive data which been sent fron its child component EditAppointmentDialog.
+          - getOpenState will receive data which been sent from its child component EditAppointmentDialog.
         */}
         <YesNoDialog open = { this.state.yesNoDialog }
                      close =  { this.getOpenStateOfYesNoDialog }
@@ -181,7 +180,6 @@ class AppointmentTable extends Component {
                                close = { this.getOpenStateOfEditDialog }
                                { ...this.state.appointment }/>
         <NewAppointmentDialog open = { this.state.newAppointmentDialog } close = { this.getOpenStateOfNewDialog }/>
-
       </React.Fragment>
     );
   }

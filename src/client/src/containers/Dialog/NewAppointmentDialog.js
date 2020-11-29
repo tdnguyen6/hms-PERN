@@ -72,4 +72,4 @@ class NewAppointmentDialog extends Component {
   }
 }
 
-export default EditAppointmentDialog;
+export default NewAppointmentDialog;

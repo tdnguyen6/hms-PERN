@@ -19,10 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="modify some syntax">
+    <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="finish yesNoDialog and symptomsDialog">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/SymptomsDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/SymptomsDialog.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/NewAppointmentDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/NewAppointmentDialog.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/YesNoDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/YesNoDialog.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Table/AppointmentTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Table/AppointmentTable.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +83,7 @@
       <workItem from="1606412286208" duration="692000" />
       <workItem from="1606413024505" duration="118000" />
       <workItem from="1606464762649" duration="125000" />
-      <workItem from="1606636188223" duration="11208000" />
+      <workItem from="1606636188223" duration="11681000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'authentication-page' of https://github.com/tidunguyen/hms-PERN into authentication-page&#10;&#10;# Conflicts:&#10;#&#9;src/server/modules/authentication.js">
       <created>1606406643270</created>
@@ -119,7 +120,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606648237831</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="finish yesNoDialog and symptomsDialog">
+      <created>1606648456181</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1606648456181</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -144,7 +152,8 @@
     <MESSAGE value="modify appointment table" />
     <MESSAGE value="add symptoms dialog" />
     <MESSAGE value="modify some syntax" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify some syntax" />
+    <MESSAGE value="finish yesNoDialog and symptomsDialog" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish yesNoDialog and symptomsDialog" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2339" y="61" key="CommitChangelistDialog2" timestamp="1606406642160">
@@ -155,10 +164,10 @@
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state x="2518" y="286" key="MultipleFileMergeDialog/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1606406585430" />
-    <state x="320" y="187" key="Vcs.Push.Dialog.v2" timestamp="1606648120465">
+    <state x="320" y="187" key="Vcs.Push.Dialog.v2" timestamp="1606648459729">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="320" y="187" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1606648120465" />
+    <state x="320" y="187" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1606648459729" />
     <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606648131599">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

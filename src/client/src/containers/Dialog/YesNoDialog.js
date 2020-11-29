@@ -19,7 +19,7 @@ class YesNoDialog extends Component {
     handleYes = () => {
         // send close state back to parent: AppointmentTable
         this.props.disease(true);
-        this.props.disease(false);
+        this.props.close(false);
     };
 
     handleNo = () => {
