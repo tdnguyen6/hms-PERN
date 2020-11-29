@@ -335,6 +335,7 @@ class SymptomsDialog extends Component {
                               symptoms.slice(2 * splitter)];
         return (
             <Dialog
+                maxWidth={"xl"}
                 open              = { this.props.open }
                 onClose           = { this.handleDialogClose }
                 aria-describedby  = "alert-dialog-description">
@@ -343,7 +344,7 @@ class SymptomsDialog extends Component {
                     <DialogContentText id = "alert-dialog-description">
                         What's your symptoms babe?
                     </DialogContentText>
-                    <Grid container spacing = {12}>{
+                    <Grid container fullWidth spacing = {12}>{
                         symptomColumns.map(symptomColumn => {
                             return (<Grid item xs>{
                                 symptomColumn.map((symptom) => {
@@ -352,7 +353,7 @@ class SymptomsDialog extends Component {
                                                 name = { symptom.name }
                                                 id = { symptom.id }
                                                 onChange = { this.handleCheckBoxChange }
-                                                color = "primary" />}
+                                                color = "primary"/>}
                                             label = { symptom.name } />);
                                     }
                                 )
