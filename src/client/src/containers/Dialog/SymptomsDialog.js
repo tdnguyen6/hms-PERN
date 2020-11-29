@@ -9,6 +9,7 @@ import DialogActions                      from '@material-ui/core/DialogActions'
 import DialogContent                      from '@material-ui/core/DialogContent';
 import DialogContentText                  from '@material-ui/core/DialogContentText';
 import DialogTitle                        from '@material-ui/core/DialogTitle';
+import Button from "@material-ui/core/Button";
 
 let symptoms = [
     {
@@ -319,32 +320,10 @@ class SymptomsDialog extends Component {
         this.setState({
             listOfSymptom: tmpListOfSymptom
         });
+    }
 
-        // const newSymptoms = this.state.symptoms.map((symptom) => {
-        //     if (symptom.name === event.target.name) {
-        //         return symptom.checked = event.target.checked;
-        //     } else {
-        //         return symptom.checked = event.target.checked;
-        //     }
-        // });
-        // this.setState({
-        //     symptoms[event.target.id - 1]: {
-        //
-        //     }
-        // });
-        // this.setState(state => {
-        //     const newSymptoms = state.symptoms.map((symptom) => {
-        //         if (symptom.name === event.target.name) {
-        //             return symptom.checked = event.target.checked;
-        //         } else {
-        //             return symptom.checked = event.target.checked;
-        //         }
-        //     });
-        //
-        //     return {
-        //         newSymptoms
-        //     };
-        // });
+    handleSave = () => {
+        this.props.close(false);
     }
 
 
@@ -383,7 +362,9 @@ class SymptomsDialog extends Component {
                     </Grid>
                 </DialogContent>
                 <DialogActions>
-
+                    <Button onClick = { this.handleSave } color = "primary" align = "right">
+                        Save
+                    </Button>
                 </DialogActions>
             </Dialog>
         );

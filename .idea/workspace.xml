@@ -19,8 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="add symptoms dialog">
+    <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="modify some syntax">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/SymptomsDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/SymptomsDialog.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/YesNoDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/YesNoDialog.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +82,7 @@
       <workItem from="1606412286208" duration="692000" />
       <workItem from="1606413024505" duration="118000" />
       <workItem from="1606464762649" duration="125000" />
-      <workItem from="1606636188223" duration="10985000" />
+      <workItem from="1606636188223" duration="11208000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'authentication-page' of https://github.com/tidunguyen/hms-PERN into authentication-page&#10;&#10;# Conflicts:&#10;#&#9;src/server/modules/authentication.js">
       <created>1606406643270</created>
@@ -110,7 +112,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606648109495</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="modify some syntax">
+      <created>1606648237831</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1606648237831</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,7 +143,8 @@
     <MESSAGE value="add yes/no dialog" />
     <MESSAGE value="modify appointment table" />
     <MESSAGE value="add symptoms dialog" />
-    <option name="LAST_COMMIT_MESSAGE" value="add symptoms dialog" />
+    <MESSAGE value="modify some syntax" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify some syntax" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2339" y="61" key="CommitChangelistDialog2" timestamp="1606406642160">
