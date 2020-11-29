@@ -301,7 +301,7 @@ This also request disease prediction after sending all checked symptoms (API2)
 class SymptomsDialog extends Component {
     state = {
         listOfSymptom: ''
-    }
+    };
     handleDialogClose = () => {
         // send close state back to parent: AppointmentTable
         this.props.close(false);
