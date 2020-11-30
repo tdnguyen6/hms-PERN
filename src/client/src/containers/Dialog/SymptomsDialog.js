@@ -326,8 +326,6 @@ class SymptomsDialog extends Component {
         this.props.close(false);
     }
 
-
-
     render() {
         let splitter = Math.ceil(symptoms.length / 3);
         let symptomColumns = [symptoms.slice(0, splitter),
@@ -349,12 +347,13 @@ class SymptomsDialog extends Component {
                             return (<Grid item xs>{
                                 symptomColumn.map((symptom) => {
                                    return (<FormControlLabel
-                                            control = {<Checkbox
+                                            control = { <Checkbox
                                                 name = { symptom.name }
                                                 id = { symptom.id }
                                                 onChange = { this.handleCheckBoxChange }
-                                                color = "primary"/>}
-                                            label = { symptom.name } />);
+                                                color = "primary"/> }
+                                            label = { symptom.name }
+                                            style = {{ display: "inline-block", width: "100%" }}/>);
                                     }
                                 )
                             }</Grid>);
