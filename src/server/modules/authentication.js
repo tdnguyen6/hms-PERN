@@ -35,13 +35,22 @@ exports.loginAccount = async function (req, res) {
             if (isPatient) position = "Patient"
             else if (isPractitioner) position = "Practitioner"
             else position = "Admin"
-            // console.log(position)
+            //console.log(position)
             // assign session to user
             req.session.userID = result.rows[0].id
             req.session.isAdmin = (position === 'Admin')
-            // console.log(req.session)
-
-            await db.query(`UPDATE accounts SET last_login = $1 WHERE id = $2`, [(new Date()).toISOString(), result.rows[0].id]);
+            console.log(req.session)
+            
+            // update user last_login
+            // if system fail to update user last_login, server will response error in the server
+            try {
+                await db.query(`UPDATE accounts SET last_login = $1 WHERE id = $2`, [(new Date()), result.rows[0].id]);
+            } catch (err) {
+                console.log(err)
+                res.status(500).json({loginStatus: false})
+                return
+            }
+            
 
             res.status(200).json({
                 loginStatus: true,
@@ -53,22 +62,7 @@ exports.loginAccount = async function (req, res) {
     }
 
 }
-// exports.redirectHome = function(req, res, next) {
-//     if (!req.session.userID) {
-//         res.redirect('/user/login')
-//     } else res.redirect('/dashboard')
-// }
-// exports.redirectHomeForAdmin = function(req, res, next) {
-//     req.session.userID = 1
-//     req.session.isAdmin = true
-//     console.log(req.session)
-//     console.log(req.session.userID && req.session.isAdmin)
-//     if (req.session.userID && req.session.isAdmin) {
-//         console.log("req.session.userID && req.session.isAdmin is called")
-//         next()
-//     } else if (req.session.userID) res.redirect('/dashboard')
-//     else res.redirect('/user/login')
-// }
+
 exports.logout = function(req, res, next) {
     req.session.destroy(err => console.log(err))
     res.status(200).json({logOutStatus: true})

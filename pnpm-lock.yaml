@@ -12,6 +12,7 @@ dependencies:
 devDependencies:
   '@testing-library/react': 11.2.2_react-dom@17.0.1+react@17.0.1
   jest: 26.6.0
+  mockdate: 3.0.2
   nodemon: 2.0.6
   react: 17.0.1
   react-dom: 17.0.1_react@17.0.1
@@ -3601,6 +3602,10 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-WRoDn//mXBiJ1H40rqa3vH0toePwSsGb45iInWlTySa+Uu4k3tYUSxa2v1KqAiLtvlrSzaExqS1gtk96A9zvEA==
+  /mockdate/3.0.2:
+    dev: true
+    resolution:
+      integrity: sha512-ldfYSUW1ocqSHGTK6rrODUiqAFPGAg0xaHqYJ5tvj1hQyFsjuHpuWgWFTZWwDVlzougN/s2/mhDr8r5nY5xDpA==
   /ms/2.0.0:
     resolution:
       integrity: sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=
@@ -5430,6 +5435,7 @@ specifiers:
   jwt-decode: ^3.1.2
   mailgen: ^2.0.14
   memorystore: ^1.6.4
+  mockdate: ^3.0.2
   nodemailer: ^6.4.16
   nodemon: ^2.0.6
   pg: ^8.5.1
