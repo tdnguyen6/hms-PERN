@@ -19,9 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="fix bug">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+    <list default="true" id="153a4649-8ac9-4a44-ba23-8f64e8444d1c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/modules/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/modules/authentication.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/server/authentication.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/authentication.test.js" afterDir="false" />
     </list>
@@ -210,5 +211,9 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="624" y="253" key="run.anything.popup/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606711522281" />
+    <state x="346" y="64" width="672" height="678" key="search.everywhere.popup" timestamp="1606723646573">
+      <screen x="0" y="0" width="1366" height="743" />
+    </state>
+    <state x="346" y="64" width="672" height="678" key="search.everywhere.popup/0.0.1366.743@0.0.1366.743" timestamp="1606723646573" />
   </component>
 </project>
