@@ -305,11 +305,11 @@ class SymptomsDialog extends Component {
     };
     handleDialogClose = () => {
         // send close state back to parent: AppointmentTable
-        this.props.close(false);
-        console.log(this.state.listOfSymptom);
-        this.setState({
-            listOfSymptom: ''
-        });
+        this.props.close(false, "symptoms");
+    }
+
+    handleDiseasePredict = () => {
+        this.props.disease('norovirus');
     }
 
     handleCheckBoxChange = (event) => {
@@ -321,9 +321,12 @@ class SymptomsDialog extends Component {
             listOfSymptom: tmpListOfSymptom
         });
     }
-
     handleSave = () => {
-        this.props.close(false);
+        this.setState({
+            listOfSymptom: ''
+        });
+        this.handleDiseasePredict();
+        this.handleDialogClose();
     }
 
     render() {

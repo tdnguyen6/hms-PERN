@@ -18,21 +18,28 @@ const dateAvailable = [
   'Sep 19',
   'Oct 17'
 ];
+const timeAvailable = [
+  '18:00',
+  '17:00',
+  '7:00',
+  '13:00'
+];
 
 class EditAppointmentDialog extends Component {
   state = {
-    date: '',
-    time: ''
+    date: this.props.date,
+    time: this.props.time
   }
   handleDialogClose = () => {
     // send close state back to parent: AppointmentTable
-    this.props.close(false);
+    this.props.close(false, "editAppointment");
   }
 
   handleSave = () => {
     // send close state back to parent: AppointmentTable
     this.handleDialogClose();
   };
+
   handleDelete = () => {
     // send close state back to parent: AppointmentTable
     this.handleDialogClose();
@@ -41,6 +48,11 @@ class EditAppointmentDialog extends Component {
   handleDateChange = (event) => {
     this.setState({
       date: event.target.value
+    })
+  }
+  handleTimeChange = (event) => {
+    this.setState({
+      time: event.target.value
     })
   }
 
@@ -98,7 +110,7 @@ class EditAppointmentDialog extends Component {
             margin        = "normal"
             id            = "date"
             label         = "Date"
-            value         = { this.props.date }
+            value         = { this.state.date }
             onChange      = { this.handleDateChange }>{
               dateAvailable.map((option) => (
                 <MenuItem key = { option } value = { option }>
@@ -115,8 +127,14 @@ class EditAppointmentDialog extends Component {
             margin        = "normal"
             id            = "time"
             label         = "Time"
-            value         = { this.props.time }
-          />
+            value         = { this.state.time }
+            onChange      = { this.handleTimeChange }>{
+            timeAvailable.map((option) => (
+                <MenuItem key = { option } value = { option }>
+                  { option }
+                </MenuItem>
+            ))}
+          </TextField>
         </DialogContent>
         <DialogActions>
           <Button onClick = { this.handleSave } color = "primary" align = "right">

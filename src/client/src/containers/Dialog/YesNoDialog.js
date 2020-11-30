@@ -13,19 +13,19 @@ import DialogTitle                        from '@material-ui/core/DialogTitle';
 class YesNoDialog extends Component {
     handleDialogClose = () => {
         // send close state back to parent: AppointmentTable
-        this.props.close(false);
+        this.props.close(false, "yesNo");
     }
 
     handleYes = () => {
         // send close state back to parent: AppointmentTable
         this.props.disease(true);
-        this.props.close(false);
+        this.handleDialogClose()
     };
 
     handleNo = () => {
         // send close state back to parent: AppointmentTable
         this.props.disease(false);
-        this.props.close(false);
+        this.handleDialogClose();
     };
 
     render() {

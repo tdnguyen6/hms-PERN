@@ -22,7 +22,7 @@ import DialogTitle                        from '@material-ui/core/DialogTitle';
 import { Completed, Upcomming }           from '../../components/Services/AppointmentStatus';
 
 import EditAppointmentDialog              from '../Dialog/EditAppointmentDialog';
-import NewAppointmentDialog              from '../Dialog/EditAppointmentDialog';
+import NewAppointmentDialog              from '../Dialog/NewAppointmentDialog';
 import YesNoDialog                       from "../Dialog/YesNoDialog";
 import SymptomsDialog                    from "../Dialog/SymptomsDialog";
 
@@ -58,10 +58,10 @@ let columns = [
 class AppointmentTable extends Component {
   state = {
     editAppointmentDialog: false,
-    newAppointmentDialog: false,
     yesNoDialog: false,
+    newAppointmentDialog: false,
     symptomsDialog: false,
-    diseaseKnown: false,
+    diseasePredicted: '',
     appointment: {
       id: '',
       disease: '',
@@ -88,41 +88,65 @@ class AppointmentTable extends Component {
   };
   handleNewClick = () => {
     this.setState({
-      yesNoDialog: true
+      yesNoDialog: true,
+      newAppointmentDialog: false,
+      symptomsDialog: false,
+      diseasePredicted: '',
+      appointment: {
+        id: '',
+        disease: '',
+        practitioner: '',
+        room: '',
+        time: '',
+        date: '',
+        status: ''
+      }
     });
   };
-  getOpenStateOfEditDialog = (openState) => {
-    this.setState({
-      editAppointmentDialog: openState
-    });
-  }
-  getOpenStateOfNewDialog = (openState) => {
-    this.setState({
-      newAppointmentDialog: openState
-    });
-  }
-  getOpenStateOfYesNoDialog = (openState) => {
-    this.setState({
-      yesNoDialog: openState
-    });
-  }
-  getOpenStateOfSymptomsDialog = (openState) => {
-    this.setState({
-      symptomsDialog: openState
-    });
+  handleDialogClose = (close, type) => {
+    if (type == "newAppointment") {
+      this.setState({
+        newAppointmentDialog: close
+      });
+    } else if (type == "yesNo") {
+      this.setState({
+        yesNoDialog: close
+      });
+    } else if (type == "symptoms") {
+      this.setState({
+        symptomsDialog: close
+      });
+    } else if (type == "editAppointment") {
+      this.setState({
+        editAppointmentDialog: close
+      });
+    }
   }
   getDiseaseKnown = (known) => {
-    this.setState({
-      diseaseKnown: !known,
-      symptomsDialog: !known
-    });
+    if (known == false) {
+      this.setState({
+        symptomsDialog: !known
+      });
+    } else {
+      this.setState({
+        newAppointmentDialog: known
+      });
+    }
+
   }
+  // bug here but can't debug
+  // don't know why?
   getDisease = (disease) => {
     this.setState({
-      appointment: {
-        disease: disease
-      }
-    })
+      diseasePredicted: disease
+    });
+    this.setState({
+      newAppointmentDialog: true
+    });
+    console.log(disease, this.state.diseasePredicted, "hahaaa");
+  }
+  getAppointment = (appointment) => {
+
   }
   render() {
     return (
@@ -170,16 +194,19 @@ class AppointmentTable extends Component {
           - getOpenState will receive data which been sent from its child component EditAppointmentDialog.
         */}
         <YesNoDialog open = { this.state.yesNoDialog }
-                     close =  { this.getOpenStateOfYesNoDialog }
+                     close =  { this.handleDialogClose }
                      disease = { this.getDiseaseKnown }
                      content = "Do you know your disease yet?" />
         <SymptomsDialog open = { this.state.symptomsDialog }
-                        close = { this.getOpenStateOfSymptomsDialog }
+                        close = { this.handleDialogClose }
                         disease = { this.getDisease } />
+        <NewAppointmentDialog open = { this.state.newAppointmentDialog }
+                              close = { this.handleDialogClose }
+                              disease = { this.state.diseasePredicted }
+                              appointment = { this.getAppointment }/>
         <EditAppointmentDialog open = { this.state.editAppointmentDialog }
-                               close = { this.getOpenStateOfEditDialog }
-                               { ...this.state.appointment }/>
-        <NewAppointmentDialog open = { this.state.newAppointmentDialog } close = { this.getOpenStateOfNewDialog }/>
+                               close = { this.handleDialogClose }
+                               { ...this.state.appointment } />
       </React.Fragment>
     );
   }
