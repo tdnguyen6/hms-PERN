@@ -20,14 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="153a4649-8ac9-4a44-ba23-8f64e8444d1c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/modules/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/modules/authentication.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/server/authentication.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/authentication.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/server/jest.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/jest.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/db/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/db/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,10 +188,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="498" y="209" key="DBNavigator.ProjectSettingsDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606702769246" />
-    <state x="192" y="104" key="MergeDialog" timestamp="1606736163213">
+    <state x="192" y="104" key="MergeDialog" timestamp="1606750247617">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="192" y="104" key="MergeDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606736163213" />
+    <state x="192" y="104" key="MergeDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606750247617" />
     <state x="2518" y="286" key="MultipleFileMergeDialog" timestamp="1606406585430">
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
@@ -215,11 +208,11 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="618" y="169" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606732803975" />
-    <state x="695" y="442" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606736007549">
+    <state x="695" y="442" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606750226118">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1606648131599" />
-    <state x="695" y="442" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606736007549" />
+    <state x="695" y="442" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606750226118" />
     <state x="624" y="253" key="run.anything.popup" timestamp="1606734149772">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

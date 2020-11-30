@@ -2,10 +2,10 @@
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 const { Pool, Client } = require('pg')
 const pool = new Pool({
-	user: 'ckbdoamkelurck',
-	host: 'ec2-54-157-4-216.compute-1.amazonaws.com',
-	database: 'deqcemi6em18vn',
-	password: 'ac1a5efd48319b30480b625170bb5ca5504e7e92cbd44b9429ac7df90fb0be7a',
+	user: 'msrhhqaebvayjp',
+	host: 'ec2-3-231-48-230.compute-1.amazonaws.com',
+	database: 'd296kmn5021kbs',
+	password: 'b54c70e9241962c0ce351862426105261b96d1b20d737cb98e79e53174395f04',
 	port: 5432,
 	ssl: true
 })
