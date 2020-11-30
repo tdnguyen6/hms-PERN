@@ -30,6 +30,7 @@ import { validate }                       from '../../components/Services/Valida
 // API -----------------------------------
 import { checkEmailExist }                from '../../components/API/CheckEmailExist';
 import { register }                       from '../../components/API/Register';
+import MenuItem from "@material-ui/core/MenuItem";
 /*
 can't use hooks because this is a component.
 so we can't useStyles API from Material UI
@@ -62,6 +63,9 @@ class Register extends Component {
       hasError: false,
       error: ''
     },
+    gender: {
+      value: ''
+    },
     email: {
       value: '',
       hasError: false,
@@ -74,9 +78,7 @@ class Register extends Component {
       error: ''
     },
     password: {
-      value: '',
-      hasError: false,
-      error: ''
+      value: ''
     },
     confirmedPassword: {
       value: '',
@@ -100,7 +102,13 @@ class Register extends Component {
         }
     });
   };
-
+  handleGenderInput = (event) => {
+    this.setState({
+      gender: {
+        value: event.target.value
+      }
+    });
+  };
   handleEmailInput = (event) => {
     let validateStatus = validate("email", event.target.value);
     let existStatus = false;
@@ -119,7 +127,6 @@ class Register extends Component {
         }
     });
   };
-
   handlePhoneInput = (event) => {
     let validateStatus = validate("phone", event.target.value);
     this.setState({
@@ -130,17 +137,13 @@ class Register extends Component {
         }
     });
   }
-
   handlePasswordInput = (event) => {
     this.setState({
       password: {
-          value: event.target.value,
-          hasError: false,
-          error: ''
+          value: event.target.value
         }
     });
   };
-
   handleConfirmedPasswordInput = (event) => {
     let passwordStatus = (event.target.value === this.state.password.value);
     this.setState({
@@ -215,7 +218,7 @@ class Register extends Component {
           <form className = {classes.form}>
             <Grid container spacing = {2}>
               {/* Name Input */}
-              <Grid item xs = {12}>
+              <Grid item xs = {12} sm = {9}>
                 <TextField
                   autoComplete  = "name"
                   name          = "Name"
@@ -230,6 +233,21 @@ class Register extends Component {
                   helperText    = { this.state.name.error }
                   onChange      = { this.handleNameInput }
                 />
+              </Grid>
+              {/* Gender Input */}
+              <Grid item xs = {12} sm = {3}>
+                <TextField
+                    required fullWidth autoFocus select
+                    autoComplete  = "Gender"
+                    name          = "Gender"
+                    variant       = "outlined"
+                    id            = "Gender"
+                    label         = "Sex"
+                    value         = { this.state.gender.value }
+                    onChange      = { this.handleGenderInput }>
+                      <MenuItem key = "M" value = "Male">M</MenuItem>
+                      <MenuItem key = "F" value = "Female">F</MenuItem>
+                </TextField>
               </Grid>
               {/* Email Input */}
               <Grid item xs = {12} sm = {6}>
