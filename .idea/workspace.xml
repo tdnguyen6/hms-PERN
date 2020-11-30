@@ -20,8 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="fix bug">
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/SymptomsDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/SymptomsDialog.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/modules/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/modules/authentication.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/server/authentication.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/authentication.test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,10 +56,22 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="database.data.extractors.current.export.id" value="JSON-Groovy.json.groovy" />
+    <property name="javascript.nodejs.core.library.configured.version" value="14.15.1" />
+    <property name="javascript.nodejs.core.library.typings.version" value="14.14.10" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/test/client" />
-    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path" value="node" />
+    <property name="nodejs_package_manager_path" value="$USER_HOME$/.nvm/versions/node/v14.15.1/lib/node_modules/pnpm" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -82,6 +96,8 @@
       <workItem from="1606413024505" duration="118000" />
       <workItem from="1606464762649" duration="125000" />
       <workItem from="1606636188223" duration="12669000" />
+      <workItem from="1606702485528" duration="370000" />
+      <workItem from="1606702860190" duration="10843000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'authentication-page' of https://github.com/tidunguyen/hms-PERN into authentication-page&#10;&#10;# Conflicts:&#10;#&#9;src/server/modules/authentication.js">
       <created>1606406643270</created>
@@ -166,10 +182,22 @@
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state x="2339" y="61" key="CommitChangelistDialog2/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1606406642160" />
+    <state x="548" y="269" key="DBNavigator.DatasetFilterDialog" timestamp="1606702724083">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="548" y="269" key="DBNavigator.DatasetFilterDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606702724083" />
+    <state x="498" y="209" key="DBNavigator.ProjectSettingsDialog" timestamp="1606702769246">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="498" y="209" key="DBNavigator.ProjectSettingsDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606702769246" />
     <state x="2518" y="286" key="MultipleFileMergeDialog" timestamp="1606406585430">
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state x="2518" y="286" key="MultipleFileMergeDialog/0.0.1920.1050/1920.0.1920.1050@1920.0.1920.1050" timestamp="1606406585430" />
+    <state x="461" y="186" width="997" height="700" key="SettingsEditor" timestamp="1606702854614">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="461" y="186" width="997" height="700" key="SettingsEditor/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606702854614" />
     <state x="320" y="187" key="Vcs.Push.Dialog.v2" timestamp="1606648930559">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -178,5 +206,9 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1606648131599" />
+    <state x="624" y="253" key="run.anything.popup" timestamp="1606711522281">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="624" y="253" key="run.anything.popup/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606711522281" />
   </component>
 </project>
