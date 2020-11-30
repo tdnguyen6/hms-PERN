@@ -5,7 +5,9 @@ const {do_hash} = require('./helper');
 const Mailer = require('./mailer')
 
 exports.checkEmailExist = async function (req, res) {
-    let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
+    let user = await db.query(`SELECT 1 FROM accounts where email = $1`, [req.body.email]);
+    console.log(req.body.email);
+    console.log(user);
     if (user.rows.length == 1) res.status(200).json({emailStatus: true})
     else res.status(500).json({emailStatus: false})
 }
@@ -35,23 +37,17 @@ exports.loginAccount = async function (req, res) {
             if (isPatient) position = "Patient"
             else if (isPractitioner) position = "Practitioner"
             else position = "Admin"
-            //console.log(position)
+            // console.log(position)
             // assign session to user
             req.session.userID = result.rows[0].id
             req.session.isAdmin = (position === 'Admin')
-            console.log(req.session)
-            
+            // console.log(req.session)
+
             // update user last_login
             // if system fail to update user last_login, server will response error in the server
-            try {
-                await db.query(`UPDATE accounts SET last_login = $1 WHERE id = $2`, [(new Date()), result.rows[0].id]);
-            } catch (err) {
-                console.log(err)
-                res.status(500).json({loginStatus: false})
-                return
-            }
-            
+            await db.query(`UPDATE accounts SET last_login = $1 WHERE id = $2`, [(new Date()), result.rows[0].id]);
 
+            // console.log(req.session)
             res.status(200).json({
                 loginStatus: true,
                 role: position

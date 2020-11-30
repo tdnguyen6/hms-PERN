@@ -19,11 +19,15 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="fix bug">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+    <list default="true" id="153a4649-8ac9-4a44-ba23-8f64e8444d1c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/pnpm-lock.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/modules/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/modules/authentication.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/server/authentication.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/authentication.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/server/jest.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/server/jest.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +43,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="JsFlowSettings">
     <service-enabled>true</service-enabled>
@@ -190,6 +195,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="498" y="209" key="DBNavigator.ProjectSettingsDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606702769246" />
+    <state x="192" y="104" key="MergeDialog" timestamp="1606736163213">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="192" y="104" key="MergeDialog/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606736163213" />
     <state x="2518" y="286" key="MultipleFileMergeDialog" timestamp="1606406585430">
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
@@ -202,13 +211,23 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="320" y="187" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1606648930559" />
-    <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606648131599">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1606648131599" />
-    <state x="624" y="253" key="run.anything.popup" timestamp="1606711522281">
+    <state x="618" y="169" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1606732803975">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="624" y="253" key="run.anything.popup/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606711522281" />
+    <state x="618" y="169" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606732803975" />
+    <state x="695" y="442" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606736007549">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1606648131599" />
+    <state x="695" y="442" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606736007549" />
+    <state x="624" y="253" key="run.anything.popup" timestamp="1606734149772">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="624" y="253" key="run.anything.popup/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606734149772" />
+    <state x="486" y="93" width="945" height="986" key="search.everywhere.popup" timestamp="1606732175740">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="346" y="64" width="672" height="678" key="search.everywhere.popup/0.0.1366.743@0.0.1366.743" timestamp="1606723646573" />
+    <state x="486" y="93" width="945" height="986" key="search.everywhere.popup/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606732175740" />
   </component>
 </project>

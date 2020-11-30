@@ -11,6 +11,7 @@ dependencies:
   pg-promise: 10.8.0
 devDependencies:
   '@testing-library/react': 11.2.2_react-dom@17.0.1+react@17.0.1
+  get-port: 5.1.1
   jest: 26.6.0
   mockdate: 3.0.2
   nodemon: 2.0.6
@@ -2081,6 +2082,12 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-pjzuKtY64GYfWizNAJ0fr9VqttZkNiK2iS430LtIHzjBEr6bX8Am2zm4sW4Ro5wjWW5cAlRL1qAMTcXbjNAO2Q==
+  /get-port/5.1.1:
+    dev: true
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-g/Q1aTSDOxFpchXC4i8ZWvxA1lnPqx/JHqcpIw0/LX9T8x/GBbi6YnlN5nhaKIFkT8oFsscUKgDJYxfwfS6QsQ==
   /get-stream/4.1.0:
     dependencies:
       pump: 3.0.0
@@ -5430,6 +5437,7 @@ specifiers:
   connect-pg-simple: ^6.2.1
   express: ^4.17.1
   express-session: ^1.17.1
+  get-port: ^5.1.1
   jest: 26.6.0
   jsonwebtoken: ^8.5.1
   jwt-decode: ^3.1.2
