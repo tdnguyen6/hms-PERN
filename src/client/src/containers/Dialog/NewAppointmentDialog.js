@@ -23,10 +23,26 @@ const timeAvailable = [
   '7:00',
   '13:00'
 ];
+const diseases = [
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F'
+];
+const practitioner = [
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F'
+];
 
 class NewAppointmentDialog extends Component {
   state = {
-    disease: this.props.disease,
+    disease: '',
     practitioner: '',
     date: '',
     time: '',
@@ -36,20 +52,34 @@ class NewAppointmentDialog extends Component {
     // send close state back to parent: AppointmentTable
     this.props.close(false, "newAppointment");
   }
-  handleSave = () => {
+  handleSave = async () => {
+    if (!this.props.diseaseKnown) {
+      await this.setState({
+        disease: this.props.disease
+      });
+    }
     // send close state back to parent: AppointmentTable
-    this.props.appointment(this.state.appointment);
+    this.props.appointment(this.state);
     this.handleDialogClose();
   };
-
-  handleDateChange = (event) => {
-    this.setState({
+  handleDateChange = async (event) => {
+    await this.setState({
       date: event.target.value
     })
   }
-  handleTimeChange = (event) => {
-    this.setState({
+  handleTimeChange = async (event) => {
+    await this.setState({
       time: event.target.value
+    })
+  }
+  handleDiseaseChange = async (event) => {
+    await this.setState({
+      disease: event.target.value
+    })
+  }
+  handlePractitionerChange = async (event) => {
+    await this.setState({
+      practitioner: event.target.value
     })
   }
 
@@ -65,25 +95,49 @@ class NewAppointmentDialog extends Component {
             To make new appointment, please enter your information here.
           </DialogContentText>
           {/* Disease */}
-          <TextField
-              autoFocus
-              fullWidth
-              variant       = "outlined"
-              margin        = "normal"
-              id            = "disease"
-              label         = "Disease"
-              value         = { this.state.disease }
-          />
+          { this.props.diseaseKnown
+              ? <TextField
+                  autoFocus
+                  fullWidth
+                  select
+                  variant       = "outlined"
+                  margin        = "normal"
+                  id            = "disease"
+                  label         = "Disease"
+                  value         = { this.state.disease }
+                  onChange      = { this.handleDiseaseChange }>{
+                diseases.map((option) => (
+                    <MenuItem key = { option } value = { option }>
+                      { option }
+                    </MenuItem>
+                ))}
+              </TextField>
+              : <TextField
+                  autoFocus
+                  fullWidth
+                  variant       = "outlined"
+                  margin        = "normal"
+                  id            = "disease"
+                  label         = "Disease"
+                  value         = { this.props.disease }/>
+          }
           {/* Practitioner */}
           <TextField
               autoFocus
               fullWidth
+              select
               variant       = "outlined"
               margin        = "normal"
               id            = "practitioner"
               label         = "Practitioner"
               value         = { this.state.practitioner }
-          />
+              onChange      = { this.handlePractitionerChange }>{
+            practitioner.map((option) => (
+            <MenuItem key = { option } value = { option }>
+              { option }
+            </MenuItem>
+            ))}
+          </TextField>
           {/* Date */}
           <TextField
               autoFocus

@@ -307,11 +307,9 @@ class SymptomsDialog extends Component {
         // send close state back to parent: AppointmentTable
         this.props.close(false, "symptoms");
     }
-
     handleDiseasePredict = () => {
         this.props.disease('norovirus');
     }
-
     handleCheckBoxChange = (event) => {
         let tmpListOfSymptom = this.state.listOfSymptom;
         if (event.target.checked && !tmpListOfSymptom.includes(event.target.id)) {

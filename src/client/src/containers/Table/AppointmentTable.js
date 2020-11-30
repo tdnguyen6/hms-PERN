@@ -53,7 +53,16 @@ let columns = [
   { id: 'time', label: 'Time', align: 'right'},
   { id: 'date', label: 'Date', align: 'right'},
   { id: 'status', label: 'Status', align: 'right'}
-]
+];
+let appointment = {
+  id: '',
+  disease: '',
+  practitioner: '',
+  room: '',
+  time: '',
+  date: '',
+  status: ''
+};
 
 class AppointmentTable extends Component {
   state = {
@@ -61,89 +70,71 @@ class AppointmentTable extends Component {
     yesNoDialog: false,
     newAppointmentDialog: false,
     symptomsDialog: false,
-    diseasePredicted: '',
-    appointment: {
-      id: '',
-      disease: '',
-      practitioner: '',
-      room: '',
-      time: '',
-      date: '',
-      status: ''
-    }
+    diseaseKnown: false,
+    diseasePredicted: ''
   };
   handleRowClick = (event, row) => {
-    this.setState({
-        editAppointmentDialog: row.status,
-        appointment: {
-          id: row.id,
-          disease: row.disease,
-          practitioner: row.practitioner,
-          room: row.room,
-          time: row.time,
-          date: row.date,
-          status: row.status
-        }
-    });
+    appointment =  {
+      id: row.id,
+      disease: row.disease,
+      practitioner: row.practitioner,
+      room: row.room,
+      time: row.time,
+      date: row.date,
+      status: row.status
+    }
+    this.setState({ editAppointmentDialog: row.status });
   };
-  handleNewClick = () => {
-    this.setState({
+
+  /*
+  * Click New -> Yes/No Dialog
+  *             -> Yes: symptomsKnown = true
+  *               -> New Appointment Dialog
+  *             -> No:  symptomsKnown = false
+  *               -> Symptoms Dialog -> Click Save -> Return Predicted Disease
+  *                 -> New Appointment Dialog
+  */
+  handleNewClick = async () => {
+    await this.setState({
       yesNoDialog: true,
       newAppointmentDialog: false,
       symptomsDialog: false,
-      diseasePredicted: '',
-      appointment: {
-        id: '',
-        disease: '',
-        practitioner: '',
-        room: '',
-        time: '',
-        date: '',
-        status: ''
-      }
+      diseaseKnown: false,
+      diseasePredicted: ''
     });
   };
-  handleDialogClose = (close, type) => {
-    if (type == "newAppointment") {
-      this.setState({
+  handleDialogClose = async (close, type) => {
+    if (type === "newAppointment") {
+      await this.setState({
         newAppointmentDialog: close
       });
-    } else if (type == "yesNo") {
-      this.setState({
+    } else if (type === "yesNo") {
+      await this.setState({
         yesNoDialog: close
       });
-    } else if (type == "symptoms") {
-      this.setState({
+    } else if (type === "symptoms") {
+      await this.setState({
         symptomsDialog: close
       });
-    } else if (type == "editAppointment") {
-      this.setState({
+    } else if (type === "editAppointment") {
+      await this.setState({
         editAppointmentDialog: close
       });
     }
   }
-  getDiseaseKnown = (known) => {
-    if (known == false) {
-      this.setState({
-        symptomsDialog: !known
-      });
-    } else {
-      this.setState({
-        newAppointmentDialog: known
-      });
-    }
 
-  }
-  // bug here but can't debug
-  // don't know why?
-  getDisease = (disease) => {
-    this.setState({
-      diseasePredicted: disease
+  getDiseaseKnown = async (disease) => {
+    await this.setState({
+      diseaseKnown: disease,
+      symptomsDialog: !disease,
+      newAppointmentDialog: disease
     });
-    this.setState({
+  }
+  getDisease = async (disease) => {
+    await this.setState({
+      diseasePredicted: disease,
       newAppointmentDialog: true
     });
-    console.log(disease, this.state.diseasePredicted, "hahaaa");
   }
   getAppointment = (appointment) => {
 
@@ -158,7 +149,7 @@ class AppointmentTable extends Component {
               <TableRow>
                 {columns.map((column) => (
                     <TableCell key = { column.id } align = { column.align }>
-                      { (column.label == 'Status')
+                      { (column.label === 'Status')
                         ? <Button variant       = "contained"
                                   color         = "primary"
                                   align         = "right"
@@ -177,7 +168,7 @@ class AppointmentTable extends Component {
                       { columns.map((column) => {
                         return (
                           <TableCell key = { column.id } align = { column.align }>
-                            { (column.id == 'status')
+                            { (column.id === 'status')
                             ? row[column.id] ? Upcomming : Completed
                             : row[column.id] }
                           </TableCell>
@@ -202,11 +193,12 @@ class AppointmentTable extends Component {
                         disease = { this.getDisease } />
         <NewAppointmentDialog open = { this.state.newAppointmentDialog }
                               close = { this.handleDialogClose }
-                              disease = { this.state.diseasePredicted }
+                              diseaseKnown = { this.state.diseaseKnown }
+                              disease = { (this.state.diseaseKnown) ? '' : this.state.diseasePredicted }
                               appointment = { this.getAppointment }/>
         <EditAppointmentDialog open = { this.state.editAppointmentDialog }
                                close = { this.handleDialogClose }
-                               { ...this.state.appointment } />
+                               { ...appointment } />
       </React.Fragment>
     );
   }
