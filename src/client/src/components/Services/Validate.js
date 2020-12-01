@@ -11,25 +11,28 @@ export const validate = (type, value) => {
     phone: {
       pattern: /^\d{10}$/,
       status: false
+    },
+    ssn: {
+      pattern: /^\d{5}$/,
+      status: false
     }
   };
 
   const res = {
     name: false,
     email: false,
-    phone: false
+    phone: false,
+    ssn: false
   };
 
   if (type === "name") {
     res.name = (validate.name.pattern.exec(value) !== null) ? false : true;
   } else if (type === "email") {
-    let nameStatus = validate.email.pattern.exec(value);
-    if (nameStatus !== null) res.email = false;
-    else res.email = true;
+    res.email = (validate.email.pattern.exec(value) !== null) ? false : true;
   } else if (type === "phone") {
-    let nameStatus = validate.phone.pattern.exec(value);
-    if (nameStatus !== null) res.phone = false;
-    else res.phone = true;
+    res.phone = (validate.phone.pattern.exec(value) !== null) ? false : true;
+  } else if (type === "ssn") {
+    res.ssn = (validate.ssn.pattern.exec(value) !== null) ? false : true;
   }
 
   return res;

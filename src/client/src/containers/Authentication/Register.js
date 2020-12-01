@@ -34,6 +34,13 @@ import MenuItem from "@material-ui/core/MenuItem";
 import {login} from "../../components/API/Login";
 import ErrorDialog from "../Dialog/ErrorDialog";
 import LoadingDialog from "../Dialog/LoadingDialog";
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 /*
 can't use hooks because this is a component.
 so we can't useStyles API from Material UI
@@ -80,6 +87,14 @@ class Register extends Component {
       hasError: false,
       exist: false,
       error: ''
+    },
+    SSN: {
+      value: '',
+      hasError: false,
+      error: ''
+    },
+    DOB: {
+      value: new Date()
     },
     password: {
       value: ''
@@ -131,7 +146,24 @@ class Register extends Component {
           error: (validateStatus.phone) ? 'Must have 10 numbers' : ''
         }
     });
-  }
+  };
+  handleSSNInput = async (event) => {
+    let validateStatus = validate("ssn", event.target.value);
+    await this.setState({
+      SSN: {
+        value: event.target.value,
+        hasError: validateStatus.ssn,
+        error: (validateStatus.ssn) ? '5 numbers and no character' : ''
+      }
+    })
+  };
+  handleDOBInput = async (date) => {
+    await this.setState({
+      DOB: {
+        value: date
+      }
+    })
+  };
   handlePasswordInput = (event) => {
     this.setState({
       password: {
@@ -190,6 +222,9 @@ class Register extends Component {
     } else if (this.state.phone.hasError) {
       dialogStatus.dialogHasError = true;
       dialogStatus.dialogMessage = 'Phone number is invalid. Phone number must contain 10 numbers.';
+    } else if (this.state.SSN.hasError) {
+      dialogStatus.dialogHasError = true;
+      dialogStatus.dialogMessage = 'The social security number is wrong. Please try again.'
     } else if (this.state.confirmedPassword.hasError) {
       dialogStatus.dialogHasError = true;
       dialogStatus.dialogMessage = 'Please confirm the password again. Confirmed password should be the same with password.';
@@ -206,7 +241,9 @@ class Register extends Component {
                                 this.state.email.value,
                                 this.state.password.value,
                                 this.state.phone.value,
-                                this.state.gender.value);
+                                this.state.gender.value,
+                                this.state.SSN.value,
+                                this.state.DOB.value);
       if (res) this.props.history.push('/login');
       else {
         // this.setState({
@@ -228,12 +265,8 @@ class Register extends Component {
           <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className = {classes.paper}>
-              <Avatar className = {classes.avatar}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography component = "h1" variant = "h5">
-                Sign up
-              </Typography>
+              <Avatar className = {classes.avatar}><LockOutlinedIcon /></Avatar>
+              <Typography component = "h1" variant = "h5">Sign up</Typography>
               <form className = {classes.form}>
                 <Grid container spacing = {2}>
                   {/* Name Input */}
@@ -267,6 +300,39 @@ class Register extends Component {
                       <MenuItem key = "M" value = "male">M</MenuItem>
                       <MenuItem key = "F" value = "female">F</MenuItem>
                     </TextField>
+                  </Grid>
+                  {/* SSN Input */}
+                  <Grid item xs = {12} sm = {6}>
+                    <TextField
+                        autoComplete  = "ssn"
+                        name          = "SSN"
+                        variant       = "outlined"
+                        required
+                        fullWidth
+                        id            = "SSN"
+                        label         = "SSN"
+                        autoFocus
+                        value         = { this.state.SSN.value }
+                        error         = { this.state.SSN.hasError }
+                        helperText    = { this.state.SSN.error }
+                        onChange      = { this.handleSSNInput }
+                    />
+                  </Grid>
+                  {/* DOB Input */}
+                  <Grid item xs = {12} sm = {6}>
+                    <MuiPickersUtilsProvider utils = {DateFnsUtils}>
+                      <KeyboardDatePicker
+                          disableFuture
+                          variant               = "inline"
+                          inputVariant          = "outlined"
+                          label                 = "Date of Birth"
+                          format                = "dd/MM/yyyy"
+                          openTo                = "year"
+                          views                 = {["year", "month", "date"]}
+                          value                 = { this.state.DOB.value }
+                          InputAdornmentProps   = {{ position: "end" }}
+                          onChange              = { this.handleDOBInput }/>
+                    </MuiPickersUtilsProvider>
                   </Grid>
                   {/* Email Input */}
                   <Grid item xs = {12} sm = {6}>
