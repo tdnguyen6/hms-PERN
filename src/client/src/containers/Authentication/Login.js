@@ -69,13 +69,13 @@ class Login extends Component {
     email: {
       value: '',
       hasError: false,
-      error: ''
     },
     password: {
       value: '',
     },
     rememberMe: false,
     errorDialog: false,
+    errorMessage: '',
     loginStatus: false
   };
 
@@ -94,16 +94,6 @@ class Login extends Component {
             })
         }
     }
-
-
-  // login = async (username, password) => {
-  //   let data = {
-  //     email: username,
-  //     password: password
-  //   }
-  //   let res = await axios.post('http://localhost:3001/user/login', data);
-  //   console.log(res);
-  // }
 
   handleEmailInput = (event) => {
     let validateStatus = validate("email", event.target.value);
@@ -139,7 +129,8 @@ class Login extends Component {
     const { email, password, rememberMe } = this.state;
       if (email.hasError) {
         this.setState({
-          errorDialog: true
+          errorDialog: true,
+          errorMessage: 'Invalid email address'
         });
       }
 
@@ -150,36 +141,21 @@ class Login extends Component {
           localStorage.rememberMe = rememberMe;
         }
 
-        if (email.value === 'admin@email.com' && password.value === 'admin') {
-          this.props.history.push("/admin");
-        } else if (email.value === 'practitioner@email.com' && password.value === 'practitioner') {
-          this.props.history.push("/practitioner");
-        } else if (email.value === 'patient@email.com' && password.value === 'patient') {
-          this.props.history.push("/patient");
+        try {
+          // loading
+          console.log('loading');
+          let role = await login(this.state.email.value, this.state.password.value);
+          if (role != null) this.props.history.push(`/${role}`);
+          else {
+            this.setState({
+              errorDialog: true,
+              errorMessage: 'Email address/Password is incorrect. Please try again.'
+            })
+          }
+        } finally {
+          console.log('finish loading');
         }
       }
-
-      // let res = axios.post('http://localhost:3001/user/login', {
-      //   email: this.state.email.value,
-      //   password: this.state.password.value
-      // }).then(res => this.setState({
-      //   loginStatus: res.data.loginStatus
-      // }));
-      //
-      // console.log(this.state.loginStatus);
-      // let api_res = await login(this.state.email.value, this.state.password.value);
-      // console.log(api_res);
-
-      // this.setState({
-      //             loginStatus: api_res['loginStatus'];
-      //           }));
-      //
-      // console.log(this.state.loginStatus);
-      // this.setState(
-      //   loginStatus: api.response
-      // )
-        // this.props.history.push("/loginTest");
-      // if (this.state.loginStatus) this.props.history.push("/dashboard");
     };
 
   getOpenStateOfErrorDialog = (openState) => {
@@ -213,7 +189,6 @@ class Login extends Component {
                 fullWidth
                 value         = { this.state.email.value }
                 error         = { this.state.email.hasError }
-                helperText    = { this.state.email.error }
                 onChange      = { this.handleEmailInput }
               />
               <TextField
@@ -244,7 +219,7 @@ class Login extends Component {
               </Button>
               <ErrorDialog open = { this.state.errorDialog }
                            close = { this.getOpenStateOfErrorDialog }
-                           error = { this.state.email.error } />
+                           error = { this.state.errorMessage } />
               <Grid container>
                 <Grid item xs>
                   <Link component = { RouteLink } to = "/forgetPassword">

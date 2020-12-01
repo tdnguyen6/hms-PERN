@@ -119,6 +119,7 @@ class NewAppointmentDialog extends Component {
                   margin        = "normal"
                   id            = "disease"
                   label         = "Disease"
+                  InputProps    = {{ readOnly: true, }}
                   value         = { this.props.disease }/>
           }
           {/* Practitioner */}

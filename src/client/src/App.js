@@ -21,8 +21,8 @@ function App() {
         <Route path = "/login"                          component = { Login }/>
         <Route path = "/register"                       component = { Register } />
         <Route path = "/forgetPassword"                 component = { ForgetPassword } />
-        <Route path = "/patient"               component = { PatientDashboard } />
-        <Route path = "/practitioner"          component = { PractitionerDashboard } />
+        <Route path = "/patient"                        component = { PatientDashboard } />
+        <Route path = "/practitioner"                   component = { PractitionerDashboard } />
         <Route path = "/admin"                          component = { AdminDashboard } />
         <Route path = "/"                               component = { Home } />
       </Switch>

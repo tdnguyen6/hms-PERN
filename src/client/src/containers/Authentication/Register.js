@@ -31,6 +31,7 @@ import { validate }                       from '../../components/Services/Valida
 import { checkEmailExist }                from '../../components/API/CheckEmailExist';
 import { register }                       from '../../components/API/Register';
 import MenuItem from "@material-ui/core/MenuItem";
+import {login} from "../../components/API/Login";
 /*
 can't use hooks because this is a component.
 so we can't useStyles API from Material UI
@@ -75,6 +76,7 @@ class Register extends Component {
     phone: {
       value: '',
       hasError: false,
+      exist: false,
       error: ''
     },
     password: {
@@ -91,7 +93,6 @@ class Register extends Component {
     },
     registerStatus: false
   };
-
   handleNameInput = (event) => {
     let validateStatus = validate("name", event.target.value);
     this.setState({
@@ -111,14 +112,7 @@ class Register extends Component {
   };
   handleEmailInput = (event) => {
     let validateStatus = validate("email", event.target.value);
-    let existStatus = false;
-    let api = checkEmailExist(event.target.value)
-              .then(message => this.setState({
-                email: {
-                  exist: message
-                }
-              }));
-    console.log(this.state.email.exist);
+    // check email exist.
     this.setState({
       email: {
           value: event.target.value,
@@ -164,11 +158,26 @@ class Register extends Component {
     })
   }
 
-  handleSubmit = () => {
+  handleSubmit = async () => {
     const dialogStatus = {
       dialogMessage: '',
       dialogHasError: false
     };
+
+    try {
+      // loading
+      console.log('loading');
+      let res = await checkEmailExist(this.state.email.value);
+      if (res != null) {
+        await this.setState({
+          email: {
+            exist: true
+          }
+        })
+      }
+    } finally {
+      console.log('finish loading');
+    }
 
     if (this.state.name.hasError) {
       dialogStatus.dialogHasError = true;
@@ -176,6 +185,9 @@ class Register extends Component {
     } else if (this.state.email.hasError) {
       dialogStatus.dialogHasError = true;
       dialogStatus.dialogMessage = 'The given email is invalid. Please input the valid email';
+    } else if (this.state.email.exist) {
+      dialogStatus.dialogHasError = true;
+      dialogStatus.dialogMessage = 'This email is registered. Please change email or recover password.';
     } else if (this.state.phone.hasError) {
       dialogStatus.dialogHasError = true;
       dialogStatus.dialogMessage = 'Phone number is invalid. Phone number must contain 10 numbers.';
@@ -183,23 +195,32 @@ class Register extends Component {
       dialogStatus.dialogHasError = true;
       dialogStatus.dialogMessage = 'Please confirm the password again. Confirmed password should be the same with password.';
     }
-    this.setState({
+    await this.setState({
       button: {
         open: dialogStatus.dialogHasError,
         error: dialogStatus.dialogMessage
       }
     });
 
-    let api = register(this.state.name.value, this.state.email.value, this.state.password.value, this.state.phone.value)
-              .then(message => this.setState({
-                registerStatus: message
-              }));
-    console.log(this.state.registerStatus);
-
-    if (!dialogStatus.dialogHasError) {
-      this.props.history.push("/login");
+    try {
+      // loading
+      console.log('loading');
+      let res = await register(this.state.name.value,
+                                this.state.email.value,
+                                this.state.password.value,
+                                this.state.phone.value,
+                                this.state.gender.value);
+      if (res) this.props.history.push('/login');
+      else {
+        // this.setState({
+        //   errorDialog: true,
+        //   errorMessage: 'Something wrong happened. Please try again.'
+        // });
+        console.log('error');
+      }
+    } finally {
+      console.log('finish loading');
     }
-    //else {}
   };
 
   render() {
@@ -245,8 +266,8 @@ class Register extends Component {
                     label         = "Sex"
                     value         = { this.state.gender.value }
                     onChange      = { this.handleGenderInput }>
-                      <MenuItem key = "M" value = "Male">M</MenuItem>
-                      <MenuItem key = "F" value = "Female">F</MenuItem>
+                      <MenuItem key = "M" value = "male">M</MenuItem>
+                      <MenuItem key = "F" value = "female">F</MenuItem>
                 </TextField>
               </Grid>
               {/* Email Input */}
