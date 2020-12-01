@@ -19,12 +19,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="finish appointment">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/components/Services/Validate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/Services/Validate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Authentication/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Authentication/Register.js" afterDir="false" />
+    <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="add SSN and DOB to register">
+      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/PractitionerInfoDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/PractitionerInfoDialog.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +96,7 @@
       <workItem from="1606636188223" duration="12669000" />
       <workItem from="1606702485528" duration="370000" />
       <workItem from="1606702860190" duration="10843000" />
-      <workItem from="1606786385775" duration="20555000" />
+      <workItem from="1606786385775" duration="20835000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'authentication-page' of https://github.com/tidunguyen/hms-PERN into authentication-page&#10;&#10;# Conflicts:&#10;#&#9;src/server/modules/authentication.js">
       <created>1606406643270</created>
@@ -179,7 +175,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606823687223</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="add SSN and DOB to register">
+      <created>1606828351492</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1606828351492</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,7 +213,8 @@
     <MESSAGE value="modify register" />
     <MESSAGE value="modify register/login" />
     <MESSAGE value="finish appointment" />
-    <option name="LAST_COMMIT_MESSAGE" value="finish appointment" />
+    <MESSAGE value="add SSN and DOB to register" />
+    <option name="LAST_COMMIT_MESSAGE" value="add SSN and DOB to register" />
   </component>
   <component name="WindowStateProjectService">
     <state x="410" y="110" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606786833948">
@@ -254,10 +258,10 @@
     </state>
     <state x="346" y="155" width="900" height="728" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1606803202959" />
     <state x="461" y="186" width="997" height="700" key="SettingsEditor/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606702854614" />
-    <state x="320" y="187" key="Vcs.Push.Dialog.v2" timestamp="1606823689959">
+    <state x="320" y="187" key="Vcs.Push.Dialog.v2" timestamp="1606828354246">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="320" y="187" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1606823689959" />
+    <state x="320" y="187" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1606828354246" />
     <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606825164219">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

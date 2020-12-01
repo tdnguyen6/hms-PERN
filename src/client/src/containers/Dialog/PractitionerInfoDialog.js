@@ -21,7 +21,10 @@ class PractitionerInfoDialog extends Component {
                 onClose           = { this.handleDialogClose }
                 aria-describedby  = "alert-dialog-description">
                 <DialogContent>
-                    <DialogTitle id="form-dialog-title">{ this.props.data }</DialogTitle>
+                    <DialogTitle id="form-dialog-title">
+                        {/* ADD @material-ui/avatar HERE */}
+                        { this.props.data }
+                    </DialogTitle>
                     <DialogContentText id = "alert-dialog-description">
                         { this.props.data }
                     </DialogContentText>
