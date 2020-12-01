@@ -28,20 +28,27 @@ exports.queryAllAppointments = async function(req, res) {
     }
 } 
 
-exports.getUnavailableTimeSlot = async function(req, res) {
+exports.getAvailableTimeSlot = async function(req, res) {
     let query = "select at from appointments where practitioner_id = " + req.body.practitionerID
     console.log(query)
     
     try {
         const result = await db.query(query)
         const arr = result.rows
-        let unavailableTimeSlots = []
         
-        arr.forEach(unavailableTimeSlot => {
-            unavailableTimeSlots.push(unavailableTimeSlot.at.getUTCHours())
+        let unAvailableTimeSlots = []
+        arr.forEach(timeSlot => {
+            unAvailableTimeSlots.push(timeSlot.at.getUTCHours())
         })
+        console.log(unAvailableTimeSlots)
         
-        res.status(200).json({unavailableTime: unavailableTimeSlots})
+        let availableTimeSlots = []
+        // initialize available time slots from 0 -> 23
+        for (let i=0; i<=23; i++) availableTimeSlots.push(i)
+        
+        availableTimeSlots = availableTimeSlots.filter(timeSlot => !unAvailableTimeSlots.includes(timeSlot))
+        
+        res.status(200).json({availableTime: availableTimeSlots})
     } catch (err) {
         console.log(err)
         res.status(500).json({status: false})
