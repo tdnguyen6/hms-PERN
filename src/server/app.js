@@ -53,4 +53,6 @@ app.post("/disease/findDiseases", disease.findDiseasesBySymptoms);
 app.post("/disease/all", disease.queryAllDiseases);
 
 app.post("/practitioner/all", practitioner.queryAllPractitioners)
+app.post("/practitioner/findByDisease", practitioner.findPractitionerByDisease)
+
 module.exports = app;
