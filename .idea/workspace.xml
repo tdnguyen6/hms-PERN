@@ -20,13 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="fix bug">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/components/API/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/API/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/components/API/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/API/Register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Authentication/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Authentication/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/src/components/API/CheckEmailExist.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/API/CheckEmailExist.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/src/containers/Authentication/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Authentication/Register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/NewAppointmentDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/NewAppointmentDialog.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/modules/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/modules/authentication.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -103,7 +100,7 @@
       <workItem from="1606636188223" duration="12669000" />
       <workItem from="1606702485528" duration="370000" />
       <workItem from="1606702860190" duration="10843000" />
-      <workItem from="1606786385775" duration="5774000" />
+      <workItem from="1606786385775" duration="6612000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'authentication-page' of https://github.com/tidunguyen/hms-PERN into authentication-page&#10;&#10;# Conflicts:&#10;#&#9;src/server/modules/authentication.js">
       <created>1606406643270</created>
@@ -154,7 +151,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606648927566</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="api for register and login">
+      <created>1606792720832</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1606792720832</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,7 +185,8 @@
     <MESSAGE value="modify some syntax" />
     <MESSAGE value="finish yesNoDialog and symptomsDialog" />
     <MESSAGE value="fix bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bug" />
+    <MESSAGE value="api for register and login" />
+    <option name="LAST_COMMIT_MESSAGE" value="api for register and login" />
   </component>
   <component name="WindowStateProjectService">
     <state x="410" y="110" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606786833948">
@@ -208,14 +213,14 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="461" y="186" width="997" height="700" key="SettingsEditor/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606702854614" />
-    <state x="320" y="187" key="Vcs.Push.Dialog.v2" timestamp="1606648930559">
+    <state x="320" y="187" key="Vcs.Push.Dialog.v2" timestamp="1606792729398">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="320" y="187" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1606648930559" />
-    <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606648131599">
+    <state x="320" y="187" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1606792729398" />
+    <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606792696905">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1606648131599" />
+    <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1606792696905" />
     <state x="624" y="253" key="run.anything.popup" timestamp="1606711522281">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

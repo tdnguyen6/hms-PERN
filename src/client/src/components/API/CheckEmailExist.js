@@ -5,6 +5,11 @@ export const checkEmailExist = async (email) => {
     email: email
   }
 
-  let res = await axios.post('http://localhost:3001/user/checkEmailExist', data);
-  return res.data.emailStatus;
+  let res;
+  try {
+    res = await axios.post('http://localhost:3001/user/checkEmailExist', data);
+    return res.data.emailStatus;
+  } catch (error) {
+    if (error.response.status === 500) return null;
+  }
 }
