@@ -12,8 +12,10 @@ exports.createAppointment = async function (req, res) {
 
 exports.queryAllAppointments = async function(req, res) {
     let queryStatement = "select * from appointments"
-    if (req.session.role = "Patient") queryStatement += " where patient_id = " + req.userID
-    else if (req.session.role = "Practitioner") queryState += " where practitioner_id = " + req.userId
+    console.log(req.session)
+    
+    if (req.session.role === "patient") queryStatement += " where patient_id = " + req.session.userID
+    else if (req.session.role === "practitioner") queryStatement += " where practitioner_id = " + req.session.userID
     
     console.log(queryStatement)
     

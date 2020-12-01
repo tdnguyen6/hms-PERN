@@ -6,7 +6,7 @@ exports.queryAllPractitioners = async function(req, res) {
 		res.status(200).json(result.rows)
 	} catch (err) {
 		console.log(err)
-		res.status(500).json({listAllPractitionersSuccessfully: false})
+		res.status(500).json({status: false})
 	}
 }
 
