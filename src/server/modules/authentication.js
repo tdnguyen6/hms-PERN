@@ -38,9 +38,10 @@ exports.loginAccount = async function (req, res) {
             else if (isPractitioner) position = "practitioner"
             else position = "admin"
             // console.log(position)
+            
             // assign session to user
             req.session.userID = result.rows[0].id
-            req.session.isAdmin = (position === 'admin')
+            req.session.role = position
             // console.log(req.session)
 
             // update user last_login
