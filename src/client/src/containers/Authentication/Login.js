@@ -117,14 +117,6 @@ class Login extends Component {
       rememberMe: event.target.checked
     });
   }
-  handleDialogClose = () => {
-      this.setState({
-        button: {
-          open: false,
-          error: ''
-        }
-      })
-  };
   handleSubmit = async () => {
     const { email, password, rememberMe } = this.state;
       if (email.hasError) {

@@ -32,6 +32,7 @@ import { checkEmailExist }                from '../../components/API/CheckEmailE
 import { register }                       from '../../components/API/Register';
 import MenuItem from "@material-ui/core/MenuItem";
 import {login} from "../../components/API/Login";
+import ErrorDialog from "../Dialog/ErrorDialog";
 /*
 can't use hooks because this is a component.
 so we can't useStyles API from Material UI
@@ -87,11 +88,9 @@ class Register extends Component {
       hasError: false,
       error: ''
     },
-    button: {
-      open: false,
-      error: ''
-    },
-    registerStatus: false
+    registerStatus: false,
+    errorDialog: false,
+    errorMessage: ''
   };
   handleNameInput = (event) => {
     let validateStatus = validate("name", event.target.value);
@@ -161,7 +160,7 @@ class Register extends Component {
   handleSubmit = async () => {
     const dialogStatus = {
       dialogMessage: '',
-      dialogHasError: false
+      dialogError: false
     };
 
     try {
@@ -196,10 +195,8 @@ class Register extends Component {
       dialogStatus.dialogMessage = 'Please confirm the password again. Confirmed password should be the same with password.';
     }
     await this.setState({
-      button: {
-        open: dialogStatus.dialogHasError,
-        error: dialogStatus.dialogMessage
-      }
+      errorDialog: dialogStatus.dialogHasError,
+      errorMessage: dialogStatus.dialogMessage
     });
 
     try {
@@ -221,6 +218,12 @@ class Register extends Component {
     } finally {
       console.log('finish loading');
     }
+  };
+
+  getOpenStateOfErrorDialog = (openState) => {
+    this.setState({
+      errorDialog: openState
+    });
   };
 
   render() {
@@ -326,9 +329,9 @@ class Register extends Component {
                   required
                   fullWidth
                   name          = "confirmedPassword"
-                  label         = "ConfirmedPassword"
+                  label         = "Confirmed Password Again"
                   type          = "password"
-                  id            = "Confirmed Password Again"
+                  id            = "ConfirmedPassword"
                   autoComplete  = "current-password"
                   value         = { this.state.confirmedPassword.value }
                   error         = { this.state.confirmedPassword.hasError }
@@ -346,22 +349,9 @@ class Register extends Component {
             >
               Sign Up
             </Button>
-            <Dialog
-              open              = { this.state.button.open }
-              onClose           = { this.handleDialogClose }
-              aria-describedby  = "alert-dialog-description"
-            >
-              <DialogContent>
-                <DialogContentText id = "alert-dialog-description">
-                  { this.state.button.error }
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick = { this.handleDialogClose } color = "primary">
-                  Got it!
-                </Button>
-              </DialogActions>
-            </Dialog>
+            <ErrorDialog open = { this.state.errorDialog }
+                         close = { this.getOpenStateOfErrorDialog }
+                         error = { this.state.errorMessage } />
             <Grid container justify="flex-end">
               <Grid item>
                 <Link component = { RouteLink } to = '/login'>
