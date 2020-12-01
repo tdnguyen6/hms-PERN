@@ -13,7 +13,7 @@ exports.checkEmailExist = async function (req, res) {
 }
 exports.registerAccount = async function (req, res) {
     try {
-        const result = await db.query(`INSERT INTO accounts (name, email, password, phone) VALUES($1,$2,$3,$4)`, [req.body.name, req.body.email, do_hash(req.body.password), req.body.phone]);
+        const result = await db.query(`INSERT INTO accounts (name, email, password, phone, gender) VALUES($1,$2,$3,$4, $5)`, [req.body.name, req.body.email, do_hash(req.body.password), req.body.phone, req.body.gender]);
         res.status(200).json({registerStatus: true});
     } catch (error) {
         res.status(500).json({registerStatus: false});
@@ -34,13 +34,13 @@ exports.loginAccount = async function (req, res) {
             let isPatient = Number.isInteger(result.rows[0].patient_id)
             let isPractitioner = Number.isInteger(result.rows[0].practitioner_id)
             let position
-            if (isPatient) position = "Patient"
-            else if (isPractitioner) position = "Practitioner"
-            else position = "Admin"
+            if (isPatient) position = "patient"
+            else if (isPractitioner) position = "practitioner"
+            else position = "admin"
             // console.log(position)
             // assign session to user
             req.session.userID = result.rows[0].id
-            req.session.isAdmin = (position === 'Admin')
+            req.session.isAdmin = (position === 'admin')
             // console.log(req.session)
 
             // update user last_login
