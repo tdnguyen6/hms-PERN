@@ -13,7 +13,7 @@ import DialogTitle                        from '@material-ui/core/DialogTitle';
 class ErrorDialog extends Component {
   handleDialogClose = () => {
     // send close state back to parent: AppointmentTable
-    this.props.close(false);
+    this.props.close(false, "error");
   }
 
   render() {

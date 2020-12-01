@@ -1,8 +1,5 @@
 import React, { Component }               from 'react';
-import { BrowserRouter, Route, Switch }   from 'react-router-dom';
 import { Link as RouteLink }              from 'react-router-dom';
-
-import axios                              from 'axios';
 
 import Avatar                             from '@material-ui/core/Avatar';
 import Button                             from '@material-ui/core/Button';
@@ -17,21 +14,15 @@ import Grid                               from '@material-ui/core/Grid';
 import LockOutlinedIcon                   from '@material-ui/icons/LockOutlined';
 import Typography                         from '@material-ui/core/Typography';
 import { withStyles }                     from '@material-ui/core/styles';
-import Container                          from '@material-ui/core/Container';
 
-import Dialog                             from '@material-ui/core/Dialog';
-import DialogActions                      from '@material-ui/core/DialogActions';
-import DialogContent                      from '@material-ui/core/DialogContent';
-import DialogContentText                  from '@material-ui/core/DialogContentText';
-import DialogTitle                        from '@material-ui/core/DialogTitle';
-
+// Service -------------------------------
 import { validate }                       from '../../components/Services/Validate';
 
 // API -----------------------------------
-import { checkEmailExist }                from '../../components/API/CheckEmailExist';
 import { login }                          from "../../components/API/Login";
 
 import ErrorDialog                        from '../Dialog/ErrorDialog';
+import LoadingDialog                      from "../Dialog/LoadingDialog";
 
 const style = (theme) => ({
   root: {
@@ -76,7 +67,8 @@ class Login extends Component {
     rememberMe: false,
     errorDialog: false,
     errorMessage: '',
-    loginStatus: false
+    loginStatus: false,
+    loading: false
   };
 
   componentDidMount() {
@@ -134,7 +126,7 @@ class Login extends Component {
         }
 
         try {
-          // loading
+          await this.setState({ loading: true });
           console.log('loading');
           let role = await login(this.state.email.value, this.state.password.value);
           if (role != null) this.props.history.push(`/${role}`);
@@ -145,7 +137,7 @@ class Login extends Component {
             })
           }
         } finally {
-          console.log('finish loading');
+          await this.setState( { loading: false });
         }
       }
     };
@@ -160,9 +152,9 @@ class Login extends Component {
     const { classes } = this.props;
 
     return (
-      <Grid container component = "main" className = {classes.root}>
+      <Grid container component = "main" className = { classes.root }>
         <CssBaseline />
-        <Grid item xs = {false} sm = {4} md = {7} className = {classes.image} />
+        <Grid item xs = {false} sm = {4} md = {7} className = { classes.image } />
         <Grid item xs = {12} sm = {8} md = {5} component = {Paper} elevation = {6} square>
           <div className = { classes.paper }>
             <Avatar className = { classes.avatar }>
@@ -170,48 +162,51 @@ class Login extends Component {
             </Avatar>
             <Typography component = "h1" variant = "h5"> Login </Typography>
             <form className = { classes.form }>
-              <TextField
-                variant       = "outlined"
-                margin        = "normal"
-                id            = "email"
-                label         = "Email Address"
-                name          = "email"
-                autoComplete  = "email"
-                required
-                fullWidth
-                value         = { this.state.email.value }
-                error         = { this.state.email.hasError }
-                onChange      = { this.handleEmailInput }
-              />
-              <TextField
-                variant       = "outlined"
-                margin        = "normal"
-                id            = "password"
-                label         = "Password"
-                name          = "password"
-                type          = "password"
-                autoComplete  = "current-password"
-                required
-                fullWidth
-                value         = { this.state.password.value }
-                onChange      = { this.handlePasswordInput }
-              />
+              <Grid container spacing = {2}>
+                {/* Name Input */}
+                <Grid item xs = {12}>
+                  <TextField
+                      variant       = "outlined"
+                      margin        = "normal"
+                      id            = "email"
+                      label         = "Email Address"
+                      name          = "email"
+                      autoComplete  = "email"
+                      required
+                      fullWidth
+                      value         = { this.state.email.value }
+                      error         = { this.state.email.hasError }
+                      onChange      = { this.handleEmailInput }
+                  />
+                </Grid>
+                {/* Password Input */}
+                <Grid item xs = {12}>
+                  <TextField
+                      variant       = "outlined"
+                      margin        = "normal"
+                      id            = "password"
+                      label         = "Password"
+                      name          = "password"
+                      type          = "password"
+                      autoComplete  = "current-password"
+                      required
+                      fullWidth
+                      value         = { this.state.password.value }
+                      onChange      = { this.handlePasswordInput }
+                  />
+                </Grid>
+              </Grid>
+              {/* Remember Me */}
               <FormControlLabel
-                control       = {<Checkbox value = "remember" color = "primary" />}
-                label         = "Remember me"
-                onChange      = { this.handleRememberMe }
-              />
+                  control       = {<Checkbox value = "remember" color = "primary" />}
+                  label         = "Remember me"
+                  onChange      = { this.handleRememberMe } />
               <Button
                 fullWidth
                 variant       = "contained"
                 color         = "primary"
                 className     = { classes.submit }
-                onClick       = { this.handleSubmit }>
-                Login
-              </Button>
-              <ErrorDialog open = { this.state.errorDialog }
-                           close = { this.getOpenStateOfErrorDialog }
-                           error = { this.state.errorMessage } />
+                onClick       = { this.handleSubmit }>Login</Button>
               <Grid container>
                 <Grid item xs>
                   <Link component = { RouteLink } to = "/forgetPassword">
@@ -227,6 +222,10 @@ class Login extends Component {
             </form>
           </div>
         </Grid>
+        <ErrorDialog open = { this.state.errorDialog }
+                     close = { this.getOpenStateOfErrorDialog }
+                     error = { this.state.errorMessage } />
+        <LoadingDialog open = { this.state.loading } />
       </Grid>
     );
   };

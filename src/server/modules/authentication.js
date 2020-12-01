@@ -13,7 +13,7 @@ exports.checkEmailExist = async function (req, res) {
 }
 exports.registerAccount = async function (req, res) {
     try {
-        const result = await db.query(`INSERT INTO accounts (name, email, password, phone, gender) VALUES($1,$2,$3,$4, $5)`, [req.body.name, req.body.email, do_hash(req.body.password), req.body.phone, req.body.gender]);
+        const res = await db.query(`INSERT INTO accounts (name, email, password, phone, gender) VALUES($1,$2,$3,$4,$5)`, [req.body.name, req.body.email, do_hash(req.body.password), req.body.phone, req.body.gender]);
         res.status(200).json({registerStatus: true});
     } catch (error) {
         res.status(500).json({registerStatus: false});

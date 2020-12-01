@@ -122,7 +122,6 @@ class AppointmentTable extends Component {
       });
     }
   }
-
   getDiseaseKnown = async (disease) => {
     await this.setState({
       diseaseKnown: disease,
@@ -186,7 +185,7 @@ class AppointmentTable extends Component {
         */}
         <YesNoDialog open = { this.state.yesNoDialog }
                      close =  { this.handleDialogClose }
-                     disease = { this.getDiseaseKnown }
+                     yesno = { this.getDiseaseKnown }
                      content = "Do you know your disease yet?" />
         <SymptomsDialog open = { this.state.symptomsDialog }
                         close = { this.handleDialogClose }
