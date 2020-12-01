@@ -45,6 +45,7 @@ app.post("/user/checkEmailExist", auth.checkEmailExist);
 
 app.post("/appointment/create", appointment.createAppointment);
 app.post("/appointment/all", appointment.queryAllAppointments);
+app.post("/appointment/getUnavailableTime", appointment.getUnavailableTimeSlot);
 
 app.post("/symptom/all", symptom.queryAllSymptoms);
 

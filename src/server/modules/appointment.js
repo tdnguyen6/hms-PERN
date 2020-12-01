@@ -28,26 +28,37 @@ exports.queryAllAppointments = async function(req, res) {
     }
 } 
 
-/* return array of object of symptoms 
-for example
-[
-    {
-        "id": 1,
-        "name": "abdominal pain"
-    },
-    {
-        "id": 2,
-        "name": "chest pain"
+exports.getUnavailableTimeSlot = async function(req, res) {
+    let query = "select at from appointments where practitioner_id = " + req.body.practitionerID
+    console.log(query)
+    
+    try {
+        const result = await db.query(query)
+        const arr = result.rows
+        let unavailableTimeSlots = []
+        
+        arr.forEach(unavailableTimeSlot => {
+            unavailableTimeSlots.push(unavailableTimeSlot.at.getUTCHours())
+        })
+        
+        res.status(200).json({unavailableTime: unavailableTimeSlots})
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({status: false})
     }
-]
-*/
-exports.listDiseases = async function(req, res) {
-    
-    
-    
-    let diseases = await db.query('SELECT * FROM diseases')
-    res.status(200).json(diseases.rows)
 }
 
+exports.getUnavailableTimeSlot2 = async function(req, res) {
+    let query = "select name from diseases"
+    console.log(query)
+    
+    try {
+        const result = await db.query(query)
+        res.status(200).json(result.rows)
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({status: false})
+    }        
+}
 
 
