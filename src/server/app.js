@@ -3,11 +3,13 @@ const app = express();
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session)
 const path = require('path');
+
 const auth = require('./modules/authentication');
 const disease = require('./modules/disease');
 const symptom = require('./modules/symptom');
 const practitioner = require('./modules/practitioner');
 const appointment = require('./modules/appointment');
+const payment = require('./modules/payment');
 
 app.use(express.json());
 app.use(session({
@@ -54,5 +56,7 @@ app.post("/disease/all", disease.queryAllDiseases);
 
 app.post("/practitioner/all", practitioner.queryAllPractitioners)
 app.post("/practitioner/findByDisease", practitioner.findPractitionerByDisease)
+
+app.post("/payment/invoice", payment.generateInvoice)
 
 module.exports = app;
