@@ -11,8 +11,14 @@ exports.createAppointment = async function (req, res) {
 }
 
 exports.queryAllAppointments = async function(req, res) {
+    let queryStatement = "select * from appointments"
+    if (req.session.role = "Patient") queryStatement += " where patient_id = " + req.userID
+    else if (req.session.role = "Practitioner") queryState += " where practitioner_id = " + req.userId
+    
+    console.log(queryStatement)
+    
     try {
-        let result = await db.query("select * from appointments")
+        let result = await db.query(queryStatement)
         res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
