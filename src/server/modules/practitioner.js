@@ -11,7 +11,6 @@ exports.queryAllPractitioners = async function(req, res) {
 }
 
 exports.findPractitionerByDisease = async function(req, res) {
-	
 	// check if req.body.diseaseID is a number
 	if (!Number.isInteger(req.body.diseaseID)) {
 		res.status(400).json({status: false})
@@ -25,7 +24,7 @@ exports.findPractitionerByDisease = async function(req, res) {
 		res.status(200).json(result.rows)
 	} catch (err) {
 		console.log(err)
-		res.status(500).json({status: false})
+		res.status(500).json(null)
 	}
 }
 

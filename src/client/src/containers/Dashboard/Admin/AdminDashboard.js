@@ -48,6 +48,8 @@ import AppointmentTable from '../../Table/AppointmentTable';
 import PractitionerTable from '../../Table/PractitionerTable';
 import PatientTable from '../../Table/PatientTable';
 import DrawerAppBar from '../../Others/DrawerAppBar';
+import Dashboard from "../../../components/Others/Dashboard";
+
 const style = (theme) => ({
   root: {
     display: 'flex'
@@ -67,7 +69,7 @@ const style = (theme) => ({
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
-    height: 680
+    height: 640
   }
 });
 
@@ -85,9 +87,11 @@ class AdminDashboard extends Component {
             <Grid container spacing = {3}>
               <Grid item xs = {12}>
                 <Paper className = { classes.paper }>
-                  <Route path = "/admin/manageAppointment" exact component = { AppointmentTable } />
-                  <Route path = "/admin/managePractitioner" exact component = { PractitionerTable } />
-                  <Route path = "/admin/managePatient" exact component = { PatientTable } />
+                  <Route path = "/admin" exact component = { Dashboard } />
+                  <Route path = "/admin/dashboard" exact component = { Dashboard } />
+                  <Route path = "/admin/appointment" exact component = { AppointmentTable } />
+                  <Route path = "/admin/practitioner" exact component = { PractitionerTable } />
+                  <Route path = "/admin/patient" exact component = { PatientTable } />
                 </Paper>
               </Grid>
             </Grid>

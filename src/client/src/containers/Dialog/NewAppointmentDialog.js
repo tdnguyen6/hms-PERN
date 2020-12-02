@@ -10,6 +10,8 @@ import DialogContent                      from '@material-ui/core/DialogContent'
 import DialogContentText                  from '@material-ui/core/DialogContentText';
 import DialogTitle                        from '@material-ui/core/DialogTitle';
 import MenuItem from "@material-ui/core/MenuItem";
+import {allDisease} from "../../components/API/AllDisease";
+import {practitionerByDisease} from "../../components/API/PractitionerByDisease";
 
 const dateAvailable = [
   'Aug 18',
@@ -23,14 +25,6 @@ const timeAvailable = [
   '7:00',
   '13:00'
 ];
-const diseases = [
-  'A',
-  'B',
-  'C',
-  'D',
-  'E',
-  'F'
-];
 const practitioner = [
   'A',
   'B',
@@ -43,9 +37,12 @@ const practitioner = [
 class NewAppointmentDialog extends Component {
   state = {
     disease: '',
+    practitionerList: [],
     practitioner: '',
+    dateList: [],
     date: '',
-    time: '',
+    timeList: [],
+    time: ''
   };
 
   handleDialogClose = () => {
@@ -62,6 +59,28 @@ class NewAppointmentDialog extends Component {
     this.props.appointment(this.state);
     this.handleDialogClose();
   };
+  handleDiseaseChange = async (event) => {
+    await this.setState({
+      disease: event.target.value
+    });
+    try {
+      await this.props.loading(true);
+      console.log('loading');
+      let res = await practitionerByDisease(this.state.disease);
+      await this.setState({
+        practitionerList: res
+      });
+      console.log(this.state.practitionerList);
+    } finally {
+      await this.props.loading(false);
+      console.log('loaded');
+    }
+  }
+  handlePractitionerChange = async (event) => {
+    await this.setState({
+      practitioner: event.target.value
+    })
+  }
   handleDateChange = async (event) => {
     await this.setState({
       date: event.target.value
@@ -72,16 +91,8 @@ class NewAppointmentDialog extends Component {
       time: event.target.value
     })
   }
-  handleDiseaseChange = async (event) => {
-    await this.setState({
-      disease: event.target.value
-    })
-  }
-  handlePractitionerChange = async (event) => {
-    await this.setState({
-      practitioner: event.target.value
-    })
-  }
+
+
 
   render() {
     return (
@@ -95,33 +106,36 @@ class NewAppointmentDialog extends Component {
             To make new appointment, please enter your information here.
           </DialogContentText>
           {/* Disease */}
-          { this.props.diseaseKnown
-              ? <TextField
-                  autoFocus
-                  fullWidth
-                  select
-                  variant       = "outlined"
-                  margin        = "normal"
-                  id            = "disease"
-                  label         = "Disease"
-                  value         = { this.state.disease }
-                  onChange      = { this.handleDiseaseChange }>{
-                diseases.map((option) => (
-                    <MenuItem key = { option } value = { option }>
-                      { option }
-                    </MenuItem>
-                ))}
-              </TextField>
-              : <TextField
-                  autoFocus
-                  fullWidth
-                  variant       = "outlined"
-                  margin        = "normal"
-                  id            = "disease"
-                  label         = "Disease"
-                  InputProps    = {{ readOnly: true, }}
-                  value         = { this.props.disease }/>
-          }
+          <div>
+            { this.props.diseaseKnown
+                ? <TextField
+                    autoFocus
+                    fullWidth
+                    select
+                    variant       = "outlined"
+                    margin        = "normal"
+                    id            = "disease"
+                    label         = "Disease"
+                    value         = { this.state.disease }
+                    onChange      = { this.handleDiseaseChange }>{
+                  this.props.disease.map((option) => (
+                      <MenuItem key = { option.id } value = { option.id }>
+                        { option.name }
+                      </MenuItem>
+                  ))}
+                </TextField>
+                : <TextField
+                    autoFocus
+                    fullWidth
+                    variant       = "outlined"
+                    margin        = "normal"
+                    id            = "disease"
+                    label         = "Disease"
+                    InputProps    = {{ readOnly: true, }}
+                    value         = { this.props.disease }/>
+            }
+          </div>
+
           {/* Practitioner */}
           <TextField
               autoFocus
@@ -133,9 +147,9 @@ class NewAppointmentDialog extends Component {
               label         = "Practitioner"
               value         = { this.state.practitioner }
               onChange      = { this.handlePractitionerChange }>{
-            practitioner.map((option) => (
-            <MenuItem key = { option } value = { option }>
-              { option }
+            this.state.practitionerList.map((option) => (
+            <MenuItem key = { option.id } value = { option.id }>
+              { option.name }
             </MenuItem>
             ))}
           </TextField>

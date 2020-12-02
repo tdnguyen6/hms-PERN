@@ -56,7 +56,7 @@ exports.queryAllDiseases = async function(req, res) {
 		res.status(200).json(result.rows)
 	} catch (err) {
 		console.log(err)
-		res.status(500).json({listDiseasesSuccessfully: false})
+		res.status(500).json(null)
 	}
 }
 
