@@ -25,6 +25,9 @@ import EditAppointmentDialog              from '../Dialog/EditAppointmentDialog'
 import NewAppointmentDialog              from '../Dialog/NewAppointmentDialog';
 import YesNoDialog                       from "../Dialog/YesNoDialog";
 import SymptomsDialog                    from "../Dialog/SymptomsDialog";
+import {login} from "../../components/API/Login";
+import {allDisease} from "../../components/API/AllDisease";
+import LoadingDialog from "../Dialog/LoadingDialog";
 
 function createData(id, disease, practitioner, room, time, date, status) {
   return { id, disease, practitioner, room, time, date, status };
@@ -71,7 +74,9 @@ class AppointmentTable extends Component {
     newAppointmentDialog: false,
     symptomsDialog: false,
     diseaseKnown: false,
-    diseasePredicted: ''
+    diseasePredicted: '',
+    diseaseList: '',
+    loading: false
   };
   handleRowClick = (event, row) => {
     appointment =  {
@@ -95,6 +100,17 @@ class AppointmentTable extends Component {
   *                 -> New Appointment Dialog
   */
   handleNewClick = async () => {
+    try {
+      await this.setState({ loading: true });
+      console.log('loading');
+      let res = await allDisease();
+      await this.setState({
+        diseaseList: res
+      });
+    } finally {
+      await this.setState( { loading: false });
+      console.log('loaded');
+    }
     await this.setState({
       yesNoDialog: true,
       newAppointmentDialog: false,
@@ -121,6 +137,11 @@ class AppointmentTable extends Component {
         editAppointmentDialog: close
       });
     }
+  }
+  handleLoading = async (loading) => {
+    await this.setState({
+      loading: loading
+    })
   }
   getDiseaseKnown = async (disease) => {
     await this.setState({
@@ -192,12 +213,16 @@ class AppointmentTable extends Component {
                         disease = { this.getDisease } />
         <NewAppointmentDialog open = { this.state.newAppointmentDialog }
                               close = { this.handleDialogClose }
+                              loading = { this.handleLoading }
                               diseaseKnown = { this.state.diseaseKnown }
-                              disease = { (this.state.diseaseKnown) ? '' : this.state.diseasePredicted }
+                              disease = { (this.state.diseaseKnown)
+                                          ? this.state.diseaseList
+                                          : this.state.diseasePredicted }
                               appointment = { this.getAppointment }/>
         <EditAppointmentDialog open = { this.state.editAppointmentDialog }
                                close = { this.handleDialogClose }
                                { ...appointment } />
+        <LoadingDialog open = { this.state.loading } />
       </React.Fragment>
     );
   }

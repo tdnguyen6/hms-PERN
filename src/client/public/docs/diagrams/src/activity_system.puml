@@ -13,7 +13,7 @@ if (want to sign in?) then (yes)
     :Sign In;
     :Dashboard;
     fork
-        :Patient;
+        :Appointment;
             fork
                 :Book an Appointment;
             fork again

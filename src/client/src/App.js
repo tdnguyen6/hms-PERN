@@ -12,6 +12,10 @@ import PractitionerDashboard              from './containers/Dashboard/Practitio
 import AdminDashboard                     from './containers/Dashboard/Admin/AdminDashboard';
 
 import './App.css';
+import AppointmentTable from "./containers/Table/AppointmentTable";
+import PractitionerTable from "./containers/Table/PractitionerTable";
+import PatientTable from "./containers/Table/PatientTable";
+import Paper from "@material-ui/core/Paper";
 
 
 function App() {
@@ -24,7 +28,11 @@ function App() {
         <Route path = "/patient"                        component = { PatientDashboard } />
         <Route path = "/practitioner"                   component = { PractitionerDashboard } />
         <Route path = "/admin"                          component = { AdminDashboard } />
+
+
         <Route path = "/"                               component = { Home } />
+
+
       </Switch>
     </BrowserRouter>
   );

@@ -13,7 +13,7 @@ beforeAll(async () => {
 });
 
 describe.each([
-    ["tidu.nguyen.2000@gmail.com", "Patient", "pass1", 1, null, 1],
+    ["tidu.nguyen.2000@gmail.com", "Appointment", "pass1", 1, null, 1],
     ["tidu@good.edu.vn", "Practitioner", "pass2", 2, 1, null],
     ["tidu@idrive.vn", "Admin", "pass3", 3, null, null]
 ])("Log %s in as %s", (email, expected_role, passwd, expected_id, practitioner_id, patient_id, needed_fields) => {

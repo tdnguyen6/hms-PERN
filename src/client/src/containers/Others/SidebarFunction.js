@@ -13,10 +13,10 @@ import { BrowserRouter, Route, Switch }   from 'react-router-dom';
 import { Link as RouteLink }              from 'react-router-dom';
 
 let admin = [
-  { id: 'Dashboard', link: '/admin'},
-  { id: 'Practitioner', link: '/admin/managePractitioner'},
-  { id: 'Patient', link: '/admin/managePatient'},
-  { id: 'Appointment', link: '/admin/manageAppointment'}
+  { id: 'Dashboard', link: '/admin/dashboard'},
+  { id: 'Practitioner', link: '/admin/practitioner'},
+  { id: 'Patient', link: '/admin/patient'},
+  { id: 'Appointment', link: '/admin/appointment'}
 ];
 
 let practitioner = [
