@@ -16,7 +16,7 @@ exports.findDiseasesBySymptoms = async function(req, res) {
 		
 		let queryString
 		if (arr.length === 1) {
-			queryString = "select ds1.disease_id from diseases_symptoms ds1 where ds1.symptom_id = " + arr[0]
+			queryString = "select ds1.disease_id as id, d.name from diseases_symptoms ds1, diseases d where d.id = ds1.disease_id and ds1.symptom_id = " + arr[0]
 			console.log(queryString)
 		} else {
 			queryString = "select ds1.disease_id from"
