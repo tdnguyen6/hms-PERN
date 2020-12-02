@@ -1,10 +1,7 @@
 import React, { Component }                     from 'react';
 
-import clsx                                     from 'clsx';
-
 import Typography                               from '@material-ui/core/Typography';
 import Button                                   from '@material-ui/core/Button';
-import TextField                                from '@material-ui/core/TextField';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -13,19 +10,12 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import Dialog                             from '@material-ui/core/Dialog';
-import DialogActions                      from '@material-ui/core/DialogActions';
-import DialogContent                      from '@material-ui/core/DialogContent';
-import DialogContentText                  from '@material-ui/core/DialogContentText';
-import DialogTitle                        from '@material-ui/core/DialogTitle';
-
 import { Completed, Upcomming }           from '../../components/Services/AppointmentStatus';
 
 import EditAppointmentDialog              from '../Dialog/EditAppointmentDialog';
 import NewAppointmentDialog              from '../Dialog/NewAppointmentDialog';
 import YesNoDialog                       from "../Dialog/YesNoDialog";
 import SymptomsDialog                    from "../Dialog/SymptomsDialog";
-import {login} from "../../components/API/Login";
 import {allDisease} from "../../components/API/AllDisease";
 import LoadingDialog from "../Dialog/LoadingDialog";
 
@@ -74,8 +64,8 @@ class AppointmentTable extends Component {
     newAppointmentDialog: false,
     symptomsDialog: false,
     diseaseKnown: false,
-    diseasePredicted: '',
-    diseaseList: '',
+    diseasePredicted: [],
+    diseaseList: [],
     loading: false
   };
   handleRowClick = (event, row) => {
@@ -100,13 +90,11 @@ class AppointmentTable extends Component {
   *                 -> New Appointment Dialog
   */
   handleNewClick = async () => {
+    let res;
     try {
       await this.setState({ loading: true });
       console.log('loading');
-      let res = await allDisease();
-      await this.setState({
-        diseaseList: res
-      });
+      res = await allDisease();
     } finally {
       await this.setState( { loading: false });
       console.log('loaded');
@@ -116,7 +104,8 @@ class AppointmentTable extends Component {
       newAppointmentDialog: false,
       symptomsDialog: false,
       diseaseKnown: false,
-      diseasePredicted: ''
+      diseasePredicted: [],
+      diseaseList: res
     });
   };
   handleDialogClose = async (close, type) => {
@@ -210,11 +199,11 @@ class AppointmentTable extends Component {
                      content = "Do you know your disease yet?" />
         <SymptomsDialog open = { this.state.symptomsDialog }
                         close = { this.handleDialogClose }
+                        loading = { this.handleLoading }
                         disease = { this.getDisease } />
         <NewAppointmentDialog open = { this.state.newAppointmentDialog }
                               close = { this.handleDialogClose }
                               loading = { this.handleLoading }
-                              diseaseKnown = { this.state.diseaseKnown }
                               disease = { (this.state.diseaseKnown)
                                           ? this.state.diseaseList
                                           : this.state.diseasePredicted }

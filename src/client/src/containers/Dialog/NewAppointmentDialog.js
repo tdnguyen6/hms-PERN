@@ -12,6 +12,7 @@ import DialogTitle                        from '@material-ui/core/DialogTitle';
 import MenuItem from "@material-ui/core/MenuItem";
 import {allDisease} from "../../components/API/AllDisease";
 import {practitionerByDisease} from "../../components/API/PractitionerByDisease";
+import {availableDateByPractitioner} from "../../components/API/AvailableDateByPractitioner";
 
 const dateAvailable = [
   'Aug 18',
@@ -79,17 +80,26 @@ class NewAppointmentDialog extends Component {
   handlePractitionerChange = async (event) => {
     await this.setState({
       practitioner: event.target.value
-    })
+    });
+    try {
+      await this.props.loading(true);
+      console.log("loading");
+      let res = await availableDateByPractitioner(this.state.practitioner);
+      console.log(res);
+    } finally {
+      await this.props.loading(false);
+      console.log("loaded");
+    }
   }
   handleDateChange = async (event) => {
     await this.setState({
       date: event.target.value
-    })
+    });
   }
   handleTimeChange = async (event) => {
     await this.setState({
       time: event.target.value
-    })
+    });
   }
 
 
@@ -107,52 +117,42 @@ class NewAppointmentDialog extends Component {
           </DialogContentText>
           {/* Disease */}
           <div>
-            { this.props.diseaseKnown
-                ? <TextField
-                    autoFocus
-                    fullWidth
-                    select
-                    variant       = "outlined"
-                    margin        = "normal"
-                    id            = "disease"
-                    label         = "Disease"
-                    value         = { this.state.disease }
-                    onChange      = { this.handleDiseaseChange }>{
-                  this.props.disease.map((option) => (
-                      <MenuItem key = { option.id } value = { option.id }>
-                        { option.name }
-                      </MenuItem>
-                  ))}
-                </TextField>
-                : <TextField
-                    autoFocus
-                    fullWidth
-                    variant       = "outlined"
-                    margin        = "normal"
-                    id            = "disease"
-                    label         = "Disease"
-                    InputProps    = {{ readOnly: true, }}
-                    value         = { this.props.disease }/>
-            }
+            <TextField
+                autoFocus
+                fullWidth
+                select
+                variant       = "outlined"
+                margin        = "normal"
+                id            = "disease"
+                label         = "Disease"
+                value         = { this.state.disease }
+                onChange      = { this.handleDiseaseChange }>{
+                this.props.disease.map((option) => (
+                    <MenuItem key = { option.id } value = { option.id }>
+                      { option.name }
+                    </MenuItem>
+                ))}
+            </TextField>
           </div>
-
           {/* Practitioner */}
-          <TextField
-              autoFocus
-              fullWidth
-              select
-              variant       = "outlined"
-              margin        = "normal"
-              id            = "practitioner"
-              label         = "Practitioner"
-              value         = { this.state.practitioner }
-              onChange      = { this.handlePractitionerChange }>{
-            this.state.practitionerList.map((option) => (
-            <MenuItem key = { option.id } value = { option.id }>
-              { option.name }
-            </MenuItem>
-            ))}
-          </TextField>
+          <div>
+            <TextField
+                autoFocus
+                fullWidth
+                select
+                variant       = "outlined"
+                margin        = "normal"
+                id            = "practitioner"
+                label         = "Practitioner"
+                value         = { this.state.practitioner }
+                onChange      = { this.handlePractitionerChange }>{
+              this.state.practitionerList.map((option) => (
+                  <MenuItem key = { option.id } value = { option.id }>
+                    { option.name }
+                  </MenuItem>
+              ))}
+            </TextField>
+          </div>
           {/* Date */}
           <TextField
               autoFocus

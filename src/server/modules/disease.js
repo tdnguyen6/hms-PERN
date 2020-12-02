@@ -10,7 +10,7 @@ exports.findDiseasesBySymptoms = async function(req, res) {
 		console.log(req.body.symptoms)
 		let arr = req.body.symptoms
 		if (!arr || arr.length == 0) {
-			res.status(500).json({successfuly_list_diseases: false})
+			res.status(400).json(null)
 			return
 		}
 		
@@ -46,7 +46,7 @@ exports.findDiseasesBySymptoms = async function(req, res) {
 		res.status(200).json(result.rows)
 	} catch (err) {
 		console.log(err)
-		res.status(500).json({findDiseasesBySymptomsSuccessfully: false})
+		res.status(500).json(null)
 	}
 }
 

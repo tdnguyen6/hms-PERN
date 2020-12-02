@@ -10,6 +10,8 @@ import DialogContent                      from '@material-ui/core/DialogContent'
 import DialogContentText                  from '@material-ui/core/DialogContentText';
 import DialogTitle                        from '@material-ui/core/DialogTitle';
 import Button from "@material-ui/core/Button";
+import {diseaseBySymptom} from "../../components/API/DiseaseBySymptom";
+import {allDisease} from "../../components/API/AllDisease";
 
 let symptoms = [
     {
@@ -303,28 +305,36 @@ class SymptomsDialog extends Component {
     state = {
         listOfSymptom: ''
     };
-    handleDialogClose = () => {
+    handleDialogClose = async () => {
+        await this.setState({ listOfSymptom: '' });
         // send close state back to parent: AppointmentTable
         this.props.close(false, "symptoms");
     }
-    handleDiseasePredict = () => {
-        this.props.disease('norovirus');
+    handleDiseasePredict = async () => {
+        try {
+            await this.props.loading(true);
+            console.log('loading');
+            console.log('disease predict test', this.state.listOfSymptom);
+            let res = await diseaseBySymptom(this.state.listOfSymptom);
+            console.log('disease by symptom res', res);
+            await this.props.disease(res);
+        } finally {
+            await this.props.loading(false);
+            console.log('loaded');
+        }
     }
-    handleCheckBoxChange = (event) => {
+    handleCheckBoxChange = async (event) => {
         let tmpListOfSymptom = this.state.listOfSymptom;
         if (event.target.checked && !tmpListOfSymptom.includes(event.target.id)) {
             tmpListOfSymptom += event.target.id + ' ';
         }
-        this.setState({
+        await this.setState({
             listOfSymptom: tmpListOfSymptom
         });
     }
-    handleSave = () => {
-        this.setState({
-            listOfSymptom: ''
-        });
-        this.handleDiseasePredict();
-        this.handleDialogClose();
+    handleSave = async () => {
+        await this.handleDiseasePredict();
+        await this.handleDialogClose();
     }
 
     render() {

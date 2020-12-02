@@ -44,14 +44,14 @@ exports.getAvailableTimeSlot = async function(req, res) {
         
         let availableTimeSlots = []
         // initialize available time slots from 0 -> 23
-        for (let i=0; i<=23; i++) availableTimeSlots.push(i)
+        for (let i = 9; i <= 17; i++) availableTimeSlots.push(i)
         
         availableTimeSlots = availableTimeSlots.filter(timeSlot => !unAvailableTimeSlots.includes(timeSlot))
         
         res.status(200).json({availableTime: availableTimeSlots})
     } catch (err) {
         console.log(err)
-        res.status(500).json({status: false})
+        res.status(500).json(null)
     }
 }
 
@@ -64,7 +64,7 @@ exports.getAvailableDate = async function(req, res) {
         res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
-        res.status(500).json({status: false})
+        res.status(500).json(null)
     }
 }
 
