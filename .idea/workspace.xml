@@ -19,31 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="add api to dialog and table.">
-      <change afterPath="$PROJECT_DIR$/src/client/src/components/API/AllSymptom.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/NewDialog/NewPractitionerDialog.js" afterDir="false" />
+    <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="add search function / add api / add practitioner table">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/src/components/API/DiseaseBySymptom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/API/DiseaseBySymptom.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Authentication/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Authentication/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Authentication/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Authentication/Register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dashboard/Admin/AdminDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dashboard/Admin/AdminDashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/DiseaseInfoDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/InfoDialog/DiseaseInfoDialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/EditAppointmentDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/EditDialog/EditAppointmentDialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/EditPatientDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/EditDialog/EditPatientDialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/EditPractitionerDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/EditDialog/EditPractitionerDialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/ErrorDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/OtherDialog/ErrorDialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/LoadingDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/OtherDialog/LoadingDialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/NewAppointmentDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/NewDialog/NewAppointmentDialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/PractitionerInfoDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/InfoDialog/PractitionerInfoDialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/SymptomsDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/OtherDialog/SymptomsDialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/YesNoDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/OtherDialog/YesNoDialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Table/AppointmentTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Table/Admin/AppointmentTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Table/PatientAppointmentTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Table/Patient/AppointmentTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Table/PatientTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Table/Admin/PatientTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Table/PractitionerAppointmentTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Table/Practitioner/AppointmentTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Table/PractitionerTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Table/Admin/PractitionerTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/modules/symptom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/modules/symptom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/OtherDialog/SymptomsDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/OtherDialog/SymptomsDialog.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +105,8 @@
       <workItem from="1606702860190" duration="10843000" />
       <workItem from="1606786385775" duration="34526000" />
       <workItem from="1606893335392" duration="717000" />
-      <workItem from="1606957991189" duration="11851000" />
+      <workItem from="1606957991189" duration="11898000" />
+      <workItem from="1606981464652" duration="6817000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'authentication-page' of https://github.com/tidunguyen/hms-PERN into authentication-page&#10;&#10;# Conflicts:&#10;#&#9;src/server/modules/authentication.js">
       <created>1606406643270</created>
@@ -232,7 +213,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606894700698</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="add search function / add api / add practitioner table">
+      <created>1606970769123</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1606970769123</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -267,7 +255,8 @@
     <MESSAGE value="add avatar (comment, not yet)" />
     <MESSAGE value="add api to appointment table" />
     <MESSAGE value="add api to dialog and table." />
-    <option name="LAST_COMMIT_MESSAGE" value="add api to dialog and table." />
+    <MESSAGE value="add search function / add api / add practitioner table" />
+    <option name="LAST_COMMIT_MESSAGE" value="add search function / add api / add practitioner table" />
   </component>
   <component name="WindowStateProjectService">
     <state x="410" y="110" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606786833948">
@@ -315,14 +304,14 @@
     </state>
     <state x="346" y="155" width="900" height="728" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1606803202959" />
     <state x="461" y="186" width="997" height="700" key="SettingsEditor/0.0.1920.1080/1920.0.1920.1080@0.0.1920.1080" timestamp="1606702854614" />
-    <state x="320" y="187" key="Vcs.Push.Dialog.v2" timestamp="1606894703243">
+    <state x="320" y="187" key="Vcs.Push.Dialog.v2" timestamp="1606970774444">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="320" y="187" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1606894703243" />
-    <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606894677677">
+    <state x="320" y="187" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1606970774444" />
+    <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606970735653">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1606894677677" />
+    <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1606970735653" />
     <state x="421" y="82" width="597" height="735" key="find.popup" timestamp="1606800409935">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

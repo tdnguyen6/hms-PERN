@@ -12,6 +12,10 @@ import DialogTitle                        from '@material-ui/core/DialogTitle';
 import Button from "@material-ui/core/Button";
 import {diseaseBySymptom} from "../../../components/API/DiseaseBySymptom";
 import TextField from "@material-ui/core/TextField";
+import Chip from "@material-ui/core/Chip";
+import {withStyles} from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import index from "recharts/demo/component";
 
 /*
 Children of NewAppointmentDialog.
@@ -19,15 +23,31 @@ In NewAppointmentDialog, when user click disease textfield, this dialog is trigg
 This query all symptoms (API1) and displays as list of checkbox,
 This also request disease prediction after sending all checked symptoms (API2)
  */
+
+const style = (theme) => ({
+    root: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        listStyle: 'none',
+        padding: theme.spacing(0.5),
+        margin: 0,
+    },
+    chip: {
+        margin: theme.spacing(0.5),
+    },
+});
+
 class SymptomsDialog extends Component {
     state = {
-        listOfSymptom: '',
         searchInput: '',
+        listOfSymptom: [],
         checkedListOfSymptom: [],
-        filteredListOfSymptom: [],
+        checkedListOfSymptomID: [],
+        filteredListOfSymptom: this.props.symptom,
     };
     handleDialogClose = async () => {
-        await this.setState({ listOfSymptom: '' });
+        await this.setState({ listOfSymptom: [] });
         // send close state back to parent: AppointmentTable
         this.props.close(false, "symptoms");
     }
@@ -35,8 +55,8 @@ class SymptomsDialog extends Component {
         try {
             await this.props.loading(true);
             console.log('loading');
-            console.log('disease predict test', this.state.listOfSymptom);
-            let res = await diseaseBySymptom(this.state.listOfSymptom);
+            console.log('disease predict test', this.state.checkedListOfSymptomID);
+            let res = await diseaseBySymptom(this.state.checkedListOfSymptomID);
             console.log('disease by symptom res', res);
             await this.props.disease(res);
         } finally {
@@ -45,16 +65,7 @@ class SymptomsDialog extends Component {
         }
     }
     handleCheckBoxChange = async (event) => {
-        let tmpListOfSymptom = this.state.listOfSymptom;
-        let tmpCheckedListOfSymptom = this.state.checkedListOfSymptom;
-        if (event.target.checked && !tmpListOfSymptom.includes(event.target.id)) {
-            tmpListOfSymptom += event.target.id + ' ';
-            tmpCheckedListOfSymptom.push({id: event.target.id, name: event.target.name});
-        }
-        await this.setState({
-            listOfSymptom: tmpListOfSymptom,
-            checkedListOfSymptom: tmpCheckedListOfSymptom
-        });
+
     }
     handleSearch = async (event) => {
         let input = event.target.value;
@@ -66,68 +77,103 @@ class SymptomsDialog extends Component {
         });
         await this.setState({
             filteredListOfSymptom: filtered
-        })
-        console.log(this.state.filteredListOfSymptom);
+        });
     }
+
+    handleChipClick = async (chip) => {
+        let selectedChip = this.props.symptom.find((symptom) => symptom.id === chip.id);
+        let checkedChip = this.state.checkedListOfSymptom;
+        let checkedChipID = this.state.checkedListOfSymptomID;
+        if (!checkedChip.includes(selectedChip)) {
+            checkedChip.push(selectedChip);
+            checkedChipID.push(selectedChip.id);
+        }
+        await this.setState({
+            checkedListOfSymptom: checkedChip,
+            checkedListOfSymptomID: checkedChipID
+        });
+
+        console.log('click', checkedChip);
+    };
+    handleChipDelete = async (chip) => {
+        let checkedChip = this.state.checkedListOfSymptom;
+        let checkedChipID = this.state.checkedListOfSymptomID;
+        console.log('delete', checkedChip);
+        let selectedChip = checkedChip.find((symptom) => symptom.id === chip.id);
+        let indexOfSelectedChip = checkedChip.indexOf(selectedChip);
+        if (indexOfSelectedChip > -1) {
+            checkedChip.splice(indexOfSelectedChip, 1);
+            checkedChipID.splice(indexOfSelectedChip, 1);
+        }
+        await this.setState({
+            checkedListOfSymptom: checkedChip,
+            checkedListOfSymptomID: checkedChipID
+        });
+
+        console.log('delete', checkedChip);
+    };
+
     handleSave = async () => {
         await this.handleDiseasePredict();
         await this.handleDialogClose();
     }
 
     render() {
-        let splitter = Math.ceil(this.props.symptom.length / 3);
-        let symptomColumns = [this.props.symptom.slice(0, splitter),
-                              this.props.symptom.slice(splitter, 2 * splitter),
-                              this.props.symptom.slice(2 * splitter)];
+        const { classes } = this.props;
         return (
             <Dialog
-                maxWidth={"xl"}
+                fullWidth
                 open              = { this.props.open }
                 onClose           = { this.handleDialogClose }
                 aria-describedby  = "alert-dialog-description">
+                <DialogTitle id="form-dialog-title">Symptom Log</DialogTitle>
                 <DialogContent>
-                    <DialogTitle id="form-dialog-title">Symptom Log</DialogTitle>
                     <DialogContentText id = "alert-dialog-description">
                         What's your symptoms babe?
                     </DialogContentText>
-                    <Grid container fullWidth spacing = {12}>
-                        <Grid item xs = {12}>
-                            <TextField
-                                required fullWidth autoFocus
-                                autoComplete  = "name"
-                                name          = "Name"
-                                variant       = "outlined"
-                                id            = "Name"
-                                label         = "Name"
-                                value         = { this.state.searchInput }
-                                onChange      = { this.handleSearch }/>
-                        </Grid>
+                    <Grid container spacing = {3}>
                         {/* Checked Symptoms */}
-                        <Grid item xs>{
+                        <Grid item xs className = { classes.root }>{
                             this.state.checkedListOfSymptom.map((symptom) => {
-                                    return (<FormControlLabel
-                                        control = { <Checkbox
-                                            name = { symptom.name }
-                                            id = { symptom.id }
-                                            onChange = { this.handleCheckBoxChange }
-                                            color = "primary"/> }
-                                        label = { symptom.name }
-                                        style = {{ display: "inline-block", width: "100%" }}/>);
+                                    return (
+                                        <span key = { symptom.id }>
+                                          <Chip
+                                              clickable
+                                              color = "secondary"
+                                              label = { symptom.name }
+                                              onDelete = { () => this.handleChipDelete(symptom) }
+                                              onClick = { () => this.handleChipDelete(symptom) }
+                                              className = { classes.chip }
+                                          />
+                                        </span>
+                                    );
                                 }
                             )
                         }</Grid>
-                        <Grid item xs>{
+                        <Grid item xs = {12}>
+                            <TextField
+                                required fullWidth autoFocus
+                                name          = "Symptom"
+                                variant       = "outlined"
+                                id            = "Symptom"
+                                label         = "Symptom"
+                                value         = { this.state.searchInput }
+                                onChange      = { this.handleSearch }/>
+                        </Grid>
+                        <Grid item xs className = { classes.root }>{
                             this.state.filteredListOfSymptom.map((symptom) => {
-                                    return (<FormControlLabel
-                                        control = { <Checkbox
-                                            name = { symptom.name }
-                                            id = { symptom.id }
-                                            onChange = { this.handleCheckBoxChange }
-                                            color = "primary"/> }
-                                        label = { symptom.name }
-                                        style = {{ display: "inline-block", width: "100%" }}/>);
-                                }
-                            )
+                                    return (
+                                        <span key = { symptom.id }>
+                                            <Chip
+                                                clickable
+                                                color = "primary"
+                                                label = { symptom.name }
+                                                onClick = { () => this.handleChipClick(symptom) }
+                                                className = { classes.chip }
+                                            />
+                                        </span>
+                                    );
+                                })
                         }</Grid>
                     </Grid>
                 </DialogContent>
@@ -141,4 +187,4 @@ class SymptomsDialog extends Component {
     }
 }
 
-export default SymptomsDialog;
+export default withStyles(style, { withTheme: true })(SymptomsDialog);

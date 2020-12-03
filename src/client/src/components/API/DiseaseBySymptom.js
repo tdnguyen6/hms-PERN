@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const diseaseBySymptom = async (listOfSymptoms) => {
     let data = {
-        symptoms: listOfSymptoms.substring(0, listOfSymptoms.length - 1).split(' ')
+        symptoms: listOfSymptoms
     }
 
     console.log('disease predict input test at api', data.symptoms);
