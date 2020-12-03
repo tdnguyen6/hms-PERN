@@ -42,7 +42,7 @@ let rows = [
   createData('10', 'A', 18, 'F', 'A', 'A1.104', '18:00', 'Aug 18', true),
 ];
 
-class PractitionerAppointmentTable extends Component {
+class AppointmentTable extends Component {
   state = {
     editDialog: false,
     newDialog: false
@@ -225,4 +225,4 @@ class PractitionerAppointmentTable extends Component {
   }
 }
 
-export default PractitionerAppointmentTable;
+export default AppointmentTable;

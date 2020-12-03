@@ -19,10 +19,10 @@ import DialogContent                      from '@material-ui/core/DialogContent'
 import DialogContentText                  from '@material-ui/core/DialogContentText';
 import DialogTitle                        from '@material-ui/core/DialogTitle';
 
-import { Completed, Upcomming }           from '../../components/Services/AppointmentStatus';
+import { Completed, Upcomming }           from '../../../components/Services/AppointmentStatus';
 
-import EditAppointmentDialog              from '../Dialog/EditAppointmentDialog';
-import NewAppointmentDialog              from '../Dialog/EditAppointmentDialog';
+import EditAppointmentDialog              from '../../Dialog/EditDialog/EditAppointmentDialog';
+import NewAppointmentDialog              from '../../Dialog/EditDialog/EditAppointmentDialog';
 
 function createData(A, B, C, D, E, F) {
   return { A, B, C, D, E, F };

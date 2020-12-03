@@ -44,9 +44,9 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import MenuIcon                                 from '@material-ui/icons/Menu';
 import ChevronLeftIcon                          from '@material-ui/icons/ChevronLeft';
 
-import AppointmentTable from '../../Table/AppointmentTable';
-import PractitionerTable from '../../Table/PractitionerTable';
-import PatientTable from '../../Table/PatientTable';
+import AppointmentTable from '../../Table/Admin/AppointmentTable';
+import PractitionerTable from '../../Table/Admin/PractitionerTable';
+import PatientTable from '../../Table/Admin/PatientTable';
 import DrawerAppBar from '../../Others/DrawerAppBar';
 import Dashboard from "../../../components/Others/Dashboard";
 

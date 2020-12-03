@@ -12,9 +12,9 @@ import PractitionerDashboard              from './containers/Dashboard/Practitio
 import AdminDashboard                     from './containers/Dashboard/Admin/AdminDashboard';
 
 import './App.css';
-import AppointmentTable from "./containers/Table/AppointmentTable";
-import PractitionerTable from "./containers/Table/PractitionerTable";
-import PatientTable from "./containers/Table/PatientTable";
+import AppointmentTable from "./containers/Table/Admin/AppointmentTable";
+import PractitionerTable from "./containers/Table/Admin/PractitionerTable";
+import PatientTable from "./containers/Table/Admin/PatientTable";
 import Paper from "@material-ui/core/Paper";
 
 

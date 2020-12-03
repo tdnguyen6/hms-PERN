@@ -19,7 +19,7 @@ import DialogContent                      from '@material-ui/core/DialogContent'
 import DialogContentText                  from '@material-ui/core/DialogContentText';
 import DialogTitle                        from '@material-ui/core/DialogTitle';
 
-import { Completed, Upcomming }           from '../../components/Services/AppointmentStatus';
+import { Completed, Upcomming }           from '../../../components/Services/AppointmentStatus';
 
 function createData(id, disease, practitioner, room, time, date, status) {
   return { id, disease, practitioner, room, time, date, status };
@@ -52,7 +52,7 @@ let columns = [
   { id: 'status', label: 'Status', align: 'right'}
 ]
 
-class PatientAppointmentTable extends Component {
+class AppointmentTable extends Component {
   state = {
     editDialog: false,
     newDialog: false
@@ -227,4 +227,4 @@ class PatientAppointmentTable extends Component {
   }
 }
 
-export default PatientAppointmentTable;
+export default AppointmentTable;

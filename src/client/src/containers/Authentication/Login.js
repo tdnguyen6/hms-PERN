@@ -21,8 +21,8 @@ import { validate }                       from '../../components/Services/Valida
 // API -----------------------------------
 import { login }                          from "../../components/API/Login";
 
-import ErrorDialog                        from '../Dialog/ErrorDialog';
-import LoadingDialog                      from "../Dialog/LoadingDialog";
+import ErrorDialog                        from '../Dialog/OtherDialog/ErrorDialog';
+import LoadingDialog                      from "../Dialog/OtherDialog/LoadingDialog";
 
 const style = (theme) => ({
   root: {

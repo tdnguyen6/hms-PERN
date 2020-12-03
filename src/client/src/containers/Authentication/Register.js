@@ -32,8 +32,8 @@ import { checkEmailExist }                from '../../components/API/CheckEmailE
 import { register }                       from '../../components/API/Register';
 import MenuItem from "@material-ui/core/MenuItem";
 import {login} from "../../components/API/Login";
-import ErrorDialog from "../Dialog/ErrorDialog";
-import LoadingDialog from "../Dialog/LoadingDialog";
+import ErrorDialog from "../Dialog/OtherDialog/ErrorDialog";
+import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {

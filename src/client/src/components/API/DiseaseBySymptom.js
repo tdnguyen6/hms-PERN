@@ -10,8 +10,11 @@ export const diseaseBySymptom = async (listOfSymptoms) => {
     let res;
     try {
         res = await axios.post('http://localhost:3001/disease/findDiseases', data);
+        console.log('disease returned in api', res.data);
         return res.data;
     } catch (error) {
-        if (error.response.status === 500 || error.response.status === 400) return null;
+        console.log('disease error', error.response.status);
+        if (error.response.status === 400) return null;
+        else if (error.response.status === 500) return [{id: 0, name: 'No disease found'}];
     }
 }

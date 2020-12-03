@@ -10,14 +10,15 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import { Completed, Upcomming }           from '../../components/Services/AppointmentStatus';
+import { Completed, Upcomming }           from '../../../components/Services/AppointmentStatus';
 
-import EditAppointmentDialog              from '../Dialog/EditAppointmentDialog';
-import NewAppointmentDialog              from '../Dialog/NewAppointmentDialog';
-import YesNoDialog                       from "../Dialog/YesNoDialog";
-import SymptomsDialog                    from "../Dialog/SymptomsDialog";
-import {allDisease} from "../../components/API/AllDisease";
-import LoadingDialog from "../Dialog/LoadingDialog";
+import EditAppointmentDialog              from '../../Dialog/EditDialog/EditAppointmentDialog';
+import NewAppointmentDialog              from '../../Dialog/NewDialog/NewAppointmentDialog';
+import YesNoDialog                       from "../../Dialog/OtherDialog/YesNoDialog";
+import SymptomsDialog                    from "../../Dialog/OtherDialog/SymptomsDialog";
+import {allDisease} from "../../../components/API/AllDisease";
+import LoadingDialog from "../../Dialog/OtherDialog/LoadingDialog";
+import {allSymptom} from "../../../components/API/AllSymptom";
 
 function createData(id, disease, practitioner, room, time, date, status) {
   return { id, disease, practitioner, room, time, date, status };
@@ -57,15 +58,16 @@ let appointment = {
   status: ''
 };
 
-class PractitionerTable extends Component {
+class AppointmentTable extends Component {
   state = {
     editAppointmentDialog: false,
     yesNoDialog: false,
     newAppointmentDialog: false,
     symptomsDialog: false,
+    symptomList: [],
     diseaseKnown: false,
-    diseasePredicted: '',
-    diseaseList: '',
+    diseasePredicted: [],
+    diseaseList: [],
     loading: false
   };
   handleRowClick = (event, row) => {
@@ -90,13 +92,14 @@ class PractitionerTable extends Component {
   *                 -> New Appointment Dialog
   */
   handleNewClick = async () => {
+    let diseases;
+    let symptoms;
     try {
       await this.setState({ loading: true });
       console.log('loading');
-      let res = await allDisease();
-      await this.setState({
-        diseaseList: res
-      });
+      diseases = await allDisease();
+      symptoms = await allSymptom();
+      console.log('symptomList', symptoms);
     } finally {
       await this.setState( { loading: false });
       console.log('loaded');
@@ -105,8 +108,10 @@ class PractitionerTable extends Component {
       yesNoDialog: true,
       newAppointmentDialog: false,
       symptomsDialog: false,
+      symptomList: symptoms,
       diseaseKnown: false,
-      diseasePredicted: ''
+      diseasePredicted: [],
+      diseaseList: diseases
     });
   };
   handleDialogClose = async (close, type) => {
@@ -151,71 +156,72 @@ class PractitionerTable extends Component {
   }
   render() {
     return (
-        <React.Fragment>
-          <Typography component = "h2" variant = "h6" color = "primary" gutterBottom>Upcomming appointment</Typography>
-          <TableContainer>
-            <Table size = "medium" stickyHeader>
-              <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                      <TableCell key = { column.id } align = { column.align }>
-                        { (column.label === 'Status')
-                            ? <Button variant       = "contained"
-                                      color         = "primary"
-                                      align         = "right"
-                                      onClick       = { this.handleNewClick }>
-                              New
-                            </Button>
-                            : column.label }
-                      </TableCell>
+      <React.Fragment>
+        <Typography component = "h2" variant = "h6" color = "primary" gutterBottom>Upcomming appointment</Typography>
+        <TableContainer>
+          <Table size = "medium" stickyHeader>
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                    <TableCell key = { column.id } align = { column.align }>
+                      { (column.label === 'Status')
+                        ? <Button variant       = "contained"
+                                  color         = "primary"
+                                  align         = "right"
+                                  onClick       = { this.handleNewClick }>
+                            New
+                          </Button>
+                        : column.label }
+                    </TableCell>
                   ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                { rows.map((row) => {
-                  return (
-                      <TableRow hover key = { row.id } onClick = { (event) => this.handleRowClick(event, row) }>
-                        { columns.map((column) => {
-                          return (
-                              <TableCell key = { column.id } align = { column.align }>
-                                { (column.id === 'status')
-                                    ? row[column.id] ? Upcomming : Completed
-                                    : row[column.id] }
-                              </TableCell>
-                          );
-                        })}
-                      </TableRow>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              { rows.map((row) => {
+                return (
+                    <TableRow hover key = { row.id } onClick = { (event) => this.handleRowClick(event, row) }>
+                      { columns.map((column) => {
+                        return (
+                          <TableCell key = { column.id } align = { column.align }>
+                            { (column.id === 'status')
+                            ? row[column.id] ? Upcomming : Completed
+                            : row[column.id] }
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
                   );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          {/*
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {/*
           - open and close props will send data back to its child component: EditAppointmentDialog.
           - getOpenState will receive data which been sent from its child component EditAppointmentDialog.
         */}
-          <YesNoDialog open = { this.state.yesNoDialog }
-                       close =  { this.handleDialogClose }
-                       yesno = { this.getDiseaseKnown }
-                       content = "Do you know your disease yet?" />
-          <SymptomsDialog open = { this.state.symptomsDialog }
-                          close = { this.handleDialogClose }
-                          disease = { this.getDisease } />
-          <NewAppointmentDialog open = { this.state.newAppointmentDialog }
-                                close = { this.handleDialogClose }
-                                loading = { this.handleLoading }
-                                diseaseKnown = { this.state.diseaseKnown }
-                                disease = { (this.state.diseaseKnown)
-                                    ? this.state.diseaseList
-                                    : this.state.diseasePredicted }
-                                appointment = { this.getAppointment }/>
-          <EditAppointmentDialog open = { this.state.editAppointmentDialog }
-                                 close = { this.handleDialogClose }
-                                 { ...appointment } />
-          <LoadingDialog open = { this.state.loading } />
-        </React.Fragment>
+        <YesNoDialog open = { this.state.yesNoDialog }
+                     close =  { this.handleDialogClose }
+                     yesno = { this.getDiseaseKnown }
+                     content = "Do you know your disease yet?" />
+        <SymptomsDialog open = { this.state.symptomsDialog }
+                        close = { this.handleDialogClose }
+                        loading = { this.handleLoading }
+                        symptom = { this.state.symptomList }
+                        disease = { this.getDisease } />
+        <NewAppointmentDialog open = { this.state.newAppointmentDialog }
+                              close = { this.handleDialogClose }
+                              loading = { this.handleLoading }
+                              disease = { (this.state.diseaseKnown)
+                                          ? this.state.diseaseList
+                                          : this.state.diseasePredicted }
+                              appointment = { this.getAppointment }/>
+        <EditAppointmentDialog open = { this.state.editAppointmentDialog }
+                               close = { this.handleDialogClose }
+                               { ...appointment } />
+        <LoadingDialog open = { this.state.loading } />
+      </React.Fragment>
     );
   }
 }
 
-export default PractitionerTable;
+export default AppointmentTable;

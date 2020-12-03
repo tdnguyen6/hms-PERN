@@ -10,9 +10,10 @@ import DialogContent                      from '@material-ui/core/DialogContent'
 import DialogContentText                  from '@material-ui/core/DialogContentText';
 import DialogTitle                        from '@material-ui/core/DialogTitle';
 import MenuItem from "@material-ui/core/MenuItem";
-import {allDisease} from "../../components/API/AllDisease";
-import {practitionerByDisease} from "../../components/API/PractitionerByDisease";
-import {availableDateByPractitioner} from "../../components/API/AvailableDateByPractitioner";
+import {allDisease} from "../../../components/API/AllDisease";
+import {practitionerByDisease} from "../../../components/API/PractitionerByDisease";
+import {availableDateByPractitioner} from "../../../components/API/AvailableDateByPractitioner";
+import Grid from "@material-ui/core/Grid";
 
 const dateAvailable = [
   'Aug 18',
@@ -112,81 +113,90 @@ class NewAppointmentDialog extends Component {
         aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Make new appointment</DialogTitle>
         <DialogContent>
-          <DialogContentText id = "alert-dialog-description">
-            To make new appointment, please enter your information here.
-          </DialogContentText>
-          {/* Disease */}
-          <div>
-            <TextField
-                autoFocus
-                fullWidth
-                select
-                variant       = "outlined"
-                margin        = "normal"
-                id            = "disease"
-                label         = "Disease"
-                value         = { this.state.disease }
-                onChange      = { this.handleDiseaseChange }>{
+          <Grid containter>
+            {/* Dialog Content */}
+            <Grid item xs = {12}>
+              <DialogContentText id = "alert-dialog-description">
+                To make new appointment, please enter your information here.
+              </DialogContentText>
+            </Grid>
+            {/* Disease */}
+            <Grid item xs = {12}>
+              <TextField
+                  autoFocus
+                  fullWidth
+                  select
+                  variant       = "outlined"
+                  margin        = "normal"
+                  id            = "disease"
+                  label         = "Disease"
+                  value         = { this.state.disease }
+                  onChange      = { this.handleDiseaseChange }>{
                 this.props.disease.map((option) => (
                     <MenuItem key = { option.id } value = { option.id }>
                       { option.name }
                     </MenuItem>
                 ))}
-            </TextField>
-          </div>
-          {/* Practitioner */}
-          <div>
-            <TextField
-                autoFocus
-                fullWidth
-                select
-                variant       = "outlined"
-                margin        = "normal"
-                id            = "practitioner"
-                label         = "Practitioner"
-                value         = { this.state.practitioner }
-                onChange      = { this.handlePractitionerChange }>{
-              this.state.practitionerList.map((option) => (
-                  <MenuItem key = { option.id } value = { option.id }>
-                    { option.name }
-                  </MenuItem>
-              ))}
-            </TextField>
-          </div>
-          {/* Date */}
-          <TextField
-              autoFocus
-              fullWidth
-              select
-              variant       = "outlined"
-              margin        = "normal"
-              id            = "date"
-              label         = "Date"
-              value         = { this.state.date }
-              onChange      = { this.handleDateChange }>{
-            dateAvailable.map((option) => (
-                <MenuItem key = { option } value = { option }>
-                  { option }
-                </MenuItem>
-            ))}
-          </TextField>
-          {/* Time */}
-          <TextField
-              autoFocus
-              fullWidth
-              select
-              variant       = "outlined"
-              margin        = "normal"
-              id            = "time"
-              label         = "Time"
-              value         = { this.state.time }
-              onChange      = { this.handleTimeChange }>{
-              timeAvailable.map((option) => (
-                  <MenuItem key = { option } value = { option }>
-                    { option }
-                  </MenuItem>
-              ))}
-          </TextField>
+              </TextField>
+            </Grid>
+            {/* Practitioner */}
+            <Grid item xs = {12}>
+              <TextField
+                  autoFocus
+                  fullWidth
+                  select
+                  variant       = "outlined"
+                  margin        = "normal"
+                  id            = "practitioner"
+                  label         = "Practitioner"
+                  value         = { this.state.practitioner }
+                  onChange      = { this.handlePractitionerChange }>{
+                this.state.practitionerList.map((option) => (
+                    <MenuItem key = { option.id } value = { option.id }>
+                      { option.name }
+                    </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            {/* Date */}
+            <Grid item xs = {12}>
+              <TextField
+                  autoFocus
+                  fullWidth
+                  select
+                  variant       = "outlined"
+                  margin        = "normal"
+                  id            = "date"
+                  label         = "Date"
+                  value         = { this.state.date }
+                  onChange      = { this.handleDateChange }>{
+                dateAvailable.map((option) => (
+                    <MenuItem key = { option } value = { option }>
+                      { option }
+                    </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            {/* Time */}
+            <Grid item xs = {12}>
+              <TextField
+                  autoFocus
+                  fullWidth
+                  select
+                  variant       = "outlined"
+                  margin        = "normal"
+                  id            = "time"
+                  label         = "Time"
+                  value         = { this.state.time }
+                  onChange      = { this.handleTimeChange }>{
+                timeAvailable.map((option) => (
+                    <MenuItem key = { option } value = { option }>
+                      { option }
+                    </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick = { this.handleSave } color = "primary" align = "right">

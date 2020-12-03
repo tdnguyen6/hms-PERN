@@ -15,8 +15,8 @@ import Grid                               from "@material-ui/core/Grid";
 
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import IconButton from "@material-ui/core/IconButton";
-import DiseaseInfoDialog from "./DiseaseInfoDialog";
-import PractitionerInfoDialog from "./PractitionerInfoDialog";
+import DiseaseInfoDialog from "../InfoDialog/DiseaseInfoDialog";
+import PractitionerInfoDialog from "../InfoDialog/PractitionerInfoDialog";
 
 const dateAvailable = [
   'Aug 18',
@@ -92,13 +92,16 @@ class EditAppointmentDialog extends Component {
               open              = { this.props.open }
               onClose           = { this.handleDialogClose }
               aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+            <DialogTitle id="form-dialog-title">Appointment Information</DialogTitle>
             <DialogContent>
-              <DialogContentText id = "alert-dialog-description">
-                To subscribe to this website, please enter your email address here. We will send updates
-                occasionally.
-              </DialogContentText>
               <Grid container>
+                {/* Dialog Content */}
+                <Grid item xs = {12}>
+                  <DialogContentText id = "alert-dialog-description">
+                    To edit information of this appointment, please enter or choose new information below.
+                    There are some read only information you can not change.
+                  </DialogContentText>
+                </Grid>
                 {/* Disease */}
                 <Grid item xs = {12}>
                   <TextField
