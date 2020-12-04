@@ -15,7 +15,9 @@ import TextField from "@material-ui/core/TextField";
 import Chip from "@material-ui/core/Chip";
 import {withStyles} from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import index from "recharts/demo/component";
+
+// why do you need the below line?
+// import index from "recharts/demo/component";
 
 /*
 Children of NewAppointmentDialog.
