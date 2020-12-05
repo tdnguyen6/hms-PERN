@@ -1,18 +1,19 @@
 const db = require('../db');
 
-exports.listPatients = async function(req, res) {
+exports.listPractitioners = async function(req, res) {
 	// comment this out in production
 //	if (res.session.position !== 'Admin') res.status(401).json({listPatientsSuccessfully: false})
+	const queryStatement = 'select p.id, a.name as name, a.avatar, a.email, a.phone, a.gender, d.name as specialty from practitioners p, accounts a, departments d where a.practitioner_id = p.id and p.specialty = d.id'
 	try {
-		let result = await db.query("select * from patients")
+		let result = await db.query(queryStatement)
 		res.status(200).json(result.rows)
 	} catch (err) {
 		console.log(err)
-		res.status(500).json({listPatientsSuccessfully: false})
+		res.status(500).json({status: false})
 	}
 }
 
-exports.listPractitioners = async function(req, res) {
+exports.listPatients = async function(req, res) {
 	try {
 		let result = await db.query("select * from practitioners")
 		res.status(200).json(result.rows)
