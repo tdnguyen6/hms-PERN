@@ -8,6 +8,7 @@ const auth = require('./modules/authentication');
 const disease = require('./modules/disease');
 const symptom = require('./modules/symptom');
 const practitioner = require('./modules/practitioner');
+const admin = require('./modules/admin');
 const appointment = require('./modules/appointment');
 const payment = require('./modules/payment');
 
@@ -45,8 +46,13 @@ app.post("/user/forget", auth.forgetPassword);
 app.post("/user/reset/:userToken", auth.resetPassword);
 app.post("/user/checkEmailExist", auth.checkEmailExist);
 
+app.post("/admin/appointments/all", admin.listAllAppointments);
+app.post("/admin/practitioners/all", admin.listPractitioners);
+app.post("/admin/patients/all", admin.listPatients);
+app.post("/admin/appointments/all", appointment.queryAllAppointments);
+
 app.post("/appointment/create", appointment.createAppointment);
-app.post("/appointment/all", appointment.queryAllAppointments);
+
 app.post("/appointment/getAvailableTime", appointment.getAvailableTimeSlot);
 app.post("/appointment/getAvailableDate", appointment.getAvailableDate);
 

@@ -14,7 +14,7 @@ export const diseaseBySymptom = async (listOfSymptoms) => {
         return res.data;
     } catch (error) {
         console.log('disease error', error.response.status);
-        if (error.response.status === 400) return null;
+        if (error.response.status === 400) return [{id: 0, name: 'No disease found'}];
         else if (error.response.status === 500) return [{id: 0, name: 'No disease found'}];
     }
 }
