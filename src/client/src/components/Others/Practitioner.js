@@ -1,5 +1,4 @@
-import React from 'react';
-import { useTheme } from '@material-ui/core/styles';
+import React, {Component} from 'react';
 import { Tooltip, LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
@@ -22,37 +21,43 @@ const data = [
     createData('24:00', undefined),
 ];
 
-export default function Practitioner() {
-    const theme = useTheme();
+class Practitioner extends Component {
+    render () {
+        return (
+            <React.Fragment>
+                <Typography component = "h2" variant = "h6" color = "primary" gutterBottom>
+                    Practitioners
+                </Typography>
+                <ResponsiveContainer>
+                    <LineChart
+                        data = {data}
+                        margin = {{ top: 16, right: 16, bottom: 0, left: 24 }}>
+                        <XAxis dataKey = "time" color = "secondary" />
+                        <YAxis color = "secondary">
+                            <Label
+                                angle = {270}
+                                position = "left"
+                                style = {{ textAnchor: 'middle', color: "primary" }}
+                            >
+                                Practitioners
+                            </Label>
+                        </YAxis>
+                        <Tooltip />
+                        <Line type = "monotone" dataKey = "Practitioners" color = "secondary" />
+                    </LineChart>
+                </ResponsiveContainer>
+                {
+                    (this.props.for === "admin")
+                        ?   <div>
+                                <Link component = { RouteLink } to = "/admin/practitioner">
+                                    View more
+                                </Link>
+                            </div>
+                        :   <div></div>
+                }
 
-    return (
-        <React.Fragment>
-            <Typography component = "h2" variant = "h6" color = "primary" gutterBottom>
-                Practitioners
-            </Typography>
-            <ResponsiveContainer>
-                <LineChart
-                    data = {data}
-                    margin = {{ top: 16, right: 16, bottom: 0, left: 24 }}>
-                    <XAxis dataKey = "time" stroke = { theme.palette.text.secondary } />
-                    <YAxis stroke = { theme.palette.text.secondary }>
-                        <Label
-                            angle = {270}
-                            position = "left"
-                            style = {{ textAnchor: 'middle', fill: theme.palette.text.primary }}
-                        >
-                            Practitioners
-                        </Label>
-                    </YAxis>
-                    <Tooltip />
-                    <Line type = "monotone" dataKey = "Practitioners" stroke = {theme.palette.primary.main} />
-                </LineChart>
-            </ResponsiveContainer>
-            <div>
-                <Link component = { RouteLink } to = "/admin/practitioner">
-                    View more
-                </Link>
-            </div>
-        </React.Fragment>
-    );
+            </React.Fragment>
+        );
+    }
 }
+export default Practitioner;
