@@ -1,4 +1,5 @@
 @startuml
+!pragma useVerticalIf on
 title HMS Activity Diagram
 start
 :Home Page;
@@ -12,39 +13,39 @@ if (want to sign in?) then (yes)
     endif
     :Sign In;
     :Dashboard;
-    fork
-        :Appointment;
-            fork
-                :Book an Appointment;
-            fork again
-                :Get his Appointments;
-            fork again
-                :Delay/Cancel an Appointment;
-            fork again
-                :Make Payments;
-            end fork
-    fork again
-        :Practitioner;
-            fork
-                :Get his Appointments;
-            fork again
-                :Delay/Cancel an Appointment;
-            fork again
-                :CheckIn an Appointment;
-            end fork
-    fork again
-        :Admin;
-            fork
-                :CRUD all Patients;
-            fork again
-                :CRUD all Practitioner;
-            fork again
-                :CRUD all Appointments;
-            end fork
-    end fork
+    if (Patient) then (yes)
+        if (new appointment) then (yes)
+            if (do not know disease & service ?)
+                :Disease & Services by Symptoms;
+             endif
+            :Book an Appointment;
+        elseif (check appointments)
+            :Get his Appointments;
+        elseif (change appointments)
+            :Delay/Cancel an Appointment;
+        elseif (pay for appointments)
+            :Make Payments;
+        endif
+    elseif (Practitioner) then (yes)
+        if (check appointments)
+            :Get his Appointments;
+         elseif (change appointments)
+            :Delay/Cancel an Appointment;
+        elseif (start appointments)
+            :CheckIn an Appointment;
+        endif
+    elseif (Admin) then (yes)
+        if (manage patients)
+            :CRUD all Patients;
+        elseif (manage practitioners)
+            :CRUD all Practitioners;
+        elseif (manage appointments)
+            :CRUD all Appointments;
+        endif
+    endif
 else (no)
-    if (Disease by Symptoms ?) then (yes)
-        :Disease by Symptoms;
+    if (do not know disease & service ?) then (yes)
+        :Disease & Services by Symptoms;
     endif
     stop
 endif

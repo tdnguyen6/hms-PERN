@@ -72,28 +72,28 @@ class Login extends Component {
   };
 
   componentDidMount() {
-    if (localStorage.rememberMe
-        && localStorage.email !== ''
-        && localStorage.password !== '') {
+    if (sessionStorage.rememberMe
+        && sessionStorage.email !== ''
+        && sessionStorage.password !== '') {
             this.setState({
                 rememberMe: true,
                 email: {
-                  value: localStorage.email
+                  value: sessionStorage.email
                 },
                 password: {
-                  value: localStorage.password
+                  value: sessionStorage.password
                 }
             })
         }
     }
 
   handleEmailInput = (event) => {
-    let validateStatus = validate("email", event.target.value);
+    let match = validate("email", event.target.value);
     this.setState({
       email: {
           value: event.target.value,
-          hasError: validateStatus.email,
-          error: (validateStatus.email) ? 'Invalid email address' : ''
+          hasError: !match.email,
+          error: !match.email ? 'Invalid email address' : ''
         }
     });
   };
@@ -120,9 +120,9 @@ class Login extends Component {
 
       if (!email.hasError) {
         if (rememberMe && email.value !== '' && password.value !== '') {
-          localStorage.email = email.value;
-          localStorage.password = password.value;
-          localStorage.rememberMe = rememberMe;
+          sessionStorage.email = email.value;
+          sessionStorage.password = password.value;
+          sessionStorage.rememberMe = rememberMe;
         }
 
         try {

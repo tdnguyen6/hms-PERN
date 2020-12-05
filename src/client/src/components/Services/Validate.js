@@ -25,15 +25,18 @@ export const validate = (type, value) => {
     ssn: false
   };
 
-  if (type === "name") {
-    res.name = (validate.name.pattern.exec(value) !== null) ? false : true;
-  } else if (type === "email") {
-    res.email = (validate.email.pattern.exec(value) !== null) ? false : true;
-  } else if (type === "phone") {
-    res.phone = (validate.phone.pattern.exec(value) !== null) ? false : true;
-  } else if (type === "ssn") {
-    res.ssn = (validate.ssn.pattern.exec(value) !== null) ? false : true;
+  switch (type) {
+    case "name":
+      res.name = validate.name.pattern.test(value);
+      break;
+    case "email":
+      res.email = validate.email.pattern.test(value);
+      break;
+    case "phone":
+      res.phone = validate.phone.pattern.test(value);
+      break;
+    case "ssn":
+      res.ssn = validate.ssn.pattern.test(value);
   }
-
   return res;
 }
