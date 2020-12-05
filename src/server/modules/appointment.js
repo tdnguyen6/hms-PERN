@@ -28,13 +28,19 @@ exports.queryAllAppointments = async function(req, res) {
     }
 } 
 
-exports.getAvailableTimeSlot = async function(req, res) {
-    let query = "select at from appointments where practitioner_id = " + req.body.practitionerID
+exports.getBookedHours = async function(req, res) {
+    if (!req.body.practitionerID || !req.body.day || !req.body.month) {
+        return res.status(400).json({status: false})
+    }
+    
+    let query = `select at from appointments where practitioner_id = ${req.body.practitionerID} and date_part('day', at) = ${req.body.day} and date_part('month', at) = ${req.body.month}`
     console.log(query)
     
     try {
         const result = await db.query(query)
         const arr = result.rows
+        
+        console.log(arr)
         
         let unAvailableTimeSlots = []
         arr.forEach(timeSlot => {
@@ -48,15 +54,15 @@ exports.getAvailableTimeSlot = async function(req, res) {
         
         availableTimeSlots = availableTimeSlots.filter(timeSlot => !unAvailableTimeSlots.includes(timeSlot))
         
-        res.status(200).json({availableTime: availableTimeSlots})
+        return res.status(200).json({availableTime: availableTimeSlots})
     } catch (err) {
         console.log(err)
-        res.status(500).json(null)
+        return res.status(500).json(null)
     }
 }
 
 exports.getAvailableDate = async function(req, res) {
-    let queryStatement = `select date_part('day', at) as day from appointments where practitioner_id = $1 and at < now()` 
+    let queryStatement = `select date_part('day', at) as day from appointments where practitioner_id = $1 and at > now()` 
     console.log(queryStatement)
     
     try {
