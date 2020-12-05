@@ -18,7 +18,13 @@ exports.findPractitionerByDisease = async function(req, res) {
 	}
 	
 	try {
-		let queryStatement = "select distinct di.id, p.id, de.name speciality, a.name, a.gender from practitioners p, accounts a, departments de, medicalservices m, diseases di where di.suggested_checkup = m.id and m.department_id = de.id and de.id = p.specialty and a.practitioner_id = p.id and di.id = " + req.body.diseaseID
+		let queryStatement
+		if (req.body.diseaseID === 0) {
+			queryStatement = "select distinct di.id, p.id, de.name speciality, a.name, a.gender from practitioners p, accounts a, departments de, medicalservices m, diseases di where di.suggested_checkup = m.id and m.department_id = de.id and de.id = p.specialty and a.practitioner_id = p.id and m.name = 'general checkup'"
+		} else {
+			queryStatement = "select distinct di.id, p.id, de.name speciality, a.name, a.gender from practitioners p, accounts a, departments de, medicalservices m, diseases di where di.suggested_checkup = m.id and m.department_id = de.id and de.id = p.specialty and a.practitioner_id = p.id and di.id = " + req.body.diseaseID
+		}
+		
 		console.log(queryStatement)
 		const result = await db.query(queryStatement)
 		res.status(200).json(result.rows)
