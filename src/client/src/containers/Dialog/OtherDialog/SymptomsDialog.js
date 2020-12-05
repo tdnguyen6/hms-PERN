@@ -49,7 +49,12 @@ class SymptomsDialog extends Component {
         filteredListOfSymptom: this.props.symptom,
     };
     handleDialogClose = async () => {
-        await this.setState({ listOfSymptom: [] });
+        await this.setState({
+            searchInput: '',
+            listOfSymptom: [],
+            checkedListOfSymptom: [],
+            checkedListOfSymptomID: []
+        });
         // send close state back to parent: AppointmentTable
         this.props.close(false, "symptoms");
     }
@@ -65,9 +70,6 @@ class SymptomsDialog extends Component {
             await this.props.loading(false);
             console.log('loaded');
         }
-    }
-    handleCheckBoxChange = async (event) => {
-
     }
     handleSearch = async (event) => {
         let input = event.target.value;

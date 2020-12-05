@@ -48,11 +48,6 @@ export default function Patient() {
                     <Line type = "monotone" dataKey = "Patients" stroke = {theme.palette.primary.main} />
                 </LineChart>
             </ResponsiveContainer>
-            <div>
-                <Link component = { RouteLink } to = "/admin/patient">
-                    View more
-                </Link>
-            </div>
         </React.Fragment>
     );
 }

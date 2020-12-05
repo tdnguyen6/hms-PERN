@@ -134,7 +134,7 @@ class NewAppointmentDialog extends Component {
                   onChange      = { this.handleDiseaseChange }>{
                 this.props.disease.map((option) => (
                     <MenuItem key = { option.id } value = { option.id }>
-                      { option.name }
+                      { option.name.charAt(0).toUpperCase() + option.name.slice(1) }
                     </MenuItem>
                 ))}
               </TextField>

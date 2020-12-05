@@ -26,8 +26,8 @@ let practitioner = [
 ];
 
 let patient = [
-  { id: 'Dashboard', link: '/dashboard'},
-  { id: 'Appointment', link: '/dashboard'}
+  { id: 'Dashboard', link: '/patient/dashboard'},
+  { id: 'Appointment', link: '/patient/appointment'}
 ];
 
 class SidebarFunction extends Component {
