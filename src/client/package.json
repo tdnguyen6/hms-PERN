@@ -21,12 +21,13 @@
     "recharts": "^1.8.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
-    "build-with-diagrams": "npm run tree:diagrams && npm run tree:diagrams-out && npm run tree:diagrams-src && npm run build",
+    "start": "REACT_APP_API_ADDR=http://localhost:3001 react-scripts start",
+    "build": "REACT_APP_API_ADDR= GENERATE_SOURCEMAP=false react-scripts build",
+    "build-with-diagrams": "npm run tree:diagrams && npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "tree:diagrams": "tree 'public/docs/diagrams' -H '.' -L 1 --noreport --charset utf-8 > public/docs/diagrams/index.html",
+    "tree:diagrams": "npm run tree:diagrams-root && npm run tree:diagrams-src && npm run tree:diagrams-out",
+    "tree:diagrams-root": "tree 'public/docs/diagrams' -H '.' -L 1 --noreport --charset utf-8 > public/docs/diagrams/index.html",
     "tree:diagrams-out": "tree 'public/docs/diagrams/out' -H '.' -L 1 --noreport --charset utf-8 > public/docs/diagrams/out/index.html",
     "tree:diagrams-src": "tree 'public/docs/diagrams/src' -H '.' -L 1 --noreport --charset utf-8 > public/docs/diagrams/src/index.html"
   },

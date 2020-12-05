@@ -9,7 +9,7 @@ export const diseaseBySymptom = async (listOfSymptoms) => {
 
     let res;
     try {
-        res = await axios.post('http://localhost:3001/disease/findDiseases', data);
+        res = await axios.post(`${process.env.REACT_APP_API_ADDR}/disease/findDiseases`, data);
         console.log('disease returned in api', res.data);
         return res.data;
     } catch (error) {

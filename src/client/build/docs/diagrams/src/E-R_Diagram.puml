@@ -1,0 +1,96 @@
+@startuml
+
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+'skinparam linetype ortho
+
+entity "departments" as dep {
+    <u>id</u> : int <<auto_increment>>
+    --
+    name : varchar(50)
+}
+
+entity "medicalservices" as medsv {
+    <u>id</u> : int <<auto_increment>>
+    --
+    name : varchar(50)
+    price: money
+}
+
+entity "diseases" as ds {
+    <u>id</u> : int <<auto_increment>>
+    --
+    name : varchar(50)
+    description: text
+}
+
+entity "symptoms" as st {
+    <u>id</u> : int <<auto_increment>>
+    --
+    name : varchar(50)
+}
+
+entity "payments" as pm {
+    <u>id</u> : int <<auto_increment>>
+    --
+    at : timestamp
+    type: varchar(20)
+    method: varchar(30)
+}
+
+entity "patients" as pt {
+    <u>id</u> : int <<auto_increment>>
+    --
+    ssn : varchar(50)
+    dob: date
+}
+
+entity "practitioners" as pr {
+    <u>id</u> : int <<auto_increment>>
+    --
+    join_date: date
+    specialty: integer
+}
+
+entity "accounts" as acc {
+    <u>id</u> : int <<auto_increment>>
+    --
+    password : varchar(32)
+    avatar: text
+    name: varchar(50)
+    email: varchar(255)
+    phone: varchar(15)
+    created_on: timestamp
+    last_login: timestamp
+}
+
+entity "appointments" as app {
+    <u>id</u> : int <<auto_increment>>
+    --
+    at: timestamp
+    status: varchar(10)
+    log: text
+    prescription: text
+    next_appointment_period: integer
+}
+
+entity "rooms" as r {
+    <u>id</u> : int <<auto_increment>>
+}
+
+ds }|..|{ st
+dep ||..|{ medsv
+r ||..o| medsv
+app }o..o| medsv: service for \n next appointment
+medsv ||..|| ds
+pr }|..|| dep
+pt ||..|{ acc
+pr ||..|{ acc
+pm }|..|| app
+app ||..o| app: last appointment
+app }o..|| pt
+app }o..|| pr
+app |o..|| r
+@enduml

@@ -92,7 +92,7 @@ exports.forgetPassword = async function (req, res) {
                 button: {
                     color: '#22bc66',
                     text: 'Click to reset password',
-                    link: 'http://localhost:3001/user/reset/' + token
+                    link: `${req.headers.origin}/resetPassword?token=${token}`
                 }
             },
             outro: 'If you did not make this request, simply ignore this email.'
@@ -128,7 +128,7 @@ exports.resetPassword = async function (req, res) {
     })
 
 
-    const password = req.body.newPassword
+    const password = req.body.password
     console.log(jwtDecode(req.params.userToken))
     const email = jwtDecode(req.params.userToken).data.email
 
@@ -136,7 +136,7 @@ exports.resetPassword = async function (req, res) {
     if (user.rows.length < 1) return res.status(401).send("User does not exist")
 
     try {
-        let result = await db.query(`UPDATE accounts SET password = $1 WHERE email = $2`, [password, email])
+        await db.query(`UPDATE accounts SET password = $1 WHERE email = $2`, [password, email])
         res.status(200).json({resetPasswordSuccessful: true})
     } catch (err) {
         res.status(500).json({resetPasswordSuccessful: false})

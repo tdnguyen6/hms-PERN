@@ -14,10 +14,10 @@ const payment = require('./modules/payment');
 
 app.use(express.json());
 app.use(session({
-    cookie: { maxAge: 86400000, httpOnly: false },
-    saveUninitialized: true,
+    cookie: { maxAge: 604800000, httpOnly: false },
+    saveUninitialized: false,
     store: new MemoryStore({
-        checkPeriod: 86400000 // prune expired entries every 24h
+        checkPeriod: 604800000 // prune expired entries every 24h
     }),
     resave: true,
     secret: 'Shigeo Tokuda'
@@ -42,8 +42,8 @@ app.get('*', function(req, res){
 app.post("/user/register", auth.registerAccount);
 app.post("/user/login", auth.loginAccount);
 app.post("/user/logout", auth.logout);
-app.post("/user/forget", auth.forgetPassword);
-app.post("/user/reset/:userToken", auth.resetPassword);
+app.post("/user/forgetPassword", auth.forgetPassword);
+app.post("/user/resetPassword/:userToken", auth.resetPassword);
 app.post("/user/checkEmailExist", auth.checkEmailExist);
 
 app.post("/admin/appointments/all", admin.listAllAppointments);
