@@ -43,19 +43,19 @@ class Dashboard extends Component {
                         {/* Practitioner */}
                         <Grid item xs = {12} md = {8} lg = {9}>
                             <Paper className = { fixedHeightPaper }>
-                                <Practitioner for = { this.props.for } />
+                                { (this.props.for === "practitioner") ? <Patient /> : <Practitioner /> }
                             </Paper>
                         </Grid>
                         {/* Appointment */}
                         <Grid item xs = {12} md = {4} lg = {3}>
                             <Paper className = { fixedHeightPaper }>
-                                <Appointment for = { this.props.for } />
+                                <Appointment />
                             </Paper>
                         </Grid>
                         {/* Patient */}
                         <Grid item xs = {12}>
                             <Paper className = { fixedHeightPaper }>
-                                { (this.props.for === 'admin') ? <Patient /> : <Appointment />}
+                                <Patient />
                             </Paper>
                         </Grid>
                     </Grid>

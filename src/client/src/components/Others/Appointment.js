@@ -3,8 +3,6 @@ import {Link as RouteLink} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 
-
-
 class Appointment extends Component {
     render() {
         return (
@@ -18,11 +16,6 @@ class Appointment extends Component {
                 <Typography color = "textSecondary">
                     was made.
                 </Typography>
-                <div>
-                    <Link component = { RouteLink } to = "/admin/appointment">
-                        View more
-                    </Link>
-                </div>
             </React.Fragment>
         );
     }

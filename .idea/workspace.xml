@@ -19,19 +19,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="add search function / add api / add practitioner table">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+    <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="modify dashboard for patient and practitioner">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/components/API/DiseaseBySymptom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/API/DiseaseBySymptom.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/src/components/Others/Appointment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/Others/Appointment.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/src/components/Others/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/Others/Dashboard.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/src/components/Others/Patient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/Others/Patient.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/src/components/Others/Practitioner.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/Others/Practitioner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dashboard/Patient/PatientDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dashboard/Patient/PatientDashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dashboard/Practitioner/PractitionerDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dashboard/Practitioner/PractitionerDashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/NewDialog/NewAppointmentDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/NewDialog/NewAppointmentDialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Dialog/OtherDialog/SymptomsDialog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Dialog/OtherDialog/SymptomsDialog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Others/SidebarFunction.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Others/SidebarFunction.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -228,7 +221,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606970769123</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="modify dashboard for patient and practitioner">
+      <created>1607154506799</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1607154506799</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -264,7 +264,8 @@
     <MESSAGE value="add api to appointment table" />
     <MESSAGE value="add api to dialog and table." />
     <MESSAGE value="add search function / add api / add practitioner table" />
-    <option name="LAST_COMMIT_MESSAGE" value="add search function / add api / add practitioner table" />
+    <MESSAGE value="modify dashboard for patient and practitioner" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify dashboard for patient and practitioner" />
   </component>
   <component name="WindowStateProjectService">
     <state x="410" y="110" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606786833948">
@@ -316,10 +317,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="320" y="187" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1606970774444" />
-    <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606970735653">
+    <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607154474723">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1606970735653" />
+    <state x="521" y="368" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1607154474723" />
     <state x="421" y="82" width="597" height="735" key="find.popup" timestamp="1606800409935">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

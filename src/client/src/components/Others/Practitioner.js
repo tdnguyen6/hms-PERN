@@ -46,16 +46,6 @@ class Practitioner extends Component {
                         <Line type = "monotone" dataKey = "Practitioners" color = "secondary" />
                     </LineChart>
                 </ResponsiveContainer>
-                {
-                    (this.props.for === "admin")
-                        ?   <div>
-                                <Link component = { RouteLink } to = "/admin/practitioner">
-                                    View more
-                                </Link>
-                            </div>
-                        :   <div></div>
-                }
-
             </React.Fragment>
         );
     }
