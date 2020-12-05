@@ -61,17 +61,6 @@ exports.getBookedHours = async function(req, res) {
     }
 }
 
-exports.getAvailableDate = async function(req, res) {
-    let queryStatement = `select date_part('day', at) as day from appointments where practitioner_id = $1 and at > now()` 
-    console.log(queryStatement)
-    
-    try {
-        const result = await db.query(queryStatement, [req.body.practitionerID])
-        res.status(200).json(result.rows)
-    } catch (err) {
-        console.log(err)
-        res.status(500).json(null)
-    }
-}
+
 
 
