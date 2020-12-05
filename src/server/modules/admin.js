@@ -14,12 +14,13 @@ exports.listPractitioners = async function(req, res) {
 }
 
 exports.listPatients = async function(req, res) {
+	const queryStatement = 'select p.id, a.name as name, a.avatar, a.email, a.phone, a.gender, p.ssn, p.dob from patients p, accounts a where p.id = a.patient_id'
 	try {
-		let result = await db.query("select * from practitioners")
+		let result = await db.query(queryStatement)
 		res.status(200).json(result.rows)
 	} catch (err) {
 		console.log(err)
-		res.status(500).json({listPatientsSuccessfully: false})
+		res.status(500).json({status: false})
 	}
 }
 
