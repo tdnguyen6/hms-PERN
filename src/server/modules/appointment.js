@@ -28,7 +28,7 @@ exports.queryAllAppointments = async function(req, res) {
     }
 } 
 
-exports.getBookedHours = async function(req, res) {
+exports.getAvailableHours = async function(req, res) {
     if (!req.body.practitionerID || !req.body.day || !req.body.month) {
         return res.status(400).json({status: false})
     }
