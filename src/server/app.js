@@ -54,7 +54,7 @@ app.post("/admin/appointments/all", appointment.queryAllAppointments);
 app.post("/appointment/create", appointment.createAppointment);
 
 app.post("/appointment/getAvailableTime", appointment.getAvailableHours);
-app.post("/appointment/getAvailableDate", appointment.getAvailableDate);
+// app.post("/appointment/getAvailableDate", appointment.getAvailableDate);
 
 app.post("/symptom/all", symptom.queryAllSymptoms);
 

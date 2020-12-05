@@ -20,37 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bd62c0d3-7724-4df8-a590-7c5efe1ec68e" name="Default Changelist" comment="add search function / add api / add practitioner table">
-      <change afterPath="$PROJECT_DIR$/src/client/src/components/API/passwordRecovery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/asset-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/out/sequence_book_appointment.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/out/sequence_book_appointment.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/out/sequence_diseases_prediction.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/out/sequence_forget_password.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/out/sequence_forget_password.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/activity_system.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/activity_system.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_book_appointment.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_book_appointment.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_diseases_prediction.puml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_forget_password.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/docs/diagrams/src/sequence_forget_password.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/build/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/2.752fd08e.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/2.752fd08e.chunk.js.LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/build/static/js/main.885da929.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/public/docs/diagrams/out/sequence_checkin_appointment.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/diagrams/out/sequence_checkin_appointment.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_checkin_appointment.puml" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/public/docs/diagrams/src/sequence_checkin_appointment.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/components/API/AllDisease.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/API/AllDisease.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/components/API/AllSymptom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/API/AllSymptom.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/components/API/AvailableDateByPractitioner.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/API/AvailableDateByPractitioner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/components/API/CheckEmailExist.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/API/CheckEmailExist.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/components/API/DiseaseBySymptom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/API/DiseaseBySymptom.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/components/API/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/API/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/components/API/PractitionerByDisease.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/API/PractitionerByDisease.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/components/API/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/components/API/Register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Authentication/ForgetPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Authentication/ForgetPassword.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Authentication/ResetPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Authentication/ResetPassword.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/src/containers/Table/Admin/PractitionerTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/src/containers/Table/Admin/PractitionerTable.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/modules/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/modules/authentication.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
