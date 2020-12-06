@@ -10,21 +10,11 @@ entity payment_gateway as G
 database Postgres as P
 
 U -> W++: GET /book-appointment
-return prompt:\nDo you know your disease?
-alt no
-U -> W++: list of symptoms
-W -> api++: POST /diseases?symptoms=...
-api -> A++: diseasesBySymptoms(symptoms)
-A->P++: query
-return
-return list of diseases
-return list of diseases
-return list of diseases
-end
+return appointment booking form
 
-U -> W++:  disease
-W -> api++: POST /practitioners?disease=...
-api -> A++: practitionersByDisease(disease)
+U -> W++:  medical service
+W -> api++: POST /practitioners?service=...
+api -> A++: practitionersByService(service)
 A -> P++: query
 return
 return list of practitioners

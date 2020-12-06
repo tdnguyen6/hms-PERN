@@ -6,9 +6,10 @@ export const login = async (username, password) => {
     password: password
   }
   let res;
+
   try {
     // show loading
-    res = await axios.post('http://localhost:3001/user/login', data);
+    res = await axios.post(`${process.env.REACT_APP_API_ADDR}/user/login`, data);
     return res.data.role;
   } catch (error) {
     if (error.response.status === 401) {

@@ -1,0 +1,80 @@
+@startuml
+left to right direction
+
+actor guest
+actor "registered user" as RU
+actor patient
+actor practitioner
+actor admin
+
+patient --|> RU
+practitioner --|> RU
+admin --|> RU
+
+rectangle "Online Appointment System for Hospital" {
+    usecase "sign up" as UC22
+    usecase "sign in" as UC23
+    usecase "reset password" as UC24
+
+    usecase "disease & service suggestion\n based on symptoms" as UC1
+    usecase "view appointments by user" as UC2
+    usecase "book appointment" as UC3
+    usecase "change appointment by user" as UC4
+    usecase "make payment" as UC5
+    usecase "check in appointment by patient" as UC6
+
+    usecase "manage patients" as UC7
+    usecase "add patient" as UC8
+    usecase "view patient" as UC9
+    usecase "update patient" as UC10
+    usecase "delete patient" as UC11
+
+    usecase "manage practitioners" as UC12
+    usecase "add practitioners" as UC13
+    usecase "view practitioners" as UC14
+    usecase "update practitioners" as UC15
+    usecase "delete practitioners" as UC16
+
+    usecase "manage appointments" as UC17
+    usecase "add appointments" as UC18
+    usecase "view appointments" as UC19
+    usecase "update appointments" as UC20
+    usecase "delete appointments" as UC21
+
+    guest -- UC1
+    guest -- UC22
+
+    RU -- UC23
+    RU -- UC24
+    RU -- UC1
+
+    patient -- UC2
+    patient -- UC3
+    patient -- UC4
+    patient -- UC5
+
+    practitioner -- UC2
+    practitioner -- UC4
+    practitioner -- UC6
+
+    admin -- UC7
+    admin -- UC12
+    admin -- UC17
+}
+
+UC7 <.. UC8: <<extends>>
+UC7 <.. UC9: <<extends>>
+UC7 <.. UC10: <<extends>>
+UC7 <.. UC11: <<extends>>
+
+UC12 <.. UC13: <<extends>>
+UC12 <.. UC14: <<extends>>
+UC12 <.. UC15: <<extends>>
+UC12 <.. UC16: <<extends>>
+
+UC17 <.. UC18: <<extends>>
+UC17 <.. UC19: <<extends>>
+UC17 <.. UC20: <<extends>>
+UC17 <.. UC21: <<extends>>
+
+@enduml

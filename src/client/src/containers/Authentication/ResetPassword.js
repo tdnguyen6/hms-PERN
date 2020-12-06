@@ -27,7 +27,7 @@ import {$} from '../../helper';
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 
 // API
-import {sendResetPasswordLink} from "../../components/API/passwordRecovery";
+import {resetPassword} from "../../components/API/passwordRecovery";
 
 /*
 can't use hooks because this is a component.
@@ -54,9 +54,9 @@ const style = theme => ({
     }
 });
 
-class ForgetPassword extends Component {
+class ResetPassword extends Component {
     state = {
-        email: {
+        password: {
             value: '',
             hasError: false,
             error: ''
@@ -70,11 +70,11 @@ class ForgetPassword extends Component {
     };
 
     handleEmailInput = (event) => {
-        const match = validate("email", this.state.email.value);
+        const match = validate("email", this.state.password.value);
 
         this.setState({
-            email: {
-                value: event ? event.target.value : this.state.email.value,
+            password: {
+                value: event ? event.target.value : this.state.password.value,
                 hasError: !match.email,
                 error: !match.email ? 'Invalid email address' : ''
             }
@@ -96,7 +96,7 @@ class ForgetPassword extends Component {
             dialogHasError: false
         };
 
-        if (this.state.email.hasError) {
+        if (this.state.password.hasError) {
             dialogStatus.dialogHasError = true;
             dialogStatus.dialogMessage = 'The given email is invalid. Please input the valid email';
         }
@@ -111,7 +111,13 @@ class ForgetPassword extends Component {
         if (!dialogStatus.dialogHasError) {
             this.setState({done: true});
             try {
-                await sendResetPasswordLink(this.state.email.value);
+                const urlParams = new URLSearchParams(window.location.search);
+                let token;
+                if (urlParams.has("token")) {
+                    token = urlParams.get("token");
+                    console.log(token);
+                }
+                // await resetPassword(this.state.password.value, token);
                 await this.setState({loading: true});
             } catch (e) {
                 console.log(e);
@@ -167,9 +173,9 @@ class ForgetPassword extends Component {
                                                 label="Email Address"
                                                 name="email"
                                                 autoComplete="email"
-                                                value={this.state.email.value}
-                                                error={this.state.email.hasError}
-                                                helperText={this.state.email.error}
+                                                value={this.state.password.value}
+                                                error={this.state.password.hasError}
+                                                helperText={this.state.password.error}
                                                 onChange={this.handleEmailInput}
                                             />
                                         </Grid>
@@ -211,4 +217,4 @@ class ForgetPassword extends Component {
     };
 }
 
-export default withStyles(style, {withTheme: true})(ForgetPassword);
+export default withStyles(style, {withTheme: true})(ResetPassword);

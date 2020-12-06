@@ -6,6 +6,7 @@ import Login                              from './containers/Authentication/Logi
 import Register                           from './containers/Authentication/Register';
 import Home                               from './containers/Authentication/Home';
 import ForgetPassword                     from './containers/Authentication/ForgetPassword';
+import ResetPassword                     from './containers/Authentication/ResetPassword';
 
 import PatientDashboard                   from './containers/Dashboard/Patient/PatientDashboard';
 import PractitionerDashboard              from './containers/Dashboard/Practitioner/PractitionerDashboard';
@@ -28,7 +29,7 @@ function App() {
         <Route path = "/patient"                        component = { PatientDashboard } />
         <Route path = "/practitioner"                   component = { PractitionerDashboard } />
         <Route path = "/admin"                          component = { AdminDashboard } />
-
+        <Route path = "/resetPassword"                  component = { ResetPassword } />
 
         <Route path = "/"                               component = { Home } />
 

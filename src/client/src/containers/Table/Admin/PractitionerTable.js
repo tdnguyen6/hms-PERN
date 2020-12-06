@@ -92,7 +92,7 @@ class PractitionerTable extends Component {
       sex: row.sex,
       ssn: row.ssn,
       dob: row.dob,
-      email: row.email,
+      password: row.email,
       phone: row.phone,
       speciality: row.speciality
     }

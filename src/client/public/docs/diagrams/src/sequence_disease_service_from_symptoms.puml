@@ -12,6 +12,11 @@ api -> A++: diseasesBySymptoms(symptoms)
 A->P++: query
 return
 return list of diseases
-return list of diseases
-return list of diseases
+
+loop for each disease in list of diseases
+    api -> A++: serviceByDisease(disease)
+    return service
+end
+return list of diseases and their service
+return list of diseases and their service
 @enduml

@@ -2,9 +2,11 @@
 title Check In Appointment
 
 actor practitioner as U
+actor patient as Pt
 boundary website as W
 control api
 entity appointment as A
+entity payment_gateway as G
 database Postgres as P
 
 U -> W+: GET /dashboard
@@ -20,7 +22,12 @@ A--
 W <-- api: appointments list
 api--
 U <-- W: dashboard
-W--
+Pt <-- W: payment notification
+
+Pt -> G++: make payment
+W <-- G: payment success confirmation
+U <-- W--: payment success confirmation
+
 U -> W+: GET /check-in?patient=...
 U <-- W-: check in form
 loop input is invalid
@@ -36,7 +43,4 @@ return
 return
 return
 return successful appointment
-
-U -> P++: make payment
-return payment success confirmation
 @enduml
