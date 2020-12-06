@@ -87,6 +87,7 @@ class ResetPassword extends Component {
                 })
             } catch (e) {
                 let mess;
+                console.log(e);
                 if (e === "Token Has Expired") {
                     mess =
                         <>
