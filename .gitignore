@@ -107,4 +107,4 @@ dist
 test[a-zA-Z]*.js
 
 .DS_Store
-**/workspace.xml
+**/.idea
