@@ -6,12 +6,12 @@
 
     <title>reveal.js - Auto Animate</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 
-    <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.1.0/dist/reset.css">
-    <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.1.0/dist/reveal.css">
-    <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.1.0/dist/theme/black.css" id="theme">
-    <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.1.0/plugin/highlight/monokai.css">
+    <link href="https://unpkg.com/reveal.js@4.1.0/dist/reset.css" rel="stylesheet">
+    <link href="https://unpkg.com/reveal.js@4.1.0/dist/reveal.css" rel="stylesheet">
+    <link href="https://unpkg.com/reveal.js@4.1.0/dist/theme/black.css" id="theme" rel="stylesheet">
+    <link href="https://unpkg.com/reveal.js@4.1.0/plugin/highlight/monokai.css" rel="stylesheet">
 </head>
 
 <body>
@@ -24,7 +24,7 @@
             <h3>Auto-Animate Example</h3>
             <p>This will fade out</p>
             <img src="assets/image1.png" style="height: 100px;">
-            <pre data-id="code"><code data-line-numbers class="hljs" data-trim>
+            <pre data-id="code"><code class="hljs" data-line-numbers data-trim>
 						function Example() {
 						  const [count, setCount] = useState(0);
 						}
@@ -35,7 +35,7 @@
             <p style="opacity: 0.2; margin-top: 100px;">This will fade out</p>
             <p>This element is unmatched</p>
             <img src="assets/image1.png" style="height: 150px;">
-            <pre data-id="code"><code data-line-numbers class="hljs" data-trim>
+            <pre data-id="code"><code class="hljs" data-line-numbers data-trim>
 						function Example() {
 						  New line!
 						  const [count, setCount] = useState(0);
@@ -54,7 +54,7 @@
 
         <section>
             <section data-auto-animate>
-						<pre data-id="code"><code data-line-numbers class="hljs" data-trim>
+						<pre data-id="code"><code class="hljs" data-line-numbers data-trim>
 							import React, { useState } from 'react';
 
 							function Example() {
@@ -67,7 +67,7 @@
 						</code></pre>
             </section>
             <section data-auto-animate>
-						<pre data-id="code"><code data-line-numbers class="hljs" data-trim>
+						<pre data-id="code"><code class="hljs" data-line-numbers data-trim>
 							function Example() {
 							  const [count, setCount] = useState(0);
 
@@ -83,7 +83,7 @@
 						</code></pre>
             </section>
             <section data-auto-animate>
-						<pre data-id="code"><code data-line-numbers class="hljs" data-trim>
+						<pre data-id="code"><code class="hljs" data-line-numbers data-trim>
 							function Example() {
 							  // A comment!
 							  const [count, setCount] = useState(0);

@@ -50,7 +50,7 @@ describe.each([
             .set('Accept', 'application/json');
     });
     afterEach(() => {
-       db.query.mockReset();
+        db.query.mockReset();
     });
     it(`should be successful`, () => {
         expect(res.status).toBe(200);

@@ -1,13 +1,11 @@
 import React from 'react';
-import { useTheme } from '@material-ui/core/styles';
-import { Tooltip, LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
+import {useTheme} from '@material-ui/core/styles';
+import {Label, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
-import {Link as RouteLink} from "react-router-dom";
 
 // Generate Sales Data
 function createData(time, Patients) {
-    return { time, Patients };
+    return {time, Patients};
 }
 
 const data = [
@@ -27,25 +25,25 @@ export default function Patient() {
 
     return (
         <React.Fragment>
-            <Typography component = "h2" variant = "h6" color = "primary" gutterBottom>
+            <Typography component="h2" variant="h6" color="primary" gutterBottom>
                 Patients
             </Typography>
             <ResponsiveContainer>
                 <LineChart
-                    data = {data}
-                    margin = {{ top: 16, right: 16, bottom: 0, left: 24 }}>
-                    <XAxis dataKey = "time" stroke = { theme.palette.text.secondary } />
-                    <YAxis stroke = { theme.palette.text.secondary }>
+                    data={data}
+                    margin={{top: 16, right: 16, bottom: 0, left: 24}}>
+                    <XAxis dataKey="time" stroke={theme.palette.text.secondary}/>
+                    <YAxis stroke={theme.palette.text.secondary}>
                         <Label
-                            angle = {270}
-                            position = "left"
-                            style = {{ textAnchor: 'middle', fill: theme.palette.text.primary }}
+                            angle={270}
+                            position="left"
+                            style={{textAnchor: 'middle', fill: theme.palette.text.primary}}
                         >
                             Patients
                         </Label>
                     </YAxis>
-                    <Tooltip />
-                    <Line type = "monotone" dataKey = "Patients" stroke = {theme.palette.primary.main} />
+                    <Tooltip/>
+                    <Line type="monotone" dataKey="Patients" stroke={theme.palette.primary.main}/>
                 </LineChart>
             </ResponsiveContainer>
         </React.Fragment>

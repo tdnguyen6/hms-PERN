@@ -117,6 +117,8 @@ exports.forgetPassword = async function (req, res) {
 exports.resetPassword = async function (req, res) {
     try {
         await db.query(`UPDATE accounts SET password = $1 WHERE email = $2`, [do_hash(req.body.password), req.body.email])
+        let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
+        if (user.rows.length < 1) return res.status(500).json({"error": "Unspecified Server Error"});
         const token = jwt.sign(
             {
                 data: {
@@ -132,7 +134,7 @@ exports.resetPassword = async function (req, res) {
         );
         let email = {
             body: {
-                name: req.body.email,
+                name: user.rows[0].name,
                 intro: 'You received this email because you password has just changed',
                 action: {
                     instructions: 'If you did not change your password, click on the link below to recover it within 10 minutes',

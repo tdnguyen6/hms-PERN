@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
-import { Tooltip, LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
+import {Label, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
-import {Link as RouteLink} from "react-router-dom";
 
 // Generate Sales Data
 function createData(time, Practitioners) {
-    return { time, Practitioners };
+    return {time, Practitioners};
 }
 
 const data = [
@@ -22,32 +20,33 @@ const data = [
 ];
 
 class Practitioner extends Component {
-    render () {
+    render() {
         return (
             <React.Fragment>
-                <Typography component = "h2" variant = "h6" color = "primary" gutterBottom>
+                <Typography component="h2" variant="h6" color="primary" gutterBottom>
                     Practitioners
                 </Typography>
                 <ResponsiveContainer>
                     <LineChart
-                        data = {data}
-                        margin = {{ top: 16, right: 16, bottom: 0, left: 24 }}>
-                        <XAxis dataKey = "time" color = "secondary" />
-                        <YAxis color = "secondary">
+                        data={data}
+                        margin={{top: 16, right: 16, bottom: 0, left: 24}}>
+                        <XAxis dataKey="time" color="secondary"/>
+                        <YAxis color="secondary">
                             <Label
-                                angle = {270}
-                                position = "left"
-                                style = {{ textAnchor: 'middle', color: "primary" }}
+                                angle={270}
+                                position="left"
+                                style={{textAnchor: 'middle', color: "primary"}}
                             >
                                 Practitioners
                             </Label>
                         </YAxis>
-                        <Tooltip />
-                        <Line type = "monotone" dataKey = "Practitioners" color = "secondary" />
+                        <Tooltip/>
+                        <Line type="monotone" dataKey="Practitioners" color="secondary"/>
                     </LineChart>
                 </ResponsiveContainer>
             </React.Fragment>
         );
     }
 }
+
 export default Practitioner;

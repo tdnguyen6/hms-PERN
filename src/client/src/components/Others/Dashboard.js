@@ -1,4 +1,4 @@
-import React, { Component }                     from 'react';
+import React, {Component} from 'react';
 import clsx from "clsx";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Container from "@material-ui/core/Container";
@@ -34,28 +34,28 @@ const styles = (theme) => ({
 
 class Dashboard extends Component {
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
         const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
         return (
-            <main className = { classes.content }>
-                <Container maxWidth = "lg" className = { classes.container }>
-                    <Grid container spacing = {3}>
+            <main className={classes.content}>
+                <Container maxWidth="lg" className={classes.container}>
+                    <Grid container spacing={3}>
                         {/* Practitioner */}
-                        <Grid item xs = {12} md = {8} lg = {9}>
-                            <Paper className = { fixedHeightPaper }>
-                                { (this.props.for === "practitioner") ? <Patient /> : <Practitioner /> }
+                        <Grid item xs={12} md={8} lg={9}>
+                            <Paper className={fixedHeightPaper}>
+                                {(this.props.for === "practitioner") ? <Patient/> : <Practitioner/>}
                             </Paper>
                         </Grid>
                         {/* Appointment */}
-                        <Grid item xs = {12} md = {4} lg = {3}>
-                            <Paper className = { fixedHeightPaper }>
-                                <Appointment />
+                        <Grid item xs={12} md={4} lg={3}>
+                            <Paper className={fixedHeightPaper}>
+                                <Appointment/>
                             </Paper>
                         </Grid>
                         {/* Patient */}
-                        <Grid item xs = {12}>
-                            <Paper className = { fixedHeightPaper }>
-                                <Patient />
+                        <Grid item xs={12}>
+                            <Paper className={fixedHeightPaper}>
+                                <Patient/>
                             </Paper>
                         </Grid>
                     </Grid>

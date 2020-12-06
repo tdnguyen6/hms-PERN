@@ -1,20 +1,17 @@
-import React, { Component }                     from 'react';
+import React, {Component} from 'react';
 
-import Grid                               from "@material-ui/core/Grid";
-import FormControlLabel                   from "@material-ui/core/FormControlLabel";
-import Checkbox                           from "@material-ui/core/Checkbox";
+import Grid from "@material-ui/core/Grid";
 
-import Dialog                             from '@material-ui/core/Dialog';
-import DialogActions                      from '@material-ui/core/DialogActions';
-import DialogContent                      from '@material-ui/core/DialogContent';
-import DialogContentText                  from '@material-ui/core/DialogContentText';
-import DialogTitle                        from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from "@material-ui/core/Button";
 import {diseaseBySymptom} from "../../../components/API/DiseaseBySymptom";
 import TextField from "@material-ui/core/TextField";
 import Chip from "@material-ui/core/Chip";
 import {withStyles} from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 
 // why do you need the below line?
 // import index from "recharts/demo/component";
@@ -123,66 +120,66 @@ class SymptomsDialog extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
         return (
             <Dialog
                 fullWidth
-                open              = { this.props.open }
-                onClose           = { this.handleDialogClose }
-                aria-describedby  = "alert-dialog-description">
+                open={this.props.open}
+                onClose={this.handleDialogClose}
+                aria-describedby="alert-dialog-description">
                 <DialogTitle id="form-dialog-title">Symptom Log</DialogTitle>
                 <DialogContent>
-                    <DialogContentText id = "alert-dialog-description">
+                    <DialogContentText id="alert-dialog-description">
                         What's your symptoms babe?
                     </DialogContentText>
-                    <Grid container spacing = {3}>
+                    <Grid container spacing={3}>
                         {/* Checked Symptoms */}
-                        <Grid item xs className = { classes.root }>{
+                        <Grid item xs className={classes.root}>{
                             this.state.checkedListOfSymptom.map((symptom) => {
                                     return (
-                                        <span key = { symptom.id }>
+                                        <span key={symptom.id}>
                                           <Chip
                                               clickable
-                                              color = "secondary"
-                                              label = { symptom.name }
-                                              onDelete = { () => this.handleChipDelete(symptom) }
-                                              onClick = { () => this.handleChipDelete(symptom) }
-                                              className = { classes.chip }
+                                              color="secondary"
+                                              label={symptom.name}
+                                              onDelete={() => this.handleChipDelete(symptom)}
+                                              onClick={() => this.handleChipDelete(symptom)}
+                                              className={classes.chip}
                                           />
                                         </span>
                                     );
                                 }
                             )
                         }</Grid>
-                        <Grid item xs = {12}>
+                        <Grid item xs={12}>
                             <TextField
                                 required fullWidth autoFocus
-                                name          = "Symptom"
-                                variant       = "outlined"
-                                id            = "Symptom"
-                                label         = "Symptom"
-                                value         = { this.state.searchInput }
-                                onChange      = { this.handleSearch }/>
+                                name="Symptom"
+                                variant="outlined"
+                                id="Symptom"
+                                label="Symptom"
+                                value={this.state.searchInput}
+                                onChange={this.handleSearch}/>
                         </Grid>
-                        <Grid item xs className = { classes.root }>{
+                        <Grid item xs className={classes.root}>{
                             this.state.filteredListOfSymptom.map((symptom) => {
-                                    return (
-                                        <span key = { symptom.id }>
+                                return (
+                                    <span key={symptom.id}>
                                             <Chip
                                                 clickable
-                                                color = "primary"
-                                                label = { symptom.name }
-                                                onClick = { () => this.handleChipClick(symptom) }
-                                                className = { classes.chip }
+                                                color="primary"
+                                                label={symptom.name}
+                                                onClick={() => this.handleChipClick(symptom)}
+                                                className={classes.chip}
                                             />
                                         </span>
-                                    );
-                                })
+                                );
+                            })
                         }</Grid>
                     </Grid>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick = { this.handleSave } color = "primary" align = "right">
+                    <Button onClick={this.handleSave} color="primary" align="right">
                         Save
                     </Button>
                 </DialogActions>
@@ -191,4 +188,4 @@ class SymptomsDialog extends Component {
     }
 }
 
-export default withStyles(style, { withTheme: true })(SymptomsDialog);
+export default withStyles(style, {withTheme: true})(SymptomsDialog);

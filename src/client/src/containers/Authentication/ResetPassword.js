@@ -3,11 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -17,18 +13,14 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import {Link as RouteLink} from 'react-router-dom';
 
 // Service -------------------------------
-import {validate} from '../../components/Services/Validate';
-import {$} from '../../helper';
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 
 // API
-import {resetPassword} from "../../components/API/passwordRecovery";
-import {verifyJWT} from "../../components/API/passwordRecovery";
+import {resetPassword, verifyJWT} from "../../components/API/passwordRecovery";
+import Footer from "../Others/Footer";
+import Main from "../Others/Main";
 
 /*
 can't use hooks because this is a component.
@@ -201,89 +193,94 @@ class ResetPassword extends Component {
         const {classes} = this.props;
 
         return (
-            <Container component="main" maxWidth="xs">
-                <CssBaseline/>
-                <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon/>
-                    </Avatar>
-                    <Typography component="h1" variant="h5" gutterBottom>
-                        Password Recovery
-                    </Typography>
-                    {
-                        this.state.messOnly
-                            ?
-                            <Typography component="p" variant="body1" align="justify">
-                                {this.state.mess}
+            <>
+                <Main>
+                    <Container maxWidth="xs">
+                        <CssBaseline/>
+                        <div className={classes.paper}>
+                            <Avatar className={classes.avatar}>
+                                <LockOutlinedIcon/>
+                            </Avatar>
+                            <Typography component="h1" variant="h5" gutterBottom>
+                                Password Recovery
                             </Typography>
-                            :
-                            <>
-                                <Typography component="p" variant="subtitle2">
-                                    {this.state.mess}
-                                </Typography>
-                                <form className={classes.form} onSubmit={this.handleSubmit}>
-                                    <Grid container spacing={2}>
-                                        {/* Email Input */}
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                variant="outlined"
-                                                required
+                            {
+                                this.state.messOnly
+                                    ?
+                                    <Typography component="p" variant="body1" align="justify">
+                                        {this.state.mess}
+                                    </Typography>
+                                    :
+                                    <>
+                                        <Typography component="p" variant="subtitle2">
+                                            {this.state.mess}
+                                        </Typography>
+                                        <form className={classes.form} onSubmit={this.handleSubmit}>
+                                            <Grid container spacing={2}>
+                                                {/* Email Input */}
+                                                <Grid item xs={12}>
+                                                    <TextField
+                                                        variant="outlined"
+                                                        required
+                                                        fullWidth
+                                                        label="New Password"
+                                                        type="password"
+                                                        value={this.state.password.value}
+                                                        onChange={this.handleEnterPassword}
+                                                    />
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container spacing={2}>
+                                                {/* Email Input */}
+                                                <Grid item xs={12}>
+                                                    <TextField
+                                                        variant="outlined"
+                                                        required
+                                                        fullWidth
+                                                        label="Reenter New Password"
+                                                        type="password"
+                                                        onChange={this.handleReenterPassword}
+                                                        error={this.state.password.reenter.hasError}
+                                                        helperText={this.state.password.reenter.error}
+                                                    />
+                                                </Grid>
+                                            </Grid>
+                                            <Button
+                                                className={classes.submit}
                                                 fullWidth
-                                                label="New Password"
-                                                type="password"
-                                                value={this.state.password.value}
-                                                onChange={this.handleEnterPassword}
-                                            />
-                                        </Grid>
-                                    </Grid>
-                                    <Grid container spacing={2}>
-                                        {/* Email Input */}
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                                label="Reenter New Password"
-                                                type="password"
-                                                onChange={this.handleReenterPassword}
-                                                error={this.state.password.reenter.hasError}
-                                                helperText={this.state.password.reenter.error}
-                                            />
-                                        </Grid>
-                                    </Grid>
-                                    <Button
-                                        className={classes.submit}
-                                        fullWidth
-                                        variant="contained"
-                                        color="primary"
-                                        type="submit"
-                                    >
-                                        Submit
-                                    </Button>
-                                    <Dialog
-                                        open={this.state.button.open}
-                                        onClose={this.handleDialogClose}
-                                        aria-describedby="alert-dialog-description"
-                                    >
-                                        <DialogContent>
-                                            <DialogContentText id="alert-dialog-description">
-                                                {this.state.button.error}
-                                            </DialogContentText>
-                                        </DialogContent>
-                                        <DialogActions>
-                                            <Button onClick={this.handleDialogClose} color="primary">
-                                                Got it!
+                                                variant="contained"
+                                                color="primary"
+                                                type="submit"
+                                            >
+                                                Submit
                                             </Button>
-                                        </DialogActions>
-                                    </Dialog>
-                                </form>
-                            </>
+                                            <Dialog
+                                                open={this.state.button.open}
+                                                onClose={this.handleDialogClose}
+                                                aria-describedby="alert-dialog-description"
+                                            >
+                                                <DialogContent>
+                                                    <DialogContentText id="alert-dialog-description">
+                                                        {this.state.button.error}
+                                                    </DialogContentText>
+                                                </DialogContent>
+                                                <DialogActions>
+                                                    <Button onClick={this.handleDialogClose} color="primary">
+                                                        Got it!
+                                                    </Button>
+                                                </DialogActions>
+                                            </Dialog>
+                                        </form>
+                                    </>
 
-                    }
+                            }
 
-                </div>
-                <LoadingDialog open={this.state.loading}/>
-            </Container>
+                        </div>
+                        <LoadingDialog open={this.state.loading}/>
+                    </Container>
+                </Main>
+                <Footer/>
+            </>
         );
     };
 }

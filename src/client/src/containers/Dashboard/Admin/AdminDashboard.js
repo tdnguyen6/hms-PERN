@@ -1,105 +1,74 @@
-import React, { Component }                     from 'react';
-import { BrowserRouter, Route, Switch }         from 'react-router-dom';
-import { Link as RouteLink }                    from 'react-router-dom';
+import React, {Component} from 'react';
+import {Route} from 'react-router-dom';
 
-import clsx                                     from 'clsx';
-
-import { withStyles }                           from '@material-ui/core/styles';
-import CssBaseline                              from '@material-ui/core/CssBaseline';
-import Drawer                                   from '@material-ui/core/Drawer';
-import Box                                      from '@material-ui/core/Box';
-import AppBar                                   from '@material-ui/core/AppBar';
-import Toolbar                                  from '@material-ui/core/Toolbar';
-import List                                     from '@material-ui/core/List';
-import Typography                               from '@material-ui/core/Typography';
-import Divider                                  from '@material-ui/core/Divider';
-import IconButton                               from '@material-ui/core/IconButton';
-import Badge                                    from '@material-ui/core/Badge';
-import Container                                from '@material-ui/core/Container';
-import Grid                                     from '@material-ui/core/Grid';
-import Paper                                    from '@material-ui/core/Paper';
-import Link                                     from '@material-ui/core/Link';
-import Button                                   from '@material-ui/core/Button';
-import TextField                                from '@material-ui/core/TextField';
-
-
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-
-import Dialog                             from '@material-ui/core/Dialog';
-import DialogActions                      from '@material-ui/core/DialogActions';
-import DialogContent                      from '@material-ui/core/DialogContent';
-import DialogContentText                  from '@material-ui/core/DialogContentText';
-import DialogTitle                        from '@material-ui/core/DialogTitle';
-
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-
-import MenuIcon                                 from '@material-ui/icons/Menu';
-import ChevronLeftIcon                          from '@material-ui/icons/ChevronLeft';
+import {withStyles} from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 import AppointmentTable from '../../Table/Admin/AppointmentTable';
 import PractitionerTable from '../../Table/Admin/PractitionerTable';
 import PatientTable from '../../Table/Admin/PatientTable';
 import DrawerAppBar from '../../Others/DrawerAppBar';
 import Dashboard from "../../../components/Others/Dashboard";
+import Main from "../../Others/Main";
+import Footer from "../../Others/Footer";
 
 const style = (theme) => ({
-  root: {
-    display: 'flex'
-  },
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto'
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-    height: 640
-  }
+    root: {
+        display: 'flex'
+    },
+    content: {
+        flexGrow: 1,
+        overflow: 'auto'
+    },
+    appBarSpacer: theme.mixins.toolbar,
+    container: {
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(4)
+    },
+    paper: {
+        padding: theme.spacing(2),
+        display: 'flex',
+        overflow: 'auto',
+        flexDirection: 'column',
+        height: 640
+    }
 });
 
 class AdminDashboard extends Component {
-  render() {
-    const { classes } = this.props;
+    render() {
+        const {classes} = this.props;
 
-    return (
-      <div className = { classes.root }>
-        <CssBaseline />
-        <DrawerAppBar type = "admin"/>
-        <main className = { classes.content }>
-          <div className = { classes.appBarSpacer } />
-          <Container maxWidth = "lg" className = { classes.container }>
-            <Grid container spacing = {3}>
-              <Grid item xs = {12}>
-                <Paper className = { classes.paper }>
-                  <Route path = "/admin" exact component = { Dashboard } />
-                  <Route path = "/admin/dashboard" exact component = { Dashboard } />
-                  <Route path = "/admin/appointment" exact component = { AppointmentTable } />
-                  <Route path = "/admin/practitioner" exact component = { PractitionerTable } />
-                  <Route path = "/admin/patient" exact component = { PatientTable } />
-                </Paper>
-              </Grid>
-            </Grid>
-          </Container>
-        </main>
-      </div>
-    );
-  }
+        return (
+            <>
+                <Main>
+                    <div className={classes.root}>
+                        <CssBaseline/>
+                        <DrawerAppBar type="admin"/>
+                        <div className={classes.content}>
+                            <div className={classes.appBarSpacer}/>
+                            <Container maxWidth="lg" className={classes.container}>
+                                <Grid container spacing={3}>
+                                    <Grid item xs={12}>
+                                        <Paper className={classes.paper}>
+                                            <Route path="/admin" exact component={Dashboard}/>
+                                            <Route path="/admin/dashboard" exact component={Dashboard}/>
+                                            <Route path="/admin/appointment" exact component={AppointmentTable}/>
+                                            <Route path="/admin/practitioner" exact component={PractitionerTable}/>
+                                            <Route path="/admin/patient" exact component={PatientTable}/>
+                                        </Paper>
+                                    </Grid>
+                                </Grid>
+                            </Container>
+                        </div>
+                    </div>
+                </Main>
+                <Footer/>
+            </>
+        );
+    }
 }
 
-export default withStyles(style, { withTheme: true })(AdminDashboard);
+export default withStyles(style, {withTheme: true})(AdminDashboard);
