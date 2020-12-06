@@ -2,11 +2,14 @@ const db = require('../db');
 
 exports.createAppointment = async function (req, res) {
     try {
-        const result = await db.query(`INSERT INTO appointments (practitioner_id, patient_id, room_id, at, last_appointment) VALUES($1,$2,$3,$4,$5) returning *`, [req.body.practitioner_id, req.body.patient_id, req.body.room_id, req.body.at, req.body.last_appointment])
-        res.status(200).json(result.rows)
+        const appointmentCreateQuery = 'INSERT INTO appointments (practitioner_id, patient_id, room_id, at, last_appointment) VALUES($1,$2,$3,$4,$5) returning *'
+        const appointmentCreateResult = await db.query(appointmentCreateQuery, [req.body.practitionerID, req.body.patientID, req.body.roomID, req.body.at, req.body.last_appointment])
+        
+        const id = appointmentCreateResult.rows[0].id
+        return res.status(200).json({appointmentID: id})
     } catch (err) {
         console.log(err)
-        res.status(500).json({createAppointmentSuccessful: false})
+        return res.status(500).json({status: false})
     }
 }
 
@@ -64,8 +67,6 @@ exports.findLastAppointment = async function(req, res) {
         return res.status(500).json({status: false})
     }
 }
-
-
 
 exports.getAvailableHours = async function(req, res) {
     if (!req.body.practitionerID || !req.body.day || !req.body.month) {

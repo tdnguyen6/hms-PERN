@@ -12,13 +12,22 @@ exports.generateInvoice = async function(req, res) {
 }
 
 exports.makePayment = async function(req, res) {
-	if (!Number.isInteger(req.body.appointmentID)) {
-		return res.status(400).json({status: false})
-	}
-	
 	try {
-		const queryStatement = "insert into payment(type, method, appointment_id) values ($1,$2,$3) returning *" 
-		const result = await db.query(queryStatement, [req.body.type, req.body.method, req.body.appointmentID])
+		const insertStatement = "insert into payment(type, method) values ($1,$2) returning id" 
+		const result = await db.query(insertStatement, [req.body.type, req.body.method])
+		
+		const id = result.rows[0].id
+		res.status(200).json({paymentID: id})
+	} catch (err) {
+		console.log(err)
+		res.status(500).json({status: false})
+	}
+}
+
+exports.updatePayment = async function(req, res) {
+	try {
+		const updateStatement = `update payment set appointment_id = ${req.body.appointmentID} where id = ${req.body.paymentID} returning *`
+		const result = await db.query(updateStatement)
 		res.status(200).json(result.rows)
 	} catch (err) {
 		console.log(err)
