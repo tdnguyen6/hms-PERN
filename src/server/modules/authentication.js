@@ -5,8 +5,6 @@ const Mailer = require('./mailer')
 
 exports.checkEmailExist = async function (req, res) {
     let user = await db.query(`SELECT 1 FROM accounts where email = $1`, [req.body.email]);
-    console.log(req.body.email);
-    console.log(user);
     if (user.rows.length == 1) res.status(200).json({emailStatus: true})
     else res.status(500).json({emailStatus: false})
 }
@@ -79,8 +77,6 @@ exports.forgetPassword = async function (req, res) {
             audience: 'hms-user'
         }
     );
-
-    console.log(token)
 
     let email = {
         body: {
