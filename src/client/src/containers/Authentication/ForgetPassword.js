@@ -90,7 +90,9 @@ class ForgetPassword extends Component {
         })
     }
 
-    handleSubmit = async () => {
+    handleSubmit = async (event) => {
+        event.preventDefault();
+
         const dialogStatus = {
             dialogMessage: '',
             dialogHasError: false
@@ -151,7 +153,7 @@ class ForgetPassword extends Component {
                                 <span> </span> to enter another one.
                             </Typography>
                             :
-                            <div>
+                            <>
                                 <Typography component="p" variant="subtitle2">
                                     Enter your email address to receive reset password link
                                 </Typography>
@@ -200,7 +202,7 @@ class ForgetPassword extends Component {
                                         </DialogActions>
                                     </Dialog>
                                 </form>
-                            </div>
+                            </>
 
                     }
 

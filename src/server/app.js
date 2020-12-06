@@ -14,7 +14,7 @@ const payment = require('./modules/payment');
 
 app.use(express.json());
 app.use(session({
-    cookie: { maxAge: 604800000, httpOnly: false },
+    cookie: {maxAge: 604800000, httpOnly: false},
     saveUninitialized: false,
     store: new MemoryStore({
         checkPeriod: 604800000 // prune expired entries every 24h
@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
     });
     next();
 });
-app.get('*', function(req, res){
+app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname + '/../client/public/404.html'));
     res.status(404);
     res.set({'content-type': 'text/html'});
@@ -43,7 +43,7 @@ app.post("/user/register", auth.registerAccount);
 app.post("/user/login", auth.loginAccount);
 app.post("/user/logout", auth.logout);
 app.post("/user/forgetPassword", auth.forgetPassword);
-app.post("/user/resetPassword/:userToken", auth.resetPassword);
+app.post("/user/resetPassword", auth.resetPassword);
 app.post("/user/checkEmailExist", auth.checkEmailExist);
 
 app.post("/admin/appointments/all", admin.listAllAppointments);
@@ -65,5 +65,17 @@ app.post("/practitioner/all", practitioner.queryAllPractitioners)
 app.post("/practitioner/findByDisease", practitioner.findPractitionerByDisease)
 
 app.post("/payment/invoice", payment.generateInvoice)
+app.post("/verify-jwt", async (req, res) => {
+    try {
+        const decoded = await auth.verifyJWT(req.body["jwtToken"]);
+        if (decoded.hasOwnProperty("error")) {
+            res.status(401).json(decoded);
+        } else {
+            res.status(200).json(decoded);
+        }
+    } catch (err) {
+        res.status(500).json({"error": "Unspecified Server Error"});
+    }
+});
 
 module.exports = app;

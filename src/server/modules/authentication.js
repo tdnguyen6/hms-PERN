@@ -1,6 +1,5 @@
 const db = require('../db');
 const jwt = require('jsonwebtoken');
-const jwtDecode = require('jwt-decode');
 const {do_hash} = require('./helper');
 const Mailer = require('./mailer')
 
@@ -38,7 +37,7 @@ exports.loginAccount = async function (req, res) {
             else if (isPractitioner) position = "practitioner"
             else position = "admin"
             // console.log(position)
-            
+
             // assign session to user
             req.session.userID = result.rows[0].id
             req.session.role = position
@@ -59,7 +58,7 @@ exports.loginAccount = async function (req, res) {
     }
 
 }
-exports.logout = function(req, res, next) {
+exports.logout = function (req, res, next) {
     req.session.destroy(err => console.log(err))
     res.status(200).json({logOutStatus: true})
 }
@@ -75,7 +74,7 @@ exports.forgetPassword = async function (req, res) {
         },
         "Yua Mikami",
         {
-            expiresIn: 604800,
+            expiresIn: 600,
             issuer: 'hms',
             audience: 'hms-user'
         }
@@ -88,9 +87,9 @@ exports.forgetPassword = async function (req, res) {
             name: user.rows[0].name,
             intro: 'You received this email because you forgot your account password',
             action: {
-                instructions: 'To reset password please click here',
+                instructions: 'To reset password please click the link below within 10 minutes',
                 button: {
-                    color: '#22bc66',
+                    color: '#FFA111',
                     text: 'Click to reset password',
                     link: `${req.headers.origin}/resetPassword?token=${token}`
                 }
@@ -104,7 +103,7 @@ exports.forgetPassword = async function (req, res) {
     let message = {
         from: Mailer.transporter.options.auth.user,
         to: req.body.email,
-        subject: "Forget password Hospital Management System",
+        subject: "Hospital Management System: Recover password",
         html: mail,
     };
 
@@ -120,25 +119,75 @@ exports.forgetPassword = async function (req, res) {
         });
 }
 exports.resetPassword = async function (req, res) {
-    jwt.verify(req.params.userToken, 'Yua Mikami', {audience: 'hms-user', issuer: 'hms'}, function(err, decoded) {
-        if (err) {
-            console.log(err)
-            res.status(500).json({resetPasswordSuccessful: false})
-        }
-    })
-
-
-    const password = req.body.password
-    console.log(jwtDecode(req.params.userToken))
-    const email = jwtDecode(req.params.userToken).data.email
-
-    let user = await db.query(`SELECT * FROM accounts where email = $1`, [email])
-    if (user.rows.length < 1) return res.status(401).send("User does not exist")
-
     try {
-        await db.query(`UPDATE accounts SET password = $1 WHERE email = $2`, [password, email])
+        await db.query(`UPDATE accounts SET password = $1 WHERE email = $2`, [do_hash(req.body.password), req.body.email])
+        const token = jwt.sign(
+            {
+                data: {
+                    email: req.body.email
+                }
+            },
+            "Yua Mikami",
+            {
+                expiresIn: 600,
+                issuer: 'hms',
+                audience: 'hms-user'
+            }
+        );
+        let email = {
+            body: {
+                name: req.body.email,
+                intro: 'You received this email because you password has just changed',
+                action: {
+                    instructions: 'If you did not change your password, click on the link below to recover it within 10 minutes',
+                    button: {
+                        color: '#FFA111',
+                        text: 'Click to reset password',
+                        link: `${req.headers.origin}/resetPassword?token=${token}`
+                    }
+                },
+                outro: 'If you did change your password, simply ignore this email.'
+            }
+        };
+
+        let mail = Mailer.mailGenerator.generate(email);
+
+        let message = {
+            from: Mailer.transporter.options.auth.user,
+            to: req.body.email,
+            subject: "Hospital Management System: Recent password change",
+            html: mail,
+        };
+
+        Mailer.transporter
+            .sendMail(message, function (error, info) {
+                if (error) {
+                    console.log(error);
+                    res.status(500).json({mailSent: false})
+                } else {
+                    console.log('Email sent: ' + info.response);
+                    res.status(200).json({mailSent: true})
+                }
+            });
         res.status(200).json({resetPasswordSuccessful: true})
     } catch (err) {
         res.status(500).json({resetPasswordSuccessful: false})
+    }
+}
+
+exports.verifyJWT = async (jwtToken) => {
+    const decoded = await new Promise((resolve, reject) => {
+        jwt.verify(jwtToken, 'Yua Mikami', {audience: 'hms-user', issuer: 'hms'}, function (err, decoded) {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(decoded);
+        })
+    });
+    if (decoded.exp < Date.now() * 10e-3) {
+        return decoded.data;
+    } else {
+        return {"error": "JWT Token Expired"};
     }
 }

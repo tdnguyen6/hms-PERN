@@ -28,6 +28,7 @@ import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 
 // API
 import {resetPassword} from "../../components/API/passwordRecovery";
+import {verifyJWT} from "../../components/API/passwordRecovery";
 
 /*
 can't use hooks because this is a component.
@@ -56,29 +57,89 @@ const style = theme => ({
 
 class ResetPassword extends Component {
     state = {
-        password: {
-            value: '',
-            hasError: false,
-            error: ''
-        },
         button: {
             open: false,
             error: ''
         },
-        done: false,
+        password: {
+            value: '',
+            reenter: {
+                hasError: false,
+                error: ''
+            }
+        },
+        mess: '',
+        email: '',
+        messOnly: false,
         loading: false
     };
 
-    handleEmailInput = (event) => {
-        const match = validate("email", this.state.password.value);
-
-        this.setState({
-            password: {
-                value: event ? event.target.value : this.state.password.value,
-                hasError: !match.email,
-                error: !match.email ? 'Invalid email address' : ''
+    async componentDidMount() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (!urlParams.has("token")) this.props.history.push("/");
+        else {
+            try {
+                this.setState({loading: true});
+                const data = await verifyJWT(urlParams.get("token"));
+                this.setState({
+                    email: data.email,
+                    mess: `Enter new password`
+                })
+            } catch (e) {
+                let mess;
+                if (e === "JWT Token Expired") {
+                    mess =
+                        <>
+                            It seems like your token has expired after 10 minutes. Please go back to <span> </span>
+                            <Link href="" onClick={this.backToForgetPassword}>
+                                forget password page
+                            </Link>
+                            <span> </span> to request a new email with a valid token.
+                        </>
+                } else {
+                    mess = `Error: ${e}`;
+                }
+                this.setState({
+                    mess: mess,
+                    messOnly: true
+                })
+            } finally {
+                this.setState({loading: false});
             }
-        });
+        }
+    }
+
+    backToForgetPassword = (event) => {
+        event.preventDefault();
+        this.props.history.push("/forgetPassword");
+    };
+
+    backToLogin = (event) => {
+        event.preventDefault();
+        this.props.history.push("/login");
+    };
+
+    handleReenterPassword = (event) => {
+        const password = this.state.password;
+
+        if (event.target.value !== password.value) {
+            password.reenter = {
+                hasError: true,
+                error: "Reentered password does not match"
+            };
+        } else {
+            password.reenter = {
+                hasError: false,
+                error: ''
+            };
+        }
+        this.setState({password: password})
+    };
+
+    handleEnterPassword = (event) => {
+        const password = this.state.password;
+        password.value = event.target.value;
+        this.setState({password: password})
     };
 
     handleDialogClose = () => {
@@ -90,15 +151,17 @@ class ResetPassword extends Component {
         })
     }
 
-    handleSubmit = async () => {
+    handleSubmit = async (event) => {
+        event.preventDefault();
+
         const dialogStatus = {
             dialogMessage: '',
             dialogHasError: false
         };
 
-        if (this.state.password.hasError) {
+        if (this.state.password.reenter.hasError) {
             dialogStatus.dialogHasError = true;
-            dialogStatus.dialogMessage = 'The given email is invalid. Please input the valid email';
+            dialogStatus.dialogMessage = this.state.password.reenter.error;
         }
 
         this.setState({
@@ -109,16 +172,23 @@ class ResetPassword extends Component {
         });
 
         if (!dialogStatus.dialogHasError) {
-            this.setState({done: true});
             try {
-                const urlParams = new URLSearchParams(window.location.search);
-                let token;
-                if (urlParams.has("token")) {
-                    token = urlParams.get("token");
-                    console.log(token);
-                }
-                // await resetPassword(this.state.password.value, token);
                 await this.setState({loading: true});
+                await resetPassword(this.state.email, this.state.password.value);
+                this.setState({
+                    messOnly: true,
+                    mess:
+                        <>
+                            You have successfully changed your password. <br/>
+                            <Typography component="p" variant="body1" align="center">
+                                Click <span> </span>
+                                <Link href="" onClick={this.backToLogin}>
+                                    here
+                                </Link>
+                                <span> </span> to login
+                            </Typography>
+                        </>
+                });
             } catch (e) {
                 console.log(e);
             } finally {
@@ -126,11 +196,6 @@ class ResetPassword extends Component {
             }
         }
     };
-
-    backToForm = (event) => {
-        event.preventDefault();
-        this.setState({done: false});
-    }
 
     render() {
         const {classes} = this.props;
@@ -146,20 +211,15 @@ class ResetPassword extends Component {
                         Password Recovery
                     </Typography>
                     {
-                        this.state.done
+                        this.state.messOnly
                             ?
                             <Typography component="p" variant="body1" align="justify">
-                                You should soonly receive an email containing a link to reset password.
-                                If you have not received an email, it may not be a registered one. Click <span> </span>
-                                <Link href="" onClick={this.backToForm}>
-                                    here
-                                </Link>
-                                <span> </span> to enter another one.
+                                {this.state.mess}
                             </Typography>
                             :
-                            <div>
+                            <>
                                 <Typography component="p" variant="subtitle2">
-                                    Enter your email address to receive reset password link
+                                    {this.state.mess}
                                 </Typography>
                                 <form className={classes.form} onSubmit={this.handleSubmit}>
                                     <Grid container spacing={2}>
@@ -169,14 +229,25 @@ class ResetPassword extends Component {
                                                 variant="outlined"
                                                 required
                                                 fullWidth
-                                                id="email"
-                                                label="Email Address"
-                                                name="email"
-                                                autoComplete="email"
+                                                label="New Password"
+                                                type="password"
                                                 value={this.state.password.value}
-                                                error={this.state.password.hasError}
-                                                helperText={this.state.password.error}
-                                                onChange={this.handleEmailInput}
+                                                onChange={this.handleEnterPassword}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container spacing={2}>
+                                        {/* Email Input */}
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                variant="outlined"
+                                                required
+                                                fullWidth
+                                                label="Reenter New Password"
+                                                type="password"
+                                                onChange={this.handleReenterPassword}
+                                                error={this.state.password.reenter.hasError}
+                                                helperText={this.state.password.reenter.error}
                                             />
                                         </Grid>
                                     </Grid>
@@ -206,7 +277,7 @@ class ResetPassword extends Component {
                                         </DialogActions>
                                     </Dialog>
                                 </form>
-                            </div>
+                            </>
 
                     }
 
