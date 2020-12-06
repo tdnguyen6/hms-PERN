@@ -13,6 +13,34 @@ exports.listPractitioners = async function(req, res) {
 	}
 }
 
+exports.addPractitioner = async function(req, res) {
+	const createAccount = 'insert into accounts(email, password, phone, name, created_on, practitioner_id, gender) values ($1,$2,$3,$4,$5,$5,$6,$7)'
+	try {
+		let result = await db.query(queryStatement, [req.body.email, req.body.password, req.body.phone, req.body.name, new Date(), req.body.id, req.body.gender])
+		res.status(200).json(result.rows)
+	} catch (err) {
+		console.log(err)
+		res.status(500).json({status: false})
+	}
+}
+
+exports.deletePractitioner = async function(req, res) {
+	if (!Number.isInteger(req.body.id)) {
+		res.status(400).json({status: false})
+		return
+	}
+	
+	const queryStatement = 'delete from practitioners where id = ' + req.body.id
+	try {
+		let result = await db.query(queryStatement)
+		res.status(200).json(result.rows)
+	} catch (err) {
+		console.log(err)
+		res.status(500).json({status: false})
+	}
+}
+
+
 exports.listPatients = async function(req, res) {
 	const queryStatement = 'select p.id, a.name as name, a.avatar, a.email, a.phone, a.gender, p.ssn, p.dob from patients p, accounts a where p.id = a.patient_id'
 	try {
