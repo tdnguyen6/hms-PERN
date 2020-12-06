@@ -52,11 +52,11 @@ app.post("/admin/patients/all", admin.listPatients);
 app.post("/admin/appointments/all", appointment.queryAllAppointments);
 
 app.post("/appointment/create", appointment.createAppointment);
-
 app.post("/appointment/getAvailableTime", appointment.getAvailableHours);
 app.post("/appointment/findRoom", appointment.findRoom);
 app.post("/appointment/last", appointment.findLastAppointment);
 app.post("/appointment/makePayment", payment.makePayment);
+app.post("/appointment/updatePayment", payment.updatePayment);
 
 
 app.post("/symptom/all", symptom.queryAllSymptoms);
