@@ -48,6 +48,24 @@ exports.findRoom = async function(req, res) {
     }
 }
 
+exports.findLastAppointment = async function(req, res) {
+    // check if req.body.diseaseID is a number
+    if (!Number.isInteger(req.body.patientID)) {
+        return res.status(400).json({status: false})
+    }
+    
+    const queryStatement = "select a.id from appointments a where a.patient_id = " + req.body.patientID
+    
+    try {
+        let result = await db.query(queryStatement)
+        return res.status(200).json(result.rows)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({status: false})
+    }
+}
+
+
 
 exports.getAvailableHours = async function(req, res) {
     if (!req.body.practitionerID || !req.body.day || !req.body.month) {
