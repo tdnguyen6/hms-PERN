@@ -87,7 +87,7 @@ class ResetPassword extends Component {
                 })
             } catch (e) {
                 let mess;
-                if (e === "JWT Token Expired") {
+                if (e === "Token Has Expired") {
                     mess =
                         <>
                             It seems like your token has expired after 10 minutes. Please go back to <span> </span>

@@ -172,18 +172,10 @@ exports.resetPassword = async function (req, res) {
 }
 
 exports.verifyJWT = async (jwtToken) => {
-    const decoded = await new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
         jwt.verify(jwtToken, 'Yua Mikami', {audience: 'hms-user', issuer: 'hms'}, function (err, decoded) {
-            if (err) {
-                console.log(err)
-                reject(err)
-            }
+            if (err) reject(err)
             resolve(decoded);
         })
     });
-    if (decoded.exp < Date.now() * 10e-3) {
-        return decoded.data;
-    } else {
-        return {"error": "JWT Token Expired"};
-    }
 }

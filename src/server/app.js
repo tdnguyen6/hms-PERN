@@ -11,6 +11,7 @@ const practitioner = require('./modules/practitioner');
 const admin = require('./modules/admin');
 const appointment = require('./modules/appointment');
 const payment = require('./modules/payment');
+const TokenExpiredError = require("jsonwebtoken/lib/TokenExpiredError");
 
 app.use(express.json());
 app.use(session({
@@ -71,13 +72,13 @@ app.post("/payment/invoice", payment.generateInvoice)
 app.post("/verify-jwt", async (req, res) => {
     try {
         const decoded = await auth.verifyJWT(req.body["jwtToken"]);
-        if (decoded.hasOwnProperty("error")) {
-            res.status(401).json(decoded);
-        } else {
-            res.status(200).json(decoded);
-        }
+        res.status(200).json(decoded.data);
     } catch (err) {
-        res.status(500).json({"error": "Unspecified Server Error"});
+        if (err instanceof TokenExpiredError) {
+            res.status(401).json({"error": "Token Has Expired"});
+        } else {
+            res.status(500).json({"error": "Unspecified Server Error"});
+        }
     }
 });
 
