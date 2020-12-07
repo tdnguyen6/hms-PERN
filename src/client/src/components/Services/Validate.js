@@ -27,16 +27,16 @@ export const validate = (type, value) => {
 
     switch (type) {
         case "name":
-            res.name = validate.name.pattern.test(value);
+            res.name = (validate.name.pattern.exec(value) === null);
             break;
         case "email":
-            res.email = validate.email.pattern.test(value);
+            res.email = (validate.email.pattern.exec(value) === null);
             break;
         case "phone":
-            res.phone = validate.phone.pattern.test(value);
+            res.phone = (validate.phone.pattern.exec(value) === null);
             break;
         case "ssn":
-            res.ssn = validate.ssn.pattern.test(value);
+            res.ssn = (validate.ssn.pattern.exec(value) === null);
     }
     return res;
 }

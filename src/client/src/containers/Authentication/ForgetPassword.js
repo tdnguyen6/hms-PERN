@@ -65,13 +65,13 @@ class ForgetPassword extends Component {
     };
 
     handleEmailInput = (event) => {
-        const match = validate("email", this.state.email.value);
+        const fail = validate("email", this.state.email.value);
 
         this.setState({
             email: {
                 value: event ? event.target.value : this.state.email.value,
-                hasError: !match.email,
-                error: !match.email ? 'Invalid email address' : ''
+                hasError: fail.email,
+                error: fail.email ? 'Invalid email address' : ''
             }
         });
     };

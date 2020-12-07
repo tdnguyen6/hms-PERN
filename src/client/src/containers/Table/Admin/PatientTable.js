@@ -44,16 +44,14 @@ class PractitionerTable extends Component {
     };
 
     componentDidMount() {
-        this.getAllPatient().then();
-    }
-
-    getAllPatient = async () => {
-        await allPatient().then(data => {
-            this.setState({
-                patient: data
+        this.setState({ loading: true });
+        allPatient()
+            .then(data => {
+                this.setState({
+                    patient: data,
+                    loading: false
+                })
             });
-        });
-        console.log(this.state.patient);
     }
 
     handleDialogClose = async (close, type) => {

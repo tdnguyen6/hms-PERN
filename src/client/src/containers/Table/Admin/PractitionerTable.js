@@ -16,6 +16,9 @@ import ErrorDialog from "../../Dialog/OtherDialog/ErrorDialog";
 import {allAppointment} from "../../../components/API/AllAppointment";
 import {allPractitioner} from "../../../components/API/AllPractitioner";
 import {Redirect} from "react-router-dom";
+import {allDisease} from "../../../components/API/AllDisease";
+import {allSymptom} from "../../../components/API/AllSymptom";
+import {allSpecialty} from "../../../components/API/AllSpecialty";
 
 let columns = [
     {id: 'name', label: 'Name'},
@@ -35,6 +38,7 @@ let practitioner = {
 class PractitionerTable extends Component {
     state = {
         practitioner: [],
+        specialtyList: [],
         loading: false,
         editPractitionerDialog: false,
         newPractitionerDialog: false,
@@ -42,16 +46,14 @@ class PractitionerTable extends Component {
     };
 
     componentDidMount() {
-        this.getAllPractitioner().then();
-    }
-
-    getAllPractitioner = async () => {
-        await allPractitioner().then(data => {
-            this.setState({
-                practitioner: data
+        this.setState({ loading: true });
+        allPractitioner()
+            .then(data => {
+                this.setState({
+                    practitioner: data,
+                    loading: false
+                })
             });
-        });
-        console.log(this.state.practitioner);
     }
 
     handleDialogClose = async (close, type) => {
@@ -94,8 +96,18 @@ class PractitionerTable extends Component {
     *                 -> New Appointment Dialog
     */
     handleNewClick = async () => {
+        let specialty;
+        try {
+            await this.setState({ loading: true });
+            console.log('loading');
+            specialty = await allSpecialty();
+        } finally {
+            await this.setState( { loading: false });
+            console.log('loaded');
+        }
         await this.setState({
-            newPractitionerDialog: true
+            newPractitionerDialog: true,
+            specialtyList: specialty
         });
     };
 
@@ -148,11 +160,12 @@ class PractitionerTable extends Component {
                 <EditPractitionerDialog open={this.state.editPractitionerDialog}
                                         close={this.handleDialogClose}
                                         loading={this.handleLoading}
-                                        {...practitioner}/>
-                <NewPractitionerDialog open={this.state.newPractitionerDialog}
-                                       close={this.handleDialogClose}
-                                       loading={this.handleLoading}
-                                       error={this.getError}/>
+                                        {...practitioner} />
+                <NewPractitionerDialog open = {this.state.newPractitionerDialog}
+                                       close = {this.handleDialogClose}
+                                       loading = {this.handleLoading}
+                                       error = {this.getError}
+                                       specialty = { this.state.specialtyList } />
                 <ErrorDialog open={this.state.errorDialog}
                              close={this.handleDialogClose}
                              error={this.state.errorMessage}/>

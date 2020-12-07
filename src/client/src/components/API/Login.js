@@ -10,7 +10,7 @@ export const login = async (username, password) => {
     try {
         // show loading
         res = await axios.post(`${process.env.REACT_APP_API_ADDR}/user/login`, data);
-        return res.data.role;
+        return res.data;
     } catch (error) {
         if (error.response.status === 401) {
             return null;

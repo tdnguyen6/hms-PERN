@@ -56,7 +56,14 @@ class AppointmentTable extends Component {
   };
 
   componentDidMount() {
-    this.getAllAppointment().then();
+    this.setState({ loading: true });
+    allAppointment()
+        .then(data => {
+          this.setState({
+            appointment: data,
+            loading: false
+          })
+        });
   }
 
   handleRowClick = (event, row) => {
@@ -126,15 +133,6 @@ class AppointmentTable extends Component {
     await this.setState({
       loading: loading
     })
-  }
-
-  getAllAppointment = async () => {
-    await allAppointment().then(data => {
-      this.setState({
-        appointment: data
-      });
-    });
-    console.log(this.state.appointment);
   }
 
   getDiseaseKnown = async (disease) => {
