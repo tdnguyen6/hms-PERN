@@ -19,7 +19,7 @@ let email = {
 let mail = Mailer.mailGenerator.generate(email);
 
 let message = {
-    from: Mailer.transporter.options.auth.user,
+    // from: 'noreply.tidu@gmail.com',
     // change to your email to try
     to: 'tidu.nguyen.2000@gmail.com',
     subject: "Demo Node.js mail using nodemailer and mailgen",

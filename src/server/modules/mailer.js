@@ -6,14 +6,14 @@ exports.transporter = nodemailer.createTransport({
     // auth: {
     //     user: 'tidu.nguyen.2000@gmail.com',
     //     pass: 'xsmtpsib-762738c1b17df7a91ee73cc890c39cdd139a8cf57e96d2eeefded33190f0a603-gUXGEbvk9QjDdxOm'
-    // }
+    // },
     host: 'smtp.gmail.com',
     auth: {
         type: 'OAuth2',
-        user: 'projects.assets@gmail.com',
-        clientId: '225683130333-mfks6en4345rpp73kfblj8dr53cqnlvt.apps.googleusercontent.com',
-        clientSecret: 'ab7L4ASy9tTcapUCRog6Z5ub',
-        refreshToken: '1//047XKtyDF_AleCgYIARAAGAQSNwF-L9IrFD_sEvCf1_lJW-kTgl4SQGvSQHV1S7DbyMsukOEeXBLkbPeUn7ojpB0cQjCHdPbVvuU'
+        user: 'noreply.tidu@gmail.com',
+        clientId: '274057410947-12bad18d6db2p46dpvj1cge621usbg9e.apps.googleusercontent.com',
+        clientSecret: 'f204H2NtkhUs9q06fZCROQjt',
+        refreshToken: '1//04mOqN0FFDb-ICgYIARAAGAQSNwF-L9IrTXMNE5rFsPQh-wz8bvIOuYWRkOf97WE0xvMc987JqpYxatGAeqERnnAyyXQ6wHs1Pjg'
     },
     secure: true
 });

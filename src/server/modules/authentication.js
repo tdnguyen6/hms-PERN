@@ -97,7 +97,6 @@ exports.forgetPassword = async function (req, res) {
     let mail = Mailer.mailGenerator.generate(email);
 
     let message = {
-        from: Mailer.transporter.options.auth.user,
         to: req.body.email,
         subject: "Hospital Management System: Recover password",
         html: mail,
@@ -137,7 +136,7 @@ exports.resetPassword = async function (req, res) {
                 name: user.rows[0].name,
                 intro: 'You received this email because you password has just changed',
                 action: {
-                    instructions: 'If you did not change your password, click on the link below to recover it within 10 minutes',
+                    instructions: 'If you did not change your password, click on the link below to reset it within 10 minutes',
                     button: {
                         color: '#FFA111',
                         text: 'Click to reset password',
@@ -151,7 +150,6 @@ exports.resetPassword = async function (req, res) {
         let mail = Mailer.mailGenerator.generate(email);
 
         let message = {
-            from: Mailer.transporter.options.auth.user,
             to: req.body.email,
             subject: "Hospital Management System: Recent password change",
             html: mail,
