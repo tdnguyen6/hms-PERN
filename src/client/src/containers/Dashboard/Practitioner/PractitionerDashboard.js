@@ -8,9 +8,8 @@ import Paper from '@material-ui/core/Paper';
 import AppointmentTable from '../../Table/Admin/AppointmentTable';
 import DrawerAppBar from '../../Others/DrawerAppBar';
 import Dashboard from "../../../components/Others/Dashboard";
-import Main from "../../Others/Main";
-import Footer from "../../Others/Footer";
 import withStyles from "@material-ui/core/styles/withStyles";
+import { Redirect } from 'react-router-dom';
 
 const style = (theme) => ({
     root: {
@@ -35,35 +34,41 @@ const style = (theme) => ({
 });
 
 class PractitionerDashboard extends Component {
+    state = {
+        redirect: null
+    };
+
+    componentDidMount() {
+        if (sessionStorage.role !== 'practitioner' || !sessionStorage.authenticated) {
+            this.setState({
+                redirect: '/login'
+            });
+        }
+    }
+
     render() {
         const {classes} = this.props;
+        if (this.state.redirect) return <Redirect to  = { this.state.redirect } />
 
         return (
-            <>
-                <Main>
-                    <div className={classes.root}>
-                        <CssBaseline/>
-                        <DrawerAppBar type="patient"/>
-                        <div className={classes.content}>
-                            <div className={classes.appBarSpacer}/>
-                            <Container maxWidth="lg" className={classes.container}>
-                                <Grid container spacing={3}>
-                                    <Grid item xs={12}>
-                                        <Paper className={classes.paper}>
-                                            <Route exact path="/practitioner"
-                                                   render={(props) => <Dashboard {...props} for={"practitioner"}/>}/>
-                                            <Route exact path="/practitioner/dashboard"
-                                                   render={(props) => <Dashboard {...props} for={"practitioner"}/>}/>
-                                            <Route path="/practitioner/appointment" exact component={AppointmentTable}/>
-                                        </Paper>
-                                    </Grid>
-                                </Grid>
-                            </Container>
-                        </div>
-                    </div>
-                </Main>
-                <Footer/>
-            </>
+            <div className={classes.root}>
+                <CssBaseline/>
+                <DrawerAppBar type="patient"/>
+                <div className={classes.content}>
+                    <div className={classes.appBarSpacer}/>
+                    <Container maxWidth="lg" className={classes.container}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <Paper className={classes.paper}>
+                                    <Route exact path="/practitioner" render={(props) => <Dashboard {...props} for={"practitioner"}/>}/>
+                                    <Route exact path="/practitioner/dashboard" render={(props) => <Dashboard {...props} for={"practitioner"}/>}/>
+                                    <Route path="/practitioner/appointment" exact component={AppointmentTable}/>
+                                </Paper>
+                            </Grid>
+                        </Grid>
+                    </Container>
+                </div>
+            </div>
         );
     }
 }

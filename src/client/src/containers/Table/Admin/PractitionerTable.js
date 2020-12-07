@@ -13,37 +13,20 @@ import LoadingDialog from "../../Dialog/OtherDialog/LoadingDialog";
 import EditPractitionerDialog from "../../Dialog/EditDialog/EditPractitionerDialog";
 import NewPractitionerDialog from "../../Dialog/NewDialog/NewPractitionerDialog";
 import ErrorDialog from "../../Dialog/OtherDialog/ErrorDialog";
+import {allAppointment} from "../../../components/API/AllAppointment";
+import {allPractitioner} from "../../../components/API/AllPractitioner";
+import {Redirect} from "react-router-dom";
 
-function createData(name, sex, ssn, dob, email, phone, speciality) {
-    return {name, sex, ssn, dob, email, phone, speciality};
-};
-let rows = [
-    createData('name', 'sex', 'ssn', 'dob', 'email', 'phone', 'speciality'),
-    createData('name', 'sex', 'ssn', 'dob', 'email', 'phone', 'speciality'),
-    createData('name', 'sex', 'ssn', 'dob', 'email', 'phone', 'speciality'),
-    createData('name', 'sex', 'ssn', 'dob', 'email', 'phone', 'speciality'),
-    createData('name', 'sex', 'ssn', 'dob', 'email', 'phone', 'speciality'),
-    createData('name', 'sex', 'ssn', 'dob', 'email', 'phone', 'speciality'),
-    createData('name', 'sex', 'ssn', 'dob', 'email', 'phone', 'speciality'),
-    createData('name', 'sex', 'ssn', 'dob', 'email', 'phone', 'speciality'),
-    createData('name', 'sex', 'ssn', 'dob', 'email', 'phone', 'speciality'),
-    createData('name', 'sex', 'ssn', 'dob', 'email', 'phone', 'speciality'),
-    createData('name', 'sex', 'ssn', 'dob', 'email', 'phone', 'speciality')
-];
 let columns = [
     {id: 'name', label: 'Name'},
-    {id: 'sex', label: 'Sex', align: 'right'},
-    {id: 'ssn', label: 'SSN', align: 'right'},
-    {id: 'dob', label: 'Date of Birth', align: 'right'},
+    {id: 'gender', label: 'Sex', align: 'right'},
     {id: 'email', label: 'Email', align: 'right'},
     {id: 'phone', label: 'Phone', align: 'right'},
-    {id: 'speciality', label: 'Speciality', align: 'right'}
+    {id: 'specialty', label: 'Specialty', align: 'right'}
 ];
 let practitioner = {
     name: '',
     sex: '',
-    ssn: '',
-    dob: '',
     email: '',
     phone: '',
     speciality: ''
@@ -51,11 +34,25 @@ let practitioner = {
 
 class PractitionerTable extends Component {
     state = {
+        practitioner: [],
         loading: false,
         editPractitionerDialog: false,
         newPractitionerDialog: false,
         errorDialog: false
     };
+
+    componentDidMount() {
+        this.getAllPractitioner().then();
+    }
+
+    getAllPractitioner = async () => {
+        await allPractitioner().then(data => {
+            this.setState({
+                practitioner: data
+            });
+        });
+        console.log(this.state.practitioner);
+    }
 
     handleDialogClose = async (close, type) => {
         if (type === "editPractitioner") {
@@ -80,12 +77,10 @@ class PractitionerTable extends Component {
     handleRowClick = (event, row) => {
         practitioner = {
             name: row.name,
-            sex: row.sex,
-            ssn: row.ssn,
-            dob: row.dob,
-            password: row.email,
+            sex: row.gender,
+            email: row.email,
             phone: row.phone,
-            speciality: row.speciality
+            specialty: row.specialty
         }
         this.setState({editPractitionerDialog: true});
     };
@@ -122,10 +117,10 @@ class PractitionerTable extends Component {
                                 {columns.map((column) => (
                                     <TableCell key={column.id} align={column.align}>
                                         {(column.label === 'Name')
-                                            ? <Button variant="contained"
-                                                      color="primary"
-                                                      align="right"
-                                                      onClick={this.handleNewClick}>
+                                            ? <Button variant = "contained"
+                                                      color = "primary"
+                                                      align = "right"
+                                                      onClick = {this.handleNewClick}>
                                                 New
                                             </Button>
                                             : column.label}
@@ -134,13 +129,13 @@ class PractitionerTable extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => {
+                            { this.state.practitioner.map((row) => {
                                 return (
-                                    <TableRow hover key={row.id} onClick={(event) => this.handleRowClick(event, row)}>
-                                        {columns.map((column) => {
+                                    <TableRow hover key = { row.id } onClick = {(event) => this.handleRowClick(event, row)}>
+                                        { columns.map((column) => {
                                             return (
-                                                <TableCell key={column.id} align={column.align}>
-                                                    {row[column.id]}
+                                                <TableCell key = {column.id} align = {column.align}>
+                                                    { row[column.id] }
                                                 </TableCell>
                                             );
                                         })}

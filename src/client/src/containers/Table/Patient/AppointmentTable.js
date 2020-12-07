@@ -18,6 +18,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import {Completed, Upcomming} from '../../../components/Services/AppointmentStatus';
+import Redirect from "react-router-dom";
 
 function createData(id, disease, practitioner, room, time, date, status) {
     return {id, disease, practitioner, room, time, date, status};

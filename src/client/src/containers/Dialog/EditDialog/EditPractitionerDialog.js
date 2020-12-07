@@ -66,34 +66,6 @@ class EditPractitionerDialog extends Component {
                                     value={this.props.sex}
                                     InputProps={{readOnly: true}}/>
                             </Grid>
-                            {/* SSN */}
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    autoComplete="ssn"
-                                    name="SSN"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="SSN"
-                                    label="SSN"
-                                    autoFocus
-                                    value={this.props.ssn}
-                                    InputProps={{readOnly: true}}/>
-                            </Grid>
-                            {/* DOB */}
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    autoComplete="dob"
-                                    name="DOB"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="DOB"
-                                    label="Date of Birth"
-                                    autoFocus
-                                    value={this.props.dob}
-                                    InputProps={{readOnly: true}}/>
-                            </Grid>
                             {/* Email */}
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -120,18 +92,18 @@ class EditPractitionerDialog extends Component {
                                     value={this.props.phone}
                                     InputProps={{readOnly: true}}/>
                             </Grid>
-                            {/* Speciality */}
+                            {/* Specialty */}
                             <Grid item xs={12} sm={12}>
                                 <TextField
-                                    autoComplete="speciality"
-                                    name="Speciality"
+                                    autoComplete="specialty"
+                                    name="Specialty"
                                     variant="outlined"
                                     required
                                     fullWidth
-                                    id="speciality"
-                                    label="Speciality"
+                                    id="specialty"
+                                    label="Specialty"
                                     autoFocus
-                                    value={this.props.speciality}
+                                    value={this.props.specialty}
                                     InputProps={{readOnly: true}}/>
                             </Grid>
                         </Grid>

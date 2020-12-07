@@ -16,7 +16,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
+import {Redirect} from 'react-router-dom';
 function createData(id, patient, age, gender, disease, room, time, date, status) {
     return {id, patient, age, gender, disease, room, time, date, status};
 };

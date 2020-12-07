@@ -26,8 +26,6 @@ function App() {
                 <Route path="/admin" component={AdminDashboard}/>
                 <Route path="/resetPassword" component={ResetPassword}/>
                 <Route path="/" component={Home}/>
-
-
             </Switch>
         </BrowserRouter>
     );

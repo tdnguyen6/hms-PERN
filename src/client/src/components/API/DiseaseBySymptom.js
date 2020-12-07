@@ -1,5 +1,10 @@
 import axios from 'axios';
 
+
+// finish
+// send array of symptomID
+// get list of predicted disease
+// if error or no disease found (array of length 0) return array of id: 0, name: 'No disease found'
 export const diseaseBySymptom = async (listOfSymptoms) => {
     let data = {
         symptoms: listOfSymptoms
@@ -10,11 +15,11 @@ export const diseaseBySymptom = async (listOfSymptoms) => {
     let res;
     try {
         res = await axios.post(`${process.env.REACT_APP_API_ADDR}/disease/findDiseases`, data);
-        console.log('disease returned in api', res.data);
+        console.log('disease returned in api', res.data, res.data.length);
+        if (res.data.length === 0) return [{id: 0, name: 'No disease found'}];
         return res.data;
     } catch (error) {
         console.log('disease error', error.response.status);
-        if (error.response.status === 400) return [{id: 0, name: 'No disease found'}];
-        else if (error.response.status === 500) return [{id: 0, name: 'No disease found'}];
+        if (error.response.status === 400 || error.response.status === 500) return [{id: 0, name: 'No disease found'}];
     }
 }
