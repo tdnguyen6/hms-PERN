@@ -13,10 +13,25 @@ exports.listAllPractitioners = async function (req, res) {
     }
 }
 
-exports.createPractitionerAccount = async function (req, res) {
-    const createAccount = 'insert into accounts(email, password, phone, name, practitioner_id, gender) values ($1,$2,$3,$4,$5,$5,$6,$7)'
+exports.createPractitioner = async function (req, res) {
+    if (!Number.isInteger(req.body.specialtyID)) {
+        return res.status(400).json({status: false})
+    }
+    
     try {
-        let result = await db.query(queryStatement, [req.body.email, req.body.password, req.body.phone, req.body.name, req.body.id, req.body.gender])
+        const insertStatement = `insert into practitioners (specialty) values (${req.body.specialtyID}) returning id`
+        const result = await db.query(insertStatement)
+        return res.status(200).json(result.rows)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({status: false})
+    }
+}
+
+exports.createPractitionerAccount = async function (req, res) {
+    const createStatement = 'insert into accounts(email, password, phone, name, practitioner_id, gender) values ($1,$2,$3,$4,$5,$5,$6)'
+    try {
+        const result = await db.query(createStatement, [req.body.email, req.body.password, req.body.phone, req.body.name, req.body.id, req.body.gender])
         return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
@@ -60,21 +75,6 @@ exports.listAllAppointments = async function (req, res) {
 
     try {
         const result = await db.query(queryStatement)
-        return res.status(200).json(result.rows)
-    } catch (err) {
-        console.log(err)
-        return res.status(500).json({status: false})
-    }
-}
-
-exports.createPractitioner = async function (req, res) {
-    if (!Number.isInteger(req.body.specialtyID)) {
-        return res.status(400).json({status: false})
-    }
-
-    try {
-        const insertStatement = `insert into practitioners (specialty) values (${req.body.specialtyID}) returning id`
-        const result = await db.query(insertStatement)
         return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
