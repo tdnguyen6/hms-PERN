@@ -131,8 +131,11 @@ class Login extends Component {
                 await this.setState({loading: true});
                 console.log('loading');
                 let role = await login(this.state.email.value, this.state.password.value);
-                if (role != null) this.props.history.push(`/${role}`);
-                else {
+                if (role != null) {
+                    sessionStorage.role = role;
+                    sessionStorage.authenticated = true;
+                    this.props.history.push(`/${role}`);
+                } else {
                     this.setState({
                         errorDialog: true,
                         errorMessage: 'Email address/Password is incorrect. Please try again.'
@@ -154,19 +157,16 @@ class Login extends Component {
         const {classes} = this.props;
 
         return (
-            <>
-                <Main>
-                    <Grid container className={classes.root}>
-                        <CssBaseline/>
-                        <Grid item xs={false} sm={4} md={7} className={classes.image}/>
-                        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                            <div className={classes.paper}>
-                                <Avatar className={classes.avatar}>
-                                    <LockOutlinedIcon/>
-                                </Avatar>
-                                <Typography component="h1" variant="h5"> Login </Typography>
-                                <form className={classes.form} onSubmit={this.handleSubmit}>
-                                    <Grid container spacing={2}>
+            <React.Fragment>
+                <Grid container className = {classes.root}>
+                    <CssBaseline/>
+                    <Grid item xs={false} sm={4} md={7} className={classes.image}/>
+                    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                        <div className = {classes.paper}>
+                            <Avatar className={classes.avatar}><LockOutlinedIcon/></Avatar>
+                            <Typography component="h1" variant="h5"> Login </Typography>
+                            <form className={classes.form} onSubmit={this.handleSubmit}>
+                                <Grid container spacing={2}>
                                         {/* Name Input */}
                                         <Grid item xs={12}>
                                             <TextField
@@ -200,44 +200,40 @@ class Login extends Component {
                                             />
                                         </Grid>
                                     </Grid>
-                                    {/* Remember Me */}
-                                    <FormControlLabel
-                                        control={<Checkbox value="remember" color="primary"/>}
-                                        label="Remember me"
-                                        onChange={this.handleRememberMe}/>
-                                    <Button
-                                        fullWidth
-                                        variant="contained"
-                                        color="primary"
-                                        type="submit"
-                                        className={classes.submit}
-                                    >
-                                        Login
-                                    </Button>
-                                    <Grid container>
-                                        <Grid item xs>
-                                            <Link component={RouteLink} to="/forgetPassword">
+                                {/* Remember Me */}
+                                <FormControlLabel
+                                    control = {<Checkbox value="remember" color="primary"/>}
+                                    label = "Remember me"
+                                    onChange = {this.handleRememberMe}/>
+                                <Button
+                                     fullWidth
+                                     variant="contained"
+                                     color="primary"
+                                     type="submit"
+                                     className={classes.submit}>Login
+                                </Button>
+                                <Grid container>
+                                    <Grid item xs>
+                                        <Link component={RouteLink} to="/forgetPassword">
                                                 <Typography variant="body2" align="left">Forgot password</Typography>
                                             </Link>
-                                        </Grid>
-                                        <Grid item xs>
-                                            <Link component={RouteLink} to="/register">
+                                    </Grid>
+                                    <Grid item xs>
+                                        <Link component={RouteLink} to="/register">
                                                 <Typography variant="body2" align="right">Don't have an
                                                     account?</Typography>
                                             </Link>
-                                        </Grid>
                                     </Grid>
-                                </form>
-                            </div>
-                        </Grid>
-                        <ErrorDialog open={this.state.errorDialog}
-                                     close={this.getOpenStateOfErrorDialog}
-                                     error={this.state.errorMessage}/>
-                        <LoadingDialog open={this.state.loading}/>
+                                </Grid>
+                            </form>
+                        </div>
                     </Grid>
-                </Main>
-                <Footer/>
-            </>
+                </Grid>
+                <ErrorDialog open={this.state.errorDialog}
+                             close={this.getOpenStateOfErrorDialog}
+                             error={this.state.errorMessage}/>
+                <LoadingDialog open={this.state.loading}/>
+            </React.Fragment>
         );
     };
 }

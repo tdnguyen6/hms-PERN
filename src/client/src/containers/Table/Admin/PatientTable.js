@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,96 +9,128 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-
-import EditAppointmentDialog from '../../Dialog/EditDialog/EditAppointmentDialog';
-import NewAppointmentDialog from '../../Dialog/EditDialog/EditAppointmentDialog';
-
-function createData(A, B, C, D, E, F) {
-    return {A, B, C, D, E, F};
-};
-let rows = [
-    createData('1', 'A', 'A', 'A1.104', '18:00', 'Aug 18'),
-    createData('2', 'B', 'B', 'A5.104', '16:00', 'Aug 20'),
-    createData('3', 'A', 'A', 'A1.104', '18:00', 'Aug 18'),
-    createData('4', 'B', 'B', 'A5.104', '16:00', 'Aug 20'),
-    createData('5', 'A', 'A', 'A1.104', '18:00', 'Aug 18'),
-    createData('6', 'B', 'B', 'A5.104', '16:00', 'Aug 20'),
-    createData('7', 'B', 'B', 'A5.104', '16:00', 'Aug 20'),
-    createData('8', 'A', 'A', 'A1.104', '18:00', 'Aug 18'),
-    createData('9', 'A', 'A', 'A1.104', '18:00', 'Aug 18'),
-    createData('10', 'A', 'A', 'A1.104', '18:00', 'Aug 18'),
-    createData('11', 'B', 'B', 'A5.104', '16:00', 'Aug 20'),
-    createData('12', 'B', 'B', 'A5.104', '16:00', 'Aug 20'),
-    createData('13', 'A', 'A', 'A1.104', '18:00', 'Aug 18'),
-    createData('14', 'A', 'A', 'A1.104', '18:00', 'Aug 18'),
-    createData('15', 'A', 'A', 'A1.104', '18:00', 'Aug 18')
-];
+import LoadingDialog from "../../Dialog/OtherDialog/LoadingDialog";
+import EditPractitionerDialog from "../../Dialog/EditDialog/EditPractitionerDialog";
+import NewPractitionerDialog from "../../Dialog/NewDialog/NewPractitionerDialog";
+import ErrorDialog from "../../Dialog/OtherDialog/ErrorDialog";
+import {allAppointment} from "../../../components/API/AllAppointment";
+import {allPractitioner} from "../../../components/API/AllPractitioner";
+import {allPatient} from "../../../components/API/AllPatient";
+import EditPatientDialog from "../../Dialog/EditDialog/EditPatientDialog";
+import {Redirect} from "react-router-dom";
 
 let columns = [
-    {id: 'A', label: 'A'},
-    {id: 'B', label: 'B'},
-    {id: 'C', label: 'C', align: 'right'},
-    {id: 'D', label: 'D', align: 'right'},
-    {id: 'E', label: 'E', align: 'right'},
-    {id: 'F', label: 'F', align: 'right'}
-]
+    {id: 'name', label: 'Name'},
+    {id: 'gender', label: 'Sex', align: 'right'},
+    {id: 'email', label: 'Email', align: 'right'},
+    {id: 'phone', label: 'Phone', align: 'right'},
+    {id: 'dob', label: 'Date of Birth', align: 'right'}
+];
+let patient = {
+    name: '',
+    sex: '',
+    email: '',
+    phone: '',
+    dob: ''
+};
 
-class PatientTable extends Component {
+class PractitionerTable extends Component {
     state = {
-        editDialog: false,
-        newDialog: false
+        patient: [],
+        loading: false,
+        editPatientDialog: false,
+        newPractitionerDialog: false,
+        errorDialog: false
     };
-    handleRowClick = (event, row) => {
-        if (row.status) {
-            this.setState({
-                editDialog: true
-            });
-        } else {
-            this.setState({
-                editDialog: false
-            })
-        }
-    };
-    handleNewClick = () => {
-        this.setState({
-            newDialog: true
-        });
-    };
-    getOpenStateOfEditDialog = (openState) => {
-        this.setState({
-            editDialog: openState
-        });
+
+    componentDidMount() {
+        this.getAllPatient().then();
     }
 
-    getOpenStateOfNewDialog = (openState) => {
-        this.setState({
-            newDialog: openState
+    getAllPatient = async () => {
+        await allPatient().then(data => {
+            this.setState({
+                patient: data
+            });
         });
+        console.log(this.state.patient);
+    }
+
+    handleDialogClose = async (close, type) => {
+        if (type === "editPatient") {
+            await this.setState({
+                editPatientDialog: close
+            });
+        } else if (type === "newPractitioner") {
+            await this.setState({
+                newPractitionerDialog: close
+            });
+        } else if (type === 'error') {
+            await this.setState({
+                errorDialog: close
+            });
+        }
+    };
+    handleLoading = async (loading) => {
+        await this.setState({
+            loading: loading
+        })
+    };
+    handleRowClick = (event, row) => {
+        patient = {
+            name: row.name,
+            sex: row.gender,
+            email: row.email,
+            phone: row.phone,
+            dob: row.dob
+        }
+        this.setState({editPatientDialog: true});
+    };
+
+    /*
+    * Click New -> Yes/No Dialog
+    *             -> Yes: symptomsKnown = true
+    *               -> New Appointment Dialog
+    *             -> No:  symptomsKnown = false
+    *               -> Symptoms Dialog -> Click Save -> Return Predicted Disease
+    *                 -> New Appointment Dialog
+    */
+    handleNewClick = async () => {
+        await this.setState({
+            newPractitionerDialog: true
+        });
+    };
+
+    getError = async (error) => {
+        await this.setState({
+            errorDialog: error.error,
+            errorMessage: error.message
+        })
     }
 
     render() {
         return (
             <React.Fragment>
-                <Typography component="h2" variant="h6" color="primary" gutterBottom>Patient</Typography>
+                <Typography component="h2" variant="h6" color="primary" gutterBottom>Patients</Typography>
                 <TableContainer>
                     <Table size="medium" stickyHeader>
                         <TableHead>
                             <TableRow>
                                 {columns.map((column) => (
-                                    <TableCell key={column.id} align={column.align}>
-                                        {column.label}
+                                    <TableCell key = { column.id } align = { column.align }>
+                                        { column.label }
                                     </TableCell>
                                 ))}
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => {
+                            { this.state.patient.map((row) => {
                                 return (
-                                    <TableRow hover key={row.id} onClick={(event) => this.handleRowClick(event, row)}>
-                                        {columns.map((column) => {
+                                    <TableRow hover key = { row.id } onClick = {(event) => this.handleRowClick(event, row)}>
+                                        { columns.map((column) => {
                                             return (
-                                                <TableCell key={column.id} align={column.align}>
-                                                    {row[column.id]}
+                                                <TableCell key = { column.id } align = { column.align }>
+                                                    { row[column.id] }
                                                 </TableCell>
                                             );
                                         })}
@@ -107,16 +140,17 @@ class PatientTable extends Component {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {/*
-          - open and close props will send data back to its child component: EditAppointmentDialog.
-          - getOpenState will receive data which been sent fron its child component EditAppointmentDialog.
-        */}
-                <EditAppointmentDialog open={this.state.editDialog} close={this.getOpenStateOfEditDialog}/>
-                <NewAppointmentDialog open={this.state.newDialog} close={this.getOpenStateOfNewDialog}/>
-
+                <EditPatientDialog open={this.state.editPatientDialog}
+                                        close={this.handleDialogClose}
+                                        loading={this.handleLoading}
+                                        {...patient}/>
+                <ErrorDialog open={this.state.errorDialog}
+                             close={this.handleDialogClose}
+                             error={this.state.errorMessage}/>
+                <LoadingDialog open={this.state.loading}/>
             </React.Fragment>
         );
     }
 }
 
-export default PatientTable;
+export default PractitionerTable;

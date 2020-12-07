@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import SidebarFunction from './SidebarFunction';
+import { Redirect } from 'react-router-dom';
 
 const style = (theme) => ({
     appBar: {
@@ -71,7 +72,8 @@ const style = (theme) => ({
 
 class DrawerAppBar extends Component {
     state = {
-        barOpen: false
+        barOpen: false,
+        redirect: null
     }
 
     handleDrawer = () => {
@@ -80,43 +82,47 @@ class DrawerAppBar extends Component {
         });
     };
 
+    handleSubmit = () => {
+        sessionStorage.removeItem('authenticated');
+        sessionStorage.removeItem('role');
+        this.setState({
+            redirect: "/"
+        });
+    }
+
     render() {
-        const {classes} = this.props;
+        const { classes } = this.props;
+        if (this.state.redirect) return <Redirect to = "/" />
         return (
-            <>
+            <React.Fragment>
                 <AppBar position="absolute" className={clsx(classes.appBar, this.state.barOpen && classes.appBarShift)}>
                     <Toolbar className={classes.toolbar}>
-                        <Grid container xs={12} justify="space-between" alignItems="center">
-                            <Grid item container xs={6} alignItems="center" wrap="nowrap">
-                                <Grid item>
-                                    <IconButton
-                                        edge="start"
-                                        color="inherit"
-                                        aria-label="open drawer"
-                                        onClick={this.handleDrawer}
-                                        className={clsx(classes.menuButton, this.state.barOpen && classes.menuButtonHidden)}
-                                    >
-                                        <MenuIcon/>
-                                    </IconButton>
-                                </Grid>
-                                <Grid item>
-                                    <Typography component="h1" variant="h6" color="inherit" noWrap
-                                                className={classes.title} display='inline'>
-                                        Dashboard
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid item container xs={6} alignItems="center" justify="space-evenly" wrap="nowrap">
-                                <Grid item>
-                                    Hi, Donald Trump
-                                </Grid>
-                                <Grid item>
-                                    <Button variant="contained" color="secondary">
-                                        Sign Out
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Grid>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={this.handleDrawer}
+                            className={clsx(classes.menuButton, this.state.barOpen && classes.menuButtonHidden)}>
+                            <MenuIcon/>
+                        </IconButton>
+                        <Typography component = "h1" variant = "h6" color = "inherit" noWrap
+                                    className = {classes.title} display = 'inline'>
+                            Dashboard
+                        </Typography>
+                        <Button
+                            color = "inherit"
+                            onClick = {this.handleSubmit}>Log out</Button>
+                            {/*<Grid item container xs={6} alignItems="center" justify="space-evenly" wrap="nowrap">*/}
+                            {/*    <Grid item>*/}
+                            {/*        Hi, Donald Trump*/}
+                            {/*    </Grid>*/}
+                            {/*    <Grid item>*/}
+                            {/*        <Button variant="contained" color="secondary">*/}
+                            {/*            Sign Out*/}
+                            {/*        </Button>*/}
+                            {/*    </Grid>*/}
+                            {/*</Grid>*/}
+
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -131,7 +137,7 @@ class DrawerAppBar extends Component {
                     <Divider/>
                     <List>{<SidebarFunction type={this.props.type}/>}</List>
                 </Drawer>
-            </>
+            </React.Fragment>
         );
     }
 }
