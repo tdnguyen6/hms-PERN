@@ -62,8 +62,15 @@ exports.loginAccount = async function (req, res) {
 }
 
 exports.isLogin = function (req, res) {
-    if (!req.session.userID && !req.session.role) return res.status(401).json({status: false})
-    return res.status(200).json({status: true})
+    if (!req.session.userID && !req.session.role) {
+        // req.session.destroy(err => console.log(err));
+        return res.status(401).json();
+    }
+    return res.status(200).json({
+        loginStatus: true,
+        role: req.session.role,
+        userID: req.session.userID
+    });
 }
 
 exports.logout = function (req, res, next) {

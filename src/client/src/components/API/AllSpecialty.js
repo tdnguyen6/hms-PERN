@@ -16,7 +16,7 @@ export const allSpecialty = async () => {
 
     try {
         // show loading
-        res = await axios.post(`${process.env.REACT_APP_API_ADDR}/admin/departments/all`);
+        res = await axios.post(`${process.env.REACT_APP_API_ADDR}/admin/departments/all`, { withCredentials: true });
         console.log(res.data);
         return res.data;
     } catch (error) {

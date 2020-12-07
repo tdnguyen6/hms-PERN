@@ -15,10 +15,10 @@ export const createPractitioner = async (practitioner) => {
 
     try {
         // show loading
-        let id = await axios.post(`${process.env.REACT_APP_API_ADDR}/admin/practitioners/create`, data);
+        let id = await axios.post(`${process.env.REACT_APP_API_ADDR}/admin/practitioners/create`, data, { withCredentials: true });
         data.id = id.data[0].id;
         console.log(data.id);
-        let res = await axios.post(`${process.env.REACT_APP_API_ADDR}/admin/practitioners/account/create`, data);
+        let res = await axios.post(`${process.env.REACT_APP_API_ADDR}/admin/practitioners/account/create`, data, { withCredentials: true });
         console.log(res);
     } catch (error) {
         if (error.response.status === 500) return null;

@@ -25,15 +25,19 @@ app.use(session({
     secret: 'Shigeo Tokuda'
 }))
 app.use(express.static(path.join(__dirname, '../client/build')));
-app.use(function (req, res, next) {
-    res.set({
-        'content-type': 'application/json',
-        'access-control-allow-headers': 'origin, x-requested-with, content-type, accept',
-        'access-control-allow-origin': '*',
-        // 'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT'
+console.log(process.env.NODE_ENV)
+if (process.env.NODE_ENV === 'development') {
+    app.use(function (req, res, next) {
+        res.set({
+            'content-type': 'application/json',
+            'access-control-allow-headers': 'origin, x-requested-with, content-type, accept',
+            'access-control-allow-origin': 'http://localhost:3000',
+            'Access-Control-Allow-Credentials': 'true'
+            // 'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT'
+        });
+        next();
     });
-    next();
-});
+}
 app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname + '/../client/public/404.html'));
     res.status(404);
