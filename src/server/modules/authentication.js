@@ -4,19 +4,21 @@ const {do_hash} = require('./helper');
 const Mailer = require('./mailer')
 
 exports.checkEmailExist = async function (req, res) {
-    let user = await db.query(`SELECT 1 FROM accounts where email = $1`, [req.body.email]);
-    if (user.rows.length == 1) res.status(200).json({emailStatus: true})
-    else res.status(500).json({emailStatus: false})
+    const user = await db.query(`SELECT 1 FROM accounts where email = $1`, [req.body.email]);
+    if (user.rows.length == 1) return res.status(200).json({emailStatus: true})
+    else return res.status(500).json({emailStatus: false})
 }
+
 exports.registerAccount = async function (req, res) {
     try {
-        const res = await db.query(`INSERT INTO accounts (name, email, password, phone, gender) VALUES($1,$2,$3,$4,$5)`, [req.body.name, req.body.email, do_hash(req.body.password), req.body.phone, req.body.gender]);
-        res.status(200).json({registerStatus: true});
+        const res = await db.query(`INSERT INTO accounts (name, email, password, phone, gender, patient_id) VALUES($1,$2,$3,$4,$5,$6)`, [req.body.name, req.body.email, do_hash(req.body.password), req.body.phone, req.body.gender, req.body.patientID]);
+        return res.status(200).json({registerStatus: true});
     } catch (error) {
-        res.status(500).json({registerStatus: false});
+        return res.status(500).json({registerStatus: false});
         console.log(error);
     }
 }
+
 exports.loginAccount = async function (req, res) {
     /* this will return json object with format
     {
