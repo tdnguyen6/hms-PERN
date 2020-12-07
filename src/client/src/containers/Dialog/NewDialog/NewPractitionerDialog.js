@@ -14,6 +14,7 @@ import {validate} from '../../../components/Services/Validate';
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import {checkEmailExist} from "../../../components/API/CheckEmailExist";
+import {createPractitioner} from "../../../components/API/CreatePractitioner";
 
 class NewPractitionerDialog extends Component {
     state = {
@@ -24,11 +25,6 @@ class NewPractitionerDialog extends Component {
         },
         sex: {
             value: ''
-        },
-        ssn: {
-            value: '',
-            hasError: false,
-            error: ''
         },
         dob: {
             value: new Date()
@@ -44,7 +40,7 @@ class NewPractitionerDialog extends Component {
             hasError: false,
             error: ''
         },
-        speciality: {
+        specialty: {
             value: ''
         },
         errorDialog: false,
@@ -56,11 +52,6 @@ class NewPractitionerDialog extends Component {
         this.props.close(false, "newPractitioner");
     }
     handleSave = async () => {
-        const errorStatus = {
-            error: false,
-            message: ''
-        };
-
         try {
             await this.props.loading(true);
             let res = await checkEmailExist(this.state.email.value);
@@ -75,43 +66,22 @@ class NewPractitionerDialog extends Component {
             await this.props.loading(false);
         }
 
-        if (this.state.name.hasError) {
-            errorStatus.error = true;
-            errorStatus.message = 'The given name is invalid. Name must not contain numbers and special characters.';
-        } else if (this.state.email.hasError) {
-            errorStatus.error = true;
-            errorStatus.message = 'The given email is invalid. Please input the valid email';
-        } else if (this.state.email.exist) {
-            errorStatus.error = true;
-            errorStatus.message = 'This email is registered. Please change email or recover password.';
-        } else if (this.state.phone.hasError) {
-            errorStatus.error = true;
-            errorStatus.message = 'Phone number is invalid. Phone number must contain 10 numbers.';
-        } else if (this.state.ssn.hasError) {
-            errorStatus.error = true;
-            errorStatus.message = 'The social security number is wrong. Please try again.';
-        } else if (this.state.name.value === '') {
-            errorStatus.error = true;
-            errorStatus.message = 'Name is required';
-        } else if (this.state.email.value === '') {
-            errorStatus.error = true;
-            errorStatus.message = 'Email is required';
-        } else if (this.state.phone.value === '') {
-            errorStatus.error = true;
-            errorStatus.message = 'Phone is required';
-        } else if (this.state.ssn.value === '') {
-            errorStatus.error = true;
-            errorStatus.message = 'SSN is required';
-        } else if (this.state.sex.value === '') {
-            errorStatus.error = true;
-            errorStatus.message = 'Sex is required';
-        } else if (this.state.speciality.value === '') {
-            errorStatus.error = true;
-            errorStatus.message = 'Speciality is required';
-        }
+        let errorStatus = this.getError();
 
         if (errorStatus.error) await this.props.error(errorStatus);
-        else this.handleDialogClose();
+        else {
+            let practitioner = {
+                name: this.state.name.value,
+                email: this.state.email.value,
+                phone: this.state.phone.value,
+                gender: this.state.sex.value,
+                password: '',
+                id: '',
+                specialty: this.state.specialty.value
+            }
+            await createPractitioner(practitioner);
+            this.handleDialogClose();
+        }
     };
     handleNameChange = async (event) => {
         let validateStatus = validate("name", event.target.value);
@@ -127,16 +97,6 @@ class NewPractitionerDialog extends Component {
         await this.setState({
             sex: {
                 value: event.target.value
-            }
-        });
-    }
-    handleSSNChange = async (event) => {
-        let validateStatus = validate("ssn", event.target.value);
-        await this.setState({
-            ssn: {
-                value: event.target.value,
-                hasError: validateStatus.ssn,
-                error: (validateStatus.ssn) ? 'Must have only 5 number' : ''
             }
         });
     }
@@ -167,14 +127,51 @@ class NewPractitionerDialog extends Component {
             }
         });
     }
-    handleSpecialityChange = async (event) => {
+    handleSpecialtyChange = async (event) => {
         await this.setState({
-            speciality: {
+            specialty: {
                 value: event.target.value
             }
         })
     }
 
+    getError = () => {
+        const errorStatus = {
+            error: false,
+            message: ''
+        };
+
+        if (this.state.name.hasError) {
+            errorStatus.error = true;
+            errorStatus.message = 'The given name is invalid. Name must not contain numbers and special characters.';
+        } else if (this.state.email.hasError) {
+            errorStatus.error = true;
+            errorStatus.message = 'The given email is invalid. Please input the valid email';
+        } else if (this.state.email.exist) {
+            errorStatus.error = true;
+            errorStatus.message = 'This email is registered. Please change email or recover password.';
+        } else if (this.state.phone.hasError) {
+            errorStatus.error = true;
+            errorStatus.message = 'Phone number is invalid. Phone number must contain 10 numbers.';
+        } else if (this.state.name.value === '') {
+            errorStatus.error = true;
+            errorStatus.message = 'Name is required';
+        } else if (this.state.email.value === '') {
+            errorStatus.error = true;
+            errorStatus.message = 'Email is required';
+        } else if (this.state.phone.value === '') {
+            errorStatus.error = true;
+            errorStatus.message = 'Phone is required';
+        } else if (this.state.sex.value === '') {
+            errorStatus.error = true;
+            errorStatus.message = 'Sex is required';
+        } else if (this.state.specialty.value === '') {
+            errorStatus.error = true;
+            errorStatus.message = 'Speciality is required';
+        }
+
+        return errorStatus;
+    }
     render() {
         return (
             <React.Fragment>
@@ -221,36 +218,20 @@ class NewPractitionerDialog extends Component {
                                     <MenuItem key="F" value="female">F</MenuItem>
                                 </TextField>
                             </Grid>
-                            {/* SSN */}
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    autoComplete="ssn"
-                                    name="SSN"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="SSN"
-                                    label="SSN"
-                                    autoFocus
-                                    value={this.state.ssn.value}
-                                    error={this.state.ssn.hasError}
-                                    helperText={this.state.ssn.error}
-                                    onChange={this.handleSSNChange}/>
-                            </Grid>
                             {/* DOB */}
                             <Grid item xs={12} sm={6}>
                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                     <KeyboardDatePicker
                                         disableFuture required fullWidth autoFocus
-                                        variant="inline"
-                                        inputVariant="outlined"
-                                        label="Date of Birth"
-                                        format="dd/MM/yyyy"
-                                        openTo="year"
-                                        views={["year", "month", "date"]}
-                                        value={this.state.dob.value}
-                                        InputAdornmentProps={{position: "end"}}
-                                        onChange={this.handleDOBChange}/>
+                                        variant             = "inline"
+                                        inputVariant        = "outlined"
+                                        label               = "Date of Birth"
+                                        format              = "dd/MM/yyyy"
+                                        openTo              = "year"
+                                        views               = {["year", "month", "date"]}
+                                        value               = {this.state.dob.value}
+                                        InputAdornmentProps = {{position: "end"}}
+                                        onChange            = {this.handleDOBChange}/>
                                 </MuiPickersUtilsProvider>
                             </Grid>
                             {/* Email */}
@@ -286,14 +267,20 @@ class NewPractitionerDialog extends Component {
                             {/* Speciality */}
                             <Grid item xs={12} sm={12}>
                                 <TextField
-                                    required fullWidth autoFocus
-                                    autoComplete="speciality"
-                                    name="Speciality"
-                                    variant="outlined"
-                                    id="speciality"
-                                    label="Speciality"
-                                    value={this.state.speciality.value}
-                                    onChange={this.handleSpecialityChange}/>
+                                    required fullWidth select
+                                    autoComplete            = "specialty"
+                                    name                    = "Specialty"
+                                    variant                 = "outlined"
+                                    id                      = "specialty"
+                                    label                   = "Specialty"
+                                    value                   = {this.state.specialty.value}
+                                    onChange                = {this.handleSpecialtyChange}> {
+                                        this.props.specialty.map((option) => (
+                                            <MenuItem key = { option.id } value = { option.id }>
+                                                { option.name.charAt(0).toUpperCase() + option.name.slice(1) }
+                                            </MenuItem>
+                                        ))}
+                                </TextField>
                             </Grid>
                         </Grid>
                     </DialogContent>

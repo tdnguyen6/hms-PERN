@@ -85,6 +85,7 @@ class DrawerAppBar extends Component {
     handleSubmit = () => {
         sessionStorage.removeItem('authenticated');
         sessionStorage.removeItem('role');
+        sessionStorage.removeItem('userID');
         this.setState({
             redirect: "/"
         });
@@ -112,17 +113,6 @@ class DrawerAppBar extends Component {
                         <Button
                             color = "inherit"
                             onClick = {this.handleSubmit}>Log out</Button>
-                            {/*<Grid item container xs={6} alignItems="center" justify="space-evenly" wrap="nowrap">*/}
-                            {/*    <Grid item>*/}
-                            {/*        Hi, Donald Trump*/}
-                            {/*    </Grid>*/}
-                            {/*    <Grid item>*/}
-                            {/*        <Button variant="contained" color="secondary">*/}
-                            {/*            Sign Out*/}
-                            {/*        </Button>*/}
-                            {/*    </Grid>*/}
-                            {/*</Grid>*/}
-
                     </Toolbar>
                 </AppBar>
                 <Drawer

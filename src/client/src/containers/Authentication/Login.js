@@ -55,7 +55,6 @@ const style = (theme) => ({
         margin: theme.spacing(3, 0, 2)
     }
 });
-
 class Login extends Component {
     state = {
         email: {
@@ -71,7 +70,6 @@ class Login extends Component {
         loginStatus: false,
         loading: false
     };
-
     componentDidMount() {
         if (sessionStorage.rememberMe
             && sessionStorage.email !== ''
@@ -93,8 +91,8 @@ class Login extends Component {
         this.setState({
             email: {
                 value: event.target.value,
-                hasError: !match.email,
-                error: !match.email ? 'Invalid email address' : ''
+                hasError: match.email,
+                error: match.email ? 'Invalid email address' : ''
             }
         });
     };
@@ -130,11 +128,13 @@ class Login extends Component {
             try {
                 await this.setState({loading: true});
                 console.log('loading');
-                let role = await login(this.state.email.value, this.state.password.value);
-                if (role != null) {
-                    sessionStorage.role = role;
+                let res = await login(this.state.email.value, this.state.password.value);
+                console.log(res);
+                if (res.role != null) {
+                    sessionStorage.role = res.role;
                     sessionStorage.authenticated = true;
-                    this.props.history.push(`/${role}`);
+                    sessionStorage.userID = res.userID;
+                    this.props.history.push(`/${res.role}`);
                 } else {
                     this.setState({
                         errorDialog: true,
@@ -155,7 +155,6 @@ class Login extends Component {
 
     render() {
         const {classes} = this.props;
-
         return (
             <React.Fragment>
                 <Grid container className = {classes.root}>
@@ -167,8 +166,8 @@ class Login extends Component {
                             <Typography component="h1" variant="h5"> Login </Typography>
                             <form className={classes.form} onSubmit={this.handleSubmit}>
                                 <Grid container spacing={2}>
-                                        {/* Name Input */}
-                                        <Grid item xs={12}>
+                                    {/* Name Input */}
+                                    <Grid item xs={12}>
                                             <TextField
                                                 variant="outlined"
                                                 margin="normal"
@@ -183,8 +182,8 @@ class Login extends Component {
                                                 onChange={this.handleEmailInput}
                                             />
                                         </Grid>
-                                        {/* Password Input */}
-                                        <Grid item xs={12}>
+                                    {/* Password Input */}
+                                    <Grid item xs={12}>
                                             <TextField
                                                 variant="outlined"
                                                 margin="normal"
@@ -196,10 +195,9 @@ class Login extends Component {
                                                 required
                                                 fullWidth
                                                 value={this.state.password.value}
-                                                onChange={this.handlePasswordInput}
-                                            />
-                                        </Grid>
+                                                onChange={this.handlePasswordInput} />
                                     </Grid>
+                                </Grid>
                                 {/* Remember Me */}
                                 <FormControlLabel
                                     control = {<Checkbox value="remember" color="primary"/>}
