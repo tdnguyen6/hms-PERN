@@ -10,6 +10,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import SidebarFunction from './SidebarFunction';
 import { Redirect } from 'react-router-dom';
+import {delCookie} from "../../helper";
 
 const style = (theme) => ({
     appBar: {
@@ -82,10 +83,8 @@ class DrawerAppBar extends Component {
         });
     };
 
-    handleSubmit = () => {
-        sessionStorage.removeItem('authenticated');
-        sessionStorage.removeItem('role');
-        sessionStorage.removeItem('userID');
+    handleLogout = () => {
+        delCookie('connect.sid');
         this.setState({
             redirect: "/"
         });
@@ -112,7 +111,7 @@ class DrawerAppBar extends Component {
                         </Typography>
                         <Button
                             color = "inherit"
-                            onClick = {this.handleSubmit}>Log out</Button>
+                            onClick = {this.handleLogout}>Log out</Button>
                     </Toolbar>
                 </AppBar>
                 <Drawer

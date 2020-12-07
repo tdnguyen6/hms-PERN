@@ -30,8 +30,6 @@
   },
   "homepage": "https://github.com/tidunguyen/hms-PERN#readme",
   "dependencies": {
-    "@material-ui/lab": "^4.0.0-alpha.56",
-    "clsx": "^1.1.1",
     "connect-pg-simple": "^6.2.1",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
@@ -40,8 +38,7 @@
     "memorystore": "^1.6.4",
     "nodemailer": "^6.4.16",
     "pg": "^8.5.1",
-    "pg-promise": "^10.8.0",
-    "react-router-dom": "^5.2.0"
+    "pg-promise": "^10.8.0"
   },
   "devDependencies": {
     "@testing-library/react": "^11.2.2",

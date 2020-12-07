@@ -58,11 +58,13 @@ const style = (theme) => ({
 });
 
 class Home extends Component {
-    componentDidMount() {
+    async componentDidMount() {
+        /** code for 404 redirect to overcome React BrowserRouter limitation **/
         if (sessionStorage.getItem("redirect") !== null) {
             this.props.history.push(sessionStorage.redirect);
             sessionStorage.removeItem("redirect");
         }
+        /*********************************************************/
     }
 
     render() {

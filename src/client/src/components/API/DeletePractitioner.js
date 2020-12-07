@@ -24,7 +24,7 @@ export const deletePractitioner = async (id) => {
 
     try {
         // show loading
-        let res = await axios.post(`${process.env.REACT_APP_API_ADDR}/admin/practitioners/delete`, data);
+        let res = await axios.post(`${process.env.REACT_APP_API_ADDR}/admin/practitioners/delete`, data, { withCredentials: true });
         console.log(res.data);
     } catch (error) {
         if (error.response.status === 500) return null;

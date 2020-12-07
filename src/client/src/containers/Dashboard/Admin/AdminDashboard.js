@@ -12,7 +12,7 @@ import PractitionerTable from '../../Table/Admin/PractitionerTable';
 import PatientTable from '../../Table/Admin/PatientTable';
 import DrawerAppBar from '../../Others/DrawerAppBar';
 import Dashboard from "../../../components/Others/Dashboard";
-import { Redirect } from 'react-router-dom';
+import authorizedUser from "../../../components/API/Auth";
 
 const style = (theme) => ({
     root: {
@@ -37,21 +37,20 @@ const style = (theme) => ({
 });
 
 class AdminDashboard extends Component {
-    state = {
-        redirect: null
-    };
-
-    componentDidMount() {
-        if (sessionStorage.role !== 'admin' || !sessionStorage.authenticated) {
-            this.setState({
-                redirect: '/login'
-            });
+    async componentDidMount() {
+        try {
+            this.setState({loading: true});
+            const user = await authorizedUser();
+            if (!user || user.role !== 'admin') {
+                this.props.history.push('/login');
+            }
+        } finally {
+            this.setState({loading: false});
         }
     }
 
     render() {
         const {classes} = this.props;
-        // if (this.state.redirect) return <Redirect to = { this.state.redirect } />
         return (
             <div className={classes.root}>
                 <CssBaseline/>

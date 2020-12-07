@@ -24,6 +24,7 @@ import ErrorDialog from '../Dialog/OtherDialog/ErrorDialog';
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import Main from "../Others/Main";
 import withStyles from "@material-ui/core/styles/withStyles";
+import authorizedUser from "../../components/API/Auth";
 
 const style = (theme) => ({
     root: {
@@ -64,23 +65,29 @@ class Login extends Component {
         password: {
             value: '',
         },
-        rememberMe: false,
+        rememberMe: true,
         errorDialog: false,
         errorMessage: '',
         loginStatus: false,
         loading: false
     };
-    componentDidMount() {
-        if (sessionStorage.rememberMe
-            && sessionStorage.email !== ''
-            && sessionStorage.password !== '') {
+
+    async componentDidMount() {
+        try {
+            this.setState({loading: true});
+            const user = await authorizedUser();
+            if (user) {
+                this.props.history.push(`/${user.role}`);
+            }
+        } finally {
+            this.setState({loading: false});
+        }
+
+        if (localStorage.email
+            && localStorage.email !== '') {
             this.setState({
-                rememberMe: true,
                 email: {
-                    value: sessionStorage.email
-                },
-                password: {
-                    value: sessionStorage.password
+                    value: localStorage.email
                 }
             })
         }
@@ -107,7 +114,7 @@ class Login extends Component {
         this.setState({
             rememberMe: event.target.checked
         });
-    }
+    };
     handleSubmit = async (event) => {
         event.preventDefault();
         const {email, password, rememberMe} = this.state;
@@ -119,10 +126,10 @@ class Login extends Component {
         }
 
         if (!email.hasError) {
-            if (rememberMe && email.value !== '' && password.value !== '') {
-                sessionStorage.email = email.value;
-                sessionStorage.password = password.value;
-                sessionStorage.rememberMe = rememberMe;
+            if (rememberMe && email.value !== '') {
+                localStorage.email = email.value;
+            } else {
+                localStorage.removeItem('email');
             }
 
             try {
@@ -131,9 +138,6 @@ class Login extends Component {
                 let res = await login(this.state.email.value, this.state.password.value);
                 console.log(res);
                 if (res.role != null) {
-                    sessionStorage.role = res.role;
-                    sessionStorage.authenticated = true;
-                    sessionStorage.userID = res.userID;
                     this.props.history.push(`/${res.role}`);
                 } else {
                     this.setState({
@@ -200,7 +204,7 @@ class Login extends Component {
                                 </Grid>
                                 {/* Remember Me */}
                                 <FormControlLabel
-                                    control = {<Checkbox value="remember" color="primary"/>}
+                                    control = {<Checkbox color="primary" checked={this.state.rememberMe}/>}
                                     label = "Remember me"
                                     onChange = {this.handleRememberMe}/>
                                 <Button
