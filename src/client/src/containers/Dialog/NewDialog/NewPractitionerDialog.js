@@ -26,9 +26,6 @@ class NewPractitionerDialog extends Component {
         sex: {
             value: ''
         },
-        dob: {
-            value: new Date()
-        },
         email: {
             value: '',
             hasError: false,
@@ -217,22 +214,6 @@ class NewPractitionerDialog extends Component {
                                     <MenuItem key="M" value="male">M</MenuItem>
                                     <MenuItem key="F" value="female">F</MenuItem>
                                 </TextField>
-                            </Grid>
-                            {/* DOB */}
-                            <Grid item xs={12} sm={6}>
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <KeyboardDatePicker
-                                        disableFuture required fullWidth autoFocus
-                                        variant             = "inline"
-                                        inputVariant        = "outlined"
-                                        label               = "Date of Birth"
-                                        format              = "dd/MM/yyyy"
-                                        openTo              = "year"
-                                        views               = {["year", "month", "date"]}
-                                        value               = {this.state.dob.value}
-                                        InputAdornmentProps = {{position: "end"}}
-                                        onChange            = {this.handleDOBChange}/>
-                                </MuiPickersUtilsProvider>
                             </Grid>
                             {/* Email */}
                             <Grid item xs={12} sm={6}>

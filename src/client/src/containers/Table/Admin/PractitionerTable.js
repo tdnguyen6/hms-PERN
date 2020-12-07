@@ -28,6 +28,7 @@ let columns = [
     {id: 'specialty', label: 'Specialty', align: 'right'}
 ];
 let practitioner = {
+    id: '',
     name: '',
     sex: '',
     email: '',
@@ -78,13 +79,14 @@ class PractitionerTable extends Component {
     };
     handleRowClick = (event, row) => {
         practitioner = {
+            id: row.id,
             name: row.name,
             sex: row.gender,
             email: row.email,
             phone: row.phone,
             specialty: row.specialty
         }
-        this.setState({editPractitionerDialog: true});
+        this.setState({ editPractitionerDialog: true });
     };
 
     /*
@@ -110,7 +112,6 @@ class PractitionerTable extends Component {
             specialtyList: specialty
         });
     };
-
     getError = async (error) => {
         await this.setState({
             errorDialog: error.error,
@@ -127,7 +128,7 @@ class PractitionerTable extends Component {
                         <TableHead>
                             <TableRow>
                                 {columns.map((column) => (
-                                    <TableCell key={column.id} align={column.align}>
+                                    <TableCell key = { column.id } align = { column.align }>
                                         {(column.label === 'Name')
                                             ? <Button variant = "contained"
                                                       color = "primary"

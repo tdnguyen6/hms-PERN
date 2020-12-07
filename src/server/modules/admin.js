@@ -1,4 +1,5 @@
 const db = require('../db');
+const {do_hash} = require('./helper');
 
 exports.listAllPractitioners = async function (req, res) {
     // comment this out in production
@@ -29,9 +30,9 @@ exports.createPractitioner = async function (req, res) {
 }
 
 exports.createPractitionerAccount = async function (req, res) {
-    const createStatement = 'insert into accounts(email, password, phone, name, practitioner_id, gender) values ($1,$2,$3,$4,$5,$5,$6)'
+    const createStatement = 'insert into accounts(email, password, phone, name, practitioner_id, gender) values ($1,$2,$3,$4,$5,$6)'
     try {
-        const result = await db.query(createStatement, [req.body.email, req.body.password, req.body.phone, req.body.name, req.body.id, req.body.gender])
+        const result = await db.query(createStatement, [req.body.email, do_hash(req.body.password), req.body.phone, req.body.name, req.body.id, req.body.gender])
         return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
