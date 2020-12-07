@@ -8,6 +8,7 @@ const auth = require('./modules/authentication');
 const disease = require('./modules/disease');
 const symptom = require('./modules/symptom');
 const practitioner = require('./modules/practitioner');
+const patient = require('./modules/patient');
 const admin = require('./modules/admin');
 const appointment = require('./modules/appointment');
 const payment = require('./modules/payment');
@@ -67,6 +68,8 @@ app.post("/disease/all", disease.queryAllDiseases);
 
 app.post("/practitioner/all", practitioner.queryAllPractitioners)
 app.post("/practitioner/findByDisease", practitioner.findPractitionerByDisease)
+
+app.post("/patient/create", patient.createPatient)
 
 app.post("/payment/invoice", payment.generateInvoice)
 app.post("/verify-jwt", async (req, res) => {
