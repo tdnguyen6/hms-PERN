@@ -48,11 +48,13 @@ exports.loginAccount = async function (req, res) {
             // console.log(req.session)
             res.status(200).json({
                 loginStatus: true,
-                role: position
+                role: position,
+                userID: result.rows[0].id
             });
-        } else res.status(401).json();
+        } else return res.status(401).json();
     } catch (error) {
         console.log(error);
+        return res.status(500).json(null);
     }
 
 }
