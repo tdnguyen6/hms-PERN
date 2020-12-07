@@ -68,15 +68,29 @@ exports.listAllAppointments = async function (req, res) {
     }
 }
 
-exports.createPatient = async function (req, res) {
-    // comment this out in production
-    //	if (res.session.position !== 'Admin') res.status(401).json({listPatientsSuccessfully: false})
+exports.createPractitioner = async function (req, res) {
+    if (!Number.isInteger(req.body.specialtyID)) {
+        return res.status(400).json({status: false})
+    }
+
     try {
-        let result = await db.query("select * from patients")
+        const insertStatement = `insert into practitioners (specialty) values (${req.body.specialtyID}) returning id`
+        const result = await db.query(insertStatement)
         res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
-        res.status(500).json({listPatientsSuccessfully: false})
+        res.status(500).json({status: false})
+    }
+}
+
+exports.listAllDepartments = async function (req, res) {
+    try {
+        const queryStatement = 'select * from departments'
+        const result = await db.query(queryStatement)
+        res.status(200).json(result.rows)
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({status: false})
     }
 }
 

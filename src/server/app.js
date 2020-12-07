@@ -50,9 +50,11 @@ app.post("/user/checkEmailExist", auth.checkEmailExist);
 
 app.post("/admin/appointments/all", admin.listAllAppointments);
 app.post("/admin/practitioners/all", admin.listPractitioners);
+app.post("/admin/practitioners/create", admin.createPractitioner);
+app.post("/admin/departments/all", admin.listAllDepartments);
 app.post("/admin/patients/all", admin.listPatients);
-app.post("/admin/appointments/all", appointment.queryAllAppointments);
 
+app.post("/appointments/all", appointment.queryAllAppointments);
 app.post("/appointment/create", appointment.createAppointment);
 app.post("/appointment/getAvailableTime", appointment.getAvailableHours);
 app.post("/appointment/findRoom", appointment.findRoom);
