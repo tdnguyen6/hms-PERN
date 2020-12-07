@@ -47,6 +47,7 @@ app.post("/user/logout", auth.logout);
 app.post("/user/forgetPassword", auth.forgetPassword);
 app.post("/user/resetPassword", auth.resetPassword);
 app.post("/user/checkEmailExist", auth.checkEmailExist);
+app.post("/user/isLogin", auth.isLogin);
 
 app.post("/admin/appointments/all", admin.listAllAppointments);
 app.post("/admin/practitioners/all", admin.listAllPractitioners);

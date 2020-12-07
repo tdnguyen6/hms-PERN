@@ -60,6 +60,12 @@ exports.loginAccount = async function (req, res) {
     }
 
 }
+
+exports.isLogin = function (req, res) {
+    if (!req.session.userID && !req.session.role) return res.status(401).json({status: false})
+    return res.status(200).json({status: true})
+}
+
 exports.logout = function (req, res, next) {
     req.session.destroy(err => console.log(err))
     res.status(200).json({logOutStatus: true})
