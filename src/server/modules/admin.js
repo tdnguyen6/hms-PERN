@@ -13,10 +13,10 @@ exports.listAllPractitioners = async function (req, res) {
     }
 }
 
-exports.addPractitioner = async function (req, res) {
-    const createAccount = 'insert into accounts(email, password, phone, name, created_on, practitioner_id, gender) values ($1,$2,$3,$4,$5,$5,$6,$7)'
+exports.createPractitionerAccount = async function (req, res) {
+    const createAccount = 'insert into accounts(email, password, phone, name, practitioner_id, gender) values ($1,$2,$3,$4,$5,$5,$6,$7)'
     try {
-        let result = await db.query(queryStatement, [req.body.email, req.body.password, req.body.phone, req.body.name, new Date(), req.body.id, req.body.gender])
+        let result = await db.query(queryStatement, [req.body.email, req.body.password, req.body.phone, req.body.name, req.body.id, req.body.gender])
         return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)

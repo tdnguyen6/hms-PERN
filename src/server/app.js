@@ -51,6 +51,7 @@ app.post("/user/checkEmailExist", auth.checkEmailExist);
 app.post("/admin/appointments/all", admin.listAllAppointments);
 app.post("/admin/practitioners/all", admin.listAllPractitioners);
 app.post("/admin/practitioners/create", admin.createPractitioner);
+app.post("/admin/practitioners/account/create", admin.createPractitionerAccount);
 app.post("/admin/departments/all", admin.listAllDepartments);
 app.post("/admin/patients/all", admin.listAllPatients);
 
