@@ -22,11 +22,10 @@ import {allSymptom} from "../../../components/API/AllSymptom";
 import {allAppointment} from "../../../components/API/AllAppointment";
 
 let columns = [
-  { id: 'practioner_name', label: 'Practitioner' },
+  { id: 'practitioner_name', label: 'Practitioner' },
   { id: 'patient_name', label: 'Patient'},
-  { id: 'disease', label: 'Disease' },
-  { id: 'room', label: 'Room', align: 'right'},
-  { id: 'time', label: 'Time', align: 'right'},
+  { id: 'medical_service', label: 'Medical Service', align: 'right'},
+  { id: 'start', label: 'Time', align: 'right'},
   { id: 'date', label: 'Date', align: 'right'},
   { id: 'status', label: 'Status', align: 'right'}
 ];
@@ -59,18 +58,19 @@ class AppointmentTable extends Component {
     this.setState({ loading: true });
     allAppointment()
         .then(data => {
+          console.log(data);
           this.setState({
             appointment: data,
             loading: false
           })
         });
   }
-
   handleRowClick = (event, row) => {
+    console.log(row);
     appointment =  {
       id: row.id,
       disease: row.disease,
-      practitioner: row.practioner_name,
+      practitioner: row.practitioner_name,
       room: row.room,
       time: row.time,
       date: row.date,

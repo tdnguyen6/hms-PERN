@@ -49,7 +49,7 @@ class PatientDashboard extends Component {
 
     render() {
         const {classes} = this.props;
-        if (this.state.redirect) return <Redirect to = { this.state.redirect } />
+        // if (this.state.redirect) return <Redirect to = { this.state.redirect } />
         return (
             <div className={classes.root}>
                 <CssBaseline/>
