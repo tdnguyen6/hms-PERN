@@ -1,15 +1,15 @@
 const db = require('../db');
 
-exports.listPractitioners = async function (req, res) {
+exports.listAllPractitioners = async function (req, res) {
     // comment this out in production
 //	if (res.session.position !== 'Admin') res.status(401).json({listPatientsSuccessfully: false})
     const queryStatement = 'select p.id, a.name as name, a.avatar, a.email, a.phone, a.gender, d.name as specialty from practitioners p, accounts a, departments d where a.practitioner_id = p.id and p.specialty = d.id'
     try {
         let result = await db.query(queryStatement)
-        res.status(200).json(result.rows)
+        return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
-        res.status(500).json({status: false})
+        return res.status(500).json({status: false})
     }
 }
 
@@ -17,38 +17,37 @@ exports.addPractitioner = async function (req, res) {
     const createAccount = 'insert into accounts(email, password, phone, name, created_on, practitioner_id, gender) values ($1,$2,$3,$4,$5,$5,$6,$7)'
     try {
         let result = await db.query(queryStatement, [req.body.email, req.body.password, req.body.phone, req.body.name, new Date(), req.body.id, req.body.gender])
-        res.status(200).json(result.rows)
+        return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
-        res.status(500).json({status: false})
+        return res.status(500).json({status: false})
     }
 }
 
 exports.deletePractitioner = async function (req, res) {
     if (!Number.isInteger(req.body.id)) {
-        res.status(400).json({status: false})
-        return
+        return res.status(400).json({status: false})
     }
 
     const queryStatement = 'delete from practitioners where id = ' + req.body.id
     try {
         let result = await db.query(queryStatement)
-        res.status(200).json(result.rows)
+        return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
-        res.status(500).json({status: false})
+        return res.status(500).json({status: false})
     }
 }
 
 
-exports.listPatients = async function (req, res) {
-    const queryStatement = 'select p.id, a.name as name, a.avatar, a.email, a.phone, a.gender, p.ssn, p.dob from patients p, accounts a where p.id = a.patient_id'
+exports.listAllPatients = async function (req, res) {
+    const queryStatement = `select p.id, a.name as name, a.avatar, a.email, a.phone, a.gender, p.ssn, to_char(p.dob, 'DD/MM/YYYY') as dob from patients p, accounts a where p.id = a.patient_id`
     try {
-        let result = await db.query(queryStatement)
-        res.status(200).json(result.rows)
+        const result = await db.query(queryStatement)
+        return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
-        res.status(500).json({status: false})
+        return res.status(500).json({status: false})
     }
 }
 
@@ -61,10 +60,10 @@ exports.listAllAppointments = async function (req, res) {
 
     try {
         const result = await db.query(queryStatement)
-        res.status(200).json(result.rows)
+        return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
-        res.status(500).json({status: false})
+        return res.status(500).json({status: false})
     }
 }
 
@@ -76,10 +75,10 @@ exports.createPractitioner = async function (req, res) {
     try {
         const insertStatement = `insert into practitioners (specialty) values (${req.body.specialtyID}) returning id`
         const result = await db.query(insertStatement)
-        res.status(200).json(result.rows)
+        return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
-        res.status(500).json({status: false})
+        return res.status(500).json({status: false})
     }
 }
 
@@ -87,10 +86,10 @@ exports.listAllDepartments = async function (req, res) {
     try {
         const queryStatement = 'select * from departments'
         const result = await db.query(queryStatement)
-        res.status(200).json(result.rows)
+        return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
-        res.status(500).json({status: false})
+        return res.status(500).json({status: false})
     }
 }
 
