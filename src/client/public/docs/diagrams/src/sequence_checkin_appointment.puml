@@ -25,7 +25,7 @@ U <-- W: dashboard
 Pt <-- W: payment notification
 
 Pt -> G++: make payment
-W <-- G: payment success confirmation
+W <-- G--: payment success confirmation
 U <-- W--: payment success confirmation
 
 U -> W+: GET /check-in?patient=...

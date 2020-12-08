@@ -22,7 +22,7 @@ const NotFound = (props) => {
                     <Typography className={classes.constant_box_404} align="center">
                         <h3 style={{whiteSpace: 'noWrap'}}>
                             🎉 Congratulation 🎉 <br/>
-                            You broke the page
+                            You broke the website
                         </h3>
 
                         <p>This page supposed to be a secret 😟</p>
