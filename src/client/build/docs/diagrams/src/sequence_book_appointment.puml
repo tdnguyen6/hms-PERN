@@ -21,7 +21,7 @@ return list of practitioners
 return list of practitioners
 return prompt:\nchoose a practitioner
 
-U -> W++:  disease & practitioner
+U -> W++:  practitioner
 W -> api++: POST /free_time?practitioner=...
 api -> A++: free_time(practitioner)
 A -> P++: query
@@ -30,10 +30,7 @@ return list of freetime
 return list of freetime
 return prompt:\nchoose a time
 
-U -> W++: disease & practitioner\n& time
-return form for other params
-
-U -> W++:  disease & practitioner\n& time & others args
+U -> W++: practitioner & time \n& medical service & room
 W -> api++: POST /invoice?disease=...
 api -> A++: invoice(disease)
 A -> A++: serviceByDisease(disease)

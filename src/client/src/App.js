@@ -10,7 +10,7 @@ import ResetPassword from './containers/Authentication/ResetPassword';
 import PatientDashboard from './containers/Dashboard/Patient/PatientDashboard';
 import PractitionerDashboard from './containers/Dashboard/Practitioner/PractitionerDashboard';
 import AdminDashboard from './containers/Dashboard/Admin/AdminDashboard';
-import NotFound from '../src/components/Others/NotFound';
+import Error from '../src/components/Others/Error';
 
 import './App.css';
 
@@ -27,7 +27,7 @@ function App() {
                 <Route path="/login" component={Login}/>
                 <Route path="/resetPassword" component={ResetPassword}/>
                 <Route exact path="/" component={Home}/>
-                <Route component={NotFound}/>
+                <Route render={(props) => <Error code={404} mess='Not Found'/>}/>
             </Switch>
         </BrowserRouter>
     );
