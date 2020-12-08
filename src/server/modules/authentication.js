@@ -37,17 +37,16 @@ exports.loginAccount = async function (req, res) {
             else if (isPractitioner) position = "practitioner"
             else position = "admin"
             // console.log(position)
-
+            
             // assign session to user
             req.session.userID = result.rows[0].id
             req.session.role = position
-            // console.log(req.session)
+            if (position === 'patient') req.session.patientID = result.rows[0].patient_id
 
             // update user last_login
             // if system fail to update user last_login, server will response error in the server
             await db.query(`UPDATE accounts SET last_login = $1 WHERE id = $2`, [(new Date()), result.rows[0].id]);
 
-            // console.log(req.session)
             res.status(200).json({
                 loginStatus: true,
                 role: position,

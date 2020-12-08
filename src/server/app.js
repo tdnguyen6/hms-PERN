@@ -66,7 +66,11 @@ app.post("/admin/patients/all", admin.listAllPatients);
 app.post("/admin/patients/account/delete", admin.deletePatientAccount);
 app.post("/admin/patients/delete", admin.deletePatient);
 
-app.post("/appointments/all", appointment.queryAllAppointments);
+app.use("/appointments", (req, res, next) => {
+    if (!req.session.patientID && req.session.role !== 'patient') return res.status(401).json(null)
+    next()
+})
+app.post("/appointments/all", appointment.patientAppointments);
 app.post("/appointment/create", appointment.createAppointment);
 app.post("/appointment/getAvailableTime", appointment.getAvailableHours);
 app.post("/appointment/findRoom", appointment.findRoom);

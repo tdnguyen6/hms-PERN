@@ -13,21 +13,14 @@ exports.createAppointment = async function (req, res) {
     }
 }
 
-exports.queryAllAppointments = async function (req, res) {
-    let queryStatement = "select * from appointments"
-    console.log(req.session)
-
-    if (req.session.role === "patient") queryStatement += " where patient_id = " + req.session.userID
-    else if (req.session.role === "practitioner") queryStatement += " where practitioner_id = " + req.session.userID
-
-    console.log(queryStatement)
-
+exports.patientAppointments = async function (req, res) {
+    const queryStatement = "select ap.id, ap.room_id, m.name as medical_services, a.name as practitioner_name, to_char(ap.at, 'HH24:MM') as start, to_char(ap.at, 'DD/MM/YYYY') as date, ap.status, ap.log, ap.prescription, ap.next_appointment_period, (select m1.name as next_appointment_service from medicalservices m1, appointments a1 where a1.next_appointment_service = m1.id), ap.last_appointment from appointments ap, rooms r, medicalservices m, practitioners p, accounts a where ap.room_id = r.id and r.medicalservice_id = m.id and ap.practitioner_id = p.id and p.id = a.practitioner_id and ap.patient_id = " + req.session.patientID
     try {
-        let result = await db.query(queryStatement)
-        res.status(200).json(result.rows)
+        const result = await db.query(queryStatement)
+        return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
-        res.status(500).json({listAllAppointmentsSuccessfully: false})
+        return res.status(500).json({status: false})
     }
 }
 
