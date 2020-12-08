@@ -61,7 +61,10 @@ app.post("/admin/practitioners/account/create", admin.createPractitionerAccount)
 app.post("/admin/practitioners/account/delete", admin.deletePractitionerAccount);
 app.post("/admin/practitioners/delete", admin.deletePractitioner);
 app.post("/admin/departments/all", admin.listAllDepartments);
+
 app.post("/admin/patients/all", admin.listAllPatients);
+app.post("/admin/patients/account/delete", admin.deletePatientAccount);
+app.post("/admin/patients/delete", admin.deletePatient);
 
 app.post("/appointments/all", appointment.queryAllAppointments);
 app.post("/appointment/create", appointment.createAppointment);

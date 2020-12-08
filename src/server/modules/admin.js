@@ -71,6 +71,37 @@ exports.deletePractitioner = async function (req, res) {
     }
 }
 
+exports.deletePatientAccount = async function (req, res) {
+    if (!Number.isInteger(req.body.patientID)) {
+        return res.status(400).json({status: false})
+    }
+    
+    const deleteStatement = 'delete from accounts where patient_id = ' + req.body.patientID
+    try {
+        await db.query(deleteStatement)
+        return res.status(200).json({status: true})
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({status: false})
+    }
+}
+
+
+exports.deletePatient = async function (req, res) {
+    if (!Number.isInteger(req.body.patientID)) {
+        return res.status(400).json({status: false})
+    }
+    
+    const deleteStatement = 'delete from patients where id = ' + req.body.patientID
+    try {
+        await db.query(deleteStatement)
+        return res.status(200).json({status: true})
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({status: false})
+    }
+}
+
 
 exports.listAllPatients = async function (req, res) {
     const queryStatement = `select p.id, a.name as name, a.avatar, a.email, a.phone, a.gender, p.ssn, to_char(p.dob, 'DD/MM/YYYY') as dob from patients p, accounts a where p.id = a.patient_id`
