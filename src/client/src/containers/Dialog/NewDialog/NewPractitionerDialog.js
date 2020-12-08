@@ -169,12 +169,13 @@ class NewPractitionerDialog extends Component {
 
         return errorStatus;
     }
+
     render() {
         return (
             <React.Fragment>
                 <Dialog
-                    open={this.props.open}
-                    onClose={this.handleDialogClose}
+                    open = {this.props.open}
+                    onClose = {this.handleDialogClose}
                     aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Add new practitioner</DialogTitle>
                     <DialogContent>
@@ -266,12 +267,11 @@ class NewPractitionerDialog extends Component {
                         </Grid>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleSave} color="primary" align="right">
+                        <Button onClick = { this.handleSave } color = "primary" align = "right">
                             Save
                         </Button>
                     </DialogActions>
                 </Dialog>
-
             </React.Fragment>
         );
     }

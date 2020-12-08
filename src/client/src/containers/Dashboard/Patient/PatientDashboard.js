@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import {Route} from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
-import AppointmentTable from '../../Table/Admin/AppointmentTable';
+import AppointmentTable from '../../Table/Patient/AppointmentTable';
 import DrawerAppBar from '../../Others/DrawerAppBar';
 import Dashboard from "../../../components/Others/Dashboard";
-import authorizedUser from "../../../components/API/Auth";
+import authorizedUser from "../../../components/API/Authenticated";
 
 const style = (theme) => ({
     root: {
@@ -35,34 +35,33 @@ const style = (theme) => ({
 });
 
 class PatientDashboard extends Component {
-
     async componentDidMount() {
         try {
-            this.setState({loading: true});
+            this.setState({ loading: true });
             const user = await authorizedUser();
             if (!user || user.role !== 'patient') {
                 this.props.history.push('/login');
             }
         } finally {
-            this.setState({loading: false});
+            this.setState({ loading: false });
         }
     }
 
     render() {
-        const {classes} = this.props;
+        const { classes } = this.props;
         return (
-            <div className={classes.root}>
+            <div className = {classes.root}>
                 <CssBaseline/>
-                <DrawerAppBar type="patient"/>
-                <div className={classes.content}>
-                    <div className={classes.appBarSpacer}/>
-                    <Container maxWidth="lg" className={classes.container}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                                <Paper className={classes.paper}>
-                                    <Route exact path="/patient" render={(props) => <Dashboard {...props} for={"patient"}/>}/>
-                                    <Route exact path="/patient/dashboard" render={(props) => <Dashboard {...props} for={"patient"}/>}/>
-                                    <Route path="/patient/appointment" exact component={AppointmentTable}/>
+                <DrawerAppBar type = "patient"/>
+                <div className = {classes.content}>
+                    <div className = {classes.appBarSpacer}/>
+                    <Container maxWidth = "lg" className = {classes.container}>
+                        <Grid container spacing = {3}>
+                            <Grid item xs = {12}>
+                                <Paper className = {classes.paper}>
+                                    <Route exact path="/patient" exact component = {Dashboard} />
+                                    <Route exact path="/patient/dashboard" exact component = {Dashboard} />
+                                    <Route path="/patient/appointment" exact component = {AppointmentTable}/>
                                 </Paper>
                             </Grid>
                         </Grid>

@@ -18,7 +18,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 
 // API
-import {resetPassword, verifyJWT} from "../../components/API/passwordRecovery";
+import {resetPassword, verifyJWT} from "../../components/API/PasswordRecovery";
 import Footer from "../Others/Footer";
 import Main from "../Others/Main";
 

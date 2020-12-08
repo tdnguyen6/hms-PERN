@@ -183,7 +183,7 @@ class Register extends Component {
         };
 
         try {
-            await this.setState({loading: true});
+            await this.setState({ loading: true });
             let res = await checkEmailExist(this.state.email.value);
             if (res != null) {
                 await this.setState({
@@ -193,7 +193,7 @@ class Register extends Component {
                 })
             }
         } finally {
-            await this.setState({loading: false});
+            await this.setState({ loading: false });
         }
 
         if (this.state.name.hasError) {
@@ -223,16 +223,16 @@ class Register extends Component {
         try {
             this.setState({
                 loading: true,
-                registerStatus: !!await register(this.state.name.value,
+                registerStatus: await register(this.state.name.value,
                     this.state.email.value,
                     this.state.password.value,
                     this.state.phone.value,
                     this.state.gender.value,
-                    this.state.SSN.value,
-                    this.state.DOB.value)
+                    this.state.DOB.value,
+                    this.state.SSN.value)
             });
         } finally {
-            await this.setState({loading: false});
+            await this.setState({ loading: false });
         }
     };
 
@@ -242,23 +242,23 @@ class Register extends Component {
     };
 
     render() {
-        const {classes} = this.props;
+        const { classes } = this.props;
 
         return (
             <>
                 <Main>
-                    <Container maxWidth="xs">
+                    <Container maxWidth = "xs">
                         <CssBaseline/>
-                        <div className={classes.paper}>
-                            <Avatar className={classes.avatar}><LockOutlinedIcon/></Avatar>
-                            <Typography component="h1" variant="h5" gutterBottom>Sign up</Typography>
+                        <div className = { classes.paper }>
+                            <Avatar className = { classes.avatar }><LockOutlinedIcon/></Avatar>
+                            <Typography component = "h1" variant = "h5" gutterBottom>Sign up</Typography>
                             {
                                 this.state.registerStatus
                                     ?
-                                    <Typography component="p" variant="body1" align="center">
+                                    <Typography component = "p" variant = "body1" align = "center">
                                         Register Successful <br/>
                                         Click <span> </span>
-                                        <Link href="" onClick={this.toLogin}>
+                                        <Link href = "" onClick = { this.toLogin }>
                                             here
                                         </Link>
                                         <span> </span> to login
@@ -280,8 +280,7 @@ class Register extends Component {
                                                     value={this.state.name.value}
                                                     error={this.state.name.hasError}
                                                     helperText={this.state.name.error}
-                                                    onChange={this.handleNameInput}
-                                                />
+                                                    onChange={this.handleNameInput}/>
                                             </Grid>
                                             {/* Gender Input */}
                                             <Grid item xs={12} sm={3}>
@@ -403,8 +402,7 @@ class Register extends Component {
                                             fullWidth
                                             variant="contained"
                                             color="primary"
-                                            onClick={this.handleSubmit}
-                                        >
+                                            onClick={this.handleSubmit}>
                                             Sign Up
                                         </Button>
                                         <Grid container justify="flex-end">
@@ -420,10 +418,10 @@ class Register extends Component {
                             }
                         </div>
                     </Container>
-                    <ErrorDialog open={this.state.errorDialog}
-                                 close={this.handleDialogClose}
-                                 error={this.state.errorMessage}/>
-                    <LoadingDialog open={this.state.loading}/>
+                    <ErrorDialog open = { this.state.errorDialog }
+                                 close = { this.handleDialogClose }
+                                 error = { this.state.errorMessage }/>
+                    <LoadingDialog open = { this.state.loading } />
                 </Main>
                 <Footer/>
             </>

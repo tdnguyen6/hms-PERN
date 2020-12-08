@@ -16,27 +16,55 @@ import {availableTimeByPractitioner} from "../../../components/API/AvailableTime
 import Grid from "@material-ui/core/Grid";
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import authorizedUser from "../../../components/API/Authenticated";
+import {allPatient} from "../../../components/API/AllPatient";
 
 class NewAppointmentDialog extends Component {
   state = {
     disease: '',
+    patientList: [],
+    patient: '',
     practitionerList: [],
     practitioner: '',
     dateList: [],
     date: new Date(),
     timeList: [],
-    time: ''
+    time: '',
+    user: ''
   };
+
+  async componentDidMount() {
+    try {
+      await this.setState({ loading: true });
+      const user = await authorizedUser();
+      if (user) {
+        await this.setState({
+          user: user.role
+        });
+        if (user.role === 'admin') {
+          const patient = await allPatient();
+          await this.setState({
+            patientList: patient
+          });
+        }
+      }
+    } finally {
+      await this.setState({ loading: false });
+    }
+  }
 
   handleDialogClose = async () => {
     await this.setState({
       disease: '',
+      patientList: [],
+      patient: '',
       practitionerList: [],
       practitioner: '',
       dateList: [],
       date: new Date(),
       timeList: [],
-      time: ''
+      time: '',
+      user: ''
     })
     // send close state back to parent: AppointmentTable
     this.props.close(false, "newAppointment");
@@ -46,6 +74,11 @@ class NewAppointmentDialog extends Component {
     this.props.appointment(this.state);
     await this.handleDialogClose();
   };
+  handlePatientChange = async (event) => {
+    await this.setState({
+      patient: event.target.value
+    });
+  }
   handleDiseaseChange = async (event) => {
     await this.setState({
       disease: event.target.value
@@ -91,8 +124,6 @@ class NewAppointmentDialog extends Component {
     });
   }
 
-
-
   render() {
     return (
       <Dialog
@@ -108,6 +139,25 @@ class NewAppointmentDialog extends Component {
                 To make new appointment, please enter your information here.
               </DialogContentText>
             </Grid>
+            {
+              (this.state.user === 'admin') &&
+              /* Patient */
+              <Grid item xs = {12}>
+                <TextField
+                    autoFocus fullWidth select
+                    variant       = "outlined"
+                    id            = "disease"
+                    label         = "Disease"
+                    value         = { this.state.patient }
+                    onChange      = { this.handlePatientChange }>{
+                      this.state.patientList.map((option) => (
+                          <MenuItem key = { option.id } value = { option.id }>
+                            { option.name }
+                          </MenuItem>
+                      ))}
+                </TextField>
+              </Grid>
+            }
             {/* Disease */}
             <Grid item xs = {12}>
               <TextField
@@ -124,22 +174,25 @@ class NewAppointmentDialog extends Component {
                 ))}
               </TextField>
             </Grid>
-            {/* Practitioner */}
-            <Grid item xs = {12}>
-              <TextField
-                  autoFocus fullWidth select
-                  variant       = "outlined"
-                  id            = "practitioner"
-                  label         = "Practitioner"
-                  value         = { this.state.practitioner }
-                  onChange      = { this.handlePractitionerChange }>{
-                this.state.practitionerList.map((option) => (
-                    <MenuItem key = { option.id } value = { option.id }>
-                      { option.name }
-                    </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
+            {
+              (this.state.user === 'admin' || this.state.user === 'patient') &&
+              /* Practitioner */
+              <Grid item xs = {12}>
+                <TextField
+                    autoFocus fullWidth select
+                    variant       = "outlined"
+                    id            = "practitioner"
+                    label         = "Practitioner"
+                    value         = { this.state.practitioner }
+                    onChange      = { this.handlePractitionerChange }>{
+                  this.state.practitionerList.map((option) => (
+                      <MenuItem key = { option.id } value = { option.id }>
+                        { option.name }
+                      </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+            }
             {/* Date */}
             <Grid item xs = {12}>
               <MuiPickersUtilsProvider utils = {DateFnsUtils}>

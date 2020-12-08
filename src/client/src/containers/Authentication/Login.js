@@ -24,7 +24,7 @@ import ErrorDialog from '../Dialog/OtherDialog/ErrorDialog';
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import Main from "../Others/Main";
 import withStyles from "@material-ui/core/styles/withStyles";
-import authorizedUser from "../../components/API/Auth";
+import authorizedUser from "../../components/API/Authenticated";
 
 const style = (theme) => ({
     root: {
@@ -74,22 +74,21 @@ class Login extends Component {
 
     async componentDidMount() {
         try {
-            this.setState({loading: true});
+            this.setState({ loading: true });
             const user = await authorizedUser();
             if (user) {
                 this.props.history.push(`/${user.role}`);
             }
         } finally {
-            this.setState({loading: false});
+            this.setState({ loading: false });
         }
 
-        if (localStorage.email
-            && localStorage.email !== '') {
+        if (localStorage.email && localStorage.email !== '') {
             this.setState({
                 email: {
                     value: localStorage.email
                 }
-            })
+            });
         }
     }
 
@@ -135,15 +134,15 @@ class Login extends Component {
             try {
                 await this.setState({loading: true});
                 console.log('loading');
-                let res = await login(this.state.email.value, this.state.password.value);
-                console.log(res);
-                if (res.role != null) {
-                    this.props.history.push(`/${res.role}`);
+                await login(this.state.email.value, this.state.password.value);
+                const user = await authorizedUser();
+                if (user) {
+                    this.props.history.push(`/${user.role}`);
                 } else {
                     this.setState({
                         errorDialog: true,
                         errorMessage: 'Email address/Password is incorrect. Please try again.'
-                    })
+                    });
                 }
             } finally {
                 await this.setState({loading: false});

@@ -100,6 +100,18 @@ class EditPatientDialog extends Component {
                                     value                   = { this.props.dob }
                                     InputProps              = {{ readOnly: true }}/>
                             </Grid>
+                            {/* SSN */}
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    required fullWidth autoFocus
+                                    autoComplete            = "ssn"
+                                    name                    = "SSN"
+                                    variant                 = "outlined"
+                                    id                      = "SSN"
+                                    label                   = "Social Security No."
+                                    value                   = { this.props.ssn }
+                                    InputProps              = {{ readOnly: true }}/>
+                            </Grid>
                         </Grid>
                     </DialogContent>
                     <DialogActions>

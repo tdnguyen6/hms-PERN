@@ -71,56 +71,53 @@ class Home extends Component {
         const {classes} = this.props;
 
         return (
-            <>
-                <Main>
-                    <CssBaseline/>
-                    <AppBar position="static" color="primary" elevation={0} className={classes.appBar}>
-                        <Toolbar className = {classes.toolbar}>
-                            <Typography variant = "h6" color = "inherit" noWrap className = {classes.toolbarTitle}>
-                                IU Hospital
-                            </Typography>
-                            <Button component = { RouteLink }
-                                    to = "/login"
-                                    color = "inherit"
-                                    className = { classes.link }>Login</Button>
-                            <Button component = { RouteLink }
-                                    to = "/register"
-                                    color = "inherit"
-                                    className = { classes.link }>Register</Button>
-                        </Toolbar>
-                    </AppBar>
-                    <Container maxWidth="sm" component="main" className={classes.heroContent}>
-                        <Typography component="h1" variant="h3" align="center" color="textPrimary" gutterBottom>
-                            Treatment in the best hospital of Vietnam
+            <React.Fragment>
+                <CssBaseline/>
+                <AppBar position="static" color="primary" elevation={0} className={classes.appBar}>
+                    <Toolbar className = {classes.toolbar}>
+                        <Typography variant = "h6" color = "inherit" noWrap className = {classes.toolbarTitle}>
+                            IU Hospital
                         </Typography>
-                        <Typography component="p" variant="h6" align="center" color="textSecondary">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores aspernatur assumenda
-                            beatae cum dicta dignissimos doloremque doloribus eum exercitationem facilis fuga mollitia
-                            neque numquam odio officiis pariatur placeat provident quo rem, rerum sint tempore, veniam
-                            vitae. Alias corporis enim iure officia omnis optio perferendis perspiciatis, reiciendis
-                            velit veniam. Atque ipsam iusto necessitatibus omnis quasi similique veniam voluptatem.
-                            Atque doloribus ducimus est nam omnis quae quo ut? Animi deleniti ex expedita hic laboriosam
-                            modi officia, optio repellat reprehenderit sapiente. Atque consequatur cum dolore doloremque
-                            ducimus eius nemo obcaecati, quaerat soluta voluptatum?
-                        </Typography>
-                    </Container>
-                    <Container maxWidth="xs" component="main">
-                        <Grid container>
-                            <Grid item xs>
-                                <Link component={RouteLink} to="/login">
-                                    <Typography variant="body1" align="center">Book now!</Typography>
-                                </Link>
-                            </Grid>
-                            <Grid item xs>
-                                <Link component={RouteLink} to="/register">
-                                    <Typography variant="body1" align="center">I'm new here!</Typography>
-                                </Link>
-                            </Grid>
+                        <Button component = { RouteLink }
+                                to = "/login"
+                                color = "inherit"
+                                className = { classes.link }>Login</Button>
+                        <Button component = { RouteLink }
+                                to = "/register"
+                                color = "inherit"
+                                className = { classes.link }>Register</Button>
+                    </Toolbar>
+                </AppBar>
+                <Container maxWidth="sm" component="main" className={classes.heroContent}>
+                    <Typography component="h1" variant="h3" align="center" color="textPrimary" gutterBottom>
+                        Treatment in the best hospital of Vietnam
+                    </Typography>
+                    <Typography component="p" variant="h6" align="center" color="textSecondary">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores aspernatur assumenda
+                        beatae cum dicta dignissimos doloremque doloribus eum exercitationem facilis fuga mollitia
+                        neque numquam odio officiis pariatur placeat provident quo rem, rerum sint tempore, veniam
+                        vitae. Alias corporis enim iure officia omnis optio perferendis perspiciatis, reiciendis
+                        velit veniam. Atque ipsam iusto necessitatibus omnis quasi similique veniam voluptatem.
+                        Atque doloribus ducimus est nam omnis quae quo ut? Animi deleniti ex expedita hic laboriosam
+                        modi officia, optio repellat reprehenderit sapiente. Atque consequatur cum dolore doloremque
+                        ducimus eius nemo obcaecati, quaerat soluta voluptatum?
+                    </Typography>
+                </Container>
+                <Container maxWidth="xs" component="main">
+                    <Grid container>
+                        <Grid item xs>
+                            <Link component={RouteLink} to="/login">
+                                <Typography variant="body1" align="center">Book now!</Typography>
+                            </Link>
                         </Grid>
-                    </Container>
-                </Main>
-                <Footer/>
-            </>
+                        <Grid item xs>
+                            <Link component={RouteLink} to="/register">
+                                <Typography variant="body1" align="center">I'm new here!</Typography>
+                            </Link>
+                        </Grid>
+                    </Grid>
+                </Container>
+            </React.Fragment>
         );
     }
 }

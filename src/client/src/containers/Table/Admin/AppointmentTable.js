@@ -10,7 +10,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import { Completed, Upcomming }           from '../../../components/Services/AppointmentStatus';
+import { Completed, Upcoming }           from '../../../components/Services/AppointmentStatus';
 
 import EditAppointmentDialog              from '../../Dialog/EditDialog/EditAppointmentDialog';
 import NewAppointmentDialog              from '../../Dialog/NewDialog/NewAppointmentDialog';
@@ -182,7 +182,7 @@ class AppointmentTable extends Component {
                         return (
                           <TableCell key = { column.id } align = { column.align }>
                             { (column.id === 'status')
-                            ? row[column.id] ? Upcomming : Completed
+                            ? row[column.id] ? Upcoming : Completed
                             : row[column.id] }
                           </TableCell>
                         );
