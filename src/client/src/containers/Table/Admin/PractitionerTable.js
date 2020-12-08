@@ -47,14 +47,7 @@ class PractitionerTable extends Component {
     };
 
     componentDidMount() {
-        this.setState({ loading: true });
-        allPractitioner()
-            .then(data => {
-                this.setState({
-                    practitioner: data,
-                    loading: false
-                })
-            });
+        this.getAllPractitioner().then();
     }
 
     handleDialogClose = async (close, type) => {
@@ -66,6 +59,7 @@ class PractitionerTable extends Component {
             await this.setState({
                 newPractitionerDialog: close
             });
+            this.getAllPractitioner().then();
         } else if (type === 'error') {
             await this.setState({
                 errorDialog: close
@@ -118,6 +112,16 @@ class PractitionerTable extends Component {
             errorMessage: error.message
         })
     }
+    getAllPractitioner = async () => {
+        this.setState({ loading: true });
+        allPractitioner()
+            .then(data => {
+                this.setState({
+                    practitioner: data,
+                    loading: false
+                })
+            });
+    }
 
     render() {
         return (
@@ -158,19 +162,19 @@ class PractitionerTable extends Component {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <EditPractitionerDialog open={this.state.editPractitionerDialog}
-                                        close={this.handleDialogClose}
-                                        loading={this.handleLoading}
+                <EditPractitionerDialog open = {this.state.editPractitionerDialog}
+                                        close = {this.handleDialogClose}
+                                        loading = {this.handleLoading}
                                         {...practitioner} />
-                <NewPractitionerDialog open = {this.state.newPractitionerDialog}
-                                       close = {this.handleDialogClose}
-                                       loading = {this.handleLoading}
-                                       error = {this.getError}
+                <NewPractitionerDialog open = { this.state.newPractitionerDialog }
+                                       close = { this.handleDialogClose }
+                                       loading = { this.handleLoading }
+                                       error = { this.getError }
                                        specialty = { this.state.specialtyList } />
-                <ErrorDialog open={this.state.errorDialog}
-                             close={this.handleDialogClose}
-                             error={this.state.errorMessage}/>
-                <LoadingDialog open={this.state.loading}/>
+                <ErrorDialog open = {this.state.errorDialog}
+                             close = {this.handleDialogClose}
+                             error = {this.state.errorMessage}/>
+                <LoadingDialog open = {this.state.loading}/>
             </React.Fragment>
         );
     }

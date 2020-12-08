@@ -24,6 +24,7 @@ let columns = [
     {id: 'gender', label: 'Sex', align: 'right'},
     {id: 'email', label: 'Email', align: 'right'},
     {id: 'phone', label: 'Phone', align: 'right'},
+    {id: 'ssn', label: 'Social Security No.', align: 'right'},
     {id: 'dob', label: 'Date of Birth', align: 'right'}
 ];
 let patient = {
@@ -31,7 +32,8 @@ let patient = {
     sex: '',
     email: '',
     phone: '',
-    dob: ''
+    dob: '',
+    ssn: ''
 };
 
 class PractitionerTable extends Component {
@@ -80,7 +82,8 @@ class PractitionerTable extends Component {
             sex: row.gender,
             email: row.email,
             phone: row.phone,
-            dob: row.dob
+            dob: row.dob,
+            ssn: row.ssn
         }
         this.setState({editPatientDialog: true});
     };

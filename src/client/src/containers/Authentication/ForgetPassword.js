@@ -20,9 +20,10 @@ import {validate} from '../../components/Services/Validate';
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 
 // API
-import {sendResetPasswordLink} from "../../components/API/passwordRecovery";
+import {sendResetPasswordLink} from "../../components/API/PasswordRecovery";
 import Footer from "../Others/Footer";
 import Main from "../Others/Main";
+import ErrorDialog from "../Dialog/OtherDialog/ErrorDialog";
 
 /*
 can't use hooks because this is a component.
@@ -56,10 +57,8 @@ class ForgetPassword extends Component {
             hasError: false,
             error: ''
         },
-        button: {
-            open: false,
-            error: ''
-        },
+        errorDialog: false,
+        errorMessage: '',
         done: false,
         loading: false
     };
@@ -76,13 +75,13 @@ class ForgetPassword extends Component {
         });
     };
 
-    handleDialogClose = () => {
-        this.setState({
-            button: {
-                open: false,
-                error: ''
-            }
-        })
+    handleDialogClose = async (close, type) => {
+        if (type === "error") {
+            await this.setState({
+                errorDialog: close,
+                errorMessage: ''
+            });
+        }
     }
 
     handleSubmit = async (event) => {
@@ -99,112 +98,95 @@ class ForgetPassword extends Component {
         }
 
         this.setState({
-            button: {
+            errorDialog: {
                 open: dialogStatus.dialogHasError,
                 error: dialogStatus.dialogMessage
             }
         });
 
         if (!dialogStatus.dialogHasError) {
-            this.setState({done: true});
+            this.setState({ done: true });
             try {
                 await sendResetPasswordLink(this.state.email.value);
-                await this.setState({loading: true});
-            } catch (e) {
-                console.log(e);
+                await this.setState({ loading: true });
+            } catch (error) {
+                console.log(error);
             } finally {
-                await this.setState({loading: false});
+                await this.setState({ loading: false });
             }
         }
     };
+
+    backToForm = (event) => {
+        event.preventDefault();
+        this.setState({ done: false });
+    }
 
     render() {
         const {classes} = this.props;
 
         return (
-            <>
-                <Main>
-                    <Container maxWidth="xs">
-                        <CssBaseline/>
-                        <div className={classes.paper}>
-                            <Avatar className={classes.avatar}>
+            <React.Fragment>
+                <Container maxWidth="xs">
+                    <CssBaseline/>
+                    <div className={classes.paper}>
+                        <Avatar className={classes.avatar}>
                                 <LockOutlinedIcon/>
                             </Avatar>
-                            <Typography component="h1" variant="h5" gutterBottom>
-                                Password Recovery
+                        <Typography component="h1" variant="h5" gutterBottom>
+                            Password Recovery
+                        </Typography>
+                        { this.state.done
+                            ?
+                            <Typography component="p" variant="body1" align="justify">
+                                You should soonly receive an email containing a link to reset password.
+                                If you have not received an email, it may not be a registered one.
+                                Click <span> </span>
+                                <Link href = "" onClick = { this.backToForm }>here</Link>
+                                <span> </span> to enter another one.
                             </Typography>
-                            {
-                                this.state.done
-                                    ?
-                                    <Typography component="p" variant="body1" align="justify">
-                                        You should soonly receive an email containing a link to reset password.
-                                        If you have not received an email, it may not be a registered one.
-                                        Click <span> </span>
-                                        <Link onClick={() => this.setState({done: false})}>
-                                            here
-                                        </Link>
-                                        <span> </span> to enter another one.
-                                    </Typography>
-                                    :
-                                    <>
-                                        <Typography component="p" variant="subtitle2">
-                                            Enter your email address to receive reset password link
-                                        </Typography>
-                                        <form className={classes.form} onSubmit={this.handleSubmit}>
-                                            <Grid container spacing={2}>
-                                                {/* Email Input */}
-                                                <Grid item xs={12}>
-                                                    <TextField
-                                                        variant="outlined"
-                                                        required
-                                                        fullWidth
-                                                        id="email"
-                                                        label="Email Address"
-                                                        name="email"
-                                                        autoComplete="email"
-                                                        value={this.state.email.value}
-                                                        error={this.state.email.hasError}
-                                                        helperText={this.state.email.error}
-                                                        onChange={this.handleEmailInput}
-                                                    />
-                                                </Grid>
-                                            </Grid>
-                                            <Button
-                                                className={classes.submit}
+                            : <div>
+                                <Typography component="p" variant="subtitle2">
+                                    Enter your email address to receive reset password link
+                                </Typography>
+                                <form className={classes.form} onSubmit={this.handleSubmit}>
+                                    <Grid container spacing={2}>
+                                        {/* Email Input */}
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                variant="outlined"
+                                                required
                                                 fullWidth
-                                                variant="contained"
-                                                color="primary"
-                                                type="submit"
-                                            >
-                                                Submit
-                                            </Button>
-                                            <Dialog
-                                                open={this.state.button.open}
-                                                onClose={this.handleDialogClose}
-                                                aria-describedby="alert-dialog-description"
-                                            >
-                                                <DialogContent>
-                                                    <DialogContentText id="alert-dialog-description">
-                                                        {this.state.button.error}
-                                                    </DialogContentText>
-                                                </DialogContent>
-                                                <DialogActions>
-                                                    <Button onClick={this.handleDialogClose} color="primary">
-                                                        Got it!
-                                                    </Button>
-                                                </DialogActions>
-                                            </Dialog>
-                                        </form>
-                                    </>
-
-                            }
-
-                        </div>
-                        <LoadingDialog open={this.state.loading}/>
-                    </Container>
-                </Main>
-                <Footer/>
-            </>
+                                                id="email"
+                                                label="Email Address"
+                                                name="email"
+                                                autoComplete="email"
+                                                value={this.state.email.value}
+                                                error={this.state.email.hasError}
+                                                helperText={this.state.email.error}
+                                                onChange={this.handleEmailInput}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                    <Button
+                                        className={classes.submit}
+                                        fullWidth
+                                        variant="contained"
+                                        color="primary"
+                                        type="submit"
+                                    >
+                                        Submit
+                                    </Button>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </Container>
+                <LoadingDialog open = { this.state.loading }/>
+                <ErrorDialog open = { this.state.errorDialog }
+                             close = { this.handleDialogClose }
+                             error = { this.state.errorMessage }/>
+            </React.Fragment>
         );
     };
 }

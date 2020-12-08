@@ -1,10 +1,10 @@
 import React from 'react';
 import Chip from '@material-ui/core/Chip';
 
-export const Upcomming = (
+export const Upcoming = (
     <Chip variant="outlined"
           size="small"
-          label="Upcomming"
+          label="Upcoming"
           color="primary"/>
 );
 

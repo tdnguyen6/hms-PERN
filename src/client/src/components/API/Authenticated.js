@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {getCookieValue} from "../../helper";
+import { getCookieValue } from "../Services/Cookie";
 
 const authorizedUser = async () => {
     const sid = getCookieValue('connect.sid');
