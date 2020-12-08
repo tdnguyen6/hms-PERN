@@ -24,6 +24,17 @@ exports.patientAppointments = async function (req, res) {
     }
 }
 
+exports.practitionerAppointments = async function (req, res) {
+    const queryStatement = "select ap.id, ap.room_id, m.name as medical_services, a.name as patient_name , date_part('year',age(dob)) as age, to_char(ap.at, 'HH24:MM') as start, to_char(ap.at, 'DD/MM/YYYY') as date, ap.status, ap.log, ap.prescription, ap.next_appointment_period, (select m1.name as next_appointment_service from medicalservices m1, appointments a1 where a1.next_appointment_service = m1.id), ap.last_appointment from appointments ap, rooms r, medicalservices m, patients p, accounts a where ap.room_id = r.id and r.medicalservice_id = m.id and ap.patient_id = p.id and p.id = a.patient_id and ap.practitioner_id =" + req.session.practitionerID
+    try {
+        const result = await db.query(queryStatement)
+        return res.status(200).json(result.rows)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({status: false})
+    }
+}
+
 exports.findRoom = async function (req, res) {
     // check if req.body.diseaseID is a number
     if (!Number.isInteger(req.body.diseaseID)) {

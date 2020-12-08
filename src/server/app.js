@@ -85,6 +85,13 @@ app.post("patient/appointment/updatePayment", payment.updatePayment);
 app.post("patient/appointment/findPractitioner", practitioner.findPractitionerByDisease)
 
 
+app.use("/practitioner/appointment/all", (req, res, next) => {
+    if (!req.session.practitionerID && req.session.role !== 'practitioner') return res.status(401).json(null)
+    next()
+})
+app.post("/practitioner/appointment/all", appointment.practitionerAppointments)
+
+
 app.post("/symptom/all", symptom.queryAllSymptoms);
 
 app.post("/disease/findDiseases", disease.findDiseasesBySymptoms);

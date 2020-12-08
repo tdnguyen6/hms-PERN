@@ -42,6 +42,7 @@ exports.loginAccount = async function (req, res) {
             req.session.userID = result.rows[0].id
             req.session.role = position
             if (position === 'patient') req.session.patientID = result.rows[0].patient_id
+            else if (position === 'practitioner') req.session.practitionerID = result.rows[0].practitioner_id
 
             // update user last_login
             // if system fail to update user last_login, server will response error in the server
