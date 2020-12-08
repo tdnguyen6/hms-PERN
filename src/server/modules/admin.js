@@ -40,15 +40,31 @@ exports.createPractitionerAccount = async function (req, res) {
     }
 }
 
+exports.deletePractitionerAccount = async function (req, res) {
+    if (!Number.isInteger(req.body.practitionerID)) {
+        return res.status(400).json({status: false})
+    }
+    
+    const deleteStatement = 'delete from accounts where practitioner_id = ' + req.body.practitionerID
+    try {
+        await db.query(deleteStatement)
+        return res.status(200).json({status: true})
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({status: false})
+    }
+}
+
+
 exports.deletePractitioner = async function (req, res) {
-    if (!Number.isInteger(req.body.id)) {
+    if (!Number.isInteger(req.body.practitionerID)) {
         return res.status(400).json({status: false})
     }
 
-    const queryStatement = 'delete from practitioners where id = ' + req.body.id
+    const deleteStatement = 'delete from practitioners where id = ' + req.body.practitionerID
     try {
-        let result = await db.query(queryStatement)
-        return res.status(200).json(result.rows)
+        await db.query(deleteStatement)
+        return res.status(200).json({status: true})
     } catch (err) {
         console.log(err)
         return res.status(500).json({status: false})
