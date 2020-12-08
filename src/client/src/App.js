@@ -10,6 +10,7 @@ import ResetPassword from './containers/Authentication/ResetPassword';
 import PatientDashboard from './containers/Dashboard/Patient/PatientDashboard';
 import PractitionerDashboard from './containers/Dashboard/Practitioner/PractitionerDashboard';
 import AdminDashboard from './containers/Dashboard/Admin/AdminDashboard';
+import NotFound from '../src/components/Others/NotFound';
 
 import './App.css';
 
@@ -18,14 +19,15 @@ function App() {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path="/login" component={Login}/>
                 <Route path="/register" component={Register}/>
                 <Route path="/forgetPassword" component={ForgetPassword}/>
                 <Route path="/patient" component={PatientDashboard}/>
                 <Route path="/practitioner" component={PractitionerDashboard}/>
                 <Route path="/admin" component={AdminDashboard}/>
+                <Route path="/login" component={Login}/>
                 <Route path="/resetPassword" component={ResetPassword}/>
-                <Route path="/" component={Home}/>
+                <Route exact path="/" component={Home}/>
+                <Route component={NotFound}/>
             </Switch>
         </BrowserRouter>
     );

@@ -118,11 +118,6 @@ class ForgetPassword extends Component {
         }
     };
 
-    backToForm = (event) => {
-        event.preventDefault();
-        this.setState({done: false});
-    }
-
     render() {
         const {classes} = this.props;
 
@@ -145,7 +140,7 @@ class ForgetPassword extends Component {
                                         You should soonly receive an email containing a link to reset password.
                                         If you have not received an email, it may not be a registered one.
                                         Click <span> </span>
-                                        <Link href="" onClick={this.backToForm}>
+                                        <Link onClick={() => this.setState({done: false})}>
                                             here
                                         </Link>
                                         <span> </span> to enter another one.

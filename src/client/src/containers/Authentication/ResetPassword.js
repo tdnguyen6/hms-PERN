@@ -3,7 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+import {Link} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -83,7 +83,7 @@ class ResetPassword extends Component {
                     mess =
                         <>
                             It seems like your token has expired after 10 minutes. Please go back to <span> </span>
-                            <Link href="" onClick={this.backToForgetPassword}>
+                            <Link to='/forgetPassword'>
                                 forget password page
                             </Link>
                             <span> </span> to request a new email with a valid token.
@@ -101,15 +101,15 @@ class ResetPassword extends Component {
         }
     }
 
-    backToForgetPassword = (event) => {
-        event.preventDefault();
-        this.props.history.push("/forgetPassword");
-    };
+    // backToForgetPassword = (event) => {
+    //     event.preventDefault();
+    //     this.props.history.push("/forgetPassword");
+    // };
 
-    backToLogin = (event) => {
-        event.preventDefault();
-        this.props.history.push("/login");
-    };
+    // backToLogin = (event) => {
+    //     event.preventDefault();
+    //     this.props.history.push("/login");
+    // };
 
     handleReenterPassword = (event) => {
         const password = this.state.password;
@@ -174,7 +174,7 @@ class ResetPassword extends Component {
                             You have successfully changed your password. <br/>
                             <Typography component="p" variant="body1" align="center">
                                 Click <span> </span>
-                                <Link href="" onClick={this.backToLogin}>
+                                <Link to='/login'>
                                     here
                                 </Link>
                                 <span> </span> to login

@@ -90,7 +90,7 @@ class Register extends Component {
             hasError: false,
             error: ''
         },
-        registerStatus: false,
+        registerStatus: true,
         errorDialog: false,
         errorMessage: '',
         loading: false
@@ -236,11 +236,6 @@ class Register extends Component {
         }
     };
 
-    toLogin = (event) => {
-        event.preventDefault();
-        this.props.history.push('/login');
-    };
-
     render() {
         const {classes} = this.props;
 
@@ -258,7 +253,7 @@ class Register extends Component {
                                     <Typography component="p" variant="body1" align="center">
                                         Register Successful <br/>
                                         Click <span> </span>
-                                        <Link href="" onClick={this.toLogin}>
+                                        <Link component={RouteLink} to='/login'>
                                             here
                                         </Link>
                                         <span> </span> to login
