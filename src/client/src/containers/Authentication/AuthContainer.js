@@ -1,6 +1,6 @@
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import React, {useEffect, useState} from "react";
-import NotFound from "../../components/Others/NotFound";
+import Error from "../../components/Others/Error";
 
 const AuthContainer = (props) => {
     const [authState, setAuth] = useState('loading');
@@ -14,11 +14,11 @@ const AuthContainer = (props) => {
                 setAuth('forbidden');
             }
         })();
-    }, []);
+    }, [authorize]);
     if (authState === 'loading') {
         return <LoadingDialog open={true}/>
     } else if (authState === 'forbidden') {
-        return <NotFound/>
+        return <Error code={403} mess='Forbidden'/>
     } else {
         return props.children;
     }

@@ -28,7 +28,7 @@ Pt -> G++: make payment
 W <-- G--: payment success confirmation
 U <-- W--: payment success confirmation
 
-U -> W+: GET /check-in?patient=...
+U -> W+: GET /check-in?appointment_id=...
 U <-- W-: check in form
 loop input is invalid
 U -> W+: submit check in form

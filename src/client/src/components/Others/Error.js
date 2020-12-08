@@ -6,7 +6,7 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-const NotFound = (props) => {
+const Error = (props) => {
     const {classes} = props;
     return (
         <Container className={classes.page_404}>
@@ -14,7 +14,8 @@ const NotFound = (props) => {
                 <Grid item>
                     <Typography className={classes.four_zero_four_bg}>
                         <Typography className={classes.four_zero_four}  align="center" color='secondary'>
-                            404
+                            {props.code} <br/>
+                            {props.mess}
                         </Typography>
                     </Typography>
                 </Grid>
@@ -47,7 +48,7 @@ export default withStyles(
         },
 
         four_zero_four: {
-            fontSize: '100px',
+            fontSize: '50px',
             fontFamily: '"Arvo", serif'
         },
 
@@ -70,4 +71,4 @@ export default withStyles(
         }
     }
 )
-(NotFound);
+(Error);
