@@ -84,7 +84,6 @@ app.post("/symptom/all", symptom.queryAllSymptoms);
 app.post("/disease/findDiseases", disease.findDiseasesBySymptoms);
 app.post("/disease/all", disease.queryAllDiseases);
 
-app.post("/practitioner/all", practitioner.queryAllPractitioners)
 app.post("/practitioner/findByDisease", practitioner.findPractitionerByDisease)
 
 app.post("/patient/create", patient.createPatient)
