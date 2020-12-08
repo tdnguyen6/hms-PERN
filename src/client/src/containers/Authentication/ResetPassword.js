@@ -101,16 +101,6 @@ class ResetPassword extends Component {
         }
     }
 
-    // backToForgetPassword = (event) => {
-    //     event.preventDefault();
-    //     this.props.history.push("/forgetPassword");
-    // };
-
-    // backToLogin = (event) => {
-    //     event.preventDefault();
-    //     this.props.history.push("/login");
-    // };
-
     handleReenterPassword = (event) => {
         const password = this.state.password;
 

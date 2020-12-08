@@ -10,6 +10,7 @@ import DrawerAppBar from '../../Others/DrawerAppBar';
 import Dashboard from "../../../components/Others/Dashboard";
 import withStyles from "@material-ui/core/styles/withStyles";
 import authorizedUser from "../../../components/API/Authenticated";
+import AuthContainer from "../../Authentication/AuthContainer";
 
 const style = (theme) => ({
     root: {
@@ -34,40 +35,40 @@ const style = (theme) => ({
 });
 
 class PractitionerDashboard extends Component {
-    async componentDidMount() {
-        try {
-            this.setState({ loading: true });
-            const user = await authorizedUser();
-            if (!user || user.role !== 'practitioner') {
-                this.props.history.push('/login');
-            }
-        } finally {
-            this.setState({ loading: false });
+    async isPractitioner() {
+        const user = await authorizedUser();
+        if (user && user.role === 'practitioner') {
+            return Promise.resolve();
         }
+        return Promise.reject();
     }
 
     render() {
         const {classes} = this.props;
 
         return (
-            <div className={classes.root}>
-                <CssBaseline/>
-                <DrawerAppBar type="patient"/>
-                <div className={classes.content}>
-                    <div className={classes.appBarSpacer}/>
-                    <Container maxWidth="lg" className={classes.container}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                                <Paper className={classes.paper}>
-                                    <Route exact path="/practitioner" render={(props) => <Dashboard {...props} for={"practitioner"}/>}/>
-                                    <Route exact path="/practitioner/dashboard" render={(props) => <Dashboard {...props} for={"practitioner"}/>}/>
-                                    <Route path="/practitioner/appointment" exact component={AppointmentTable}/>
-                                </Paper>
+            <AuthContainer authorize={this.isPractitioner}>
+                <div className={classes.root}>
+                    <CssBaseline/>
+                    <DrawerAppBar type="patient"/>
+                    <div className={classes.content}>
+                        <div className={classes.appBarSpacer}/>
+                        <Container maxWidth="lg" className={classes.container}>
+                            <Grid container spacing={3}>
+                                <Grid item xs={12}>
+                                    <Paper className={classes.paper}>
+                                        <Route exact path="/practitioner"
+                                               render={(props) => <Dashboard {...props} for={"practitioner"}/>}/>
+                                        <Route exact path="/practitioner/dashboard"
+                                               render={(props) => <Dashboard {...props} for={"practitioner"}/>}/>
+                                        <Route path="/practitioner/appointment" exact component={AppointmentTable}/>
+                                    </Paper>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Container>
+                        </Container>
+                    </div>
                 </div>
-            </div>
+            </AuthContainer>
         );
     }
 }

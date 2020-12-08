@@ -13,6 +13,7 @@ import PatientTable from '../../Table/Admin/PatientTable';
 import DrawerAppBar from '../../Others/DrawerAppBar';
 import Dashboard from "../../../components/Others/Dashboard";
 import authorizedUser from "../../../components/API/Authenticated";
+import AuthContainer from "../../Authentication/AuthContainer";
 
 const style = (theme) => ({
     root: {
@@ -37,41 +38,39 @@ const style = (theme) => ({
 });
 
 class AdminDashboard extends Component {
-    async componentDidMount() {
-        try {
-            this.setState({ loading: true });
-            const user = await authorizedUser();
-            if (!user || user.role !== 'admin') {
-                this.props.history.push('/login');
-            }
-        } finally {
-            this.setState({ loading: false });
+    async isAdmin() {
+        const user = await authorizedUser();
+        if (user && user.role === 'admin') {
+            return Promise.resolve();
         }
+        return Promise.reject();
     }
 
     render() {
         const {classes} = this.props;
         return (
-            <div className={classes.root}>
-                <CssBaseline/>
-                <DrawerAppBar type="admin"/>
-                <div className={classes.content}>
-                    <div className={classes.appBarSpacer}/>
-                    <Container maxWidth="lg" className={classes.container}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                                <Paper className={classes.paper}>
-                                    <Route path="/admin" exact component={Dashboard}/>
-                                    <Route path="/admin/dashboard" exact component={Dashboard}/>
-                                    <Route path="/admin/appointment" exact component={AppointmentTable}/>
-                                    <Route path="/admin/practitioner" exact component={PractitionerTable}/>
-                                    <Route path="/admin/patient" exact component={PatientTable}/>
-                                </Paper>
+            <AuthContainer authorize={this.isAdmin}>
+                <div className={classes.root}>
+                    <CssBaseline/>
+                    <DrawerAppBar type="admin"/>
+                    <div className={classes.content}>
+                        <div className={classes.appBarSpacer}/>
+                        <Container maxWidth="lg" className={classes.container}>
+                            <Grid container spacing={3}>
+                                <Grid item xs={12}>
+                                    <Paper className={classes.paper}>
+                                        <Route path="/admin" exact component={Dashboard}/>
+                                        <Route path="/admin/dashboard" exact component={Dashboard}/>
+                                        <Route path="/admin/appointment" exact component={AppointmentTable}/>
+                                        <Route path="/admin/practitioner" exact component={PractitionerTable}/>
+                                        <Route path="/admin/patient" exact component={PatientTable}/>
+                                    </Paper>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Container>
+                        </Container>
+                    </div>
                 </div>
-            </div>
+            </AuthContainer>
         );
     }
 }
