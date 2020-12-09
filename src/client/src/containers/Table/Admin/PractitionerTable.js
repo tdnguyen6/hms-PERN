@@ -55,6 +55,7 @@ class PractitionerTable extends Component {
             await this.setState({
                 editPractitionerDialog: close
             });
+            this.getAllPractitioner().then();
         } else if (type === "newPractitioner") {
             await this.setState({
                 newPractitionerDialog: close
@@ -95,11 +96,9 @@ class PractitionerTable extends Component {
         let specialty;
         try {
             await this.setState({ loading: true });
-            console.log('loading');
             specialty = await allSpecialty();
         } finally {
             await this.setState( { loading: false });
-            console.log('loaded');
         }
         await this.setState({
             newPractitionerDialog: true,
@@ -121,6 +120,7 @@ class PractitionerTable extends Component {
                     loading: false
                 })
             });
+        this.setState({ loading: false });
     }
 
     render() {

@@ -11,8 +11,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from "@material-ui/core/Grid";
 import {login} from "../../../components/API/Login";
 import {deletePractitioner} from "../../../components/API/DeletePractitioner";
+import LoadingDialog from "../OtherDialog/LoadingDialog";
 
 class EditPractitionerDialog extends Component {
+    state = {
+        loading: false
+    }
+
     handleDialogClose = () => {
         // send close state back to parent: PractitionerTable
         this.props.close(false, "editPractitioner");
@@ -21,11 +26,14 @@ class EditPractitionerDialog extends Component {
     handleSave = () => {
         this.handleDialogClose();
     };
+
     handleDelete = async () => {
         try {
+            await this.setState({ loading: true });
             let res = await deletePractitioner(this.props.id);
             console.log(res);
         } finally {
+            await this.setState({ loading: false });
         }
         this.handleDialogClose();
     };
@@ -124,6 +132,7 @@ class EditPractitionerDialog extends Component {
                         </Button>
                     </DialogActions>
                 </Dialog>
+                <LoadingDialog open = {this.state.loading}/>
             </React.Fragment>
         );
     }

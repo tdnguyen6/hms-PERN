@@ -17,17 +17,16 @@ export const createAppointment = async (appointment) => {
         diseaseID: appointment.diseaseID,
         practitionerID: appointment.practitionerID,
         patientID: appointment.diseaseID,
-        at: `${year}-${month}-${day} ${time}:00`,
+        at: Date.parse(`${year}-${month}-${day}T${time}:00.000+00:00`),
         roomID: '',
         last_appointment: '',
     }
-    console.log(data);
     let res;
     try {
         let room = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/appointment/findRoom`, data, { withCredentials: true });
         data.roomID = room.data[0].id;
         let lastAppointment = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/appointment/last`, data, { withCredentials: true });
-        data.last_appointment = (lastAppointment.data[0].id || '');
+        console.log('data return', data);
         res = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/appointment/create`, data, { withCredentials: true });
         console.log(res);
     } catch (error) {

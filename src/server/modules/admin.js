@@ -55,7 +55,6 @@ exports.deletePractitionerAccount = async function (req, res) {
     }
 }
 
-
 exports.deletePractitioner = async function (req, res) {
     if (!Number.isInteger(req.body.practitionerID)) {
         return res.status(400).json({status: false})
