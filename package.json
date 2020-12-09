@@ -11,7 +11,7 @@
     "test:client": "jest --config=test/client/jest.config.js --watch",
     "test:server": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest --config=test/server/jest.config.js --watchAll --testTimeout=10000",
     "start": "NODE_ENV=production node src/server/index.js",
-    "daemon": "NODE_ENV=development nodemon src/server/index.js"
+    "daemon": "NODE_ENV=development nodemon src/server/index.js --ignore src/client"
   },
   "repository": {
     "type": "git",
