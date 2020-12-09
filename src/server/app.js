@@ -75,14 +75,14 @@ app.use("/patient/appointment/all", (req, res, next) => {
     if (!req.session.patientID && req.session.role !== 'patient') return res.status(401).json(null)
     next()
 })
-app.post("patient/appointment/all", appointment.patientAppointments);
-app.post("patient/appointment/create", appointment.createAppointment);
-app.post("patient/appointment/getAvailableTime", appointment.getAvailableHours);
-app.post("patient/appointment/findRoom", appointment.findRoom);
-app.post("patient/appointment/last", appointment.findLastAppointment);
-app.post("patient/appointment/makePayment", payment.makePayment);
-app.post("patient/appointment/updatePayment", payment.updatePayment);
-app.post("patient/appointment/findPractitioner", practitioner.findPractitionerByDisease)
+app.post("/patient/appointment/all", appointment.patientAppointments);
+app.post("/patient/appointment/create", appointment.createAppointment);
+app.post("/patient/appointment/getAvailableTime", appointment.getAvailableHours);
+app.post("/patient/appointment/findRoom", appointment.findRoom);
+app.post("/patient/appointment/last", appointment.findLastAppointment);
+app.post("/patient/appointment/makePayment", payment.makePayment);
+app.post("/patient/appointment/updatePayment", payment.updatePayment);
+app.post("/patient/appointment/findPractitioner", practitioner.findPractitionerByDisease)
 
 
 app.use("/practitioner/appointment/all", (req, res, next) => {
