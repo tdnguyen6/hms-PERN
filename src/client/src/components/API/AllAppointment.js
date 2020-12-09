@@ -6,6 +6,6 @@ export const allAppointment = async () => {
         res = await axios.post(`${process.env.REACT_APP_API_ADDR}/admin/appointments/all`, { withCredentials: true });
         return res.data;
     } catch (error) {
-        if (error.response.status === 500) return null;
+        console.log(error);
     }
 }

@@ -86,7 +86,6 @@ exports.deletePatientAccount = async function (req, res) {
     }
 }
 
-
 exports.deletePatient = async function (req, res) {
     if (!Number.isInteger(req.body.patientID)) {
         return res.status(400).json({status: false})
@@ -101,7 +100,6 @@ exports.deletePatient = async function (req, res) {
         return res.status(500).json({status: false})
     }
 }
-
 
 exports.listAllPatients = async function (req, res) {
     const queryStatement = `select p.id, a.name as name, a.avatar, a.email, a.phone, a.gender, p.ssn, to_char(p.dob, 'DD/MM/YYYY') as dob from patients p, accounts a where p.id = a.patient_id`

@@ -7,7 +7,7 @@ export const createPractitioner = async (practitioner) => {
         email: practitioner.email,
         phone: practitioner.phone,
         gender: practitioner.gender,
-        password: practitioner.email,
+        password: '',
         id: '',
         specialtyID: practitioner.specialty,
     }
@@ -15,9 +15,10 @@ export const createPractitioner = async (practitioner) => {
 
     try {
         // show loading
+        let password = practitioner.email.split('@');
         let id = await axios.post(`${process.env.REACT_APP_API_ADDR}/admin/practitioners/create`, data, { withCredentials: true });
         data.id = id.data[0].id;
-        console.log(data.id);
+        data.password = password[0];
         let res = await axios.post(`${process.env.REACT_APP_API_ADDR}/admin/practitioners/account/create`, data, { withCredentials: true });
         console.log(res);
     } catch (error) {

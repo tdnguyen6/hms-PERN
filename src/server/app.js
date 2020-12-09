@@ -53,10 +53,10 @@ app.post("/user/resetPassword", auth.resetPassword);
 app.post("/user/checkEmailExist", auth.checkEmailExist);
 app.post("/user/isLogin", auth.isLogin);
 
-app.use("/admin", (req, res, next) => {
-    if (req.session.role !== 'admin') return res.status(401).json(null)
-    next()
-})
+// app.use("/admin", (req, res, next) => {
+//     if (req.session.role !== 'admin') return res.status(401).json(null)
+//     next()
+// })
 
 app.post("/admin/appointments/all", admin.listAllAppointments);
 app.post("/admin/practitioners/all", admin.listAllPractitioners);
@@ -71,10 +71,10 @@ app.post("/admin/patients/all", admin.listAllPatients);
 app.post("/admin/patients/account/delete", admin.deletePatientAccount);
 app.post("/admin/patients/delete", admin.deletePatient);
 
-app.use("/patient/appointment/all", (req, res, next) => {
-    if (!req.session.patientID && req.session.role !== 'patient') return res.status(401).json(null)
-    next()
-})
+// app.use("/patient/appointment/all", (req, res, next) => {
+//     if (!req.session.patientID && req.session.role !== 'patient') return res.status(401).json(null)
+//     next()
+// })
 app.post("/patient/appointment/all", appointment.patientAppointments);
 app.post("/patient/appointment/create", appointment.createAppointment);
 app.post("/patient/appointment/getAvailableTime", appointment.getAvailableHours);
@@ -85,10 +85,10 @@ app.post("/patient/appointment/updatePayment", payment.updatePayment);
 app.post("/patient/appointment/findPractitioner", practitioner.findPractitionerByDisease)
 
 
-app.use("/practitioner/appointment/all", (req, res, next) => {
-    if (!req.session.practitionerID && req.session.role !== 'practitioner') return res.status(401).json(null)
-    next()
-})
+// app.use("/practitioner/appointment/all", (req, res, next) => {
+//     if (!req.session.practitionerID && req.session.role !== 'practitioner') return res.status(401).json(null)
+//     next()
+// })
 app.post("/practitioner/appointment/all", appointment.practitionerAppointments)
 
 

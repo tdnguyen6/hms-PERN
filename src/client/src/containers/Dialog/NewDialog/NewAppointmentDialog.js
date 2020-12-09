@@ -18,6 +18,8 @@ import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers"
 import DateFnsUtils from "@date-io/date-fns";
 import authorizedUser from "../../../components/API/Authenticated";
 import {allPatient} from "../../../components/API/AllPatient";
+import {createPractitioner} from "../../../components/API/CreatePractitioner";
+import {createAppointment} from "../../../components/API/CreateAppointment";
 
 class NewAppointmentDialog extends Component {
   state = {
@@ -37,6 +39,7 @@ class NewAppointmentDialog extends Component {
     try {
       await this.setState({ loading: true });
       const user = await authorizedUser();
+      // console.log('newappointmentdialog', user);
       if (user) {
         await this.setState({
           user: user.role
@@ -46,6 +49,8 @@ class NewAppointmentDialog extends Component {
           await this.setState({
             patientList: patient
           });
+        } else if (user.role === 'patient') {
+          console.log(user.userID);
         }
       }
     } finally {
@@ -70,8 +75,22 @@ class NewAppointmentDialog extends Component {
     this.props.close(false, "newAppointment");
   }
   handleSave = async () => {
-    // send close state back to parent: AppointmentTable
-    this.props.appointment(this.state);
+    let appointment = {
+      diseaseID: this.state.disease,
+      practitionerID: this.state.practitioner,
+      patientID: this.state.patient,
+      date: this.state.date,
+      time: this.state.time,
+    }
+
+    try {
+      await this.props.loading(true);
+      console.log('loading');
+      let res = await createAppointment(appointment);
+    } finally {
+      await this.props.loading(false);
+      console.log('loaded');
+    }
     await this.handleDialogClose();
   };
   handlePatientChange = async (event) => {

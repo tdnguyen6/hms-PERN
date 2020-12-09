@@ -132,8 +132,7 @@ class Login extends Component {
             }
 
             try {
-                await this.setState({loading: true});
-                console.log('loading');
+                await this.setState({ loading: true });
                 await login(this.state.email.value, this.state.password.value);
                 const user = await authorizedUser();
                 if (user) {
