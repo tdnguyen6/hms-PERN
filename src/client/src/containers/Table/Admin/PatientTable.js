@@ -28,6 +28,7 @@ let columns = [
     {id: 'dob', label: 'Date of Birth', align: 'right'}
 ];
 let patient = {
+    id: '',
     name: '',
     sex: '',
     email: '',
@@ -47,13 +48,7 @@ class PractitionerTable extends Component {
 
     componentDidMount() {
         this.setState({ loading: true });
-        allPatient()
-            .then(data => {
-                this.setState({
-                    patient: data,
-                    loading: false
-                })
-            });
+        this.getAllPatient().then();
     }
 
     handleDialogClose = async (close, type) => {
@@ -78,6 +73,7 @@ class PractitionerTable extends Component {
     };
     handleRowClick = (event, row) => {
         patient = {
+            id: row.id,
             name: row.name,
             sex: row.gender,
             email: row.email,
@@ -107,6 +103,15 @@ class PractitionerTable extends Component {
             errorDialog: error.error,
             errorMessage: error.message
         })
+    };
+    getAllPatient = async () => {
+        allPatient()
+            .then(data => {
+                this.setState({
+                    patient: data,
+                    loading: false
+                })
+            });
     }
 
     render() {

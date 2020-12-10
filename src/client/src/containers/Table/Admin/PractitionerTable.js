@@ -47,6 +47,7 @@ class PractitionerTable extends Component {
     };
 
     componentDidMount() {
+        this.setState({ loading: true });
         this.getAllPractitioner().then();
     }
 
@@ -112,7 +113,6 @@ class PractitionerTable extends Component {
         })
     }
     getAllPractitioner = async () => {
-        this.setState({ loading: true });
         allPractitioner()
             .then(data => {
                 this.setState({
@@ -120,7 +120,6 @@ class PractitionerTable extends Component {
                     loading: false
                 })
             });
-        this.setState({ loading: false });
     }
 
     render() {

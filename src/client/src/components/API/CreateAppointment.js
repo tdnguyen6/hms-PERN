@@ -12,20 +12,21 @@ export const createAppointment = async (appointment) => {
     let month = appointment.date.getMonth();
     let year = appointment.date.getFullYear();
     let time = appointment.time;
+    //Date.parse(`${year}-${month}-${day}T${time}:00.000+00:00`)
     console.log(day, month, year, time);
     let data = {
         diseaseID: appointment.diseaseID,
         practitionerID: appointment.practitionerID,
         patientID: appointment.diseaseID,
-        at: Date.parse(`${year}-${month}-${day}T${time}:00.000+00:00`),
-        roomID: '',
-        last_appointment: '',
+        at: new Date('05 October 2011 15:00 UTC'),
+        roomID: null,
+        last_appointment: 0,
     }
     let res;
     try {
         let room = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/appointment/findRoom`, data, { withCredentials: true });
         data.roomID = room.data[0].id;
-        let lastAppointment = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/appointment/last`, data, { withCredentials: true });
+        // let lastAppointment = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/appointment/last`, data, { withCredentials: true });
         console.log('data return', data);
         res = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/appointment/create`, data, { withCredentials: true });
         console.log(res);
