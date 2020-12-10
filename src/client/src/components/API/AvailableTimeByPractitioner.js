@@ -8,7 +8,7 @@ export const availableTimeByPractitioner = async (id, date) => {
     }
     let res;
     try {
-        res = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/appointment/getAvailableTime`, data, { withCredentials: true });
+        res = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/appointments/getAvailableTime`, data, { withCredentials: true });
         const time = res.data.availableTime.map(time => `${time}:00`);
         return time;
     } catch (error) {
