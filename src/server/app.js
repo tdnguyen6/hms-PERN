@@ -45,13 +45,19 @@ app.get('*', function (req, res) {
 });
 
 // api
-app.post("/user/register", auth.registerAccount);
-app.post("/user/login", auth.loginAccount);
-app.post("/user/logout", auth.logout);
-app.post("/user/forgetPassword", auth.forgetPassword);
-app.post("/user/resetPassword", auth.resetPassword);
-app.post("/user/checkEmailExist", auth.checkEmailExist);
-app.post("/user/isLogin", auth.isLogin);
+app.post("/register", auth.registerAccount);
+app.post("/login", auth.loginAccount);
+app.post("/logout", auth.logout);
+app.post("/forgetPassword", auth.forgetPassword);
+app.post("/resetPassword", auth.resetPassword);
+app.post("/checkEmailExist", auth.checkEmailExist);
+
+
+app.use("/user/", (req, res, next) => {
+    if (!req.session.userID) return res.status(401).json(null)
+    next()
+})
+app.post("/user/changePassword", auth.changePassword);
 
 // app.use("/admin", (req, res, next) => {
 //     if (req.session.role !== 'admin') return res.status(401).json(null)
