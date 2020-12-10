@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const sendResetPasswordLink = async (email) => {
     try {
-        await axios.post(`${process.env.REACT_APP_API_ADDR}/user/forgetPassword`, {email: email});
+        await axios.post(`${process.env.REACT_APP_API_ADDR}/forgetPassword`, {email: email});
     } catch (error) {
         if (error.response.status === 500) return null;
     }
@@ -10,7 +10,7 @@ export const sendResetPasswordLink = async (email) => {
 
 export const resetPassword = async (email, password) => {
     try {
-        await axios.post(`${process.env.REACT_APP_API_ADDR}/user/resetPassword`, {
+        await axios.post(`${process.env.REACT_APP_API_ADDR}/resetPassword`, {
             email: email,
             password: password
         });

@@ -51,6 +51,7 @@ app.post("/logout", auth.logout);
 app.post("/forgetPassword", auth.forgetPassword);
 app.post("/resetPassword", auth.resetPassword);
 app.post("/checkEmailExist", auth.checkEmailExist);
+app.post("/isLogin", auth.isLogin);
 
 
 app.use("/user/", (req, res, next) => {

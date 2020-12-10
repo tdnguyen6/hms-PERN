@@ -7,7 +7,7 @@ export const checkEmailExist = async (email) => {
 
     let res;
     try {
-        res = await axios.post(`${process.env.REACT_APP_API_ADDR}/user/checkEmailExist`, data);
+        res = await axios.post(`${process.env.REACT_APP_API_ADDR}/checkEmailExist`, data);
         return res.data.emailStatus;
     } catch (error) {
         if (error.response.status === 500) return null;
