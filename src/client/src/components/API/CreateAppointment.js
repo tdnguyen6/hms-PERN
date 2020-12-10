@@ -11,14 +11,13 @@ export const createAppointment = async (appointment) => {
     let day = appointment.date.getDate();
     let month = appointment.date.getMonth();
     let year = appointment.date.getFullYear();
-    let time = appointment.time;
-    //Date.parse(`${year}-${month}-${day}T${time}:00.000+00:00`)
+    let time = appointment.time.split(':');
     console.log(day, month, year, time);
     let data = {
         diseaseID: appointment.diseaseID,
         practitionerID: appointment.practitionerID,
         patientID: appointment.patientID,
-        at: new Date('2020-12-17 15:00 UTC'),
+        at: new Date(year, month, day, time[0], time[1]),
         roomID: null,
         last_appointment: null,
     }
