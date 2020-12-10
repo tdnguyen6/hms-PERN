@@ -45,13 +45,20 @@ app.get('*', function (req, res) {
 });
 
 // api
-app.post("/user/register", auth.registerAccount);
-app.post("/user/login", auth.loginAccount);
-app.post("/user/logout", auth.logout);
-app.post("/user/forgetPassword", auth.forgetPassword);
-app.post("/user/resetPassword", auth.resetPassword);
-app.post("/user/checkEmailExist", auth.checkEmailExist);
-app.post("/user/isLogin", auth.isLogin);
+app.post("/register", auth.registerAccount);
+app.post("/login", auth.loginAccount);
+app.post("/logout", auth.logout);
+app.post("/forgetPassword", auth.forgetPassword);
+app.post("/resetPassword", auth.resetPassword);
+app.post("/checkEmailExist", auth.checkEmailExist);
+app.post("/isLogin", auth.isLogin);
+
+
+app.use("/user/", (req, res, next) => {
+    if (!req.session.userID) return res.status(401).json(null)
+    next()
+})
+app.post("/user/changePassword", auth.changePassword);
 
 // app.use("/admin", (req, res, next) => {
 //     if (req.session.role !== 'admin') return res.status(401).json(null)
@@ -60,7 +67,9 @@ app.post("/user/isLogin", auth.isLogin);
 
 app.post("/admin/appointments/all", admin.listAllAppointments);
 app.post("/admin/practitioners/all", admin.listAllPractitioners);
-app.post("/admin/practitioners/create", admin.createPractitioner);
+app.post("/admin/practitioners/create", admin.createPractitioner)
+app.post("/admin/practitioners/find", admin.getPractitionerByID)
+app.post("/admin/practitioners/update", admin.updatePractitioner);
 app.post("/admin/practitioners/delete", admin.deletePractitioner);
 app.post("/admin/practitioners/account/create", admin.createPractitionerAccount);
 app.post("/admin/practitioners/account/delete", admin.deletePractitionerAccount);
@@ -68,6 +77,7 @@ app.post("/admin/practitioners/delete", admin.deletePractitioner);
 app.post("/admin/departments/all", admin.listAllDepartments);
 
 app.post("/admin/patients/all", admin.listAllPatients);
+app.post("/admin/patients/find", admin.getPatientByID);
 app.post("/admin/patients/account/delete", admin.deletePatientAccount);
 app.post("/admin/patients/delete", admin.deletePatient);
 
@@ -100,6 +110,7 @@ app.post("/disease/all", disease.queryAllDiseases);
 
 
 app.post("/patient/create", patient.createPatient)
+app.post("/patient/update", patient.updatePatient)
 
 app.post("/payment/invoice", payment.generateInvoice)
 app.post("/verify-jwt", async (req, res) => {

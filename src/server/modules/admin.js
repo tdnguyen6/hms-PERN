@@ -40,6 +40,25 @@ exports.createPractitionerAccount = async function (req, res) {
     }
 }
 
+exports.updatePractitioner = async function (req, res) {
+    if (!Number.isInteger(req.body.newSpecialty) && 
+        !Number.isInteger(req.body.practitionerID) && 
+        !Number.isInteger(req.body.accountID)) {
+        return res.status(400).json({status: false})
+    }
+    
+
+    const updateTransaction = `begin; UPDATE practitioners SET specialty = ${req.body.newSpecialty}, join_date = '${req.body.joinDate}' WHERE id = ${req.body.practitionerID}; UPDATE accounts SET name = '${req.body.newName}', phone = ${req.body.phone}, gender = '${req.body.gender}' where id = ${req.body.accountID}; commit;`
+    
+    try {
+        await db.query(updateTransaction)
+        return res.status(200).json({status: true})
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({status: false})
+    }
+}
+
 exports.deletePractitionerAccount = async function (req, res) {
     if (!Number.isInteger(req.body.practitionerID)) {
         return res.status(400).json({status: false})
@@ -102,6 +121,35 @@ exports.deletePatient = async function (req, res) {
 
 exports.listAllPatients = async function (req, res) {
     const queryStatement = `select p.id, a.name as name, a.avatar, a.email, a.phone, a.gender, p.ssn, to_char(p.dob, 'DD/MM/YYYY') as dob from patients p, accounts a where p.id = a.patient_id`
+    try {
+        const result = await db.query(queryStatement)
+        return res.status(200).json(result.rows)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({status: false})
+    }
+}
+
+exports.getPatientByID = async function (req, res) {
+    if (!Number.isInteger(req.body.patientID)) {
+        return res.status(400).json({status: false})
+    }
+    
+    const queryStatement = `select p.id, a.name as name, a.avatar, a.email, a.phone, a.gender, p.ssn, to_char(p.dob, 'DD/MM/YYYY') as dob from patients p, accounts a where p.id = a.patient_id and p.id = ${req.body.patientID}`
+    try {
+        const result = await db.query(queryStatement)
+        return res.status(200).json(result.rows)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({status: false})
+    }
+}
+
+exports.getPractitionerByID = async function (req, res) {
+    if (!Number.isInteger(req.body.practitionerID)) {
+        return res.status(400).json({status: false})
+    }
+    const queryStatement = 'select p.id, a.name as name, a.avatar, a.email, a.phone, a.gender, d.name as specialty from practitioners p, accounts a, departments d where a.practitioner_id = p.id and p.specialty = d.id and p.id = ' + req.body.practitionerID
     try {
         const result = await db.query(queryStatement)
         return res.status(200).json(result.rows)

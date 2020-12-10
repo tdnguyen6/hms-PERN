@@ -11,6 +11,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import SidebarFunction from './SidebarFunction';
 import { Redirect } from 'react-router-dom';
 import { delCookie } from "../../components/Services/Cookie";
+import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
+import {logout} from "../../components/API/Logout";
 
 const style = (theme) => ({
     appBar: {
@@ -74,7 +76,8 @@ const style = (theme) => ({
 class DrawerAppBar extends Component {
     state = {
         barOpen: false,
-        redirect: null
+        redirect: null,
+        loading: false
     }
 
     handleDrawer = () => {
@@ -83,10 +86,16 @@ class DrawerAppBar extends Component {
         });
     };
 
-    handleLogout = () => {
+    handleLogout = async () => {
         delCookie('connect.sid');
+        try {
+            this.setState({loading: true});
+            await logout();
+        } finally {
+            this.setState({loading: false});
+        }
         this.setState({
-            redirect: "/"
+            redirect: "/login"
         });
     }
 
@@ -126,6 +135,7 @@ class DrawerAppBar extends Component {
                     <Divider/>
                     <List>{<SidebarFunction type={this.props.type}/>}</List>
                 </Drawer>
+                <LoadingDialog open={this.state.loading}/>
             </React.Fragment>
         );
     }
