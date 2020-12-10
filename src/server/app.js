@@ -109,6 +109,7 @@ app.post("/disease/all", disease.queryAllDiseases);
 
 
 app.post("/patient/create", patient.createPatient)
+app.post("/patient/update", patient.updatePatient)
 
 app.post("/payment/invoice", payment.generateInvoice)
 app.post("/verify-jwt", async (req, res) => {
