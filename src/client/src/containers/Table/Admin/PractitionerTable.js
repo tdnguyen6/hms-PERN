@@ -113,7 +113,7 @@ class PractitionerTable extends Component {
         })
     }
     getAllPractitioner = async () => {
-        allPractitioner()
+        await allPractitioner()
             .then(data => {
                 this.setState({
                     practitioner: data,

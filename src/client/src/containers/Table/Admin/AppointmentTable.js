@@ -56,14 +56,7 @@ class AppointmentTable extends Component {
 
   componentDidMount() {
     this.setState({ loading: true });
-    allAppointment()
-        .then(data => {
-          console.log(data);
-          this.setState({
-            appointment: data,
-            loading: false
-          })
-        });
+    this.getAllAppointment().then().catch();
   }
   handleRowClick = (event, row) => {
     console.log(row);
@@ -115,6 +108,7 @@ class AppointmentTable extends Component {
       await this.setState({
         newAppointmentDialog: close
       });
+      this.getAllAppointment().then().catch();
     } else if (type === "yesNo") {
       await this.setState({
         yesNoDialog: close
@@ -150,6 +144,16 @@ class AppointmentTable extends Component {
   }
   getAppointment = (appointment) => {
 
+  };
+  getAllAppointment = async () => {
+    await allAppointment()
+        .then(data => {
+          console.log(data);
+          this.setState({
+            appointment: data,
+            loading: false
+          })
+        });
   }
 
   render() {

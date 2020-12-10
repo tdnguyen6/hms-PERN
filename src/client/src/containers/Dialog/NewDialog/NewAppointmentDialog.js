@@ -165,8 +165,8 @@ class NewAppointmentDialog extends Component {
                 <TextField
                     autoFocus fullWidth select
                     variant       = "outlined"
-                    id            = "disease"
-                    label         = "Disease"
+                    id            = "patient"
+                    label         = "Patient"
                     value         = { this.state.patient }
                     onChange      = { this.handlePatientChange }>{
                       this.state.patientList.map((option) => (

@@ -30,7 +30,7 @@ class NewPractitionerDialog extends Component {
             value: '',
             hasError: false,
             error: '',
-            exist: ''
+            exist: false
         },
         phone: {
             value: '',
@@ -44,15 +44,41 @@ class NewPractitionerDialog extends Component {
         errorMessage: '',
     };
 
-    handleDialogClose = () => {
+    handleDialogClose = async () => {
         // send close state back to parent: AppointmentTable
+        await this.setState({
+            name: {
+                value: '',
+                hasError: false,
+                error: ''
+            },
+            sex: {
+                value: ''
+            },
+            email: {
+                value: '',
+                hasError: false,
+                error: '',
+                exist: false
+            },
+            phone: {
+                value: '',
+                hasError: false,
+                error: ''
+            },
+            specialty: {
+                value: ''
+            },
+            errorDialog: false,
+            errorMessage: '',
+        });
         this.props.close(false, "newPractitioner");
     }
     handleSave = async () => {
         try {
             await this.props.loading(true);
             let res = await checkEmailExist(this.state.email.value);
-            if (res != null) {
+            if (res) {
                 await this.setState({
                     email: {
                         exist: true
