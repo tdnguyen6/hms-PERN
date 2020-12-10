@@ -4,6 +4,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import {Link as RouteLink} from 'react-router-dom';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import AirlineSeatIndividualSuiteIcon from '@material-ui/icons/AirlineSeatIndividualSuite';
+import EventIcon from '@material-ui/icons/Event';
 
 let admin = [
     {id: 'Dashboard', link: '/admin/dashboard'},
@@ -14,7 +17,6 @@ let admin = [
 
 let practitioner = [
     {id: 'Dashboard', link: '/practitioner/dashboard'},
-    {id: 'Patient', link: '/practitioner/patient'},
     {id: 'Appointment', link: '/practitioner/appointment'}
 ];
 
@@ -31,7 +33,12 @@ class SidebarFunction extends Component {
                 roleFunctions.map((func) => (
                     <ListItem button component = {RouteLink} to = {func.link}>
                         <ListItemIcon>
-                            <DashboardIcon/>
+                            {
+                                (func.id !== "Dashboard") ?
+                                    (func.id !== 'Practitioner') ?
+                                        (func.id !== 'Patient') ?
+                                            <EventIcon/> : <AirlineSeatIndividualSuiteIcon/> : <PersonAddIcon/> : <DashboardIcon/>
+                            }
                         </ListItemIcon>
                         <ListItemText primary = {func.id}/>
                     </ListItem>
