@@ -17,10 +17,10 @@ export const createAppointment = async (appointment) => {
     let data = {
         diseaseID: appointment.diseaseID,
         practitionerID: appointment.practitionerID,
-        patientID: appointment.diseaseID,
-        at: new Date('05 October 2011 15:00 UTC'),
+        patientID: appointment.patientID,
+        at: new Date('2011-06-03 15:00 UTC'),
         roomID: null,
-        last_appointment: 0,
+        last_appointment: null,
     }
     let res;
     try {

@@ -5,17 +5,16 @@ const Mailer = require('./mailer')
 
 exports.checkEmailExist = async function (req, res) {
     const user = await db.query(`SELECT 1 FROM accounts where email = $1`, [req.body.email]);
-    if (user.rows.length == 1) return res.status(200).json({emailStatus: true})
-    else return res.status(500).json({emailStatus: false})
+    return res.status(200).json({emailStatus: !!user.rows.length});
 }
 
 exports.registerAccount = async function (req, res) {
     try {
-        const res = await db.query(`INSERT INTO accounts (name, email, password, phone, gender, patient_id) VALUES($1,$2,$3,$4,$5,$6)`, [req.body.name, req.body.email, do_hash(req.body.password), req.body.phone, req.body.gender, req.body.patientID]);
+        await db.query(`INSERT INTO accounts (name, email, password, phone, gender, patient_id) VALUES($1,$2,$3,$4,$5,$6)`, [req.body.name, req.body.email, do_hash(req.body.password), req.body.phone, req.body.gender, req.body.patientID]);
         return res.status(200).json({registerStatus: true});
     } catch (error) {
-        return res.status(500).json({registerStatus: false});
         console.log(error);
+        return res.status(500).json({registerStatus: false});
     }
 }
 
