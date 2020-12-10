@@ -67,6 +67,7 @@ app.post("/user/changePassword", auth.changePassword);
 app.post("/admin/appointments/all", admin.listAllAppointments);
 app.post("/admin/practitioners/all", admin.listAllPractitioners);
 app.post("/admin/practitioners/create", admin.createPractitioner);
+app.post("/admin/practitioners/update", admin.updatePractitioner);
 app.post("/admin/practitioners/delete", admin.deletePractitioner);
 app.post("/admin/practitioners/account/create", admin.createPractitionerAccount);
 app.post("/admin/practitioners/account/delete", admin.deletePractitionerAccount);
