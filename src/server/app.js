@@ -6,7 +6,7 @@ const session = require('express-session');
 const MemoryStore = require('memorystore')(session)
 const TokenExpiredError = require("jsonwebtoken/lib/TokenExpiredError");
 if (process.env.NODE_ENV === 'development')
-    dotenv.config({ path: path.join(__dirname, `../../.env.${process.env.NODE_ENV}`)});
+    dotenv.config({path: path.join(__dirname, `../../.env.${process.env.NODE_ENV}`)});
 else
     dotenv.config();
 
@@ -31,7 +31,8 @@ app.use(session({
     secret: 'Shigeo Tokuda'
 }))
 app.use(express.static(path.join(__dirname, '../client/build')));
-console.log(process.env.NODE_ENV)
+console.log(process.env.NODE_ENV);
+console.log(process.env.DATABASE_URL);
 if (process.env.NODE_ENV === 'development') {
     app.use(function (req, res, next) {
         res.set({
@@ -112,7 +113,6 @@ app.post("/symptom/all", symptom.queryAllSymptoms);
 
 app.post("/disease/findDiseases", disease.findDiseasesBySymptoms);
 app.post("/disease/all", disease.queryAllDiseases);
-
 
 
 app.post("/patient/create", patient.createPatient)
