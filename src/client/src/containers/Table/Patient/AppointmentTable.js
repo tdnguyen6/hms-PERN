@@ -44,6 +44,7 @@ class AppointmentTable extends Component {
         yesNoDialog: false,
         newAppointmentDialog: false,
         symptomsDialog: false,
+        isAppointment: true,
         appointment: [],
         symptomList: [],
         diseaseKnown: false,
@@ -55,21 +56,14 @@ class AppointmentTable extends Component {
 
     componentDidMount() {
         this.setState({ loading: true });
-        allAppointment()
-            .then(data => {
-                console.log(data);
-                this.setState({
-                    appointment: data,
-                    loading: false
-                })
-            });
+        this.getAllAppointment().then().catch();
     }
     handleRowClick = (event, row) => {
         console.log(row);
         appointment =  {
             id: row.id,
             disease: row.disease,
-            practitioner: row.practitioner,
+            practitioner: row.practitioner_name,
             room: row.room,
             time: row.time,
             date: row.date,
@@ -134,6 +128,19 @@ class AppointmentTable extends Component {
         })
     }
 
+    getAllAppointment = async () => {
+        allAppointment()
+            .then(data => {
+                console.log(data);
+                this.setState({
+                    appointment: data,
+                    loading: false
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
     getDiseaseKnown = async (disease) => {
         await this.setState({
             diseaseKnown: disease,
@@ -146,9 +153,6 @@ class AppointmentTable extends Component {
             diseasePredicted: disease,
             newAppointmentDialog: true
         });
-    }
-    getAppointment = (appointment) => {
-
     }
 
     render() {
@@ -176,7 +180,7 @@ class AppointmentTable extends Component {
                         <TableBody>
                             { this.state.appointment.map((row) => {
                                 return (
-                                    <TableRow hover key = { row.id } onClick = { (event) => this.handleRowClick(event, row) }>
+                                    <TableRow hover key = { row.appointment_id } onClick = { (event) => this.handleRowClick(event, row) }>
                                         { columns.map((column) => {
                                             return (
                                                 <TableCell key = { column.id } align = { column.align }>

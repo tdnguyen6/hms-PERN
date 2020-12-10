@@ -9,6 +9,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from "@material-ui/core/Grid";
+import {deletePractitioner} from "../../../components/API/DeletePractitioner";
+import { deletePatient } from '../../../components/API/DeletePatient';
 
 class EditPatientDialog extends Component {
     handleDialogClose = () => {
@@ -19,7 +21,14 @@ class EditPatientDialog extends Component {
     handleSave = () => {
         this.handleDialogClose();
     };
-    handleDelete = () => {
+    handleDelete = async () => {
+        try {
+            await this.setState({ loading: true });
+            let res = await deletePatient(this.props.id);
+            console.log(res);
+        } finally {
+            await this.setState({ loading: false });
+        }
         this.handleDialogClose();
     };
 

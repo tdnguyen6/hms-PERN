@@ -177,7 +177,7 @@ class AppointmentTable extends Component {
             <TableBody>
               { this.state.appointment.map((row) => {
                 return (
-                    <TableRow hover key = { row.appointment_id } onClick = { (event) => this.handleRowClick(event, row) }>
+                    <TableRow hover key = { row.id } onClick = { (event) => this.handleRowClick(event, row) }>
                       { columns.map((column) => {
                         return (
                           <TableCell key = { column.id } align = { column.align }>

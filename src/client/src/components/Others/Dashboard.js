@@ -43,7 +43,7 @@ class Dashboard extends Component {
                         {/* Practitioner */}
                         <Grid item xs={12} md={8} lg={9}>
                             <Paper className={fixedHeightPaper}>
-                                {(this.props.for === "practitioner") ? <Patient/> : <Practitioner/>}
+                                <Practitioner/>
                             </Paper>
                         </Grid>
                         {/* Appointment */}

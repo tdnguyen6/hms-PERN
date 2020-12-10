@@ -7,7 +7,7 @@ export const practitionerByDisease = async (id) => {
 
     let res;
     try {
-        res = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/appointment/findPractitioner`, data, { withCredentials: true });
+        res = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/appointments/findPractitioner`, data, { withCredentials: true });
         console.log(res.data);
         return res.data;
     } catch (error) {

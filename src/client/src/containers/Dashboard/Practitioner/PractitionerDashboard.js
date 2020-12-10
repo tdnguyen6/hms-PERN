@@ -5,12 +5,14 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
-import AppointmentTable from '../../Table/Admin/AppointmentTable';
 import DrawerAppBar from '../../Others/DrawerAppBar';
 import Dashboard from "../../../components/Others/Dashboard";
 import withStyles from "@material-ui/core/styles/withStyles";
 import authorizedUser from "../../../components/API/Authenticated";
 import AuthContainer from "../../Authentication/AuthContainer";
+
+import AppointmentTable from '../../Table/Practitioner/AppointmentTable';
+import PatientTable from "../../Table/Practitioner/PatientTable";
 
 const style = (theme) => ({
     root: {
@@ -37,6 +39,7 @@ const style = (theme) => ({
 class PractitionerDashboard extends Component {
     async isPractitioner() {
         const user = await authorizedUser();
+        console.log(user);
         if (user && user.role === 'practitioner') {
             return Promise.resolve();
         }
@@ -47,21 +50,20 @@ class PractitionerDashboard extends Component {
         const {classes} = this.props;
 
         return (
-            <AuthContainer authorize={this.isPractitioner}>
+            <AuthContainer authorize = { this.isPractitioner }>
                 <div className={classes.root}>
                     <CssBaseline/>
-                    <DrawerAppBar type="patient"/>
+                    <DrawerAppBar type="practitioner"/>
                     <div className={classes.content}>
                         <div className={classes.appBarSpacer}/>
                         <Container maxWidth="lg" className={classes.container}>
                             <Grid container spacing={3}>
                                 <Grid item xs={12}>
                                     <Paper className={classes.paper}>
-                                        <Route exact path="/practitioner"
-                                               render={(props) => <Dashboard {...props} for={"practitioner"}/>}/>
-                                        <Route exact path="/practitioner/dashboard"
-                                               render={(props) => <Dashboard {...props} for={"practitioner"}/>}/>
-                                        <Route path="/practitioner/appointment" exact component={AppointmentTable}/>
+                                        <Route exact path="/practitioner" component = { Dashboard } />
+                                        <Route exact path="/practitioner/dashboard" component = { Dashboard } />\
+                                        <Route exact path="/practitioner/patient" component = { PatientTable }/>
+                                        <Route exact path="/practitioner/appointment" component = { AppointmentTable }/>
                                     </Paper>
                                 </Grid>
                             </Grid>

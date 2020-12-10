@@ -28,6 +28,7 @@ let columns = [
     {id: 'dob', label: 'Date of Birth', align: 'right'}
 ];
 let patient = {
+    id: '',
     name: '',
     sex: '',
     email: '',
@@ -36,7 +37,7 @@ let patient = {
     ssn: ''
 };
 
-class PractitionerTable extends Component {
+class PatientTable extends Component {
     state = {
         patient: [],
         loading: false,
@@ -47,13 +48,7 @@ class PractitionerTable extends Component {
 
     componentDidMount() {
         this.setState({ loading: true });
-        allPatient()
-            .then(data => {
-                this.setState({
-                    patient: data,
-                    loading: false
-                })
-            });
+        this.getAllPatient().then().catch();
     }
 
     handleDialogClose = async (close, type) => {
@@ -61,6 +56,7 @@ class PractitionerTable extends Component {
             await this.setState({
                 editPatientDialog: close
             });
+            this.getAllPatient().then().catch();
         } else if (type === "newPractitioner") {
             await this.setState({
                 newPractitionerDialog: close
@@ -78,6 +74,7 @@ class PractitionerTable extends Component {
     };
     handleRowClick = (event, row) => {
         patient = {
+            id: row.id,
             name: row.name,
             sex: row.gender,
             email: row.email,
@@ -107,6 +104,15 @@ class PractitionerTable extends Component {
             errorDialog: error.error,
             errorMessage: error.message
         })
+    };
+    getAllPatient = async () => {
+        allPatient()
+            .then(data => {
+                this.setState({
+                    patient: data,
+                    loading: false
+                })
+            });
     }
 
     render() {
@@ -154,4 +160,4 @@ class PractitionerTable extends Component {
     }
 }
 
-export default PractitionerTable;
+export default PatientTable;
