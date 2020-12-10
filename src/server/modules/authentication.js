@@ -68,7 +68,9 @@ exports.isLogin = function (req, res) {
     return res.status(200).json({
         loginStatus: true,
         role: req.session.role,
-        userID: req.session.userID
+        userID: req.session.userID,
+        patientID: req.session.patientID,
+        practitionerID: req.session.practitionerID
     });
 }
 

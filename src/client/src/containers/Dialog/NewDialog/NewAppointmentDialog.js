@@ -39,7 +39,6 @@ class NewAppointmentDialog extends Component {
     try {
       await this.setState({ loading: true });
       const user = await authorizedUser();
-      // console.log('newappointmentdialog', user);
       if (user) {
         await this.setState({
           user: user.role
@@ -50,7 +49,9 @@ class NewAppointmentDialog extends Component {
             patientList: patient
           });
         } else if (user.role === 'patient') {
-          console.log(user.userID);
+          await this.setState({
+            patient: user.patientID
+          });
         }
       }
     } finally {
@@ -86,7 +87,7 @@ class NewAppointmentDialog extends Component {
     try {
       await this.props.loading(true);
       console.log('loading');
-      let res = await createAppointment(appointment);
+      await createAppointment(appointment);
     } finally {
       await this.props.loading(false);
       console.log('loaded');

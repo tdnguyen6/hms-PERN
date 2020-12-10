@@ -108,6 +108,7 @@ class AppointmentTable extends Component {
             await this.setState({
                 newAppointmentDialog: close
             });
+            this.getAllAppointment().then().catch();
         } else if (type === "yesNo") {
             await this.setState({
                 yesNoDialog: close
