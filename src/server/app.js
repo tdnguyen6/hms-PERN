@@ -1,8 +1,11 @@
+const path = require('path');
+const dotenv = require('dotenv');
 const express = require('express');
 const app = express();
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session)
-const path = require('path');
+const TokenExpiredError = require("jsonwebtoken/lib/TokenExpiredError");
+dotenv.config({ path: path.join(__dirname, `../../.env.${process.env.NODE_ENV}`)});
 
 const auth = require('./modules/authentication');
 const disease = require('./modules/disease');
@@ -12,7 +15,7 @@ const patient = require('./modules/patient');
 const admin = require('./modules/admin');
 const appointment = require('./modules/appointment');
 const payment = require('./modules/payment');
-const TokenExpiredError = require("jsonwebtoken/lib/TokenExpiredError");
+
 
 app.use(express.json());
 app.use(session({
