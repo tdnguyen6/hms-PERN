@@ -6,9 +6,11 @@ export const allAppointment = async () => {
     console.log(user.role);
     let res;
     try {
-        res = await axios.post(`${process.env.REACT_APP_API_ADDR}/admin/appointments/all`, { withCredentials: true });
+        res = await axios.post(`${process.env.REACT_APP_API_ADDR}/${user.role}/appointments/all`, { withCredentials: true });
+        console.log(res.data);
         return res.data;
     } catch (error) {
         console.log(error);
+        return [];
     }
 }

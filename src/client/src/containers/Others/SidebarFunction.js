@@ -13,9 +13,9 @@ let admin = [
 ];
 
 let practitioner = [
-    {id: 'Dashboard', link: '/dashboard'},
-    {id: 'Patient', link: '/dashboard'},
-    {id: 'Appointment', link: '/dashboard'}
+    {id: 'Dashboard', link: '/practitioner/dashboard'},
+    {id: 'Patient', link: '/practitioner/patient'},
+    {id: 'Appointment', link: '/practitioner/appointment'}
 ];
 
 let patient = [
@@ -25,15 +25,15 @@ let patient = [
 
 class SidebarFunction extends Component {
     render() {
-        let funcs = (this.props.type != 'admin') ? (this.props.type != 'practitioner') ? patient : practitioner : admin;
+        let roleFunctions = (this.props.type !== 'admin') ? (this.props.type !== 'practitioner') ? patient : practitioner : admin;
         return (
             <div>{
-                funcs.map((func) => (
-                    <ListItem button component={RouteLink} to={func.link}>
+                roleFunctions.map((func) => (
+                    <ListItem button component = {RouteLink} to = {func.link}>
                         <ListItemIcon>
                             <DashboardIcon/>
                         </ListItemIcon>
-                        <ListItemText primary={func.id}/>
+                        <ListItemText primary = {func.id}/>
                     </ListItem>
                 ))
             }</div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link as RouteLink, Link} from 'react-router-dom';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
@@ -9,32 +9,23 @@ import Button from "@material-ui/core/Button";
 const Error = (props) => {
     const {classes} = props;
     return (
-        <Container className={classes.page_404}>
-            <Grid container direction="column">
+        <Container maxWidth = "sm">
+            <Grid container direction="column" spacing = {2}>
                 <Grid item>
-                    <Typography className={classes.four_zero_four_bg}>
-                        <Typography className={classes.four_zero_four}  align="center" color='secondary'>
-                            {props.code} <br/>
-                            {props.mess}
+                    <Typography className={classes.four_zero_four_bg}></Typography>
+                        <Typography component = "h1" variant = "h5" align = "center">
+                            { props.code } <br/> { props.mess }
                         </Typography>
-                    </Typography>
                 </Grid>
                 <Grid item>
-                    <Typography className={classes.constant_box_404} align="center">
-                        <h3 style={{whiteSpace: 'noWrap'}}>
-                            🎉 Congratulation 🎉 <br/>
-                            You broke the website
-                        </h3>
-
-                        <p>This page supposed to be a secret 😟</p>
-                        <p>Don't try to hack us you alien 👽</p>
-
-                        <Button variant="outlined" color="secondary">
-                            <Link className={classes.link_404} to='/'>Go to Home</Link>
-                        </Button>
-
+                    <Typography align = "center">
+                        Hi, I'm Cat the Detective. Don't you dare hack my website!
                     </Typography>
                 </Grid>
+                    <Button component = { RouteLink }
+                            to = "/"
+                            variant = "text"
+                            color = "primary">Go Home</Button>
             </Grid>
         </Container>
     );
@@ -53,7 +44,7 @@ export default withStyles(
         },
 
         four_zero_four_bg: {
-            backgroundImage: 'url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif)',
+            backgroundImage: 'url(https://im4.ezgif.com/tmp/ezgif-4-f89390835a1b.gif)',
             backgroundRepeat: 'no-repeat',
             height: '400px',
             backgroundPosition: 'center',

@@ -37,7 +37,7 @@ let patient = {
     ssn: ''
 };
 
-class PractitionerTable extends Component {
+class PatientTable extends Component {
     state = {
         patient: [],
         loading: false,
@@ -48,7 +48,7 @@ class PractitionerTable extends Component {
 
     componentDidMount() {
         this.setState({ loading: true });
-        this.getAllPatient().then();
+        this.getAllPatient().then().catch();
     }
 
     handleDialogClose = async (close, type) => {
@@ -56,6 +56,7 @@ class PractitionerTable extends Component {
             await this.setState({
                 editPatientDialog: close
             });
+            this.getAllPatient().then().catch();
         } else if (type === "newPractitioner") {
             await this.setState({
                 newPractitionerDialog: close
@@ -159,4 +160,4 @@ class PractitionerTable extends Component {
     }
 }
 
-export default PractitionerTable;
+export default PatientTable;

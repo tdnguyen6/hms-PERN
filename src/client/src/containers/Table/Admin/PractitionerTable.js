@@ -161,7 +161,7 @@ class PractitionerTable extends Component {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <EditPractitionerDialog open = {this.state.editPractitionerDialog}
+                <EditPractitionerDialog open = { this.state.editPractitionerDialog }
                                         close = {this.handleDialogClose}
                                         loading = {this.handleLoading}
                                         {...practitioner} />

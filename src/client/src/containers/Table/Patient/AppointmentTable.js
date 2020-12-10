@@ -44,6 +44,7 @@ class AppointmentTable extends Component {
         yesNoDialog: false,
         newAppointmentDialog: false,
         symptomsDialog: false,
+        isAppointment: true,
         appointment: [],
         symptomList: [],
         diseaseKnown: false,
@@ -55,14 +56,7 @@ class AppointmentTable extends Component {
 
     componentDidMount() {
         this.setState({ loading: true });
-        allAppointment()
-            .then(data => {
-                console.log(data);
-                this.setState({
-                    appointment: data,
-                    loading: false
-                })
-            });
+        this.getAllAppointment().then().catch();
     }
     handleRowClick = (event, row) => {
         console.log(row);
@@ -134,6 +128,19 @@ class AppointmentTable extends Component {
         })
     }
 
+    getAllAppointment = async () => {
+        allAppointment()
+            .then(data => {
+                console.log(data);
+                this.setState({
+                    appointment: data,
+                    loading: false
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
     getDiseaseKnown = async (disease) => {
         await this.setState({
             diseaseKnown: disease,

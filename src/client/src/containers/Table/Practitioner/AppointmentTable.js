@@ -1,223 +1,225 @@
-import React, {Component} from 'react';
+import React, { Component }                     from 'react';
 
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Chip from '@material-ui/core/Chip';
+import Typography                               from '@material-ui/core/Typography';
+import Button                                   from '@material-ui/core/Button';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import {Redirect} from 'react-router-dom';
-function createData(id, patient, age, gender, disease, room, time, date, status) {
-    return {id, patient, age, gender, disease, room, time, date, status};
-};
+import { Completed, Upcoming }           from '../../../components/Services/AppointmentStatus';
 
-let rows = [
-    createData('1', 'A', 18, 'F', 'A', 'A1.104', '18:00', 'Aug 18', true),
-    createData('2', 'B', 18, 'F', 'B', 'A5.104', '16:00', 'Aug 20', false),
-    createData('3', 'A', 18, 'F', 'A', 'A1.104', '18:00', 'Aug 18', true),
-    createData('4', 'B', 18, 'F', 'B', 'A5.104', '16:00', 'Aug 20', false),
-    createData('5', 'A', 18, 'F', 'A', 'A1.104', '18:00', 'Aug 18', true),
-    createData('6', 'B', 18, 'F', 'B', 'A5.104', '16:00', 'Aug 20', false),
-    createData('7', 'B', 18, 'F', 'B', 'A5.104', '16:00', 'Aug 20', false),
-    createData('8', 'A', 18, 'F', 'A', 'A1.104', '18:00', 'Aug 18', true),
-    createData('9', 'A', 18, 'F', 'A', 'A1.104', '18:00', 'Aug 18', true),
-    createData('10', 'A', 18, 'F', 'A', 'A1.104', '18:00', 'Aug 18', true),
-    createData('6', 'B', 18, 'F', 'B', 'A5.104', '16:00', 'Aug 20', false),
-    createData('7', 'B', 18, 'F', 'B', 'A5.104', '16:00', 'Aug 20', false),
-    createData('8', 'A', 18, 'F', 'A', 'A1.104', '18:00', 'Aug 18', true),
-    createData('9', 'A', 18, 'F', 'A', 'A1.104', '18:00', 'Aug 18', true),
-    createData('10', 'A', 18, 'F', 'A', 'A1.104', '18:00', 'Aug 18', true),
+import EditAppointmentDialog              from '../../Dialog/EditDialog/EditAppointmentDialog';
+import NewAppointmentDialog              from '../../Dialog/NewDialog/NewAppointmentDialog';
+import YesNoDialog                       from "../../Dialog/OtherDialog/YesNoDialog";
+import SymptomsDialog                    from "../../Dialog/OtherDialog/SymptomsDialog";
+import {allDisease} from "../../../components/API/AllDisease";
+import LoadingDialog from "../../Dialog/OtherDialog/LoadingDialog";
+import {allSymptom} from "../../../components/API/AllSymptom";
+import {allAppointment} from "../../../components/API/AllAppointment";
+
+let columns = [
+    { id: 'patient_name', label: 'Patient' },
+    { id: 'medical_service', label: 'Medical Service', align: 'right'},
+    { id: 'start', label: 'Time', align: 'right'},
+    { id: 'date', label: 'Date', align: 'right'},
+    { id: 'status', label: 'Status', align: 'right'}
 ];
+let appointment = {
+    id: '',
+    disease: '',
+    practitioner: '',
+    room: '',
+    time: '',
+    date: '',
+    status: ''
+};
 
 class AppointmentTable extends Component {
     state = {
-        editDialog: false,
-        newDialog: false
+        editAppointmentDialog: false,
+        yesNoDialog: false,
+        newAppointmentDialog: false,
+        symptomsDialog: false,
+        isAppointment: true,
+        appointment: [],
+        symptomList: [],
+        diseaseKnown: false,
+        diseasePredicted: [],
+        diseaseList: [],
+        loading: false,
+        dataLoading: false,
     };
+
+    componentDidMount() {
+        this.setState({ loading: true });
+        this.getAllAppointment().then().catch();
+    }
     handleRowClick = (event, row) => {
-        console.log("Row click", row);
-        if (row.status) {
-            this.setState({
-                editDialog: true
+        console.log(row);
+        appointment =  {
+            id: row.id,
+            disease: row.disease,
+            practitioner: row.practitioner_name,
+            room: row.room,
+            time: row.time,
+            date: row.date,
+            status: false
+        }
+        this.setState({ editAppointmentDialog: row.status });
+    };
+
+    /*
+    * Click New -> Yes/No Dialog
+    *             -> Yes: symptomsKnown = true
+    *               -> New Appointment Dialog
+    *             -> No:  symptomsKnown = false
+    *               -> Symptoms Dialog -> Click Save -> Return Predicted Disease
+    *                 -> New Appointment Dialog
+    */
+    handleNewClick = async () => {
+        let diseases;
+        let symptoms;
+        try {
+            await this.setState({ loading: true });
+            console.log('loading');
+            diseases = await allDisease();
+            symptoms = await allSymptom();
+            console.log('symptomList', symptoms);
+        } finally {
+            await this.setState( { loading: false });
+            console.log('loaded');
+        }
+        await this.setState({
+            yesNoDialog: true,
+            newAppointmentDialog: false,
+            symptomsDialog: false,
+            symptomList: symptoms,
+            diseaseKnown: false,
+            diseasePredicted: [],
+            diseaseList: diseases
+        });
+    };
+    handleDialogClose = async (close, type) => {
+        if (type === "newAppointment") {
+            await this.setState({
+                newAppointmentDialog: close
+            });
+        } else if (type === "yesNo") {
+            await this.setState({
+                yesNoDialog: close
+            });
+        } else if (type === "symptoms") {
+            await this.setState({
+                symptomsDialog: close
+            });
+        } else if (type === "editAppointment") {
+            await this.setState({
+                editAppointmentDialog: close
             });
         }
-    };
-    handleNewClick = () => {
-        this.setState({
-            newDialog: true
+    }
+    handleLoading = async (loading) => {
+        await this.setState({
+            loading: loading
+        })
+    }
+
+    getAllAppointment = async () => {
+        allAppointment()
+            .then(data => {
+                console.log(data);
+                this.setState({
+                    appointment: data,
+                    loading: false
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+    getDiseaseKnown = async (disease) => {
+        await this.setState({
+            diseaseKnown: disease,
+            symptomsDialog: !disease,
+            newAppointmentDialog: disease
         });
-    };
-    handleEditDialogClose = () => {
-        this.setState({
-            editDialog: false
+    }
+    getDisease = async (disease) => {
+        await this.setState({
+            diseasePredicted: disease,
+            newAppointmentDialog: true
         });
-    };
-    handleNewDialogClose = () => {
-        this.setState({
-            newDialog: false
-        });
-    };
-    handleSave = () => {
-        this.setState({
-            editDialog: false
-        });
-    };
-    handleDelete = () => {
-        this.setState({
-            editDialog: false
-        });
-    };
-    handleNew = () => {
-        this.setState({
-            editDialog: false
-        });
-    };
+    }
 
     render() {
         return (
             <React.Fragment>
-                <Typography component="h2" variant="h6" color="primary" gutterBottom>Upcomming appointment</Typography>
-                <Table size="medium" stickyHeader>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Patient</TableCell>
-                            <TableCell align="center">Age</TableCell>
-                            <TableCell align="center">F/M</TableCell>
-                            <TableCell>Disease</TableCell>
-                            <TableCell align="right">Room</TableCell>
-                            <TableCell align="right">Time</TableCell>
-                            <TableCell align="right">Date</TableCell>
-                            <TableCell align="right">
-                                <Button variant="contained"
-                                        color="primary"
-                                        align="right"
-                                        onClick={this.handleNewClick}>
-                                    New
-                                </Button>
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map((row) => (
-                            <TableRow key={row.id} onClick={(event) => this.handleRowClick(event, row)}>
-                                <TableCell component="th" scope="row">{row.patient}</TableCell>
-                                <TableCell align="center">{row.age}</TableCell>
-                                <TableCell align="center">{row.gender}</TableCell>
-                                <TableCell>{row.disease}</TableCell>
-                                <TableCell align="right">{row.room}</TableCell>
-                                <TableCell align="right">{row.time}</TableCell>
-                                <TableCell align="right">{row.date}</TableCell>
-                                <TableCell align="right">{
-                                    row.status
-                                        ? <Chip variant="outlined"
-                                                size="small"
-                                                label="Upcomming"
-                                                color="primary"/>
-                                        : <Chip variant="outlined"
-                                                size="small"
-                                                label="Completed"
-                                                color="secondary"/>
-                                }</TableCell>
+                <Typography component = "h2" variant = "h6" color = "primary" gutterBottom>Upcomming appointment</Typography>
+                <TableContainer>
+                    <Table size = "medium" stickyHeader>
+                        <TableHead>
+                            <TableRow>
+                                {columns.map((column) => (
+                                    <TableCell key = { column.id } align = { column.align }>
+                                        { (column.label === 'Status')
+                                            ? <Button variant       = "contained"
+                                                      color         = "primary"
+                                                      align         = "right"
+                                                      onClick       = { this.handleNewClick }>
+                                                New
+                                            </Button>
+                                            : column.label }
+                                    </TableCell>
+                                ))}
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-                <Dialog
-                    open={this.state.editDialog}
-                    onClose={this.handleEditDialogClose}
-                    aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            To subscribe to this website, please enter your email address here. We will send updates
-                            occasionally.
-                        </DialogContentText>
-                        <TextField
-                            autoFocus
-                            variant="outlined"
-                            margin="normal"
-                            id="name"
-                            label="Email Address"
-                            type="email"
-                            fullWidth
-                        />
-                        <TextField
-                            autoFocus
-                            variant="outlined"
-                            margin="normal"
-                            id="name"
-                            label="Name"
-                            fullWidth
-                        />
-                        <TextField
-                            autoFocus
-                            variant="outlined"
-                            margin="normal"
-                            id="name"
-                            label="Date"
-                            fullWidth
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.handleSave} color="primary" align="right">
-                            Save
-                        </Button>
-                        <Button onClick={this.handleDelete} color="primary" align="left">
-                            Delete
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-                <Dialog
-                    open={this.state.newDialog}
-                    onClose={this.handleNewDialogClose}
-                    aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Make new appointment</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            To make new appointment, please enter your information here.
-                        </DialogContentText>
-                        <TextField
-                            autoFocus
-                            variant="outlined"
-                            margin="normal"
-                            id="name"
-                            label="Email Address"
-                            type="email"
-                            fullWidth
-                        />
-                        <TextField
-                            autoFocus
-                            variant="outlined"
-                            margin="normal"
-                            id="name"
-                            label="Name"
-                            fullWidth
-                        />
-                        <TextField
-                            autoFocus
-                            variant="outlined"
-                            margin="normal"
-                            id="name"
-                            label="Date"
-                            fullWidth
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.handleNew} color="primary" align="right">
-                            Save
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                        </TableHead>
+                        <TableBody>
+                            { this.state.appointment.map((row) => {
+                                return (
+                                    <TableRow hover key = { row.appointment_id } onClick = { (event) => this.handleRowClick(event, row) }>
+                                        { columns.map((column) => {
+                                            return (
+                                                <TableCell key = { column.id } align = { column.align }>
+                                                    { (column.id === 'status')
+                                                        ? row[column.id] ? Upcoming : Completed
+                                                        : row[column.id] }
+                                                </TableCell>
+                                            );
+                                        })}
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                {/*
+          - open and close props will send data back to its child component: EditAppointmentDialog.
+          - getOpenState will receive data which been sent from its child component EditAppointmentDialog.
+        */}
+                <YesNoDialog open = { this.state.yesNoDialog }
+                             close =  { this.handleDialogClose }
+                             yesno = { this.getDiseaseKnown }
+                             content = "Do you know your disease yet?" />
+                <SymptomsDialog open = { this.state.symptomsDialog }
+                                close = { this.handleDialogClose }
+                                loading = { this.handleLoading }
+                                symptom = { this.state.symptomList }
+                                disease = { this.getDisease } />
+                <NewAppointmentDialog open = { this.state.newAppointmentDialog }
+                                      close = { this.handleDialogClose }
+                                      loading = { this.handleLoading }
+                                      disease = { (this.state.diseaseKnown)
+                                          ? this.state.diseaseList
+                                          : this.state.diseasePredicted }
+                                      appointment = { this.getAppointment }/>
+                <EditAppointmentDialog open = { this.state.editAppointmentDialog }
+                                       close = { this.handleDialogClose }
+                                       { ...appointment } />
+                <LoadingDialog open = { this.state.loading } />
             </React.Fragment>
         );
     }
