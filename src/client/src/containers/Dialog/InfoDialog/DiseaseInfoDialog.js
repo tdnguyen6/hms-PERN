@@ -22,7 +22,7 @@ class DiseaseInfoDialog extends Component {
                 aria-describedby = "alert-dialog-description">
                 <DialogContent>
                     <DialogTitle id="form-dialog-title">
-                        { this.props.name.charAt(0).toUpperCase() + this.props.name.slice(1) }
+                        { this.props.name }
                     </DialogTitle>
                     <DialogContentText id="alert-dialog-description">
                         { this.props.descriptions }

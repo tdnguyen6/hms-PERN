@@ -15,27 +15,42 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import IconButton from "@material-ui/core/IconButton";
 import DiseaseInfoDialog from "../InfoDialog/DiseaseInfoDialog";
 import PractitionerInfoDialog from "../InfoDialog/PractitionerInfoDialog";
-
-const dateAvailable = [
-    'Aug 18',
-    'Aug 20',
-    'Sep 19',
-    'Oct 17'
-];
-const timeAvailable = [
-    '18:00',
-    '17:00',
-    '7:00',
-    '13:00'
-];
+import {deleteAppointment} from "../../../components/API/DeleteAppointment";
+import {availableTimeByPractitioner} from "../../../components/API/AvailableTimeByPractitioner";
+import LoadingDialog from "../OtherDialog/LoadingDialog";
+import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 class EditAppointmentDialog extends Component {
     state = {
-        date: this.props.date,
-        time: this.props.time,
+        date: new Date(this.props.appointment.date[2],
+            this.props.appointment.date[1] - 1,
+            this.props.appointment.date[0], 0, 0, 0),
+        timeList: [this.props.appointment.time],
+        time: null,
         diseaseInfoDialog: false,
         practitionerInfoDialog: false,
+        loading: false
     }
+
+    // async componentDidMount() {
+    //     console.log(this.props);
+    //     await this.setState({ loading: true });
+    //     let tmpDateList = this.state.dateList;
+    //     tmpDateList.push(this.state.date);
+    //     console.log(this.props.appointment.practitionerID);
+    //     let tmpTimeList = this.state.timeList;
+    //     tmpTimeList.push(this.state.time);
+    //     await this.setState({
+    //         dateList: tmpDateList,
+    //         date: this.props.appointment.date,
+    //         timeList: tmpTimeList,
+    //         time: this.props.appointment.time
+    //     });
+    //     console.log(this.state);
+    //     await this.setState({ loading: false });
+    //
+    // }
 
     handleDialogClose = () => {
         // send close state back to parent: AppointmentTable
@@ -56,14 +71,14 @@ class EditAppointmentDialog extends Component {
         // send close state back to parent: AppointmentTable
         this.handleDialogClose();
     };
-    handleDelete = () => {
-        // send close state back to parent: AppointmentTable
+    handleDelete = async () => {
+        await deleteAppointment(this.props.id);
         this.handleDialogClose();
     };
 
-    handleDateChange = async (event) => {
+    handleDateChange = async (date) => {
         await this.setState({
-            date: event.target.value
+            date: date
         })
     }
     handleTimeChange = async (event) => {
@@ -72,23 +87,18 @@ class EditAppointmentDialog extends Component {
         })
     }
 
-    handleDiseaseInfoClick = async () => {
-        await this.setState({
-            diseaseInfoDialog: true
-        });
-    }
-    handlePractitionerInfoClick = async () => {
-        await this.setState({
-            practitionerInfoDialog: true
-        });
-    }
+    // handlePractitionerInfoClick = async () => {
+    //     await this.setState({
+    //         practitionerInfoDialog: true
+    //     });
+    // }
 
     render() {
         return (
             <React.Fragment>
                 <Dialog
-                    open={this.props.open}
-                    onClose={this.handleDialogClose}
+                    open = {this.props.open}
+                    onClose = {this.handleDialogClose}
                     aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Appointment Information</DialogTitle>
                     <DialogContent>
@@ -101,88 +111,76 @@ class EditAppointmentDialog extends Component {
                                     There are some read only information you can not change.
                                 </DialogContentText>
                             </Grid>
-                            {/* Disease */}
+                            {/* Medical Service */}
                             <Grid item xs={12}>
                                 <TextField
-                                    autoFocus
-                                    fullWidth
-                                    variant="outlined"
-                                    margin="normal"
-                                    id="disease"
-                                    label="Disease"
-                                    value={this.props.disease}
-                                    InputProps={{
-                                        readOnly: true, endAdornment:
-                                            <IconButton aria-label="information">
-                                                <InfoOutlinedIcon onClick={this.handleDiseaseInfoClick}/>
-                                            </IconButton>
-                                    }}
-                                />
+                                    autoFocus fullWidth
+                                    variant = "outlined"
+                                    margin = "normal"
+                                    id = "medical_service"
+                                    label = "Medical Service"
+                                    value = { this.props.appointment.medical_service }
+                                    InputProps = {{ readOnly: true }}/>
                             </Grid>
                             {/* Practitioner */}
                             <Grid item xs={12}>
                                 <TextField
-                                    autoFocus
-                                    fullWidth
-                                    variant="outlined"
-                                    margin="normal"
-                                    id="practitioner"
-                                    label="Practitioner"
-                                    value={this.props.practitioner}
+                                    autoFocus fullWidth
+                                    variant = "outlined"
+                                    margin = "normal"
+                                    id = "practitioner"
+                                    label = "Practitioner"
+                                    value = { this.props.appointment.practitioner }
                                     InputProps={{
                                         readOnly: true, endAdornment:
                                             <IconButton aria-label="information">
-                                                <InfoOutlinedIcon onClick={this.handlePractitionerInfoClick}/>
+                                                <InfoOutlinedIcon onClick = { this.handlePractitionerInfoClick }/>
                                             </IconButton>
                                     }}
                                 />
                             </Grid>
-                            {/* Room */}
-                            <Grid item xs={12}>
-                                <TextField
-                                    autoFocus
-                                    fullWidth
-                                    variant="outlined"
-                                    margin="normal"
-                                    id="room"
-                                    label="Room"
-                                    InputProps={{readOnly: true,}}
-                                    value={this.props.room}
-                                />
-                            </Grid>
                             {/* Date */}
-                            <Grid item xs={12}>
-                                <TextField
-                                    autoFocus
-                                    fullWidth
-                                    select
-                                    variant="outlined"
-                                    margin="normal"
-                                    id="date"
-                                    label="Date"
-                                    value={this.state.date}
-                                    onChange={this.handleDateChange}>{
-                                    dateAvailable.map((option) => (
-                                        <MenuItem key={option} value={option}>
-                                            {option}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
+                            <Grid item xs = {12}>
+                                <MuiPickersUtilsProvider utils = {DateFnsUtils}>
+                                    <KeyboardDatePicker
+                                        disablePast fullWidth autoFocus
+                                        variant               = "inline"
+                                        inputVariant          = "outlined"
+                                        label                 = "Date of appointment"
+                                        format                = "dd/MM/yyyy"
+                                        value                 = { this.state.date }
+                                        onChange              = { this.handleDateChange }/>
+                                </MuiPickersUtilsProvider>
                             </Grid>
+                            {/*/!* Date *!/*/}
+                            {/*<Grid item xs={12}>*/}
+                            {/*    <TextField*/}
+                            {/*        autoFocus fullWidth select*/}
+                            {/*        variant = "outlined"*/}
+                            {/*        margin = "normal"*/}
+                            {/*        id = "date"*/}
+                            {/*        label = "Date"*/}
+                            {/*        value = { this.state.date }*/}
+                            {/*        onChange={this.handleDateChange}>{*/}
+                            {/*        this.state.dateList.map((option) => (*/}
+                            {/*            <MenuItem key={option} value={option}>*/}
+                            {/*                {option}*/}
+                            {/*            </MenuItem>*/}
+                            {/*        ))}*/}
+                            {/*    </TextField>*/}
+                            {/*</Grid>*/}
                             {/* Time */}
                             <Grid item xs={12}>
                                 <TextField
-                                    autoFocus
-                                    fullWidth
-                                    select
-                                    variant="outlined"
-                                    margin="normal"
-                                    id="time"
-                                    label="Time"
-                                    value={this.state.time}
-                                    onChange={this.handleTimeChange}>{
-                                    timeAvailable.map((option) => (
-                                        <MenuItem key={option} value={option}>
+                                    autoFocus fullWidth select
+                                    variant = "outlined"
+                                    margin = "normal"
+                                    id = "time"
+                                    label = "Time"
+                                    value = { this.state.time }
+                                    onChange = { this.handleTimeChange }>{
+                                    this.state.timeList.map((option) => (
+                                        <MenuItem key = {option} value = {option}>
                                             {option}
                                         </MenuItem>
                                     ))}
@@ -191,20 +189,21 @@ class EditAppointmentDialog extends Component {
                         </Grid>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleSave} color="primary" align="right">
+                        <Button onClick = { this.handleSave } color="primary" align="right">
                             Save
                         </Button>
-                        <Button onClick={this.handleDelete} color="primary" align="left">
+                        <Button onClick = { this.handleDelete } color="primary" align="left">
                             Delete
                         </Button>
                     </DialogActions>
                 </Dialog>
-                <DiseaseInfoDialog open={this.state.diseaseInfoDialog}
-                                   close={this.handleSubDialogClose}
-                                   data={this.props.disease}/>
-                <PractitionerInfoDialog open={this.state.practitionerInfoDialog}
-                                        close={this.handleSubDialogClose}
-                                        data={this.props.practitioner}/>
+                <DiseaseInfoDialog open = { this.state.diseaseInfoDialog }
+                                   close = { this.handleSubDialogClose }
+                                   { ...this.props.disease }/>
+                <PractitionerInfoDialog open = { this.state.practitionerInfoDialog }
+                                        close = { this.handleSubDialogClose }
+                                        data = { this.props.practitioner }/>
+                <LoadingDialog open = { this.state.loading } />
             </React.Fragment>
 
         );

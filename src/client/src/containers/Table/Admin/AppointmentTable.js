@@ -29,15 +29,7 @@ let columns = [
   { id: 'date', label: 'Date', align: 'right'},
   { id: 'status', label: 'Status', align: 'right'}
 ];
-let appointment = {
-  id: '',
-  disease: '',
-  practitioner: '',
-  room: '',
-  time: '',
-  date: '',
-  status: ''
-};
+
 
 class AppointmentTable extends Component {
   state = {
@@ -52,24 +44,37 @@ class AppointmentTable extends Component {
     diseaseList: [],
     loading: false,
     dataLoading: false,
+    appointmentDetail: {
+      id: '',
+      disease: '',
+      practitioner: '',
+      room: '',
+      time: '',
+      date: '',
+      status: ''
+    }
   };
 
   componentDidMount() {
     this.setState({ loading: true });
     this.getAllAppointment().then().catch();
   }
-  handleRowClick = (event, row) => {
-    console.log(row);
-    appointment =  {
-      id: row.id,
-      disease: row.disease,
-      practitioner: row.practitioner_name,
-      room: row.room,
-      time: row.time,
-      date: row.date,
-      status: false
-    }
-    this.setState({ editAppointmentDialog: row.status });
+  handleRowClick = async (event, row) => {
+
+    await this.setState({
+      appointmentDetail: {
+        id: row.appointment_id,
+        medical_service: row.medical_service,
+        practitioner: row.practitioner_name,
+        practitionerID: row.practitioner_id,
+        time: row.start,
+        date: row.date.split('/').map( Number ),
+        status: (row.status === 'booked')
+      }
+    });
+    console.log(this.state.appointmentDetail);
+
+    this.setState({ editAppointmentDialog: (row.status === 'booked') });
   };
 
   /*
@@ -186,7 +191,7 @@ class AppointmentTable extends Component {
                         return (
                           <TableCell key = { column.id } align = { column.align }>
                             { (column.id === 'status')
-                            ? row[column.id] ? Upcoming : Completed
+                            ? (row[column.id] === 'booked') ? Upcoming : Completed
                             : row[column.id] }
                           </TableCell>
                         );
@@ -219,7 +224,7 @@ class AppointmentTable extends Component {
                               appointment = { this.getAppointment }/>
         <EditAppointmentDialog open = { this.state.editAppointmentDialog }
                                close = { this.handleDialogClose }
-                               { ...appointment } />
+                               appointment = { this.state.appointmentDetail } />
         <LoadingDialog open = { this.state.loading } />
       </React.Fragment>
     );
