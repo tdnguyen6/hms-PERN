@@ -19,6 +19,7 @@ import {allSymptom} from "../../components/API/AllSymptom";
 import SymptomsDialog from "../Dialog/OtherDialog/SymptomsDialog";
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import DiseaseDialog from "../Dialog/OtherDialog/DiseaseDialog";
+import DefaultAppBar from "../Others/AppBar";
 
 const style = (theme) => ({
     '@global': {
@@ -27,18 +28,6 @@ const style = (theme) => ({
             padding: 0,
             listStyle: 'none',
         },
-    },
-    appBar: {
-        borderBottom: `1px solid ${theme.palette.divider}`,
-    },
-    toolbar: {
-        flexWrap: 'wrap',
-    },
-    toolbarTitle: {
-        flexGrow: 1,
-    },
-    link: {
-        margin: theme.spacing(1, 1.5),
     },
     heroContent: {
         padding: theme.spacing(8, 0, 6),
@@ -66,105 +55,13 @@ const style = (theme) => ({
 });
 
 class Home extends Component {
-    state = {
-        anchorEl: null,
-        symptomList: [],
-        symptomsDialog: false,
-        loading: false,
-        diseaseList: [],
-        diseaseDialog: false
-    }
-    async componentDidMount() {
-        /** code for 404 redirect to overcome React BrowserRouter limitation **/
-        if (sessionStorage.getItem("redirect") !== null) {
-            this.props.history.push(sessionStorage.redirect);
-            sessionStorage.removeItem("redirect");
-        }
-        /*********************************************************/
-        this.getAllSymptom().then().catch();
-    }
-
-    handleMenuClick = (event) => {
-        this.setState({
-            anchorEl: event.currentTarget
-        });
-    };
-    handleMenuClose = () => {
-        this.setState({
-            anchorEl: null
-        });
-    };
-    handleLogin = () => {
-        this.props.history.push('/login');
-    }
-    handleRegister = () => {
-        this.props.history.push('/register');
-    }
-    handleDiseasePredict = async () => {
-        await this.setState({
-            symptomsDialog: true
-        });
-    }
-    handleDialogClose = async (close, type) => {
-        if (type === "symptoms") {
-            await this.setState({
-                symptomsDialog: close
-            });
-        } else if (type === 'disease') {
-            await this.setState({
-                diseaseDialog: close
-            });
-        }
-    }
-
-    handleLoading = async (loading) => {
-        await this.setState({
-            loading: loading
-        })
-    }
-
-    getAllSymptom = async () => {
-        await allSymptom().then(data => {
-            this.setState({
-                symptomList: data
-            })
-        })
-    }
-    getDisease = async (disease) => {
-        await this.setState({
-            diseaseList: disease,
-            diseaseDialog: true
-        });
-        console.log(disease);
-    }
-
     render() {
         const { classes } = this.props;
 
         return (
             <React.Fragment>
                 <CssBaseline/>
-                <AppBar position="static" color="primary" elevation={0} className={classes.appBar}>
-                    <Toolbar className = {classes.toolbar}>
-                        <Typography variant = "h6" color = "inherit" noWrap className = {classes.toolbarTitle}>
-                            IU Hospital
-                        </Typography>
-                        <Button color = "inherit" className = { classes.link }  startIcon = {<SettingsIcon />}
-                                onClick = { this.handleMenuClick }>
-                            Click here!
-                        </Button>
-                        <Menu
-                            id              = "simple-menu"
-                            anchorEl        = { this.state.anchorEl }
-                            keepMounted
-                            open            = { Boolean(this.state.anchorEl) }
-                            onClose         = { this.handleMenuClose }>
-                            <MenuItem onClick = { this.handleLogin }>Login</MenuItem>
-                            <MenuItem onClick = { this.handleRegister }>Register</MenuItem>
-                            <MenuItem onClick = { this.handleDiseasePredict }>Predict Disease</MenuItem>
-                        </Menu>
-                    </Toolbar>
-                </AppBar>
+                <DefaultAppBar />
                 <Container maxWidth="sm" component="main" className={classes.heroContent}>
                     <Typography component="h1" variant="h3" align="center" color="textPrimary" gutterBottom>
                         Treatment in the best hospital of Vietnam
@@ -194,15 +91,6 @@ class Home extends Component {
                         </Grid>
                     </Grid>
                 </Container>
-                <SymptomsDialog open = { this.state.symptomsDialog }
-                                close = { this.handleDialogClose }
-                                loading = { this.handleLoading }
-                                symptom = { this.state.symptomList }
-                                disease = { this.getDisease } />
-                <DiseaseDialog open = { this.state.diseaseDialog }
-                               close = { this.handleDialogClose }
-                               diseaseList = { this.state.diseaseList } />
-                <LoadingDialog open = { this.state.loading } />
             </React.Fragment>
         );
     }

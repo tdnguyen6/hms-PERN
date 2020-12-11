@@ -46,9 +46,9 @@ class AppointmentTable extends Component {
         dataLoading: false,
         appointmentDetail: {
             id: '',
-            disease: '',
+            medical_service: '',
             practitioner: '',
-            room: '',
+            practitionerID: '',
             time: '',
             date: '',
             status: ''
