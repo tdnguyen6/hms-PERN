@@ -98,17 +98,15 @@ class ForgetPassword extends Component {
         }
 
         this.setState({
-            errorDialog: {
-                open: dialogStatus.dialogHasError,
-                error: dialogStatus.dialogMessage
-            }
+                dialogHasError: dialogStatus.dialogHasError,
+                dialogMessage: dialogStatus.dialogMessage
         });
 
         if (!dialogStatus.dialogHasError) {
             this.setState({ done: true });
             try {
-                await sendResetPasswordLink(this.state.email.value);
                 await this.setState({ loading: true });
+                await sendResetPasswordLink(this.state.email.value);
             } catch (error) {
                 console.log(error);
             } finally {

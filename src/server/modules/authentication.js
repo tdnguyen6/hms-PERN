@@ -36,7 +36,7 @@ exports.loginAccount = async function (req, res) {
             else if (isPractitioner) position = "practitioner"
             else position = "admin"
             // console.log(position)
-            
+
             // assign session to user
             req.session.userID = result.rows[0].id
             req.session.role = position
@@ -80,56 +80,55 @@ exports.logout = function (req, res, next) {
 }
 exports.forgetPassword = async function (req, res) {
     let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
-    if (user.rows.length < 1) return res.status(500).json({userExist: false})
-
-    const token = jwt.sign(
-        {
-            data: {
-                email: req.body.email
-            }
-        },
-        "Yua Mikami",
-        {
-            expiresIn: 600,
-            issuer: 'hms',
-            audience: 'hms-user'
-        }
-    );
-
-    let email = {
-        body: {
-            name: user.rows[0].name,
-            intro: 'You received this email because you forgot your account password',
-            action: {
-                instructions: 'To reset password please click the link below within 10 minutes',
-                button: {
-                    color: '#FFA111',
-                    text: 'Click to reset password',
-                    link: `${req.headers.origin}/resetPassword?token=${token}`
+    if (user.rows.length === 1) {
+        const token = jwt.sign(
+            {
+                data: {
+                    email: req.body.email
                 }
             },
-            outro: 'If you did not make this request, simply ignore this email.'
-        }
-    };
-
-    let mail = Mailer.mailGenerator.generate(email);
-
-    let message = {
-        to: req.body.email,
-        subject: "Hospital Management System: Recover password",
-        html: mail,
-    };
-
-    Mailer.transporter
-        .sendMail(message, function (error, info) {
-            if (error) {
-                console.log(error);
-                res.status(500).json({mailSent: false})
-            } else {
-                console.log('Email sent: ' + info.response);
-                res.status(200).json({mailSent: true})
+            "Yua Mikami",
+            {
+                expiresIn: 600,
+                issuer: 'hms',
+                audience: 'hms-user'
             }
-        });
+        );
+
+        let email = {
+            body: {
+                name: user.rows[0].name,
+                intro: 'You received this email because you forgot your account password',
+                action: {
+                    instructions: 'To reset password please click the link below within 10 minutes',
+                    button: {
+                        color: '#FFA111',
+                        text: 'Click to reset password',
+                        link: `${req.headers.origin}/resetPassword?token=${token}`
+                    }
+                },
+                outro: 'If you did not make this request, simply ignore this email.'
+            }
+        };
+
+        let mail = Mailer.mailGenerator.generate(email);
+
+        let message = {
+            to: req.body.email,
+            subject: "Hospital Management System: Recover password",
+            html: mail,
+        };
+
+        Mailer.transporter
+            .sendMail(message, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+    }
+    return res.status(200).json();
 }
 exports.resetPassword = async function (req, res) {
     try {
