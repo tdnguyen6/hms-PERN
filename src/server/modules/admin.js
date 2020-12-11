@@ -186,4 +186,22 @@ exports.listAllDepartments = async function (req, res) {
     }
 }
 
+exports.deleteAppointment = async function (req, res) {
+    if (!Number.isInteger(req.body.appointmentID)) {
+        return res.status(400).json({status: false})
+    }
+    
+    try {
+        const deleteStatement = 'delete from appointments where id = $1'
+        const arr = [req.body.appointmentID]
+        const result = await db.query(deleteStatement, arr)
+        return res.status(200).json({status: true})
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({status: false})
+    }
+}
+
+
+
 
