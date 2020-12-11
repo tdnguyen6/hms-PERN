@@ -109,6 +109,7 @@ app.post("/patient/appointments/findPractitioner", practitioner.findPractitioner
 //     next()
 // })
 app.post("/practitioner/appointments/all", appointment.practitionerAppointments)
+app.post("/practitioner/appointments/update", appointment.updateAppointmentPractitioner)
 
 
 app.post("/symptom/all", symptom.queryAllSymptoms);

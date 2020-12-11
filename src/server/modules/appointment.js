@@ -123,6 +123,24 @@ exports.updateAppointment = async function (req, res) {
     }
 }
 
+exports.updateAppointmentPractitioner = async function (req, res) {
+    if (!Number.isInteger(req.body.appointmentID)) {
+        return res.status(400).json({status: false})
+    }
+
+    try {
+        const appointmentUpdateQuery = 'update appointments set log = $1, prescription = $2, next_appointment_period = $3, next_appointment_service = $4 where id = $5'
+        const arr = [req.body.log, req.body.prescription, req.body.nextAppointmentPeriod, req.body.nextAppointmentService, req.body.appointmentID]
+
+        await db.query(appointmentUpdateQuery, arr)
+
+        return res.status(200).json({status: true})
+    } catch (err) {
+        console.log(err) 
+        return res.status(500).json({status: false})
+    }
+}
+
 
 
 
