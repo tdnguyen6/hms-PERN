@@ -61,11 +61,10 @@ class AppointmentTable extends Component {
     }
 
     handleRowClick = async (event, row) => {
-
         await this.setState({
             appointmentDetail: {
                 id: row.appointment_id,
-                medical_service: row.medical_service,
+                medical_service: row.medical_services,
                 practitioner: row.practitioner_name,
                 practitionerID: row.practitioner_id,
                 time: row.start,
