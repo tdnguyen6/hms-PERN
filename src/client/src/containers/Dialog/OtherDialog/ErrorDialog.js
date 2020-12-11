@@ -16,8 +16,8 @@ class ErrorDialog extends Component {
     render() {
         return (
             <Dialog
-                open={this.props.open}
-                onClose={this.handleDialogClose}
+                open = {this.props.open}
+                onClose = {this.handleDialogClose}
                 aria-describedby="alert-dialog-description">
                 <DialogContent>
                     <DialogTitle id="form-dialog-title">Error</DialogTitle>

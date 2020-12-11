@@ -16,7 +16,7 @@ export const diseaseBySymptom = async (listOfSymptoms) => {
     try {
         res = await axios.post(`${process.env.REACT_APP_API_ADDR}/disease/findDiseases`, data);
         console.log('disease returned in api', res.data, res.data.length);
-        if (res.data.length === 0) return [{id: 0, name: 'No disease found'}];
+        if (res.data.length === 0) return [{id: 0, name: 'No disease found', descriptions: 'You should use general checkup service.'}];
         return res.data;
     } catch (error) {
         console.log('disease error', error.response.status);

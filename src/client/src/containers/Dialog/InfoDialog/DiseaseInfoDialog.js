@@ -11,23 +11,25 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 class DiseaseInfoDialog extends Component {
     handleDialogClose = () => {
         // send close state back to parent: AppointmentTable
-        this.props.close(false, "diseaseInfo");
+        this.props.close(false);
     }
 
     render() {
         return (
             <Dialog
-                open={this.props.open}
-                onClose={this.handleDialogClose}
-                aria-describedby="alert-dialog-description">
+                open    =   { this.props.open }
+                onClose = { this.handleDialogClose }
+                aria-describedby = "alert-dialog-description">
                 <DialogContent>
-                    <DialogTitle id="form-dialog-title">{this.props.data}</DialogTitle>
+                    <DialogTitle id="form-dialog-title">
+                        { this.props.name.charAt(0).toUpperCase() + this.props.name.slice(1) }
+                    </DialogTitle>
                     <DialogContentText id="alert-dialog-description">
-                        {this.props.data}
+                        { this.props.descriptions }
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={this.handleDialogClose} color="primary">
+                    <Button onClick = { this.handleDialogClose } color="primary">
                         Got it!
                     </Button>
                 </DialogActions>

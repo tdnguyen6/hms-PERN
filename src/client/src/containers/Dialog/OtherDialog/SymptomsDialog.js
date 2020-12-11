@@ -167,10 +167,10 @@ class SymptomsDialog extends Component {
                                     <span key={symptom.id}>
                                             <Chip
                                                 clickable
-                                                color="primary"
-                                                label={symptom.name}
-                                                onClick={() => this.handleChipClick(symptom)}
-                                                className={classes.chip}
+                                                color = "primary"
+                                                label = { symptom.name }
+                                                onClick = {() => this.handleChipClick(symptom)}
+                                                className = { classes.chip }
                                             />
                                         </span>
                                 );
@@ -179,7 +179,7 @@ class SymptomsDialog extends Component {
                     </Grid>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={this.handleSave} color="primary" align="right">
+                    <Button onClick = { this.handleSave } color="primary" align="right">
                         Save
                     </Button>
                 </DialogActions>

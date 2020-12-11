@@ -103,7 +103,7 @@ class NewPractitionerDialog extends Component {
                 specialty: this.state.specialty.value
             }
             await createPractitioner(practitioner);
-            this.handleDialogClose();
+            await this.handleDialogClose();
         }
     };
     handleNameChange = async (event) => {
