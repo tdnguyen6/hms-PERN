@@ -105,6 +105,24 @@ exports.getAvailableHours = async function (req, res) {
     }
 }
 
+exports.updateAppointment = async function (req, res) {
+    if (!Number.isInteger(req.body.appointmentID)) {
+        return res.status(400).json({status: false})
+    }
+
+    try {
+        const appointmentUpdateQuery = 'update appointments set at = $1 where id = $2'
+        const arr = [req.body.at, req.body.appointmentID]
+
+        await db.query(appointmentUpdateQuery, arr)
+
+        return res.status(200).json({status: true})
+    } catch (err) {
+        console.log(err) 
+        return res.status(500).json({status: false})
+    }
+}
+
 
 
 

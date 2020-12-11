@@ -73,6 +73,7 @@ app.post("/user/changePassword", auth.changePassword);
 // })
 
 app.post("/admin/appointments/all", admin.listAllAppointments);
+app.post("/admin/appointments/update", appointment.updateAppointment);
 app.post("/admin/appointments/delete", admin.deleteAppointment);
 app.post("/admin/practitioners/all", admin.listAllPractitioners);
 app.post("/admin/practitioners/create", admin.createPractitioner)
