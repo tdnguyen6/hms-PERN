@@ -14,7 +14,7 @@ exports.createAppointment = async function (req, res) {
 }
 
 exports.patientAppointments = async function (req, res) {
-    const queryStatement = "select ap.id as appointment_id, ap.room_id, m.name as medical_services, ap.practitioner_id, a.name as practitioner_name, to_char(ap.at, 'HH24:MI') as start, to_char(ap.at, 'DD/MM/YYYY') as date, ap.status, ap.log, ap.prescription, ap.next_appointment_period, (select m.name as next_appointment_service where ap.next_appointment_service = m.id), ap.last_appointment from appointments ap, rooms r, medicalservices m, practitioners p, accounts a where ap.room_id = r.id and r.medicalservice_id = m.id and ap.practitioner_id = p.id and p.id = a.practitioner_id and ap.patient_id = $1"
+    const queryStatement = "select ap.id as appointment_id, ap.room_id, m.name as medical_services, ap.practitioner_id, a.name as practitioner_name, d.name as practitioner_specialty, a.avatar as practitioner_avatar, a.email as practitioner_email, a.phone as practitioner_phone, a.gender as practitioner_gender, to_char(ap.at, 'HH24:MI') as start, to_char(ap.at, 'DD/MM/YYYY') as date, ap.status, ap.log, ap.prescription, ap.next_appointment_period, (select m.name as next_appointment_service where ap.next_appointment_service = m.id), ap.last_appointment from appointments ap, rooms r, medicalservices m, practitioners p, accounts a, departments d where ap.room_id = r.id and r.medicalservice_id = m.id and m.department_id = d.id and ap.practitioner_id = p.id and p.id = a.practitioner_id and ap.patient_id = $1"
     const arr = [req.session.patientID]
     try {
         const result = await db.query(queryStatement, arr)
