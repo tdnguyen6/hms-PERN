@@ -75,6 +75,7 @@ app.post("/user/changePassword", auth.changePassword);
 app.post("/admin/appointments/all", admin.listAllAppointments);
 app.post("/admin/appointments/update", appointment.updateAppointment);
 app.post("/admin/appointments/delete", admin.deleteAppointment);
+
 app.post("/admin/practitioners/all", admin.listAllPractitioners);
 app.post("/admin/practitioners/create", admin.createPractitioner)
 app.post("/admin/practitioners/find", admin.getPractitionerByID)
@@ -83,6 +84,7 @@ app.post("/admin/practitioners/delete", admin.deletePractitioner);
 app.post("/admin/practitioners/account/create", admin.createPractitionerAccount);
 app.post("/admin/practitioners/account/delete", admin.deletePractitionerAccount);
 app.post("/admin/practitioners/delete", admin.deletePractitioner);
+
 app.post("/admin/departments/all", admin.listAllDepartments);
 
 app.post("/admin/patients/all", admin.listAllPatients);

@@ -9,14 +9,14 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import LoadingDialog from "../../Dialog/OtherDialog/LoadingDialog";
-import EditPractitionerDialog from "../../Dialog/EditDialog/EditPractitionerDialog";
-import NewPractitionerDialog from "../../Dialog/NewDialog/NewPractitionerDialog";
-import ErrorDialog from "../../Dialog/OtherDialog/ErrorDialog";
-import {allAppointment} from "../../../components/API/AllAppointment";
-import {allPractitioner} from "../../../components/API/AllPractitioner";
-import {allPatient} from "../../../components/API/AllPatient";
-import EditPatientDialog from "../../Dialog/EditDialog/EditPatientDialog";
+import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
+import EditPractitionerDialog from "../Dialog/EditDialog/EditPractitionerDialog";
+import NewPractitionerDialog from "../Dialog/NewDialog/NewPractitionerDialog";
+import ErrorDialog from "../Dialog/OtherDialog/ErrorDialog";
+import {allAppointment} from "../../components/API/AllAppointment";
+import {allPractitioner} from "../../components/API/AllPractitioner";
+import {allPatient} from "../../components/API/AllPatient";
+import EditPatientDialog from "../Dialog/EditDialog/EditPatientDialog";
 import {Redirect} from "react-router-dom";
 
 let columns = [

@@ -11,7 +11,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import authorizedUser from "../../../components/API/Authenticated";
 import AuthContainer from "../../Authentication/AuthContainer";
 
-import AppointmentTable from '../../Table/Practitioner/AppointmentTable';
+import AppointmentTable from '../../Table/AppointmentTable';
 // import PatientTable from "../../Table/Practitioner/PatientTable";
 
 const style = (theme) => ({
@@ -61,8 +61,7 @@ class PractitionerDashboard extends Component {
                                 <Grid item xs={12}>
                                     <Paper className={classes.paper}>
                                         <Route exact path="/practitioner" component = { Dashboard } />
-                                        <Route exact path="/practitioner/dashboard" component = { Dashboard } />\
-                                        {/*<Route exact path="/practitioner/patient" component = { PatientTable }/>*/}
+                                        <Route exact path="/practitioner/dashboard" component = { Dashboard } />
                                         <Route exact path="/practitioner/appointment" component = { AppointmentTable }/>
                                     </Paper>
                                 </Grid>

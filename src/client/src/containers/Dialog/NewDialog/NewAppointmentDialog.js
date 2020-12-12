@@ -10,7 +10,6 @@ import DialogContent                      from '@material-ui/core/DialogContent'
 import DialogContentText                  from '@material-ui/core/DialogContentText';
 import DialogTitle                        from '@material-ui/core/DialogTitle';
 import MenuItem from "@material-ui/core/MenuItem";
-import {allDisease} from "../../../components/API/AllDisease";
 import {practitionerByDisease} from "../../../components/API/PractitionerByDisease";
 import {availableTimeByPractitioner} from "../../../components/API/AvailableTimeByPractitioner";
 import Grid from "@material-ui/core/Grid";
@@ -18,21 +17,19 @@ import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers"
 import DateFnsUtils from "@date-io/date-fns";
 import authorizedUser from "../../../components/API/Authenticated";
 import {allPatient} from "../../../components/API/AllPatient";
-import {createPractitioner} from "../../../components/API/CreatePractitioner";
 import {createAppointment} from "../../../components/API/CreateAppointment";
 
 class NewAppointmentDialog extends Component {
   state = {
-    disease: '',
+    disease: null,
     patientList: [],
-    patient: '',
+    patient: null,
     practitionerList: [],
-    practitioner: '',
+    practitioner: null,
     dateList: [],
     date: new Date(),
     timeList: [],
-    time: '',
-    user: ''
+    time: null,
   };
 
   async componentDidMount() {
@@ -40,9 +37,6 @@ class NewAppointmentDialog extends Component {
       await this.setState({ loading: true });
       const user = await authorizedUser();
       if (user) {
-        await this.setState({
-          user: user.role
-        });
         if (user.role === 'admin') {
           const patient = await allPatient();
           await this.setState({
@@ -61,16 +55,15 @@ class NewAppointmentDialog extends Component {
 
   handleDialogClose = async () => {
     await this.setState({
-      disease: '',
+      disease: null,
       patientList: [],
-      patient: '',
+      patient: null,
       practitionerList: [],
-      practitioner: '',
+      practitioner: null,
       dateList: [],
       date: new Date(),
       timeList: [],
-      time: '',
-      user: ''
+      time: null,
     })
     // send close state back to parent: AppointmentTable
     this.props.close(false, "newAppointment");
@@ -160,7 +153,7 @@ class NewAppointmentDialog extends Component {
               </DialogContentText>
             </Grid>
             {
-              (this.state.user === 'admin') &&
+              (this.props.user === 'admin') &&
               /* Patient */
               <Grid item xs = {12}>
                 <TextField
@@ -194,10 +187,8 @@ class NewAppointmentDialog extends Component {
                 ))}
               </TextField>
             </Grid>
-            {
-              (this.state.user === 'admin' || this.state.user === 'patient') &&
-              /* Practitioner */
-              <Grid item xs = {12}>
+            {/* Practitioner */}
+            <Grid item xs = {12}>
                 <TextField
                     autoFocus fullWidth select
                     variant       = "outlined"
@@ -212,7 +203,6 @@ class NewAppointmentDialog extends Component {
                   ))}
                 </TextField>
               </Grid>
-            }
             {/* Date */}
             <Grid item xs = {12}>
               <MuiPickersUtilsProvider utils = {DateFnsUtils}>

@@ -9,16 +9,17 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import LoadingDialog from "../../Dialog/OtherDialog/LoadingDialog";
-import EditPractitionerDialog from "../../Dialog/EditDialog/EditPractitionerDialog";
-import NewPractitionerDialog from "../../Dialog/NewDialog/NewPractitionerDialog";
-import ErrorDialog from "../../Dialog/OtherDialog/ErrorDialog";
-import {allAppointment} from "../../../components/API/AllAppointment";
-import {allPractitioner} from "../../../components/API/AllPractitioner";
+import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
+import EditPractitionerDialog from "../Dialog/EditDialog/EditPractitionerDialog";
+import NewPractitionerDialog from "../Dialog/NewDialog/NewPractitionerDialog";
+import ErrorDialog from "../Dialog/OtherDialog/ErrorDialog";
+import {allAppointment} from "../../components/API/AllAppointment";
+import {allPractitioner} from "../../components/API/AllPractitioner";
 import {Redirect} from "react-router-dom";
-import {allDisease} from "../../../components/API/AllDisease";
-import {allSymptom} from "../../../components/API/AllSymptom";
-import {allSpecialty} from "../../../components/API/AllSpecialty";
+import {allDisease} from "../../components/API/AllDisease";
+import {allSymptom} from "../../components/API/AllSymptom";
+import {allSpecialty} from "../../components/API/AllSpecialty";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
 
 let columns = [
     {id: 'name', label: 'Name'},
@@ -136,7 +137,8 @@ class PractitionerTable extends Component {
                                             ? <Button variant = "contained"
                                                       color = "primary"
                                                       align = "right"
-                                                      onClick = {this.handleNewClick}>
+                                                      onClick = {this.handleNewClick}
+                                                      startIcon = {<PersonAddIcon />}>
                                                 New
                                             </Button>
                                             : column.label}
