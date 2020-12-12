@@ -64,13 +64,13 @@ class AppointmentTable extends Component {
         columns: [],
         user: null,
         appointmentDetail: {
-            id: '',
-            medical_service: '',
-            practitioner: '',
-            practitionerID: '',
-            time: '',
-            date: '',
-            status: ''
+            id: null,
+            medical_service: null,
+            practitioner: null,
+            practitionerID: null,
+            time: null,
+            date: new Date(),
+            status: null
         }
     };
 
@@ -90,14 +90,14 @@ class AppointmentTable extends Component {
             });
         }
         this.getAllAppointment().then().catch();
+        console.log(this.state.appointment);
     }
 
     handleRowClick = async (event, row) => {
-
         await this.setState({
             appointmentDetail: {
-                id: row.appointment_id,
-                medical_service: row.medical_service,
+                id: row.id,
+                medical_service: row.medical_services,
                 practitioner: row.practitioner_name,
                 practitionerID: row.practitioner_id,
                 time: row.start,
@@ -110,36 +110,16 @@ class AppointmentTable extends Component {
         this.setState({editAppointmentDialog: (row.status === 'booked')});
     };
 
-    /*
-    * Click New -> Yes/No Dialog
-    *             -> Yes: symptomsKnown = true
-    *               -> New Appointment Dialog
-    *             -> No:  symptomsKnown = false
-    *               -> Symptoms Dialog -> Click Save -> Return Predicted Disease
-    *                 -> New Appointment Dialog
-    */
     handleNewClick = async () => {
         let diseases;
-        let symptoms;
         try {
             await this.setState({loading: true});
             console.log('loading');
             diseases = await allDisease();
-            // symptoms = await allSymptom();
-            // console.log('symptomList', symptoms);
         } finally {
             await this.setState({loading: false});
             console.log('loaded');
         }
-        // await this.setState({
-        //     yesNoDialog: true,
-        //     newAppointmentDialog: false,
-        //     symptomsDialog: false,
-        //     symptomList: symptoms,
-        //     diseaseKnown: false,
-        //     diseasePredicted: [],
-        //     diseaseList: diseases
-        // });
         await this.setState({
             newAppointmentDialog: true,
             diseaseList: diseases
@@ -151,10 +131,6 @@ class AppointmentTable extends Component {
                 newAppointmentDialog: close
             });
             this.getAllAppointment().then().catch();
-        } else if (type === "yesNo") {
-            await this.setState({
-                yesNoDialog: close
-            });
         } else if (type === "symptoms") {
             await this.setState({
                 symptomsDialog: close
@@ -163,6 +139,7 @@ class AppointmentTable extends Component {
             await this.setState({
                 editAppointmentDialog: close
             });
+            this.getAllAppointment().then().catch();
         }
     }
     handleLoading = async (loading) => {
@@ -171,22 +148,6 @@ class AppointmentTable extends Component {
         })
     }
 
-    // getDiseaseKnown = async (disease) => {
-    //     await this.setState({
-    //         diseaseKnown: disease,
-    //         symptomsDialog: !disease,
-    //         newAppointmentDialog: disease
-    //     });
-    // }
-    // getDisease = async (disease) => {
-    //     await this.setState({
-    //         diseasePredicted: disease,
-    //         newAppointmentDialog: true
-    //     });
-    // }
-    // getAppointment = (appointment) => {
-    //
-    // };
     getAllAppointment = async () => {
         await allAppointment()
             .then(data => {

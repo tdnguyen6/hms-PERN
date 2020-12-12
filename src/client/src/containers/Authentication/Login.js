@@ -17,7 +17,7 @@ import ErrorDialog from '../Dialog/OtherDialog/ErrorDialog';
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {authorizedUser} from "../../components/API/Authenticated";
-import DefaultAppBar from "../Others/AppBar";
+import DefaultAppBar from "../Others/DefaultAppBar";
 
 const style = (theme) => ({
     root: {
