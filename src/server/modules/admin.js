@@ -2,11 +2,9 @@ const db = require('../db');
 const {do_hash} = require('./helper');
 
 exports.listAllPractitioners = async function (req, res) {
-    // comment this out in production
-//	if (res.session.position !== 'Admin') res.status(401).json({listPatientsSuccessfully: false})
     const queryStatement = 'select p.id, a.name as name, a.avatar, a.email, a.phone, a.gender, d.name as specialty from practitioners p, accounts a, departments d where a.practitioner_id = p.id and p.specialty = d.id'
     try {
-        let result = await db.query(queryStatement)
+        const result = await db.query(queryStatement)
         return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
@@ -18,10 +16,10 @@ exports.createPractitioner = async function (req, res) {
     if (!Number.isInteger(req.body.specialtyID)) {
         return res.status(400).json({status: false})
     }
-    
+    const insertStatement = 'insert into practitioners (specialty) values $1 returning id'
+    const arr = [req.body.specialtyID]
     try {
-        const insertStatement = `insert into practitioners (specialty) values (${req.body.specialtyID}) returning id`
-        const result = await db.query(insertStatement)
+        const result = await db.query(insertStatement, arr)
         return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
@@ -31,8 +29,9 @@ exports.createPractitioner = async function (req, res) {
 
 exports.createPractitionerAccount = async function (req, res) {
     const createStatement = 'insert into accounts(email, password, phone, name, practitioner_id, gender) values ($1,$2,$3,$4,$5,$6)'
+    const arr = [req.body.email, do_hash(req.body.password), req.body.phone, req.body.name, req.body.id, req.body.gender]
     try {
-        const result = await db.query(createStatement, [req.body.email, do_hash(req.body.password), req.body.phone, req.body.name, req.body.id, req.body.gender])
+        const result = await db.query(createStatement, arr)
         return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
@@ -48,8 +47,9 @@ exports.updatePractitioner = async function (req, res) {
     }
     
 
-    const updateTransaction = `begin; UPDATE practitioners SET specialty = ${req.body.newSpecialty}, join_date = '${req.body.joinDate}' WHERE id = ${req.body.practitionerID}; UPDATE accounts SET name = '${req.body.newName}', phone = ${req.body.phone}, gender = '${req.body.gender}' where id = ${req.body.accountID}; commit;`
+    const updateTransaction = 'begin; UPDATE practitioners SET specialty = $1, join_date = $2 WHERE id = $3; UPDATE accounts SET name = $4, phone = $5, gender = $6 where id = $7; commit;'
     
+    const arr = [req.body.newSpecialty, req.body.joinDate, req.body.practitionerID, req.body.newName, req.body.phone, req.body.gender, req.body.accountID]
     try {
         await db.query(updateTransaction)
         return res.status(200).json({status: true})

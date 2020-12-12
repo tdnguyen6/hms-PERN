@@ -63,10 +63,11 @@ exports.findLastAppointment = async function (req, res) {
         return res.status(400).json({status: false})
     }
 
-    const queryStatement = "select a.id from appointments a where a.patient_id = " + req.body.patientID
+    const queryStatement = "select a.id from appointments a where a.patient_id = "
+    const arr = [req.body.patientID]
 
     try {
-        let result = await db.query(queryStatement)
+        let result = await db.query(queryStatement, arr)
         return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
@@ -79,14 +80,12 @@ exports.getAvailableHours = async function (req, res) {
         return res.status(400).json({status: false})
     }
 
-    let query = `select at from appointments where practitioner_id = ${req.body.practitionerID} and date_part('day', at) = ${req.body.day} and date_part('month', at) = ${req.body.month}`
-    console.log(query)
+    const query = "select at from appointments where practitioner_id = $1 and date_part('day', at) = $2 and date_part('month', at) = $3"
+    const queryArr = [req.body.practitionerID, req.body.day, req.body.month]
 
     try {
-        const result = await db.query(query)
+        const result = await db.query(query, queryArr)
         const arr = result.rows
-
-        console.log(arr)
 
         let unAvailableTimeSlots = []
         arr.forEach(timeSlot => {
