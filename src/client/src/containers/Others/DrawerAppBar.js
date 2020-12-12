@@ -187,19 +187,20 @@ class DrawerAppBar extends Component {
                             keepMounted
                             open            = { Boolean(this.state.anchorEl) }
                             onClose         = { this.handleMenuClose }>
-                            <MenuItem onClick = { this.handleLogout }>
-                                <ListItemIcon>
-                                    <ExitToAppIcon fontSize="small" />
-                                </ListItemIcon>
-                                <Typography variant="inherit">Logout</Typography>
-                            </MenuItem>
-                            <Divider />
                             <MenuItem onClick = { this.handleDiseasePredict }>
                                 <ListItemIcon>
                                     <AssignmentIndIcon fontSize="small" />
                                 </ListItemIcon>
                                 <Typography variant="inherit">Predict Disease</Typography>
                             </MenuItem>
+                            <Divider />
+                            <MenuItem onClick = { this.handleLogout }>
+                                <ListItemIcon>
+                                    <ExitToAppIcon fontSize="small" />
+                                </ListItemIcon>
+                                <Typography variant="inherit">Logout</Typography>
+                            </MenuItem>
+
                         </Menu>
                     </Toolbar>
                 </AppBar>
