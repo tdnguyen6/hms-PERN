@@ -19,6 +19,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
+import SymptomsDialog from "../Dialog/OtherDialog/SymptomsDialog";
+import DiseaseDialog from "../Dialog/OtherDialog/DiseaseDialog";
+import {allSymptom} from "../../components/API/AllSymptom";
 
 
 const style = (theme) => ({
@@ -85,7 +89,11 @@ class DrawerAppBar extends Component {
         anchorEl: null,
         barOpen: false,
         redirect: null,
-        loading: false
+        loading: false,
+        symptomList: [],
+        symptomsDialog: false,
+        diseaseList: [],
+        diseaseDialog: false
     }
 
     handleDrawer = () => {
@@ -115,6 +123,39 @@ class DrawerAppBar extends Component {
         this.setState({
             redirect: "/login"
         });
+    }
+
+    handleDiseasePredict = async () => {
+        await this.setState({
+            symptomsDialog: true
+        });
+    }
+
+    handleDialogClose = async (close, type) => {
+        if (type === "symptoms") {
+            await this.setState({
+                symptomsDialog: close
+            });
+        } else if (type === 'disease') {
+            await this.setState({
+                diseaseDialog: close
+            });
+        }
+    }
+
+    getAllSymptom = async () => {
+        await allSymptom().then(data => {
+            this.setState({
+                symptomList: data
+            })
+        })
+    }
+    getDisease = async (disease) => {
+        await this.setState({
+            diseaseList: disease,
+            diseaseDialog: true
+        });
+        console.log(disease);
     }
 
     render() {
@@ -152,11 +193,14 @@ class DrawerAppBar extends Component {
                                 </ListItemIcon>
                                 <Typography variant="inherit">Logout</Typography>
                             </MenuItem>
-
+                            <Divider />
+                            <MenuItem onClick = { this.handleDiseasePredict }>
+                                <ListItemIcon>
+                                    <AssignmentIndIcon fontSize="small" />
+                                </ListItemIcon>
+                                <Typography variant="inherit">Predict Disease</Typography>
+                            </MenuItem>
                         </Menu>
-                        {/*<Button*/}
-                        {/*    color = "inherit"*/}
-                        {/*    onClick = { this.handleLogout }>Log out</Button>*/}
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -171,7 +215,15 @@ class DrawerAppBar extends Component {
                     <Divider/>
                     <List>{<SidebarFunction type={this.props.type}/>}</List>
                 </Drawer>
-                <LoadingDialog open={this.state.loading}/>
+                <SymptomsDialog open = { this.state.symptomsDialog }
+                                close = { this.handleDialogClose }
+                                loading = { this.handleLoading }
+                                symptom = { this.state.symptomList }
+                                disease = { this.getDisease } />
+                <DiseaseDialog open = { this.state.diseaseDialog }
+                               close = { this.handleDialogClose }
+                               diseaseList = { this.state.diseaseList } />
+                <LoadingDialog open = {this.state.loading}/>
             </React.Fragment>
         );
     }

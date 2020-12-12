@@ -140,6 +140,7 @@ class DefaultAppBar extends Component {
                                 </ListItemIcon>
                                 <Typography variant="inherit">Register</Typography>
                             </MenuItem>
+                            <Divider />
                             <MenuItem onClick = { this.handleDiseasePredict }>
                                 <ListItemIcon>
                                     <AssignmentIndIcon fontSize="small" />

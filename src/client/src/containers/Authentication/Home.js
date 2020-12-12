@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 import {Link as RouteLink} from 'react-router-dom';
 import Container from '@material-ui/core/Container';
-import DefaultAppBar from "../Others/AppBar";
+import DefaultAppBar from "../Others/DefaultAppBar";
 
 const style = (theme) => ({
     '@global': {
