@@ -19,6 +19,7 @@ import {Redirect} from "react-router-dom";
 import {allDisease} from "../../components/API/AllDisease";
 import {allSymptom} from "../../components/API/AllSymptom";
 import {allSpecialty} from "../../components/API/AllSpecialty";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
 
 let columns = [
     {id: 'name', label: 'Name'},
@@ -136,7 +137,8 @@ class PractitionerTable extends Component {
                                             ? <Button variant = "contained"
                                                       color = "primary"
                                                       align = "right"
-                                                      onClick = {this.handleNewClick}>
+                                                      onClick = {this.handleNewClick}
+                                                      startIcon = {<PersonAddIcon />}>
                                                 New
                                             </Button>
                                             : column.label}

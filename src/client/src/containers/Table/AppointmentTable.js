@@ -21,6 +21,7 @@ import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import {allSymptom} from "../../components/API/AllSymptom";
 import {allAppointment} from "../../components/API/AllAppointment";
 import authorizedUser from "../../components/API/Authenticated";
+import PostAddIcon from '@material-ui/icons/PostAdd';
 
 let forAdmin = [
     {id: 'practitioner_name', label: 'Practitioner'},
@@ -211,7 +212,8 @@ class AppointmentTable extends Component {
                                             ? <Button variant="contained"
                                                       color="primary"
                                                       align="right"
-                                                      onClick={this.handleNewClick}>
+                                                      onClick={this.handleNewClick}
+                                                      startIcon={<PostAddIcon />}>
                                                 New
                                             </Button>
                                             : column.label}
