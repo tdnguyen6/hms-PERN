@@ -79,7 +79,16 @@ class EditAppointmentDialog extends Component {
     handleDateChange = async (date) => {
         await this.setState({
             date: date
-        })
+        });
+        try {
+            await this.setState({ loading: true });
+            let res = await availableTimeByPractitioner(this.props.appointment.practitionerID, this.state.date);
+            await this.setState({
+                timeList: res
+            });
+        } finally {
+            await this.setState({ loading: false });
+        }
     }
     handleTimeChange = async (event) => {
         await this.setState({
@@ -102,7 +111,7 @@ class EditAppointmentDialog extends Component {
                     aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Appointment Information</DialogTitle>
                     <DialogContent>
-                        <Grid container>
+                        <Grid container spacing = {2}>
                             {/* Dialog Content */}
                             <Grid item xs={12}>
                                 <DialogContentText id="alert-dialog-description">
@@ -116,7 +125,6 @@ class EditAppointmentDialog extends Component {
                                 <TextField
                                     autoFocus fullWidth
                                     variant = "outlined"
-                                    margin = "normal"
                                     id = "medical_service"
                                     label = "Medical Service"
                                     value = { this.props.appointment.medical_service }
@@ -127,7 +135,6 @@ class EditAppointmentDialog extends Component {
                                 <TextField
                                     autoFocus fullWidth
                                     variant = "outlined"
-                                    margin = "normal"
                                     id = "practitioner"
                                     label = "Practitioner"
                                     value = { this.props.appointment.practitioner }
@@ -152,29 +159,10 @@ class EditAppointmentDialog extends Component {
                                         onChange              = { this.handleDateChange }/>
                                 </MuiPickersUtilsProvider>
                             </Grid>
-                            {/*/!* Date *!/*/}
-                            {/*<Grid item xs={12}>*/}
-                            {/*    <TextField*/}
-                            {/*        autoFocus fullWidth select*/}
-                            {/*        variant = "outlined"*/}
-                            {/*        margin = "normal"*/}
-                            {/*        id = "date"*/}
-                            {/*        label = "Date"*/}
-                            {/*        value = { this.state.date }*/}
-                            {/*        onChange={this.handleDateChange}>{*/}
-                            {/*        this.state.dateList.map((option) => (*/}
-                            {/*            <MenuItem key={option} value={option}>*/}
-                            {/*                {option}*/}
-                            {/*            </MenuItem>*/}
-                            {/*        ))}*/}
-                            {/*    </TextField>*/}
-                            {/*</Grid>*/}
-                            {/* Time */}
                             <Grid item xs={12}>
                                 <TextField
                                     autoFocus fullWidth select
                                     variant = "outlined"
-                                    margin = "normal"
                                     id = "time"
                                     label = "Time"
                                     value = { this.state.time }

@@ -25,6 +25,7 @@ import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import Main from "../Others/Main";
 import withStyles from "@material-ui/core/styles/withStyles";
 import authorizedUser from "../../components/API/Authenticated";
+import DefaultAppBar from "../Others/AppBar";
 
 const style = (theme) => ({
     root: {
@@ -159,6 +160,7 @@ class Login extends Component {
         const {classes} = this.props;
         return (
             <React.Fragment>
+                <DefaultAppBar />
                 <Grid container className = {classes.root}>
                     <CssBaseline/>
                     <Grid item xs={false} sm={4} md={7} className={classes.image}/>

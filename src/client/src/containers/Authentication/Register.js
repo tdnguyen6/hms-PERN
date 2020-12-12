@@ -27,6 +27,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import {KeyboardDatePicker, MuiPickersUtilsProvider,} from '@material-ui/pickers';
 import Footer from "../Others/Footer";
 import Main from "../Others/Main";
+import DefaultAppBar from "../Others/AppBar";
 /*
 can't use hooks because this is a component.
 so we can't useStyles API from Material UI
@@ -239,8 +240,8 @@ class Register extends Component {
         const {classes} = this.props;
 
         return (
-            <>
-                <Main>
+            <React.Fragment>
+                    <DefaultAppBar />
                     <Container maxWidth="xs">
                         <CssBaseline/>
                         <div className={classes.paper}>
@@ -416,9 +417,7 @@ class Register extends Component {
                                  close={this.handleDialogClose}
                                  error={this.state.errorMessage}/>
                     <LoadingDialog open={this.state.loading}/>
-                </Main>
-                <Footer/>
-            </>
+            </React.Fragment>
         );
     };
 }
