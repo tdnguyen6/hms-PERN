@@ -20,6 +20,7 @@ import {availableTimeByPractitioner} from "../../../components/API/AvailableTime
 import LoadingDialog from "../OtherDialog/LoadingDialog";
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import {editAppointment} from "../../../components/API/EditAppointment";
 
 class EditAppointmentDialog extends Component {
     state = {
@@ -67,12 +68,13 @@ class EditAppointmentDialog extends Component {
             });
         }
     }
-    handleSave = () => {
+    handleSave = async () => {
+        await editAppointment(this.props.appointment.id, this.state.date, this.state.time)
         // send close state back to parent: AppointmentTable
         this.handleDialogClose();
     };
     handleDelete = async () => {
-        await deleteAppointment(this.props.id);
+        await deleteAppointment(this.props.appointment.id);
         this.handleDialogClose();
     };
 

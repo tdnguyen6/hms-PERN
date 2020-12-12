@@ -75,7 +75,9 @@ exports.isLogin = function (req, res) {
 }
 
 exports.logout = function (req, res, next) {
-    req.session.destroy(err => console.log(err))
+    req.session.destroy(err => {
+        console.log(err);
+    })
     res.status(200).json({logOutStatus: true})
 }
 exports.forgetPassword = async function (req, res) {

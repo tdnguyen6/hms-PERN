@@ -7,9 +7,9 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
-import AppointmentTable from '../../Table/Admin/AppointmentTable';
-import PractitionerTable from '../../Table/Admin/PractitionerTable';
-import PatientTable from '../../Table/Admin/PatientTable';
+import AppointmentTable from '../../Table/AppointmentTable';
+import PractitionerTable from '../../Table/PractitionerTable';
+import PatientTable from '../../Table/PatientTable';
 import DrawerAppBar from '../../Others/DrawerAppBar';
 import Dashboard from "../../../components/Others/Dashboard";
 import authorizedUser from "../../../components/API/Authenticated";

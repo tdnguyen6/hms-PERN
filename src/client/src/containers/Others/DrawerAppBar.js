@@ -9,10 +9,17 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import SidebarFunction from './SidebarFunction';
-import { Redirect } from 'react-router-dom';
+import {Link as RouteLink, Redirect} from 'react-router-dom';
 import { delCookie } from "../../components/Services/Cookie";
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import {logout} from "../../components/API/Logout";
+import SettingsIcon from "@material-ui/icons/Settings";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
 
 const style = (theme) => ({
     appBar: {
@@ -75,6 +82,7 @@ const style = (theme) => ({
 
 class DrawerAppBar extends Component {
     state = {
+        anchorEl: null,
         barOpen: false,
         redirect: null,
         loading: false
@@ -83,6 +91,16 @@ class DrawerAppBar extends Component {
     handleDrawer = () => {
         this.setState({
             barOpen: !this.state.barOpen
+        });
+    };
+    handleMenuClick = (event) => {
+        this.setState({
+            anchorEl: event.currentTarget
+        });
+    };
+    handleMenuClose = () => {
+        this.setState({
+            anchorEl: null
         });
     };
 
@@ -118,9 +136,27 @@ class DrawerAppBar extends Component {
                                     className = {classes.title} display = 'inline'>
                             Dashboard
                         </Typography>
-                        <Button
-                            color = "inherit"
-                            onClick = { this.handleLogout }>Log out</Button>
+                        <Button color = "inherit" className = { classes.link }
+                                onClick = { this.handleMenuClick }>
+                            <AccountCircleIcon />
+                        </Button>
+                        <Menu
+                            id              = "simple-menu"
+                            anchorEl        = { this.state.anchorEl }
+                            keepMounted
+                            open            = { Boolean(this.state.anchorEl) }
+                            onClose         = { this.handleMenuClose }>
+                            <MenuItem onClick = { this.handleLogout }>
+                                <ListItemIcon>
+                                    <ExitToAppIcon fontSize="small" />
+                                </ListItemIcon>
+                                <Typography variant="inherit">Logout</Typography>
+                            </MenuItem>
+
+                        </Menu>
+                        {/*<Button*/}
+                        {/*    color = "inherit"*/}
+                        {/*    onClick = { this.handleLogout }>Log out</Button>*/}
                     </Toolbar>
                 </AppBar>
                 <Drawer

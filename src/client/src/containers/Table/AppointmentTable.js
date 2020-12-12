@@ -10,19 +10,36 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import {Completed, Upcoming} from '../../../components/Services/AppointmentStatus';
+import {Completed, Upcoming} from '../../components/Services/AppointmentStatus';
 
-import EditAppointmentDialog from '../../Dialog/EditDialog/EditAppointmentDialog';
-import NewAppointmentDialog from '../../Dialog/NewDialog/NewAppointmentDialog';
-import YesNoDialog from "../../Dialog/OtherDialog/YesNoDialog";
-import SymptomsDialog from "../../Dialog/OtherDialog/SymptomsDialog";
-import {allDisease} from "../../../components/API/AllDisease";
-import LoadingDialog from "../../Dialog/OtherDialog/LoadingDialog";
-import {allSymptom} from "../../../components/API/AllSymptom";
-import {allAppointment} from "../../../components/API/AllAppointment";
+import EditAppointmentDialog from '../Dialog/EditDialog/EditAppointmentDialog';
+import NewAppointmentDialog from '../Dialog/NewDialog/NewAppointmentDialog';
+import YesNoDialog from "../Dialog/OtherDialog/YesNoDialog";
+import SymptomsDialog from "../Dialog/OtherDialog/SymptomsDialog";
+import {allDisease} from "../../components/API/AllDisease";
+import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
+import {allSymptom} from "../../components/API/AllSymptom";
+import {allAppointment} from "../../components/API/AllAppointment";
+import authorizedUser from "../../components/API/Authenticated";
 
-let columns = [
+let forAdmin = [
     {id: 'practitioner_name', label: 'Practitioner'},
+    {id: 'patient_name', label: 'Patient'},
+    {id: 'medical_service', label: 'Medical Service', align: 'right'},
+    {id: 'start', label: 'Time', align: 'right'},
+    {id: 'date', label: 'Date', align: 'right'},
+    {id: 'status', label: 'Status', align: 'right'}
+];
+
+let forPatient = [
+    {id: 'practitioner_name', label: 'Practitioner'},
+    {id: 'medical_service', label: 'Medical Service', align: 'right'},
+    {id: 'start', label: 'Time', align: 'right'},
+    {id: 'date', label: 'Date', align: 'right'},
+    {id: 'status', label: 'Status', align: 'right'}
+];
+
+let forPractitioner = [
     {id: 'patient_name', label: 'Patient'},
     {id: 'medical_service', label: 'Medical Service', align: 'right'},
     {id: 'start', label: 'Time', align: 'right'},
@@ -43,7 +60,8 @@ class AppointmentTable extends Component {
         diseasePredicted: [],
         diseaseList: [],
         loading: false,
-        dataLoading: false,
+        columns: [],
+        user: null,
         appointmentDetail: {
             id: '',
             medical_service: '',
@@ -55,16 +73,30 @@ class AppointmentTable extends Component {
         }
     };
 
-    componentDidMount() {
+    async componentDidMount() {
         this.setState({loading: true});
+        const user = await authorizedUser();
+        if (user) {
+            if (user.role === "admin") {
+                await this.setState({ columns: forAdmin });
+            } else if (user.role === "practitioner") {
+                await this.setState({ columns: forPractitioner });
+            } else if (user.role === "patient") {
+                await this.setState({ columns: forPatient });
+            }
+            await this.setState({
+                user: user.role
+            });
+        }
         this.getAllAppointment().then().catch();
     }
 
     handleRowClick = async (event, row) => {
+
         await this.setState({
             appointmentDetail: {
                 id: row.appointment_id,
-                medical_service: row.medical_services,
+                medical_service: row.medical_service,
                 practitioner: row.practitioner_name,
                 practitionerID: row.practitioner_id,
                 time: row.start,
@@ -92,19 +124,23 @@ class AppointmentTable extends Component {
             await this.setState({loading: true});
             console.log('loading');
             diseases = await allDisease();
-            symptoms = await allSymptom();
-            console.log('symptomList', symptoms);
+            // symptoms = await allSymptom();
+            // console.log('symptomList', symptoms);
         } finally {
             await this.setState({loading: false});
             console.log('loaded');
         }
+        // await this.setState({
+        //     yesNoDialog: true,
+        //     newAppointmentDialog: false,
+        //     symptomsDialog: false,
+        //     symptomList: symptoms,
+        //     diseaseKnown: false,
+        //     diseasePredicted: [],
+        //     diseaseList: diseases
+        // });
         await this.setState({
-            yesNoDialog: true,
-            newAppointmentDialog: false,
-            symptomsDialog: false,
-            symptomList: symptoms,
-            diseaseKnown: false,
-            diseasePredicted: [],
+            newAppointmentDialog: true,
             diseaseList: diseases
         });
     };
@@ -134,22 +170,22 @@ class AppointmentTable extends Component {
         })
     }
 
-    getDiseaseKnown = async (disease) => {
-        await this.setState({
-            diseaseKnown: disease,
-            symptomsDialog: !disease,
-            newAppointmentDialog: disease
-        });
-    }
-    getDisease = async (disease) => {
-        await this.setState({
-            diseasePredicted: disease,
-            newAppointmentDialog: true
-        });
-    }
-    getAppointment = (appointment) => {
-
-    };
+    // getDiseaseKnown = async (disease) => {
+    //     await this.setState({
+    //         diseaseKnown: disease,
+    //         symptomsDialog: !disease,
+    //         newAppointmentDialog: disease
+    //     });
+    // }
+    // getDisease = async (disease) => {
+    //     await this.setState({
+    //         diseasePredicted: disease,
+    //         newAppointmentDialog: true
+    //     });
+    // }
+    // getAppointment = (appointment) => {
+    //
+    // };
     getAllAppointment = async () => {
         await allAppointment()
             .then(data => {
@@ -169,7 +205,7 @@ class AppointmentTable extends Component {
                     <Table size="medium" stickyHeader>
                         <TableHead>
                             <TableRow>
-                                {columns.map((column) => (
+                                { this.state.columns.map((column) => (
                                     <TableCell key={column.id} align={column.align}>
                                         {(column.label === 'Status')
                                             ? <Button variant="contained"
@@ -184,10 +220,10 @@ class AppointmentTable extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {this.state.appointment.map((row) => {
+                            { this.state.appointment.map((row) => {
                                 return (
                                     <TableRow hover key={row.id} onClick={(event) => this.handleRowClick(event, row)}>
-                                        {columns.map((column) => {
+                                        {this.state.columns.map((column) => {
                                             return (
                                                 <TableCell key={column.id} align={column.align}>
                                                     {(column.id === 'status')
@@ -202,25 +238,11 @@ class AppointmentTable extends Component {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {/*
-          - open and close props will send data back to its child component: EditAppointmentDialog.
-          - getOpenState will receive data which been sent from its child component EditAppointmentDialog.
-        */}
-                <YesNoDialog open={this.state.yesNoDialog}
-                             close={this.handleDialogClose}
-                             yesno={this.getDiseaseKnown}
-                             content="Do you know your disease yet?"/>
-                <SymptomsDialog open={this.state.symptomsDialog}
-                                close={this.handleDialogClose}
-                                loading={this.handleLoading}
-                                symptom={this.state.symptomList}
-                                disease={this.getDisease}/>
                 <NewAppointmentDialog open={this.state.newAppointmentDialog}
                                       close={this.handleDialogClose}
                                       loading={this.handleLoading}
-                                      disease={(this.state.diseaseKnown)
-                                          ? this.state.diseaseList
-                                          : this.state.diseasePredicted}
+                                      disease={this.state.diseaseList}
+                                      user = {this.state.user}
                                       appointment={this.getAppointment}/>
                 <EditAppointmentDialog open={this.state.editAppointmentDialog}
                                        close={this.handleDialogClose}

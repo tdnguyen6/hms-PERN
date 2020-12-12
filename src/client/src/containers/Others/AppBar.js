@@ -13,13 +13,16 @@ import {Link as RouteLink, Redirect} from 'react-router-dom';
 import { delCookie } from "../../components/Services/Cookie";
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import {logout} from "../../components/API/Logout";
-import SettingsIcon from "@material-ui/icons/Settings";
-import Menu from "@material-ui/core/Menu";
+import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import SymptomsDialog from "../Dialog/OtherDialog/SymptomsDialog";
 import DiseaseDialog from "../Dialog/OtherDialog/DiseaseDialog";
 import {allSymptom} from "../../components/API/AllSymptom";
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import HowToRegIcon from '@material-ui/icons/HowToReg';
 
 const style = (theme) => ({
     appBar: {
@@ -66,12 +69,6 @@ class DefaultAppBar extends Component {
             anchorEl: null
         });
     };
-    handleLogin = () => {
-        return <Redirect push to = "/login" />;
-    }
-    handleRegister = () => {
-        this.props.history.push('/register');
-    }
     handleDiseasePredict = async () => {
         await this.setState({
             symptomsDialog: true
@@ -120,7 +117,8 @@ class DefaultAppBar extends Component {
                             component = { RouteLink } to = "/">
                             IU Hospital
                         </Typography>
-                        <Button color = "inherit" className = { classes.link }  startIcon = {<SettingsIcon />}
+                        <Button color = "inherit" className = { classes.link }
+                                startIcon = {<ArrowDropDownCircleIcon />}
                                 onClick = { this.handleMenuClick }>
                             Click here!
                         </Button>
@@ -130,9 +128,24 @@ class DefaultAppBar extends Component {
                             keepMounted
                             open            = { Boolean(this.state.anchorEl) }
                             onClose         = { this.handleMenuClose }>
-                            <MenuItem component = { RouteLink } to = '/login'>Login</MenuItem>
-                            <MenuItem component = { RouteLink } to = '/register'>Register</MenuItem>
-                            <MenuItem onClick = { this.handleDiseasePredict }>Predict Disease</MenuItem>
+                            <MenuItem component = { RouteLink } to = '/login'>
+                                <ListItemIcon>
+                                    <LockOpenIcon fontSize="small" />
+                                </ListItemIcon>
+                                <Typography variant="inherit">Login</Typography>
+                            </MenuItem>
+                            <MenuItem component = { RouteLink } to = '/register'>
+                                <ListItemIcon>
+                                    <HowToRegIcon fontSize="small" />
+                                </ListItemIcon>
+                                <Typography variant="inherit">Register</Typography>
+                            </MenuItem>
+                            <MenuItem onClick = { this.handleDiseasePredict }>
+                                <ListItemIcon>
+                                    <AssignmentIndIcon fontSize="small" />
+                                </ListItemIcon>
+                                <Typography variant="inherit">Predict Disease</Typography>
+                            </MenuItem>
                         </Menu>
                     </Toolbar>
                 </AppBar>
