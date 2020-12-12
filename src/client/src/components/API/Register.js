@@ -10,15 +10,13 @@ export const register = async (name, email, password, phone, sex, dob, ssn) => {
         dob: dob,
         ssn: ssn,
         patientID: ''
-    }
+    };
 
     let res;
     try {
         let id = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/create`, data);
         data.patientID = id.data[0].id;
-        console.log(data.patientID);
         res = await axios.post(`${process.env.REACT_APP_API_ADDR}/register`, data);
-        console.log(res);
         return res.data.registerStatus;
     } catch (error) {
         console.log(error);

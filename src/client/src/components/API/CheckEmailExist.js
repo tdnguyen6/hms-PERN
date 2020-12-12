@@ -3,8 +3,7 @@ import axios from 'axios';
 export const checkEmailExist = async (email) => {
     let data = {
         email: email
-    }
-
+    };
     let res;
     try {
         res = await axios.post(`${process.env.REACT_APP_API_ADDR}/checkEmailExist`, data);

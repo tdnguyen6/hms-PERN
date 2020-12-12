@@ -13,20 +13,11 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-
-// Service -------------------------------
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
-
-// API
 import {resetPassword, verifyJWT} from "../../components/API/PasswordRecovery";
 import Footer from "../Others/Footer";
 import Main from "../Others/Main";
 
-/*
-can't use hooks because this is a component.
-so we can't useStyles API from Material UI
-use withStyles instead.
-*/
 const style = theme => ({
     paper: {
         marginTop: theme.spacing(8),

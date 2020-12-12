@@ -5,7 +5,7 @@ export const availableTimeByPractitioner = async (id, date) => {
         practitionerID: id,
         day: date.getDate(),
         month: date.getMonth() + 1
-    }
+    };
     let res;
     try {
         res = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/appointments/getAvailableTime`, data, { withCredentials: true });

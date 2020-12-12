@@ -20,7 +20,7 @@ import {allDisease} from "../../components/API/AllDisease";
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import {allSymptom} from "../../components/API/AllSymptom";
 import {allAppointment} from "../../components/API/AllAppointment";
-import authorizedUser from "../../components/API/Authenticated";
+import {authorizedUser} from "../../components/API/Authenticated";
 import PostAddIcon from '@material-ui/icons/PostAdd';
 
 let forAdmin = [

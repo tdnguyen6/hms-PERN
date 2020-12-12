@@ -1,24 +1,11 @@
 import React, {Component} from 'react';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 import {Link as RouteLink} from 'react-router-dom';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Container from '@material-ui/core/Container';
-import Footer from "../Others/Footer";
-import Main from "../Others/Main";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
-import SettingsIcon from '@material-ui/icons/Settings';
-import {allDisease} from "../../components/API/AllDisease";
-import {allSymptom} from "../../components/API/AllSymptom";
-import SymptomsDialog from "../Dialog/OtherDialog/SymptomsDialog";
-import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
-import DiseaseDialog from "../Dialog/OtherDialog/DiseaseDialog";
 import DefaultAppBar from "../Others/AppBar";
 
 const style = (theme) => ({
