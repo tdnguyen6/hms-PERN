@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import DrawerAppBar from '../../Others/DrawerAppBar';
 import Dashboard from "../../../components/Others/Dashboard";
 import withStyles from "@material-ui/core/styles/withStyles";
-import authorizedUser from "../../../components/API/Authenticated";
+import {authorizedUser} from "../../../components/API/Authenticated";
 import AuthContainer from "../../Authentication/AuthContainer";
 
 import AppointmentTable from '../../Table/AppointmentTable';

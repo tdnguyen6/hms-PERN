@@ -12,7 +12,7 @@ import PractitionerTable from '../../Table/PractitionerTable';
 import PatientTable from '../../Table/PatientTable';
 import DrawerAppBar from '../../Others/DrawerAppBar';
 import Dashboard from "../../../components/Others/Dashboard";
-import authorizedUser from "../../../components/API/Authenticated";
+import {authorizedUser} from "../../../components/API/Authenticated";
 import AuthContainer from "../../Authentication/AuthContainer";
 
 const style = (theme) => ({

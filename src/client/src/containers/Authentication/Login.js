@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Link as RouteLink} from 'react-router-dom';
-
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,19 +11,12 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import Footer from "../Others/Footer";
-
-// Service -------------------------------
 import {validate} from '../../components/Services/Validate';
-
-// API -----------------------------------
 import {login} from "../../components/API/Login";
-
 import ErrorDialog from '../Dialog/OtherDialog/ErrorDialog';
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
-import Main from "../Others/Main";
 import withStyles from "@material-ui/core/styles/withStyles";
-import authorizedUser from "../../components/API/Authenticated";
+import {authorizedUser} from "../../components/API/Authenticated";
 import DefaultAppBar from "../Others/AppBar";
 
 const style = (theme) => ({
@@ -93,6 +85,13 @@ class Login extends Component {
         }
     }
 
+    handleDialogClose = async (close, type) => {
+        if (type === 'error') {
+            await this.setState({
+                errorDialog: close
+            })
+        }
+    }
     handleEmailInput = (event) => {
         let match = validate("email", event.target.value);
         this.setState({
@@ -148,12 +147,6 @@ class Login extends Component {
                 await this.setState({loading: false});
             }
         }
-    };
-
-    getOpenStateOfErrorDialog = (openState) => {
-        this.setState({
-            errorDialog: openState
-        });
     };
 
     render() {
@@ -232,7 +225,7 @@ class Login extends Component {
                     </Grid>
                 </Grid>
                 <ErrorDialog open={this.state.errorDialog}
-                             close={this.getOpenStateOfErrorDialog}
+                             close={this.handleDialogClose}
                              error={this.state.errorMessage}/>
                 <LoadingDialog open={this.state.loading}/>
             </React.Fragment>

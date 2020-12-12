@@ -1,9 +1,6 @@
 import React, { Component }                     from 'react';
-
-import Typography                               from '@material-ui/core/Typography';
 import Button                                   from '@material-ui/core/Button';
 import TextField                                from '@material-ui/core/TextField';
-
 import Dialog                             from '@material-ui/core/Dialog';
 import DialogActions                      from '@material-ui/core/DialogActions';
 import DialogContent                      from '@material-ui/core/DialogContent';
@@ -15,7 +12,7 @@ import {availableTimeByPractitioner} from "../../../components/API/AvailableTime
 import Grid from "@material-ui/core/Grid";
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import authorizedUser from "../../../components/API/Authenticated";
+import {authorizedUser} from "../../../components/API/Authenticated";
 import {allPatient} from "../../../components/API/AllPatient";
 import {createAppointment} from "../../../components/API/CreateAppointment";
 

@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-
 import {Link as RouteLink} from 'react-router-dom';
-
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,12 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-
 import {validate} from '../../components/Services/Validate';
-
-// API -----------------------------------
 import {checkEmailExist} from '../../components/API/CheckEmailExist';
 import {register} from '../../components/API/Register';
 import MenuItem from "@material-ui/core/MenuItem";
@@ -25,14 +19,9 @@ import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {KeyboardDatePicker, MuiPickersUtilsProvider,} from '@material-ui/pickers';
-import Footer from "../Others/Footer";
-import Main from "../Others/Main";
 import DefaultAppBar from "../Others/AppBar";
-/*
-can't use hooks because this is a component.
-so we can't useStyles API from Material UI
-use withStyles instead.
-*/
+
+
 const style = theme => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -45,7 +34,7 @@ const style = theme => ({
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '100%',
         marginTop: theme.spacing(3),
     },
     submit: {
@@ -115,7 +104,6 @@ class Register extends Component {
     };
     handleEmailInput = (event) => {
         let validateStatus = validate("email", event.target.value);
-        // check email exist.
         this.setState({
             email: {
                 value: event.target.value,
