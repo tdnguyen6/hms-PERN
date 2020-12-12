@@ -9,7 +9,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from "@material-ui/core/Grid";
-import {login} from "../../../components/API/Login";
 import {deletePractitioner} from "../../../components/API/DeletePractitioner";
 import LoadingDialog from "../OtherDialog/LoadingDialog";
 

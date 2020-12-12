@@ -167,7 +167,6 @@ class Login extends Component {
                                     <Grid item xs={12}>
                                             <TextField
                                                 variant="outlined"
-                                                margin="normal"
                                                 id="email"
                                                 label="Email Address"
                                                 name="email"
@@ -183,7 +182,6 @@ class Login extends Component {
                                     <Grid item xs={12}>
                                             <TextField
                                                 variant="outlined"
-                                                margin="normal"
                                                 id="password"
                                                 label="Password"
                                                 name="password"

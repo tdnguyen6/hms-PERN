@@ -14,11 +14,8 @@ import {Completed, Upcoming} from '../../components/Services/AppointmentStatus';
 
 import EditAppointmentDialog from '../Dialog/EditDialog/EditAppointmentDialog';
 import NewAppointmentDialog from '../Dialog/NewDialog/NewAppointmentDialog';
-import YesNoDialog from "../Dialog/OtherDialog/YesNoDialog";
-import SymptomsDialog from "../Dialog/OtherDialog/SymptomsDialog";
 import {allDisease} from "../../components/API/AllDisease";
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
-import {allSymptom} from "../../components/API/AllSymptom";
 import {allAppointment} from "../../components/API/AllAppointment";
 import {authorizedUser} from "../../components/API/Authenticated";
 import PostAddIcon from '@material-ui/icons/PostAdd';
@@ -26,7 +23,7 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 let forAdmin = [
     {id: 'practitioner_name', label: 'Practitioner'},
     {id: 'patient_name', label: 'Patient'},
-    {id: 'medical_service', label: 'Medical Service', align: 'right'},
+    {id: 'medical_services', label: 'Medical Service', align: 'right'},
     {id: 'start', label: 'Time', align: 'right'},
     {id: 'date', label: 'Date', align: 'right'},
     {id: 'status', label: 'Status', align: 'right'}
@@ -34,7 +31,7 @@ let forAdmin = [
 
 let forPatient = [
     {id: 'practitioner_name', label: 'Practitioner'},
-    {id: 'medical_service', label: 'Medical Service', align: 'right'},
+    {id: 'medical_services', label: 'Medical Service', align: 'right'},
     {id: 'start', label: 'Time', align: 'right'},
     {id: 'date', label: 'Date', align: 'right'},
     {id: 'status', label: 'Status', align: 'right'}
@@ -42,7 +39,7 @@ let forPatient = [
 
 let forPractitioner = [
     {id: 'patient_name', label: 'Patient'},
-    {id: 'medical_service', label: 'Medical Service', align: 'right'},
+    {id: 'medical_services', label: 'Medical Service', align: 'right'},
     {id: 'start', label: 'Time', align: 'right'},
     {id: 'date', label: 'Date', align: 'right'},
     {id: 'status', label: 'Status', align: 'right'}
@@ -65,9 +62,26 @@ class AppointmentTable extends Component {
         user: null,
         appointmentDetail: {
             id: null,
-            medical_service: null,
-            practitioner: null,
-            practitionerID: null,
+            medical_services: null,
+            practitioner: {
+                id: null,
+                avatar: null,
+                email: null,
+                gender: null,
+                name: null,
+                phone: null,
+                specialty: null,
+            },
+            patient: {
+                id: null,
+                avatar: null,
+                dob: new Date(),
+                email: null,
+                gender: null,
+                name: null,
+                phone: null,
+                ssn: null
+            },
             time: null,
             date: new Date(),
             status: null
@@ -75,7 +89,7 @@ class AppointmentTable extends Component {
     };
 
     async componentDidMount() {
-        this.setState({loading: true});
+        this.setState({ loading: true });
         const user = await authorizedUser();
         if (user) {
             if (user.role === "admin") {
@@ -86,20 +100,36 @@ class AppointmentTable extends Component {
                 await this.setState({ columns: forPatient });
             }
             await this.setState({
-                user: user.role
+                user: user.role,
             });
         }
         this.getAllAppointment().then().catch();
-        console.log(this.state.appointment);
     }
 
     handleRowClick = async (event, row) => {
         await this.setState({
             appointmentDetail: {
-                id: row.id,
-                medical_service: row.medical_services,
-                practitioner: row.practitioner_name,
-                practitionerID: row.practitioner_id,
+                id: row.appointment_id,
+                medical_services: row.medical_services,
+                practitioner: {
+                    id: row.practitioner_id,
+                    avatar: row.practitioner_avatar,
+                    email: row.practitioner_email,
+                    gender: row.practitioner_gender,
+                    name: row.practitioner_name,
+                    phone: row.practitioner_phone,
+                    specialty: row.practitioner_specialty,
+                },
+                patient: {
+                    id: row.patient_id,
+                    avatar: row.practitioner_avatar,
+                    dob: row.patient_date_of_birth,
+                    email: row.patient_email,
+                    gender: row.patient_gender,
+                    name: row.patient_name,
+                    phone: row.patient_phone,
+                    ssn: row.patient_ssn
+                },
                 time: row.start,
                 date: row.date.split('/').map(Number),
                 status: (row.status === 'booked')
@@ -130,7 +160,7 @@ class AppointmentTable extends Component {
             await this.setState({
                 newAppointmentDialog: close
             });
-            this.getAllAppointment().then().catch();
+            await this.getAllAppointment().then().catch();
         } else if (type === "symptoms") {
             await this.setState({
                 symptomsDialog: close
@@ -139,7 +169,7 @@ class AppointmentTable extends Component {
             await this.setState({
                 editAppointmentDialog: close
             });
-            this.getAllAppointment().then().catch();
+            await this.getAllAppointment().then().catch();
         }
     }
     handleLoading = async (loading) => {
@@ -149,6 +179,7 @@ class AppointmentTable extends Component {
     }
 
     getAllAppointment = async () => {
+        await this.setState({ loading: true });
         await allAppointment()
             .then(data => {
                 console.log(data);
@@ -157,6 +188,7 @@ class AppointmentTable extends Component {
                     loading: false
                 })
             });
+        await this.setState( { loading: false });
     }
 
     render() {
@@ -210,6 +242,7 @@ class AppointmentTable extends Component {
                 <EditAppointmentDialog open={this.state.editAppointmentDialog}
                                        close={this.handleDialogClose}
                                        appointment={this.state.appointmentDetail}
+                                       user = { this.state.user }
                                        key={this.state.appointmentDetail.id} />
                 <LoadingDialog open={this.state.loading}/>
             </React.Fragment>

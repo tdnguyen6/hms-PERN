@@ -28,30 +28,12 @@ class EditAppointmentDialog extends Component {
             this.props.appointment.date[1] - 1,
             this.props.appointment.date[0], 0, 0, 0),
         timeList: [this.props.appointment.time],
-        time: null,
+        time: this.props.appointment.time,
         diseaseInfoDialog: false,
-        practitionerInfoDialog: false,
+        userInfoDialog: false,
+        userInfo: null,
         loading: false
     }
-
-    // async componentDidMount() {
-    //     console.log(this.props);
-    //     await this.setState({ loading: true });
-    //     let tmpDateList = this.state.dateList;
-    //     tmpDateList.push(this.state.date);
-    //     console.log(this.props.appointment.practitionerID);
-    //     let tmpTimeList = this.state.timeList;
-    //     tmpTimeList.push(this.state.time);
-    //     await this.setState({
-    //         dateList: tmpDateList,
-    //         date: this.props.appointment.date,
-    //         timeList: tmpTimeList,
-    //         time: this.props.appointment.time
-    //     });
-    //     console.log(this.state);
-    //     await this.setState({ loading: false });
-    //
-    // }
 
     handleDialogClose = () => {
         // send close state back to parent: AppointmentTable
@@ -62,14 +44,24 @@ class EditAppointmentDialog extends Component {
             await this.setState({
                 diseaseInfoDialog: close
             });
-        } else if (type === "practitionerInfo") {
+        } else if (type === "userInfo") {
             await this.setState({
-                practitionerInfoDialog: close
+                userInfoDialog: close
             });
         }
     }
     handleSave = async () => {
-        await editAppointment(this.props.appointment.id, this.state.date, this.state.time)
+        await editAppointment(this.props.appointment.id, this.state.date, this.state.time);
+        await this.setState({
+            date: new Date(this.props.appointment.date[2],
+                this.props.appointment.date[1] - 1,
+                this.props.appointment.date[0], 0, 0, 0),
+            timeList: [this.props.appointment.time],
+            time: this.props.appointment.time,
+            diseaseInfoDialog: false,
+            practitionerInfoDialog: false,
+            loading: false
+        })
         // send close state back to parent: AppointmentTable
         this.handleDialogClose();
     };
@@ -98,11 +90,12 @@ class EditAppointmentDialog extends Component {
         })
     }
 
-    // handlePractitionerInfoClick = async () => {
-    //     await this.setState({
-    //         practitionerInfoDialog: true
-    //     });
-    // }
+    handleUserInfoClick = async (user) => {
+        await this.setState({
+            userInfoDialog: true,
+            userInfo: user
+        });
+    }
 
     render() {
         return (
@@ -129,25 +122,47 @@ class EditAppointmentDialog extends Component {
                                     variant = "outlined"
                                     id = "medical_service"
                                     label = "Medical Service"
-                                    value = { this.props.appointment.medical_service }
+                                    value = { this.props.appointment.medical_services }
                                     InputProps = {{ readOnly: true }}/>
                             </Grid>
                             {/* Practitioner */}
-                            <Grid item xs={12}>
-                                <TextField
-                                    autoFocus fullWidth
-                                    variant = "outlined"
-                                    id = "practitioner"
-                                    label = "Practitioner"
-                                    value = { this.props.appointment.practitioner }
-                                    InputProps={{
-                                        readOnly: true, endAdornment:
-                                            <IconButton aria-label="information">
-                                                <InfoOutlinedIcon onClick = { this.handlePractitionerInfoClick }/>
-                                            </IconButton>
-                                    }}
-                                />
-                            </Grid>
+                            {
+                                (this.props.user !== 'practitioner') &&
+                                <Grid item xs={12}>
+                                    <TextField
+                                        autoFocus fullWidth
+                                        variant="outlined"
+                                        id="practitioner"
+                                        label="Practitioner"
+                                        value={this.props.appointment.practitioner.name}
+                                        InputProps={{
+                                            readOnly: true, endAdornment:
+                                                <IconButton aria-label="information">
+                                                    <InfoOutlinedIcon onClick={ () => this.handleUserInfoClick('practitioner') }/>
+                                                </IconButton>
+                                        }}
+                                    />
+                                </Grid>
+                            }
+                            {/* Patient */}
+                            {
+                                (this.props.user !== 'patient') &&
+                                <Grid item xs={12}>
+                                    <TextField
+                                        autoFocus fullWidth
+                                        variant="outlined"
+                                        id="patient"
+                                        label="Patient"
+                                        value={this.props.appointment.patient.name}
+                                        InputProps={{
+                                            readOnly: true, endAdornment:
+                                                <IconButton aria-label="information">
+                                                    <InfoOutlinedIcon onClick={ () => this.handleUserInfoClick('patient')}/>
+                                                </IconButton>
+                                        }}
+                                    />
+                                </Grid>
+                            }
                             {/* Date */}
                             <Grid item xs = {12}>
                                 <MuiPickersUtilsProvider utils = {DateFnsUtils}>
@@ -161,6 +176,7 @@ class EditAppointmentDialog extends Component {
                                         onChange              = { this.handleDateChange }/>
                                 </MuiPickersUtilsProvider>
                             </Grid>
+                            {/* Time */}
                             <Grid item xs={12}>
                                 <TextField
                                     autoFocus fullWidth select
@@ -187,12 +203,10 @@ class EditAppointmentDialog extends Component {
                         </Button>
                     </DialogActions>
                 </Dialog>
-                <DiseaseInfoDialog open = { this.state.diseaseInfoDialog }
-                                   close = { this.handleSubDialogClose }
-                                   { ...this.props.disease }/>
-                <PractitionerInfoDialog open = { this.state.practitionerInfoDialog }
+                <PractitionerInfoDialog open = { this.state.userInfoDialog }
                                         close = { this.handleSubDialogClose }
-                                        data = { this.props.practitioner }/>
+                                        data = { (this.state.userInfo === 'patient') ? this.props.appointment.patient : this.props.appointment.practitioner }
+                                        user = { this.state.userInfo }/>
                 <LoadingDialog open = { this.state.loading } />
             </React.Fragment>
 

@@ -9,7 +9,7 @@ export const createAppointment = async (appointment) => {
         diseaseID: appointment.diseaseID,
         practitionerID: appointment.practitionerID,
         patientID: appointment.patientID,
-        at: new Date(year, month, day, time[0], time[1]),
+        at: new Date(Date.UTC(year, month, day, time[0], time[1])),
         roomID: null,
         last_appointment: null,
     };
