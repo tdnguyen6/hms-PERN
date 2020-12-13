@@ -71,7 +71,6 @@ class DiseaseDialog extends Component {
                                close = { this.handleInfoDialogClose }
                                { ...this.state.diseaseInfo } />
             </React.Fragment>
-
         );
     }
 }

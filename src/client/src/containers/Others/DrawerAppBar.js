@@ -1,19 +1,14 @@
 import React, {Component} from 'react';
-
 import clsx from 'clsx';
-
 import {withStyles} from '@material-ui/core/styles';
 import {AppBar, Button, Divider, Drawer, Grid, IconButton, List, Toolbar, Typography} from '@material-ui/core';
-
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-
 import SidebarFunction from './SidebarFunction';
-import {Link as RouteLink, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import { delCookie } from "../../components/Services/Cookie";
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import {logout} from "../../components/API/Logout";
-import SettingsIcon from "@material-ui/icons/Settings";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -23,7 +18,9 @@ import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import SymptomsDialog from "../Dialog/OtherDialog/SymptomsDialog";
 import DiseaseDialog from "../Dialog/OtherDialog/DiseaseDialog";
 import {allSymptom} from "../../components/API/AllSymptom";
-
+import ChangePasswordDialog from "../Dialog/OtherDialog/ChangePasswordDialog";
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const style = (theme) => ({
     appBar: {
@@ -58,7 +55,7 @@ const style = (theme) => ({
         }),
         width: theme.spacing(7),
         [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(9)
+            width: theme.spacing(7)
         }
     },
     toolbarIcon: {
@@ -93,7 +90,8 @@ class DrawerAppBar extends Component {
         symptomList: [],
         symptomsDialog: false,
         diseaseList: [],
-        diseaseDialog: false
+        diseaseDialog: false,
+        changePasswordDialog: false
     }
 
     handleDrawer = () => {
@@ -112,6 +110,11 @@ class DrawerAppBar extends Component {
         });
     };
 
+    handleChangePassword = async () => {
+        await this.setState({
+            changePasswordDialog: true
+        });
+    };
     handleLogout = async () => {
         delCookie('connect.sid');
         try {
@@ -124,7 +127,6 @@ class DrawerAppBar extends Component {
             redirect: "/login"
         });
     }
-
     handleDiseasePredict = async () => {
         await this.setState({
             symptomsDialog: true
@@ -139,6 +141,10 @@ class DrawerAppBar extends Component {
         } else if (type === 'disease') {
             await this.setState({
                 diseaseDialog: close
+            });
+        } else if (type === 'changePassword') {
+            await this.setState({
+                changePasswordDialog: close
             });
         }
     }
@@ -179,12 +185,12 @@ class DrawerAppBar extends Component {
                         </Typography>
                         <Button color = "inherit" className = { classes.link }
                                 onClick = { this.handleMenuClick }>
-                            <AccountCircleIcon />
+                            <MoreHorizIcon />
                         </Button>
                         <Menu
+                            keepMounted
                             id              = "simple-menu"
                             anchorEl        = { this.state.anchorEl }
-                            keepMounted
                             open            = { Boolean(this.state.anchorEl) }
                             onClose         = { this.handleMenuClose }>
                             <MenuItem onClick = { this.handleDiseasePredict }>
@@ -193,14 +199,32 @@ class DrawerAppBar extends Component {
                                 </ListItemIcon>
                                 <Typography variant="inherit">Predict Disease</Typography>
                             </MenuItem>
-                            <Divider />
+                            <Divider variant = 'inset' />
+                            {
+                                (this.props.type !== 'admin') &&
+                                    <div>
+                                        <MenuItem>
+                                            <ListItemIcon>
+                                                <AccountCircleIcon fontSize="small" />
+                                            </ListItemIcon>
+                                            <Typography variant="inherit">My Account</Typography>
+                                        </MenuItem>
+                                        <Divider variant = 'inset' />
+                                    </div>
+                            }
+                            <MenuItem onClick = { this.handleChangePassword }>
+                                <ListItemIcon>
+                                    <VpnKeyIcon fontSize="small" />
+                                </ListItemIcon>
+                                <Typography variant="inherit">Change Password</Typography>
+                            </MenuItem>
+                            <Divider variant = 'inset' />
                             <MenuItem onClick = { this.handleLogout }>
                                 <ListItemIcon>
                                     <ExitToAppIcon fontSize="small" />
                                 </ListItemIcon>
                                 <Typography variant="inherit">Logout</Typography>
                             </MenuItem>
-
                         </Menu>
                     </Toolbar>
                 </AppBar>
@@ -224,6 +248,8 @@ class DrawerAppBar extends Component {
                 <DiseaseDialog open = { this.state.diseaseDialog }
                                close = { this.handleDialogClose }
                                diseaseList = { this.state.diseaseList } />
+                <ChangePasswordDialog open = { this.state.changePasswordDialog }
+                                      close = { this.handleDialogClose } />
                 <LoadingDialog open = {this.state.loading}/>
             </React.Fragment>
         );

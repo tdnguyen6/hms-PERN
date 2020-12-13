@@ -61,10 +61,10 @@ app.post("/checkEmailExist", auth.checkEmailExist);
 app.post("/isLogin", auth.isLogin);
 
 
-app.use("/user/", (req, res, next) => {
-    if (!req.session.userID) return res.status(401).json(null)
-    next()
-})
+// app.use("/user/", (req, res, next) => {
+//     if (!req.session.userID) return res.status(401).json(null)
+//     next()
+// })
 app.post("/user/changePassword", auth.changePassword);
 
 // app.use("/admin", (req, res, next) => {

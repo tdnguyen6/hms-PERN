@@ -76,7 +76,7 @@ class EditAppointmentDialog extends Component {
         });
         try {
             await this.setState({ loading: true });
-            let res = await availableTimeByPractitioner(this.props.appointment.practitionerID, this.state.date);
+            let res = await availableTimeByPractitioner(this.props.appointment.practitioner.id, this.state.date);
             await this.setState({
                 timeList: res
             });

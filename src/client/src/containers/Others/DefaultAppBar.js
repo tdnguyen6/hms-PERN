@@ -1,18 +1,8 @@
 import React, {Component} from 'react';
-
-import clsx from 'clsx';
-
 import {withStyles} from '@material-ui/core/styles';
-import {AppBar, Button, Divider, Drawer, Grid, IconButton, List, Toolbar, Typography} from '@material-ui/core';
-
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-
-import SidebarFunction from './SidebarFunction';
-import {Link as RouteLink, Redirect} from 'react-router-dom';
-import { delCookie } from "../../components/Services/Cookie";
+import {AppBar, Button, Divider, Toolbar, Typography} from '@material-ui/core';
+import {Link as RouteLink} from 'react-router-dom';
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
-import {logout} from "../../components/API/Logout";
 import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import SymptomsDialog from "../Dialog/OtherDialog/SymptomsDialog";
@@ -73,7 +63,7 @@ class DefaultAppBar extends Component {
         await this.setState({
             symptomsDialog: true
         });
-    }
+    };
     handleDialogClose = async (close, type) => {
         if (type === "symptoms") {
             await this.setState({
@@ -84,28 +74,28 @@ class DefaultAppBar extends Component {
                 diseaseDialog: close
             });
         }
-    }
+    };
 
     handleLoading = async (loading) => {
         await this.setState({
             loading: loading
-        })
-    }
+        });
+    };
 
     getAllSymptom = async () => {
         await allSymptom().then(data => {
             this.setState({
                 symptomList: data
-            })
-        })
-    }
+            });
+        });
+    };
     getDisease = async (disease) => {
         await this.setState({
             diseaseList: disease,
             diseaseDialog: true
         });
         console.log(disease);
-    }
+    };
 
     render() {
         const { classes } = this.props;

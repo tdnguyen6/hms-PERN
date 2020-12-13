@@ -168,7 +168,7 @@ class Register extends Component {
     handleSubmit = async () => {
         const dialogStatus = {
             dialogMessage: '',
-            dialogError: false
+            dialogHasError: false
         };
 
         const email = this.state.email;
@@ -221,7 +221,6 @@ class Register extends Component {
                 await this.setState({loading: false});
             }
         }
-
     };
 
     render() {
