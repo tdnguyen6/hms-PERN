@@ -19,7 +19,7 @@ rectangle "Online Appointment System for Hospital" {
     usecase "disease & service suggestion\n based on symptoms" as UC1
     usecase "view appointments by user" as UC2
     usecase "book appointment" as UC3
-    usecase "change appointment by user" as UC4
+    usecase "give appointment results" as UC4
     usecase "make payment" as UC5
     usecase "check in appointment by patient" as UC6
 

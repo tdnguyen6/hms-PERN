@@ -1,0 +1,47 @@
+@startuml
+title Give Appointment Results
+
+actor practitioner as U
+boundary website as W
+control api
+entity appointment as A
+database Postgres as P
+
+U -> W+: GET /appointments?type=booked
+W -> api+: POST /appointments?type=booked\npractitionerID=...
+api -> A+: bookedAppointments(practitionerID)
+A -> P+: query
+A <-- P: rows
+P--
+api <-- A: booked appointments list
+A--
+W <-- api: booked appointments list
+api--
+U <-- W--: booked appointments list
+
+U -> W+: GET /give-result?appointment_id=...
+U <-- W-: appointment result form
+loop input is invalid
+U -> W+: submit appointment result form
+W -> W+: validate inputs
+W--
+U <-- W: prevent submission \ninvalid input warning
+end
+
+W -> api+: POST /save_appointment\ndata: ...
+api -> A+: save_appointment(data)
+A->P+: update
+return
+return
+return
+alt mark_appointment_done==true
+W -> api+: POST /complete_appointment?\nappointmentID=...
+api -> A+: change_appointment_status\n(appointmentID, 'done')
+A->P+: update
+return
+return
+return
+end
+return give appointment\nresults D
+
+@enduml
