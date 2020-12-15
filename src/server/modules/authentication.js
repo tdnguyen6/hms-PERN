@@ -140,8 +140,13 @@ exports.forgetPassword = async function (req, res) {
 }
 exports.resetPassword = async function (req, res) {
     try {
-        await db.query(`UPDATE accounts SET password = $1 WHERE email = $2`, [do_hash(req.body.password), req.body.email])
-        let user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
+        const statement = `UPDATE accounts 
+                            SET password = $1 
+                            WHERE email = $2`
+        const arr = [do_hash(req.body.password), req.body.email]
+        await db.query(statement, arr)
+
+        const user = await db.query(`SELECT * FROM accounts where email = $1`, [req.body.email])
         if (user.rows.length < 1) return res.status(500).json({"error": "Unspecified Server Error"});
         const token = jwt.sign(
             {
@@ -191,16 +196,19 @@ exports.resetPassword = async function (req, res) {
                     res.status(200).json({mailSent: true})
                 }
             });
-        res.status(200).json({resetPasswordSuccessful: true})
+        return res.status(200).json({resetPasswordSuccessful: true})
     } catch (err) {
-        res.status(500).json({resetPasswordSuccessful: false})
+        return res.status(500).json({resetPasswordSuccessful: false})
     }
 }
 
 exports.changePassword = async function (req, res) {
     try {
-        const updateStatement = `update accounts set password = '${do_hash(req.body.newPassword)}' where id = ${req.session.userID}`
-        await db.query(updateStatement)
+        const updateStatement = `update accounts 
+                                set password = $1 
+                                where id = $2`
+        const arr = [do_hash(req.body.newPassword), req.session.userID]
+        await db.query(updateStatement, arr)
         return res.status(200).json({status: true})
     } catch (error) {
         console.log(error);
