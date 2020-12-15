@@ -14,7 +14,7 @@ exports.createAppointment = async function (req, res) {
 }
 
 exports.patientAppointments = async function (req, res) {
-    const queryStatement = "select ap.id as appointment_id, ap.room_id, m.name as medical_services, ap.practitioner_id, a.name as practitioner_name, d.name as practitioner_specialty, a.avatar as practitioner_avatar, a.email as practitioner_email, a.phone as practitioner_phone, a.gender as practitioner_gender, to_char(ap.at, 'HH24:MI') as start, to_char(ap.at, 'DD/MM/YYYY') as date, ap.status, ap.log, ap.prescription, ap.next_appointment_period, (select m.name as next_appointment_service where ap.next_appointment_service = m.id), ap.last_appointment from appointments ap, rooms r, medicalservices m, practitioners p, accounts a, departments d where ap.room_id = r.id and r.medicalservice_id = m.id and m.department_id = d.id and ap.practitioner_id = p.id and p.id = a.practitioner_id and ap.patient_id = $1 order by status='done', at"
+    const queryStatement = "select ap.id as appointment_id, ap.room_id, m.name as medical_service, ap.practitioner_id, a.name as practitioner_name, d.name as practitioner_specialty, a.avatar as practitioner_avatar, a.email as practitioner_email, a.phone as practitioner_phone, a.gender as practitioner_gender, to_char(ap.at, 'HH24:MI') as start, to_char(ap.at, 'DD/MM/YYYY') as date, ap.status, ap.log, ap.prescription, ap.next_appointment_period, (select m.name as next_appointment_service where ap.next_appointment_service = m.id), ap.last_appointment from appointments ap, rooms r, medicalservices m, practitioners p, accounts a, departments d where ap.room_id = r.id and r.medicalservice_id = m.id and m.department_id = d.id and ap.practitioner_id = p.id and p.id = a.practitioner_id and ap.patient_id = $1 order by status='done', at"
     const arr = [req.session.patientID]
     try {
         const result = await db.query(queryStatement, arr)
@@ -26,7 +26,7 @@ exports.patientAppointments = async function (req, res) {
 }
 
 exports.practitionerAppointments = async function (req, res) {
-    const queryStatement = "select ap.id as appointment_id, ap.practitioner_id, ap.room_id, m.name as medical_services, ap.patient_id, a.name as patient_name, a.avatar as patient_avatar, a.gender as patient_gender, a.email as patient_email, a.phone as patient_phone, p.ssn as patient_ssn, date_part('year', age(dob)) as patient_age, to_char(ap.at, 'HH24:MI') as start, to_char(ap.at, 'DD/MM/YYYY') as date, ap.status, ap.log, ap.prescription, ap.next_appointment_period, (select m.name as next_appointment_service where ap.next_appointment_service = m.id), ap.last_appointment from appointments ap, rooms r, medicalservices m, patients p, accounts a where ap.room_id = r.id and r.medicalservice_id = m.id and ap.patient_id = p.id and p.id = a.patient_id and ap.practitioner_id = $1 order by status='done', at"
+    const queryStatement = "select ap.id as appointment_id, ap.practitioner_id, ap.room_id, m.name as medical_service, ap.patient_id, a.name as patient_name, a.avatar as patient_avatar, a.gender as patient_gender, a.email as patient_email, a.phone as patient_phone, p.ssn as patient_ssn, date_part('year', age(dob)) as patient_age, p.dob as patient_dob, to_char(ap.at, 'HH24:MI') as start, to_char(ap.at, 'DD/MM/YYYY') as date, ap.status, ap.log, ap.prescription, ap.next_appointment_period, (select m.name as next_appointment_service where ap.next_appointment_service = m.id), ap.last_appointment from appointments ap, rooms r, medicalservices m, patients p, accounts a where ap.room_id = r.id and r.medicalservice_id = m.id and ap.patient_id = p.id and p.id = a.patient_id and ap.practitioner_id = $1 order by status='done', at"
     const arr = [req.session.practitionerID]
     try {
         const result = await db.query(queryStatement, arr)
@@ -80,7 +80,12 @@ exports.getAvailableHours = async function (req, res) {
         return res.status(400).json({status: false})
     }
 
-    const query = "select at from appointments where practitioner_id = $1 and date_part('day', at) = $2 and date_part('month', at) = $3 and date_part('year', at) = $4"
+    const query = `select at 
+                        from appointments 
+                        where practitioner_id = $1 
+                            and date_part('day', at) = $2 
+                            and date_part('month', at) = $3 
+                            and date_part('year', at) = $4`;
     const queryArr = [req.body.practitionerID, req.body.day, req.body.month, req.body.year]
 
     try {

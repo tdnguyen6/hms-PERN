@@ -104,7 +104,7 @@ class PractitionerInfoDialog extends Component {
                                         variant                 = "outlined"
                                         id                      = "DOB"
                                         label                   = "Date of Birth"
-                                        value                   = { this.props.data.dob }
+                                        value                   = { this.props.data.dob.toLocaleDateString('en-GB') }
                                         InputProps              = {{ readOnly: true }}/>
                                 </Grid>
                             }

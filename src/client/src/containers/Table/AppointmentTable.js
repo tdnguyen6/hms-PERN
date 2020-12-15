@@ -89,15 +89,15 @@ class AppointmentTable extends Component {
     };
 
     async componentDidMount() {
-        this.setState({ loading: true });
+        this.setState({loading: true});
         const user = await authorizedUser();
         if (user) {
             if (user.role === "admin") {
-                await this.setState({ columns: forAdmin });
+                await this.setState({columns: forAdmin});
             } else if (user.role === "practitioner") {
-                await this.setState({ columns: forPractitioner });
+                await this.setState({columns: forPractitioner});
             } else if (user.role === "patient") {
-                await this.setState({ columns: forPatient });
+                await this.setState({columns: forPatient});
             }
             await this.setState({
                 user: user.role,
@@ -107,10 +107,11 @@ class AppointmentTable extends Component {
     }
 
     handleRowClick = async (event, row) => {
+        console.log(row);
         await this.setState({
             appointmentDetail: {
                 id: row.appointment_id,
-                medical_services: row.medical_services,
+                medical_services: row.medical_service,
                 practitioner: {
                     id: row.practitioner_id,
                     avatar: row.practitioner_avatar,
@@ -122,8 +123,8 @@ class AppointmentTable extends Component {
                 },
                 patient: {
                     id: row.patient_id,
-                    avatar: row.practitioner_avatar,
-                    dob: row.patient_date_of_birth,
+                    avatar: row.patient_avatar,
+                    dob: new Date(row.patient_dob),
                     email: row.patient_email,
                     gender: row.patient_gender,
                     name: row.patient_name,
@@ -158,7 +159,7 @@ class AppointmentTable extends Component {
             await this.setState({
                 newAppointmentDialog: close
             });
-            await this.getAllAppointment().then().catch();
+            await this.getAllAppointment();
         } else if (type === "symptoms") {
             await this.setState({
                 symptomsDialog: close
@@ -167,7 +168,7 @@ class AppointmentTable extends Component {
             await this.setState({
                 editAppointmentDialog: close
             });
-            await this.getAllAppointment().then().catch();
+            await this.getAllAppointment();
         }
     }
     handleLoading = async (loading) => {
@@ -177,15 +178,12 @@ class AppointmentTable extends Component {
     }
 
     getAllAppointment = async () => {
-        await this.setState({ loading: true });
-        await allAppointment()
-            .then(data => {
-                this.setState({
-                    appointment: data,
-                    loading: false
-                })
-            });
-        await this.setState( { loading: false });
+        await this.setState({loading: true});
+        await this.setState({
+            appointment: await allAppointment(),
+            loading: false
+        });
+        await this.setState({loading: false});
     }
 
     render() {
@@ -196,14 +194,14 @@ class AppointmentTable extends Component {
                     <Table size="medium" stickyHeader>
                         <TableHead>
                             <TableRow>
-                                { this.state.columns.map((column) => (
+                                {this.state.columns.map((column) => (
                                     <TableCell key={column.id} align={column.align}>
                                         {(column.label === 'Status')
                                             ? <Button variant="contained"
                                                       color="primary"
                                                       align="right"
                                                       onClick={this.handleNewClick}
-                                                      startIcon={<PostAddIcon />}>
+                                                      startIcon={<PostAddIcon/>}>
                                                 New
                                             </Button>
                                             : column.label}
@@ -212,7 +210,7 @@ class AppointmentTable extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            { this.state.appointment.map((row) => {
+                            {this.state.appointment.map((row) => {
                                 return (
                                     <TableRow hover key={row.id} onClick={(event) => this.handleRowClick(event, row)}>
                                         {this.state.columns.map((column) => {
@@ -234,13 +232,12 @@ class AppointmentTable extends Component {
                                       close={this.handleDialogClose}
                                       loading={this.handleLoading}
                                       disease={this.state.diseaseList}
-                                      user = {this.state.user}
-                                      appointment={this.getAppointment}/>
+                                      user={this.state.user}/>
                 <EditAppointmentDialog open={this.state.editAppointmentDialog}
                                        close={this.handleDialogClose}
                                        appointment={this.state.appointmentDetail}
-                                       user = { this.state.user }
-                                       key={this.state.appointmentDetail.id} />
+                                       user={this.state.user}
+                                       key={this.state.appointmentDetail.id}/>
                 <LoadingDialog open={this.state.loading}/>
             </React.Fragment>
         );
