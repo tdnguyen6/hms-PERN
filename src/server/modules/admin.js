@@ -79,9 +79,13 @@ exports.deletePractitioner = async function (req, res) {
         return res.status(400).json({status: false})
     }
 
-    const deleteStatement = 'delete from practitioners where id = ' + req.body.practitionerID
+    const statement = `update accounts
+                        set active = false
+                        where practitioner_id = $1` 
+
+    const arr = [req.body.practitionerID]
     try {
-        await db.query(deleteStatement)
+        await db.query(statement, arr) 
         return res.status(200).json({status: true})
     } catch (err) {
         console.log(err)
