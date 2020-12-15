@@ -26,7 +26,12 @@ exports.loginAccount = async function (req, res) {
     }
     */
     try {
-        const result = await db.query(`SELECT * FROM accounts where email = $1 and password = $2`, [req.body.email, do_hash(req.body.password)]);
+        const statement = `select * from accounts
+                            where email = $1 and
+                                password = $2 and
+                                active = true`
+        const arr = [req.body.email, do_hash(req.body.password)]
+        const result = await db.query(statement, arr)
         if (result.rows.length == 1) {
             // identify users role
             let isPatient = Number.isInteger(result.rows[0].patient_id)
