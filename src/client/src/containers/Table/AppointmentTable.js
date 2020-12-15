@@ -103,7 +103,7 @@ class AppointmentTable extends Component {
                 user: user.role,
             });
         }
-        this.getAllAppointment().then().catch();
+        await this.getAllAppointment();
     }
 
     handleRowClick = async (event, row) => {
@@ -135,7 +135,7 @@ class AppointmentTable extends Component {
                 status: (row.status === 'booked')
             }
         });
-        console.log(this.state.appointmentDetail);
+        // console.log(this.state.appointmentDetail);
 
         this.setState({editAppointmentDialog: (row.status === 'booked')});
     };
