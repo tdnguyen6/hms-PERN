@@ -233,11 +233,11 @@ class AppointmentTable extends Component {
                                       loading={this.handleLoading}
                                       disease={this.state.diseaseList}
                                       user={this.state.user}/>
-                <EditAppointmentDialog open={this.state.editAppointmentDialog}
-                                       close={this.handleDialogClose}
-                                       appointment={this.state.appointmentDetail}
-                                       user={this.state.user}
-                                       key={this.state.appointmentDetail.id}/>
+                { this.state.appointmentDetail.id && <EditAppointmentDialog open={this.state.editAppointmentDialog}
+                                                                       close={this.handleDialogClose}
+                                                                       appointment={this.state.appointmentDetail}
+                                                                       user={this.state.user}
+                                                                       key={this.state.appointmentDetail.id}/> }
                 <LoadingDialog open={this.state.loading}/>
             </React.Fragment>
         );
