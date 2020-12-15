@@ -144,11 +144,9 @@ class AppointmentTable extends Component {
         let diseases;
         try {
             await this.setState({loading: true});
-            console.log('loading');
             diseases = await allDisease();
         } finally {
             await this.setState({loading: false});
-            console.log('loaded');
         }
         await this.setState({
             newAppointmentDialog: true,
@@ -182,7 +180,6 @@ class AppointmentTable extends Component {
         await this.setState({ loading: true });
         await allAppointment()
             .then(data => {
-                console.log(data);
                 this.setState({
                     appointment: data,
                     loading: false

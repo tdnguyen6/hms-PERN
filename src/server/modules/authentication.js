@@ -116,12 +116,13 @@ exports.forgetPassword = async function (req, res) {
         let mail = Mailer.mailGenerator.generate(email);
 
         let message = {
+            from: Mailer.transporter.options.auth.user,
             to: req.body.email,
             subject: "Hospital Management System: Recover password",
             html: mail,
         };
 
-        Mailer.transporter
+        await Mailer.transporter
             .sendMail(message, function (error, info) {
                 if (error) {
                     console.log(error);
@@ -169,12 +170,13 @@ exports.resetPassword = async function (req, res) {
         let mail = Mailer.mailGenerator.generate(email);
 
         let message = {
+            from: Mailer.transporter.options.auth.user,
             to: req.body.email,
             subject: "Hospital Management System: Recent password change",
             html: mail,
         };
 
-        Mailer.transporter
+        await Mailer.transporter
             .sendMail(message, function (error, info) {
                 if (error) {
                     console.log(error);

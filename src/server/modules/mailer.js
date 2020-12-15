@@ -4,7 +4,7 @@ const Mailgen = require("mailgen");
 exports.transporter = nodemailer.createTransport({
     // host: 'smtp-relay.sendinblue.com',
     // auth: {
-    //     user: 'tidu.nguyen.2000@gmail.com',
+    //     user: 'noreply.tidu@gmail.com',
     //     pass: 'xsmtpsib-762738c1b17df7a91ee73cc890c39cdd139a8cf57e96d2eeefded33190f0a603-gUXGEbvk9QjDdxOm'
     // },
     host: 'smtp.gmail.com',
