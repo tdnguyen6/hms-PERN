@@ -26,7 +26,8 @@ exports.getPatientByID = async function (req, res) {
 																																to_char(p.dob, 'DD/MM/YYYY') as dob 
 																									from 		patients p, 
 																																accounts a 
-																									where 	p.id = a.patient_id and 
+																									where 	p.id = a.patient_id and
+																																a.active = true and 
 																																p.id = $1`
 	const arr = [req.body.patientID]
 	try {
@@ -86,7 +87,8 @@ exports.listAllPatients = async function (req, res) {
 																																to_char(p.dob, 'DD/MM/YYYY') as dob 
 																									from 		patients p, 
 																																accounts a 
-																									where 	p.id = a.patient_id`
+																									where 	p.id = a.patient_id and
+																																a.active = true`
 	try {
 					const result = await db.query(queryStatement)
 					return res.status(200).json(result.rows)
