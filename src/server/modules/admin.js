@@ -88,8 +88,9 @@ exports.deletePractitionerAccount = async function (req, res) {
         return res.status(400).json({status: false})
     }
     
-				const deleteStatement = `delete from accounts 
-																													where practitioner_id = $1` 
+				const deleteStatement = `UPDATE accounts
+																													SET active = false 
+																													WHERE practitioner_id = $1` 
 				const arr = [req.body.practitionerID]
     try {
         await db.query(deleteStatement, arr)
@@ -100,31 +101,32 @@ exports.deletePractitionerAccount = async function (req, res) {
     }
 }
 
-exports.deletePractitioner = async function (req, res) {
-    if (!Number.isInteger(req.body.practitionerID)) {
-        return res.status(400).json({status: false})
-    }
+// exports.deletePractitioner = async function (req, res) {
+//     if (!Number.isInteger(req.body.practitionerID)) {
+//         return res.status(400).json({status: false})
+//     }
 
-    const statement = `update accounts
-                       set active = false
-                       where practitioner_id = $1` 
+//     const statement = `update accounts
+//                        set active = false
+//                        where practitioner_id = $1` 
 
-    const arr = [req.body.practitionerID]
-    try {
-        await db.query(statement, arr) 
-        return res.status(200).json({status: true})
-    } catch (err) {
-        console.log(err)
-        return res.status(500).json({status: false})
-    }
-}
+//     const arr = [req.body.practitionerID]
+//     try {
+//         await db.query(statement, arr) 
+//         return res.status(200).json({status: true})
+//     } catch (err) {
+//         console.log(err)
+//         return res.status(500).json({status: false})
+//     }
+// }
 
 exports.deletePatientAccount = async function (req, res) {
     if (!Number.isInteger(req.body.patientID)) {
         return res.status(400).json({status: false})
     }
     
-				const deleteStatement = `DELETE from accounts 
+				const deleteStatement = `UPDATE accounts
+																													SET active = false 
 																													WHERE patient_id = $1` 
 				const arr = [req.body.patientID]
     try {
@@ -136,22 +138,22 @@ exports.deletePatientAccount = async function (req, res) {
     }
 }
 
-exports.deletePatient = async function (req, res) {
-    if (!Number.isInteger(req.body.patientID)) {
-        return res.status(400).json({status: false})
-    }
+// exports.deletePatient = async function (req, res) {
+//     if (!Number.isInteger(req.body.patientID)) {
+//         return res.status(400).json({status: false})
+//     }
     
-				const deleteStatement = `delete from patients 
-																													where id = $1`
-				const arr = [req.body.patientID]
-    try {
-        await db.query(deleteStatement, arr)
-        return res.status(200).json({status: true})
-    } catch (err) {
-        console.log(err)
-        return res.status(500).json({status: false})
-    }
-}
+// 				const deleteStatement = `delete from patients 
+// 																													where id = $1`
+// 				const arr = [req.body.patientID]
+//     try {
+//         await db.query(deleteStatement, arr)
+//         return res.status(200).json({status: true})
+//     } catch (err) {
+//         console.log(err)
+//         return res.status(500).json({status: false})
+//     }
+// }
 
 exports.listAllPatients = async function (req, res) {
 				const queryStatement = `select p.id, 

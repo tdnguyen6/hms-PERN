@@ -83,17 +83,17 @@ app.post("/admin/practitioners/all", admin.listAllPractitioners);
 app.post("/admin/practitioners/create", admin.createPractitioner)
 app.post("/admin/practitioners/find", admin.getPractitionerByID)
 app.post("/admin/practitioners/update", admin.updatePractitioner);
-app.post("/admin/practitioners/delete", admin.deletePractitioner);
+app.post("/admin/practitioners/delete", admin.deletePractitionerAccount);
 app.post("/admin/practitioners/account/create", admin.createPractitionerAccount);
 app.post("/admin/practitioners/account/delete", admin.deletePractitionerAccount);
-app.post("/admin/practitioners/delete", admin.deletePractitioner);
+// app.post("/admin/practitioners/delete", admin.deletePractitioner);
 
 app.post("/admin/departments/all", admin.listAllDepartments);
 
 app.post("/admin/patients/all", admin.listAllPatients);
 app.post("/admin/patients/find", admin.getPatientByID);
 app.post("/admin/patients/account/delete", admin.deletePatientAccount);
-app.post("/admin/patients/delete", admin.deletePatient);
+// app.post("/admin/patients/delete", admin.deletePatient);
 
 // app.use("/patient/appointment/all", (req, res, next) => {
 //     if (!req.session.patientID && req.session.role !== 'patient') return res.status(401).json(null)
