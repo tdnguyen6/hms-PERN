@@ -157,16 +157,16 @@ exports.deletePatientAccount = async function (req, res) {
 
 exports.listAllPatients = async function (req, res) {
 				const queryStatement = `select p.id, 
-																																			a.name as name, 
-																																			a.avatar, 
-																																			a.email, 
-																																			a.phone, 
-																																			a.gender, 
-																																			p.ssn, 
-																																			to_char(p.dob, 'DD/MM/YYYY') as dob 
-																												from 		patients p, 
-																																			accounts a 
-																												where 	p.id = a.patient_id`
+                                            a.name as name, 
+                                            a.avatar, 
+                                            a.email, 
+                                            a.phone, 
+                                            a.gender, 
+                                            p.ssn, 
+                                            to_char(p.dob, 'DD/MM/YYYY') as dob 
+                                        from patients p, 
+                                             accounts a 
+                                        where p.id = a.patient_id`
     try {
         const result = await db.query(queryStatement)
         return res.status(200).json(result.rows)
@@ -182,17 +182,17 @@ exports.getPatientByID = async function (req, res) {
     }
     
 				const queryStatement = `select p.id, 
-																																			a.name as name, 
-																																			a.avatar, 
-																																			a.email, 
-																																			a.phone, 
-																																			a.gender, 
-																																			p.ssn, 
-																																			to_char(p.dob, 'DD/MM/YYYY') as dob 
-																												from 		patients p, 
-																																			accounts a 
-																												where 	p.id = a.patient_id and 
-																																			p.id = $1`
+                                            a.name as name, 
+                                            a.avatar, 
+                                            a.email, 
+                                            a.phone, 
+                                            a.gender, 
+                                            p.ssn, 
+                                            to_char(p.dob, 'DD/MM/YYYY') as dob 
+                                        from patients p, 
+                                            accounts a 
+                                        where p.id = a.patient_id and 
+                                            p.id = $1`
 				const arr = [req.body.patientID]
     try {
         const result = await db.query(queryStatement)
