@@ -9,9 +9,9 @@ const AuthContainer = (props) => {
         (async () => {
             try {
                 await authorize();
-                setAuth('authorized');
+                await setAuth('authorized');
             } catch (e) {
-                setAuth('forbidden');
+                await setAuth('forbidden');
             }
         })();
     }, [authorize]);

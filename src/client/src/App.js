@@ -1,19 +1,20 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
-import Login from './containers/Authentication/Login';
-import Register from './containers/Authentication/Register';
-import Home from './containers/Authentication/Home';
-import ForgetPassword from './containers/Authentication/ForgetPassword';
-import ResetPassword from './containers/Authentication/ResetPassword';
+import Login from './routes/Login';
+import Register from './routes/Register';
+import Home from './routes/Home';
+import ForgetPassword from './routes/ForgetPassword';
+import ResetPassword from './routes/ResetPassword';
+import Account from "./routes/Account";
 
-import PatientDashboard from './containers/Dashboard/Patient/PatientDashboard';
-import PractitionerDashboard from './containers/Dashboard/Practitioner/PractitionerDashboard';
-import AdminDashboard from './containers/Dashboard/Admin/AdminDashboard';
+import PatientDashboard from './routes/Dashboard/Patient/PatientDashboard';
+import PractitionerDashboard from './routes/Dashboard/Practitioner/PractitionerDashboard';
+import AdminDashboard from './routes/Dashboard/Admin/AdminDashboard';
 import Error from '../src/components/Others/Error';
 
 import './App.css';
-import UserDashboard from "./containers/Dashboard/UserDashboard";
+import UserDashboard from "./routes/Dashboard/UserDashboard";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/practitioner" component={PractitionerDashboard}/>
                 <Route path="/admin" component={AdminDashboard}/>
                 <Route path="/login" component={Login}/>
+                <Route path="/account" component={Account}/>
                 <Route path="/resetPassword" component={ResetPassword}/>
                 <Route exact path="/" component={Home}/>
                 <Route render={(props) => <Error code={404} mess='Not Found'/>}/>

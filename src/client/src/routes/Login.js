@@ -11,13 +11,13 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import {validate} from '../../components/Services/Validate';
-import {login} from "../../components/API/Login";
-import ErrorDialog from '../Dialog/OtherDialog/ErrorDialog';
-import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
+import {validate} from '../components/Services/Validate';
+import {login} from "../components/API/Login";
+import ErrorDialog from '../containers/Dialog/OtherDialog/ErrorDialog';
+import LoadingDialog from "../containers/Dialog/OtherDialog/LoadingDialog";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {authorizedUser} from "../../components/API/Authenticated";
-import DefaultAppBar from "../Others/DefaultAppBar";
+import {authorizedUser} from "../components/API/Authenticated";
+import DefaultAppBar from "../containers/Others/DefaultAppBar";
 
 const style = (theme) => ({
     root: {

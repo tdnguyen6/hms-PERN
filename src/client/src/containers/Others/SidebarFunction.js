@@ -9,20 +9,20 @@ import AirlineSeatIndividualSuiteIcon from '@material-ui/icons/AirlineSeatIndivi
 import EventIcon from '@material-ui/icons/Event';
 
 let admin = [
-    {id: 'Dashboard', link: '/admin/dashboard'},
-    {id: 'Practitioner', link: '/admin/practitioner'},
-    {id: 'Patient', link: '/admin/patient'},
-    {id: 'Appointment', link: '/admin/appointment'}
+    {id: 'Dashboard', link: '/admin/dashboard', icon: <DashboardIcon/>},
+    {id: 'Practitioner', link: '/admin/practitioner', icon: <PersonAddIcon/>},
+    {id: 'Patient', link: '/admin/patient', icon: <AirlineSeatIndividualSuiteIcon/>},
+    {id: 'Appointment', link: '/admin/appointment', icon: <EventIcon/>}
 ];
 
 let practitioner = [
-    {id: 'Dashboard', link: '/practitioner/dashboard'},
-    {id: 'Appointment', link: '/practitioner/appointment'}
+    {id: 'Dashboard', link: '/practitioner/dashboard', icon: <DashboardIcon/>},
+    {id: 'Appointment', link: '/practitioner/appointment', icon: <EventIcon/>}
 ];
 
 let patient = [
-    {id: 'Dashboard', link: '/patient/dashboard'},
-    {id: 'Appointment', link: '/patient/appointment'}
+    {id: 'Dashboard', link: '/patient/dashboard', icon: <DashboardIcon/>},
+    {id: 'Appointment', link: '/patient/appointment', icon: <EventIcon/>}
 ];
 
 class SidebarFunction extends Component {
@@ -33,12 +33,7 @@ class SidebarFunction extends Component {
                 roleFunctions.map((func) => (
                     <ListItem button component = {RouteLink} to = {func.link}>
                         <ListItemIcon>
-                            {
-                                (func.id !== "Dashboard") ?
-                                    (func.id !== 'Practitioner') ?
-                                        (func.id !== 'Patient') ?
-                                            <EventIcon/> : <AirlineSeatIndividualSuiteIcon/> : <PersonAddIcon/> : <DashboardIcon/>
-                            }
+                            { func.icon }
                         </ListItemIcon>
                         <ListItemText primary = {func.id}/>
                     </ListItem>
