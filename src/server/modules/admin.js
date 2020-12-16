@@ -89,8 +89,8 @@ exports.deletePractitionerAccount = async function (req, res) {
     }
     
 				const deleteStatement = `UPDATE accounts
-																													SET active = false 
-																													WHERE practitioner_id = $1` 
+                                            SET active = false 
+                                            WHERE practitioner_id = $1`
 				const arr = [req.body.practitionerID]
     try {
         await db.query(deleteStatement, arr)
@@ -126,8 +126,8 @@ exports.deletePatientAccount = async function (req, res) {
     }
     
 				const deleteStatement = `UPDATE accounts
-																													SET active = false 
-																													WHERE patient_id = $1` 
+                                            SET active = false 
+                                            WHERE patient_id = $1`
 				const arr = [req.body.patientID]
     try {
         await db.query(deleteStatement, arr)
