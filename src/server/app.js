@@ -66,6 +66,8 @@ app.post("/isLogin", auth.isLogin);
 //     next()
 // })
 app.post("/user/changePassword", auth.changePassword);
+app.post("/user/account/get", auth.getAccount);
+app.post("/user/account/update", auth.updateAccount);
 
 // app.use("/admin", (req, res, next) => {
 //     if (req.session.role !== 'admin') return res.status(401).json(null)

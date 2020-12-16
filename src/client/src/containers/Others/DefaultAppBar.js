@@ -46,7 +46,6 @@ class DefaultAppBar extends Component {
             sessionStorage.removeItem("redirect");
         }
         /*********************************************************/
-        this.getAllSymptom().then().catch();
     }
 
     handleMenuClick = (event) => {
@@ -60,6 +59,7 @@ class DefaultAppBar extends Component {
         });
     };
     handleDiseasePredict = async () => {
+        await this.getAllSymptom();
         await this.setState({
             symptomsDialog: true
         });

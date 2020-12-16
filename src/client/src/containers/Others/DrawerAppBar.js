@@ -130,6 +130,7 @@ class DrawerAppBar extends Component {
         });
     }
     handleDiseasePredict = async () => {
+        await this.getAllSymptom();
         await this.setState({
             symptomsDialog: true
         });

@@ -1,5 +1,6 @@
 dependencies:
   connect-pg-simple: 6.2.1
+  dotenv: 8.2.0
   express: 4.17.1
   express-session: 1.17.1
   jsonwebtoken: 8.5.1
@@ -1637,6 +1638,12 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==
+  /dotenv/8.2.0:
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
   /duplexer3/0.1.4:
     dev: true
     resolution:
@@ -5430,6 +5437,7 @@ packages:
 specifiers:
   '@testing-library/react': ^11.2.2
   connect-pg-simple: ^6.2.1
+  dotenv: ^8.2.0
   express: ^4.17.1
   express-session: ^1.17.1
   get-port: ^5.1.1
