@@ -10,16 +10,17 @@ import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import {validate} from '../../components/Services/Validate';
-import {checkEmailExist} from '../../components/API/CheckEmailExist';
-import {register} from '../../components/API/Register';
+import {validate} from '../components/Services/Validate';
+import {checkEmailExist} from '../components/API/CheckEmailExist';
+import {register} from '../components/API/Register';
 import MenuItem from "@material-ui/core/MenuItem";
-import ErrorDialog from "../Dialog/OtherDialog/ErrorDialog";
-import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
+import ErrorDialog from "../containers/Dialog/OtherDialog/ErrorDialog";
+import LoadingDialog from "../containers/Dialog/OtherDialog/LoadingDialog";
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {KeyboardDatePicker, MuiPickersUtilsProvider,} from '@material-ui/pickers';
-import DefaultAppBar from "../Others/DefaultAppBar";
+import DefaultAppBar from "../containers/Others/DefaultAppBar";
+import {checkPhoneExist} from '../components/API/checkPhoneExist';
 
 
 const style = theme => ({
@@ -55,13 +56,11 @@ class Register extends Component {
         email: {
             value: '',
             hasError: false,
-            exist: false,
             error: ''
         },
         phone: {
             value: '',
             hasError: false,
-            exist: false,
             error: ''
         },
         SSN: {
@@ -172,10 +171,11 @@ class Register extends Component {
         };
 
         const email = this.state.email;
-
+        let emailExist, phoneExist;
         try {
             await this.setState({loading: true});
-            email.exist = await checkEmailExist(this.state.email.value);
+            emailExist = await checkEmailExist(this.state.email.value);
+            phoneExist = await checkPhoneExist(this.state.phone.value);
             await this.setState({email: email});
         } finally {
             await this.setState({loading: false});
@@ -187,9 +187,6 @@ class Register extends Component {
         } else if (this.state.email.hasError) {
             dialogStatus.dialogHasError = true;
             dialogStatus.dialogMessage = 'The given email is invalid. Please input the valid email';
-        } else if (this.state.email.exist) {
-            dialogStatus.dialogHasError = true;
-            dialogStatus.dialogMessage = 'This email is registered. Please change email or recover password.';
         } else if (this.state.phone.hasError) {
             dialogStatus.dialogHasError = true;
             dialogStatus.dialogMessage = 'Phone number is invalid. Phone number must contain 10 numbers.';
@@ -199,7 +196,14 @@ class Register extends Component {
         } else if (this.state.confirmedPassword.hasError) {
             dialogStatus.dialogHasError = true;
             dialogStatus.dialogMessage = 'Please confirm the password again. Confirmed password should be the same with password.';
+        } else if (emailExist) {
+            dialogStatus.dialogHasError = true;
+            dialogStatus.dialogMessage = 'This email is registered. Please change email or recover password.';
+        } else if (phoneExist) {
+            dialogStatus.dialogHasError = true;
+            dialogStatus.dialogMessage = 'This phone number is registered. Please use another phone number';
         }
+
         await this.setState({
             errorDialog: dialogStatus.dialogHasError,
             errorMessage: dialogStatus.dialogMessage

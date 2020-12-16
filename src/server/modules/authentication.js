@@ -4,8 +4,21 @@ const {do_hash} = require('./helper');
 const Mailer = require('./mailer')
 
 exports.checkEmailExist = async function (req, res) {
-    const user = await db.query(`SELECT 1 FROM accounts where email = $1`, [req.body.email]);
-    return res.status(200).json({emailStatus: !!user.rows.length});
+    const qRes = await db.query(
+        `SELECT 1 
+                FROM accounts
+                WHERE email = $1`,
+        [req.body.email]);
+    return res.status(200).json({emailExist: !!qRes.rows.length});
+}
+
+exports.checkPhoneExist = async function (req, res) {
+    const qRes = await db.query(
+        `SELECT 1 
+                FROM accounts
+                WHERE phone = $1`,
+        [req.body.phone]);
+    return res.status(200).json({phoneExist: !!qRes.rows.length});
 }
 
 exports.registerAccount = async function (req, res) {
@@ -223,4 +236,46 @@ exports.verifyJWT = async (jwtToken) => {
             resolve(decoded);
         })
     });
+}
+
+exports.getAccount = async (req, res) => {
+    try {
+        const query =
+            `SELECT A.avatar,
+                    A.email,
+                    A.gender,
+                    A.name,
+                    A.phone
+                FROM accounts A
+                WHERE A.id = $1`
+        const arr = [req.session.userID];
+        const qRes = await db.query(query, arr)
+        return res.status(200).json(qRes.rows[0]);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({status: false});
+    }
+}
+
+exports.updateAccount = async (req, res) => {
+    let i = 0;
+    const keys = Object.keys(req.body);
+    console.log(keys);
+    try {
+        let query = `UPDATE accounts SET `;
+        keys.forEach(k => {
+            query += `${keys[i]} = $${i + 1}`;
+            i++;
+            if (i !== keys.length)
+                query += `, `;
+        })
+        query += ` WHERE id = $${i + 1}`;
+        console.log(query);
+        const arr = Object.values(req.body).concat(req.session.userID);
+        const qRes = await db.query(query, arr)
+        return res.status(200).json();
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json();
+    }
 }

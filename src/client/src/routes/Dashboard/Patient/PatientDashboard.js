@@ -1,18 +1,17 @@
 import React, {Component} from 'react';
 import {Route} from 'react-router-dom';
+
+import {withStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
-import DrawerAppBar from '../../Others/DrawerAppBar';
+import AppointmentTable from '../../../containers/Table/AppointmentTable';
+import DrawerAppBar from '../../../containers/Others/DrawerAppBar';
 import Dashboard from "../../../components/Others/Dashboard";
-import withStyles from "@material-ui/core/styles/withStyles";
 import {authorizedUser} from "../../../components/API/Authenticated";
-import AuthContainer from "../../Authentication/AuthContainer";
-
-import AppointmentTable from '../../Table/AppointmentTable';
-// import PatientTable from "../../Table/Practitioner/PatientTable";
+import AuthContainer from "../../../containers/Authentication/AuthContainer";
 
 const style = (theme) => ({
     root: {
@@ -36,11 +35,10 @@ const style = (theme) => ({
     }
 });
 
-class PractitionerDashboard extends Component {
-    async isPractitioner() {
+class PatientDashboard extends Component {
+    async isPatient() {
         const user = await authorizedUser();
-        console.log(user);
-        if (user && user.role === 'practitioner') {
+        if (user && user.role === 'patient') {
             return Promise.resolve();
         }
         return Promise.reject();
@@ -48,21 +46,20 @@ class PractitionerDashboard extends Component {
 
     render() {
         const {classes} = this.props;
-
         return (
-            <AuthContainer authorize = { this.isPractitioner }>
+            <AuthContainer authorize={this.isPatient}>
                 <div className={classes.root}>
                     <CssBaseline/>
-                    <DrawerAppBar type="practitioner"/>
+                    <DrawerAppBar type="patient"/>
                     <div className={classes.content}>
                         <div className={classes.appBarSpacer}/>
                         <Container maxWidth="lg" className={classes.container}>
                             <Grid container spacing={3}>
                                 <Grid item xs={12}>
                                     <Paper className={classes.paper}>
-                                        <Route exact path="/practitioner" component = { Dashboard } />
-                                        <Route exact path="/practitioner/dashboard" component = { Dashboard } />
-                                        <Route exact path="/practitioner/appointment" component = { AppointmentTable }/>
+                                        <Route exact path="/patient" exact component={Dashboard}/>
+                                        <Route exact path="/patient/dashboard" exact component={Dashboard}/>
+                                        <Route path="/patient/appointment" exact component={AppointmentTable}/>
                                     </Paper>
                                 </Grid>
                             </Grid>
@@ -74,4 +71,4 @@ class PractitionerDashboard extends Component {
     }
 }
 
-export default withStyles(style, {withTheme: true})(PractitionerDashboard);
+export default withStyles(style, {withTheme: true})(PatientDashboard);

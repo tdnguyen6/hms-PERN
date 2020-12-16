@@ -5,7 +5,7 @@ import {AppBar, Button, Divider, Drawer, Grid, IconButton, List, Toolbar, Typogr
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import SidebarFunction from './SidebarFunction';
-import {Redirect} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import { delCookie } from "../../components/Services/Cookie";
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import {logout} from "../../components/API/Logout";
@@ -42,6 +42,8 @@ const style = (theme) => ({
         position: 'relative',
         whiteSpace: 'nowrap',
         width: 240,
+        minHeight: '100%',
+        height: '100vh',
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen
@@ -200,18 +202,15 @@ class DrawerAppBar extends Component {
                                 <Typography variant="inherit">Predict Disease</Typography>
                             </MenuItem>
                             <Divider variant = 'inset' />
-                            {
-                                (this.props.type !== 'admin') &&
-                                    <div>
-                                        <MenuItem>
-                                            <ListItemIcon>
-                                                <AccountCircleIcon fontSize="small" />
-                                            </ListItemIcon>
+                                <Link to='/account' style={{ textDecoration: 'none', color: 'initial' }}>
+                                    <MenuItem>
+                                        <ListItemIcon>
+                                            <AccountCircleIcon fontSize="small" />
+                                        </ListItemIcon>
                                             <Typography variant="inherit">My Account</Typography>
-                                        </MenuItem>
-                                        <Divider variant = 'inset' />
-                                    </div>
-                            }
+                                    </MenuItem>
+                                    <Divider variant = 'inset' />
+                                </Link>
                             <MenuItem onClick = { this.handleChangePassword }>
                                 <ListItemIcon>
                                     <VpnKeyIcon fontSize="small" />

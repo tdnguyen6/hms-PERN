@@ -12,6 +12,7 @@ import {diseaseBySymptom} from "../../../components/API/DiseaseBySymptom";
 import TextField from "@material-ui/core/TextField";
 import Chip from "@material-ui/core/Chip";
 import {withStyles} from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
 // why do you need the below line?
 // import index from "recharts/demo/component";
@@ -34,6 +35,7 @@ const style = (theme) => ({
     },
     chip: {
         margin: theme.spacing(0.5),
+        height: '100%',
     },
 });
 
@@ -73,12 +75,18 @@ class SymptomsDialog extends Component {
         await this.setState({
             searchInput: input
         });
-        const filtered = this.props.symptom.filter((symptom) => {
-            return symptom.name.toLowerCase().includes(this.state.searchInput.toLowerCase())
-        });
-        await this.setState({
-            filteredListOfSymptom: filtered
-        });
+        if (this.state.searchInput) {
+            const filtered = this.props.symptom.filter((symptom) => {
+                return symptom.name.toLowerCase().includes(this.state.searchInput.toLowerCase())
+            });
+            await this.setState({
+                filteredListOfSymptom: filtered
+            });
+        } else {
+            await this.setState({
+                filteredListOfSymptom: []
+            });
+        }
     }
 
     handleChipClick = async (chip) => {
@@ -135,20 +143,18 @@ class SymptomsDialog extends Component {
                     <Grid container spacing={3}>
                         {/* Checked Symptoms */}
                         <Grid item xs className={classes.root}>{
-                            this.state.checkedListOfSymptom.map((symptom) => {
-                                    return (
-                                        <span key={symptom.id}>
+                            this.state.checkedListOfSymptom.map((symptom) => (
+                                    <span key={symptom.id} style={{margin: '0.5rem 0'}}>
                                           <Chip
                                               clickable
                                               color="secondary"
-                                              label={symptom.name}
+                                              label={<Typography element='p' variant='body2' style={{whiteSpace: 'normal'}}>{symptom.name}</Typography>}
                                               onDelete={() => this.handleChipDelete(symptom)}
                                               onClick={() => this.handleChipDelete(symptom)}
                                               className={classes.chip}
                                           />
                                         </span>
-                                    );
-                                }
+                                )
                             )
                         }</Grid>
                         <Grid item xs={12}>
@@ -162,24 +168,23 @@ class SymptomsDialog extends Component {
                                 onChange={this.handleSearch}/>
                         </Grid>
                         <Grid item xs className={classes.root}>{
-                            this.state.filteredListOfSymptom.map((symptom) => {
-                                return (
-                                    <span key={symptom.id}>
+                            this.state.filteredListOfSymptom.map((symptom) => (
+                                    <span key={symptom.id} style={{margin: '0.5rem 0'}}>
                                             <Chip
                                                 clickable
-                                                color = "primary"
-                                                label = { symptom.name }
-                                                onClick = {() => this.handleChipClick(symptom)}
-                                                className = { classes.chip }
+                                                color="primary"
+                                                label={<Typography element='p' variant='body2' style={{whiteSpace: 'normal'}}>{symptom.name}</Typography>}
+                                                onClick={() => this.handleChipClick(symptom)}
+                                                className={classes.chip}
                                             />
                                         </span>
-                                );
-                            })
+                                )
+                            )
                         }</Grid>
                     </Grid>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick = { this.handleSave } color="primary" align="right">
+                    <Button onClick={this.handleSave} color="primary" align="right">
                         Save
                     </Button>
                 </DialogActions>

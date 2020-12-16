@@ -9,10 +9,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {validate} from '../../components/Services/Validate';
-import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
-import {sendResetPasswordLink} from "../../components/API/PasswordRecovery";
-import ErrorDialog from "../Dialog/OtherDialog/ErrorDialog";
+import {validate} from '../components/Services/Validate';
+import LoadingDialog from "../containers/Dialog/OtherDialog/LoadingDialog";
+import {sendResetPasswordLink} from "../components/API/PasswordRecovery";
+import ErrorDialog from "../containers/Dialog/OtherDialog/ErrorDialog";
 
 const style = theme => ({
     paper: {

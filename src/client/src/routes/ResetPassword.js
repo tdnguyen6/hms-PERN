@@ -13,10 +13,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
-import {resetPassword, verifyJWT} from "../../components/API/PasswordRecovery";
-import Footer from "../Others/Footer";
-import Main from "../Others/Main";
+import LoadingDialog from "../containers/Dialog/OtherDialog/LoadingDialog";
+import {resetPassword, verifyJWT} from "../components/API/PasswordRecovery";
+import Footer from "../containers/Others/Footer";
+import Main from "../containers/Others/Main";
 
 const style = theme => ({
     paper: {
