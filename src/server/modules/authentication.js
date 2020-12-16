@@ -6,8 +6,8 @@ const Mailer = require('./mailer')
 exports.checkEmailExist = async function (req, res) {
     const qRes = await db.query(
         `SELECT 1 
-                FROM accounts
-                WHERE email = $1`,
+         FROM accounts
+         WHERE email = $1`,
         [req.body.email]);
     return res.status(200).json({emailExist: !!qRes.rows.length});
 }
@@ -15,8 +15,8 @@ exports.checkEmailExist = async function (req, res) {
 exports.checkPhoneExist = async function (req, res) {
     const qRes = await db.query(
         `SELECT 1 
-                FROM accounts
-                WHERE phone = $1`,
+         FROM accounts
+         WHERE phone = $1`,
         [req.body.phone]);
     return res.status(200).json({phoneExist: !!qRes.rows.length});
 }
@@ -40,9 +40,9 @@ exports.loginAccount = async function (req, res) {
     */
     try {
         const statement = `select * from accounts
-                            where email = $1 and
-                                password = $2 and
-                                active = true`
+                           where email = $1 and
+                                 password = $2 and
+                                 active = true`
         const arr = [req.body.email, do_hash(req.body.password)]
         const result = await db.query(statement, arr)
         if (result.rows.length == 1) {

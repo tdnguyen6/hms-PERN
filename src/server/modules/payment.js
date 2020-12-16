@@ -2,8 +2,13 @@ const db = require('../db');
 
 exports.generateInvoice = async function (req, res) {
     try {
-        let queryStatement = "select m.price from medicalservices m, diseases d where d.suggested_checkup = m.id and d.id = " + req.body.diseaseID
-        const result = await db.query(queryStatement)
+        const queryStatement = `select m.price 
+                              from medicalservices m, 
+                                   diseases d 
+                              where d.suggested_checkup = m.id and 
+                                    d.id = $1`
+        const arr = [req.body.diseaseID]
+        const result = await db.query(queryStatement, arr)
         res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
@@ -26,11 +31,15 @@ exports.makePayment = async function (req, res) {
 
 exports.updatePayment = async function (req, res) {
     try {
-        const updateStatement = `update payment set appointment_id = ${req.body.appointmentID} where id = ${req.body.paymentID} returning *`
-        const result = await db.query(updateStatement)
-        res.status(200).json(result.rows)
+        const updateStatement = `UPDATE payment 
+                                 SET appointment_id = $1 
+                                 WHERE id = $2 
+                                 RETURNING *`
+        const arr = [req.body.appointmentID, req.body.paymentID]
+        const result = await db.query(updateStatement, arr)
+        return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
-        res.status(500).json({status: false})
+        return res.status(500).json({status: false})
     }
 }
