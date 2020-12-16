@@ -15,7 +15,7 @@ const disease = require('./modules/disease');
 const symptom = require('./modules/symptom');
 const practitioner = require('./modules/practitioner');
 const patient = require('./modules/patient');
-const admin = require('./modules/admin');
+const department = require('./modules/department');
 const appointment = require('./modules/appointment');
 const payment = require('./modules/payment');
 
@@ -72,24 +72,24 @@ app.post("/user/changePassword", auth.changePassword);
 //     next()
 // })
 
-app.post("/admin/appointments/all", admin.listAllAppointments);
+app.post("/admin/appointments/all", appointment.listAllAppointments);
 app.post("/admin/appointments/update", appointment.updateAppointment);
-app.post("/admin/appointments/delete", admin.deleteAppointment);
+app.post("/admin/appointments/delete", appointment.deleteAppointment);
 
-app.post("/admin/practitioners/all", admin.listAllPractitioners);
-app.post("/admin/practitioners/create", admin.createPractitioner)
-app.post("/admin/practitioners/find", admin.getPractitionerByID)
-app.post("/admin/practitioners/update", admin.updatePractitioner);
-app.post("/admin/practitioners/delete", admin.deletePractitionerAccount);
-app.post("/admin/practitioners/account/create", admin.createPractitionerAccount);
-app.post("/admin/practitioners/account/delete", admin.deletePractitionerAccount);
+app.post("/admin/practitioners/all", practitioner.listAllPractitioners);
+app.post("/admin/practitioners/create", practitioner.createPractitioner)
+app.post("/admin/practitioners/find", practitioner.getPractitionerByID)
+app.post("/admin/practitioners/update", practitioner.updatePractitioner);
+app.post("/admin/practitioners/delete", practitioner.deletePractitionerAccount);
+app.post("/admin/practitioners/account/create", practitioner.createPractitionerAccount);
+app.post("/admin/practitioners/account/delete", practitioner.deletePractitionerAccount);
 // app.post("/admin/practitioners/delete", admin.deletePractitioner);
 
-app.post("/admin/departments/all", admin.listAllDepartments);
+app.post("/admin/departments/all", department.listAllDepartments);
 
-app.post("/admin/patients/all", admin.listAllPatients);
-app.post("/admin/patients/find", admin.getPatientByID);
-app.post("/admin/patients/account/delete", admin.deletePatientAccount);
+app.post("/admin/patients/all", patient.listAllPatients);
+app.post("/admin/patients/find", patient.getPatientByID);
+app.post("/admin/patients/account/delete", patient.deletePatientAccount);
 // app.post("/admin/patients/delete", admin.deletePatient);
 
 // app.use("/patient/appointment/all", (req, res, next) => {
