@@ -18,6 +18,7 @@ const patient = require('./modules/patient');
 const department = require('./modules/department');
 const appointment = require('./modules/appointment');
 const payment = require('./modules/payment');
+const medical_service = require("./modules/medical_service");
 
 
 app.use(express.json());
@@ -105,7 +106,7 @@ app.post("/patient/appointments/findRoom", appointment.findRoom);
 app.post("/patient/appointments/last", appointment.findLastAppointment);
 app.post("/patient/appointments/makePayment", payment.makePayment);
 app.post("/patient/appointments/updatePayment", payment.updatePayment);
-app.post("/patient/appointments/findPractitioner", practitioner.findPractitionerByDisease)
+app.post("/patient/appointments/findPractitioner", practitioner.findPractitionerByMedicalService)
 
 
 // app.use("/practitioner/appointment/all", (req, res, next) => {
@@ -121,6 +122,7 @@ app.post("/symptom/all", symptom.queryAllSymptoms);
 app.post("/disease/findDiseases", disease.findDiseasesBySymptoms);
 app.post("/disease/all", disease.queryAllDiseases);
 
+app.post("/medical_service/all", medical_service.queryAllMedicalServices);
 
 app.post("/patient/create", patient.createPatient)
 app.post("/patient/update", patient.updatePatient)
