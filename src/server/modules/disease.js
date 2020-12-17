@@ -61,12 +61,20 @@ exports.findDiseasesBySymptoms = async function (req, res) {
 }
 
 exports.queryAllDiseases = async function (req, res) {
+    const query = `select d.id,
+                          d.name,
+                          d.descriptions,
+                          m.name as medical_service,
+                          m.price as service_price
+                   from diseases d, 
+                        medicalservices m
+                   where d.suggested_checkup = m.id`
     try {
-        let result = await db.query("select * from diseases")
-        res.status(200).json(result.rows)
+        const result = await db.query(query)
+        return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
-        res.status(500).json(null)
+        return res.status(500).json(null)
     }
 }
 
