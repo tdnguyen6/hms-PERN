@@ -19,14 +19,14 @@ import {allMedicalService} from "../../../components/API/AllMedicalService";
 
 class NewAppointmentDialog extends Component {
     state = {
-        medical_services: [],
-        medical_serviceID: null,
+        medicalService: [],
+        medicalServiceID: null,
         patientList: [],
         patient: null,
         practitionerList: [],
         practitioner: null,
         dateList: [],
-        date: new Date(0),
+        date: new Date(),
         timeList: [],
         time: null,
     };
@@ -48,7 +48,7 @@ class NewAppointmentDialog extends Component {
                 }
             }
             await this.setState({
-                medical_services: await allMedicalService()
+                medicalService: await allMedicalService()
             })
         } finally {
             await this.setState({loading: false});
@@ -57,13 +57,12 @@ class NewAppointmentDialog extends Component {
 
     handleDialogClose = async () => {
         await this.setState({
-            medical_service: null,
-            patientList: [],
+            medicalServiceID: null,
             patient: null,
             practitionerList: [],
             practitioner: null,
             dateList: [],
-            date: new Date(0),
+            date: new Date(),
             timeList: [],
             time: null,
         })
@@ -72,7 +71,7 @@ class NewAppointmentDialog extends Component {
     }
     handleSave = async () => {
         let appointment = {
-            medical_serviceID: this.state.medical_serviceID,
+            medicalServiceID: this.state.medicalServiceID,
             practitionerID: this.state.practitioner,
             patientID: this.state.patient,
             date: this.state.date,
@@ -96,12 +95,12 @@ class NewAppointmentDialog extends Component {
     }
     handleMedicalServiceChange = async (event) => {
         await this.setState({
-            medical_serviceID: event.target.value
+            medicalServiceID: event.target.value
         });
         try {
             await this.props.loading(true);
             console.log('loading');
-            let res = await practitionerByMedicalService(this.state.medical_serviceID);
+            let res = await practitionerByMedicalService(this.state.medicalServiceID);
             console.log(res);
             await this.setState({
                 practitionerList: res
@@ -115,7 +114,7 @@ class NewAppointmentDialog extends Component {
     handlePractitionerChange = async (event) => {
         await this.setState({
             practitioner: event.target.value,
-            date: new Date(0)
+            date: new Date()
         });
     }
     handleDateChange = async (date) => {
@@ -124,7 +123,6 @@ class NewAppointmentDialog extends Component {
         });
         try {
             await this.props.loading(true);
-            console.log("loading");
             let res = await availableTimeByPractitioner(this.state.practitioner, this.state.date);
             console.log(res);
             await this.setState({
@@ -132,7 +130,6 @@ class NewAppointmentDialog extends Component {
             });
         } finally {
             await this.props.loading(false);
-            console.log("loaded");
         }
     }
     handleTimeChange = async (event) => {
@@ -156,25 +153,25 @@ class NewAppointmentDialog extends Component {
                 To make new appointment, please enter your information here.
               </DialogContentText>
             </Grid>
-            {/* medical_service */}
+            {/* Medical service */}
             <Grid item xs={12}>
               <TextField
                   autoFocus fullWidth select
                   variant="outlined"
                   id="medical_service"
                   label="Medical Service"
-                  value={this.state.medical_serviceID}
+                  value={this.state.medicalServiceID}
                   onChange={this.handleMedicalServiceChange}>{
-                this.state.medical_services.map((option) => (
+                this.state.medicalService.map((option) => (
                     <MenuItem key={option.id} value={option.id}>
                       {option.name.charAt(0).toUpperCase() + option.name.slice(1)} - {option.price}
                     </MenuItem>
                 ))}
               </TextField>
             </Grid>
+            {/* Patient */}
             {
               (this.props.user === 'admin') &&
-              /* Patient */
               <Grid item xs = {6}>
                 <TextField
                     autoFocus fullWidth select
@@ -191,7 +188,6 @@ class NewAppointmentDialog extends Component {
                 </TextField>
               </Grid>
             }
-
             {/* Practitioner */}
             <Grid item xs = {6}>
                 <TextField

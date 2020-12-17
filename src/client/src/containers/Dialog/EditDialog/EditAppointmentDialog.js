@@ -20,9 +20,15 @@ import LoadingDialog from "../OtherDialog/LoadingDialog";
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import {editAppointment} from "../../../components/API/EditAppointment";
+import {allMedicalService} from "../../../components/API/AllMedicalService";
+import {practitionerByMedicalService} from "../../../components/API/PractitionerByMedicalService";
 
 class EditAppointmentDialog extends Component {
     state = {
+        medicalServiceList: [],
+        medicalServiceID: this.props.appointment.medical_serviceID,
+        practitionerList: [],
+        practitionerID: null,
         date: new Date(this.props.appointment.date[2],
             this.props.appointment.date[1] - 1,
             this.props.appointment.date[0], 0, 0, 0),
@@ -46,14 +52,21 @@ class EditAppointmentDialog extends Component {
             await this.setState({loading: true});
             const res = await availableTimeByPractitioner(this.props.appointment.practitioner.id, this.state.date);
             await this.setState({
-                timeList: res.concat(this.state.time).sort()
+                timeList: res.concat(this.state.time).sort(),
+                medicalServiceList: await allMedicalService()
             });
         } finally {
             await this.setState({loading: false});
         }
     }
 
-    handleDialogClose = () => {
+    handleDialogClose = async () => {
+        console.log(this.props.appointment);
+        await this.setState({
+            medicalServiceID: this.props.appointment.medical_serviceID,
+            practitionerList: [],
+            practitioner: null,
+        })
         // send close state back to parent: AppointmentTable
         this.props.close(false, "editAppointment");
     }
@@ -88,6 +101,21 @@ class EditAppointmentDialog extends Component {
         this.handleDialogClose();
     };
 
+    handleMedicalServiceChange = async (event) => {
+        await this.setState({
+            medicalServiceID: event.target.value
+        });
+        try {
+            await this.setState({ loading: true });
+            let res = await practitionerByMedicalService(this.state.medicalServiceID);
+            console.log(res);
+            await this.setState({
+                practitionerList: res
+            });
+        } finally {
+            await this.setState({ loading: false });
+        }
+    }
     handleDateChange = async (date) => {
         await this.setState({
             date: date
@@ -140,8 +168,22 @@ class EditAppointmentDialog extends Component {
                                     variant="outlined"
                                     id="medical_service"
                                     label="Medical Service"
-                                    value={this.props.appointment.medical_service}
-                                    InputProps={{readOnly: true}}/>
+                                    value={this.props.appointment.medical_service}/>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    autoFocus fullWidth select
+                                    variant="outlined"
+                                    id="medical_service"
+                                    label="Medical Service"
+                                    value={this.state.medicalServiceID}
+                                    onChange={this.handleMedicalServiceChange}>{
+                                    this.state.medicalServiceList.map((option) => (
+                                        <MenuItem key={option.id} value={option.id}>
+                                            {option.name.charAt(0).toUpperCase() + option.name.slice(1)} - {option.price}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
                             </Grid>
                             {/* Practitioner */}
                             {
