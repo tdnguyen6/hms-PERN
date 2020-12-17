@@ -24,6 +24,7 @@ exports.listAllAppointments = async function (req, res) {
                                    t1.log, 
                                    t1.prescription,
                                    t1.next_appointment_period,
+                                   t1.next_service_id,
                                    t1.next_medical_service,
                                    t1.next_service_price, 
                                    t1.practitioner_id, 
@@ -48,6 +49,7 @@ exports.listAllAppointments = async function (req, res) {
                  ap.log, 
                  ap.prescription,
                  ap.next_appointment_period,
+                 ap.next_appointment_service as next_service_id,
                  ( select medicalservices.name
                    from medicalservices
                    where ap.next_appointment_service = medicalservices.id)  as next_medical_service,
@@ -111,6 +113,7 @@ exports.patientAppointments = async function (req, res) {
     select ap.id as appointment_id,
            ap.room_id,
            m.name as medical_service,
+           m.price as service_price,
            ap.practitioner_id,
            a.name as practitioner_name,
            d.name as practitioner_specialty,
@@ -124,8 +127,15 @@ exports.patientAppointments = async function (req, res) {
            ap.log,
            ap.prescription,
            ap.next_appointment_period,
-           (select m.name as next_appointment_service
-            where ap.next_appointment_service = m.id),
+           ap.next_appointment_service as next_service_id,
+           (    select medicalservices.name
+                from   medicalservices
+                where  ap.next_appointment_service = medicalservices.id) 
+           as next_medical_service,
+           (    select medicalservices.price
+                from medicalservices
+                where ap.next_appointment_service = medicalservices.id) 
+           as next_service_price,
            ap.last_appointment
     from appointments ap,
          rooms r,
@@ -312,7 +322,8 @@ exports.updateAppointmentPractitioner = async function (req, res) {
                                         set log = $1,
                                             prescription = $2,
                                             next_appointment_period = $3,
-                                            next_appointment_service = $4
+                                            next_appointment_service = $4,
+                                            status = 'done'
                                         where id = $5`
         const arr = [req.body.log, req.body.prescription, req.body.nextAppointmentPeriod, req.body.nextAppointmentService, req.body.appointmentID]
 
