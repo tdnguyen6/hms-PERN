@@ -14,6 +14,7 @@ exports.findDiseasesBySymptoms = async function (req, res) {
         if (symptoms.length === 1) {
             queryString = `select ds1.disease_id as id,
                                   d.name         as disease,
+                                  d.descriptions,
                                   m.name         as medical_service,
                                   m.price
                            from diseases_symptoms ds1,
