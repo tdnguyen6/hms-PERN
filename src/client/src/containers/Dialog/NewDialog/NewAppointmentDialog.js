@@ -36,14 +36,20 @@ class NewAppointmentDialog extends Component {
             await this.setState({loading: true});
             const user = await authorizedUser();
             if (user) {
-                if (user.role === 'admin') {
+                if (user.role !== 'patient') {
                     const patient = await allPatient();
                     await this.setState({
                         patientList: patient
                     });
-                } else if (user.role === 'patient') {
+                }
+
+                if (user.role === 'patient') {
                     await this.setState({
                         patient: user.patientID
+                    });
+                } else if (user.role === 'practitioner') {
+                    await this.setState({
+                        practitioner: user.practitionerID
                     });
                 }
             }
@@ -56,11 +62,10 @@ class NewAppointmentDialog extends Component {
     }
 
     handleDialogClose = async () => {
+        console.log(this.state);
         await this.setState({
             medicalServiceID: null,
-            patient: null,
             practitionerList: [],
-            practitioner: null,
             dateList: [],
             date: new Date(),
             timeList: [],
@@ -124,7 +129,7 @@ class NewAppointmentDialog extends Component {
         try {
             await this.props.loading(true);
             let res = await availableTimeByPractitioner(this.state.practitioner, this.state.date);
-            console.log(res);
+            console.log(this.state.practitioner, this.state.date);
             await this.setState({
                 timeList: res
             });
@@ -154,7 +159,7 @@ class NewAppointmentDialog extends Component {
               </DialogContentText>
             </Grid>
             {/* Medical service */}
-            <Grid item xs={12}>
+            <Grid item xs={(this.props.user === 'admin') ? 12 : 6}>
               <TextField
                   autoFocus fullWidth select
                   variant="outlined"
@@ -171,7 +176,7 @@ class NewAppointmentDialog extends Component {
             </Grid>
             {/* Patient */}
             {
-              (this.props.user === 'admin') &&
+              (this.props.user !== 'patient') &&
               <Grid item xs = {6}>
                 <TextField
                     autoFocus fullWidth select
@@ -189,21 +194,24 @@ class NewAppointmentDialog extends Component {
               </Grid>
             }
             {/* Practitioner */}
-            <Grid item xs = {6}>
-                <TextField
-                    autoFocus fullWidth select
-                    variant       = "outlined"
-                    id            = "practitioner"
-                    label         = "Practitioner"
-                    value         = { this.state.practitioner }
-                    onChange      = { this.handlePractitionerChange }>{
-                  this.state.practitionerList.map((option) => (
-                      <MenuItem key = { option.id } value = { option.id }>
-                        { option.name }
-                      </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
+            {
+                (this.props.user !== 'practitioner') &&
+                <Grid item xs = {6}>
+                    <TextField
+                        autoFocus fullWidth select
+                        variant       = "outlined"
+                        id            = "practitioner"
+                        label         = "Practitioner"
+                        value         = { this.state.practitioner }
+                        onChange      = { this.handlePractitionerChange }>{
+                        this.state.practitionerList.map((option) => (
+                            <MenuItem key = { option.id } value = { option.id }>
+                                { option.name }
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </Grid>
+            }
             {/* Date */}
             <Grid item xs = {6}>
               <MuiPickersUtilsProvider utils = {DateFnsUtils}>
