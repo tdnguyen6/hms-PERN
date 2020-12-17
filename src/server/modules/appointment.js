@@ -224,33 +224,23 @@ exports.practitionerAppointments = async function (req, res) {
 }
 
 exports.findRoom = async function (req, res) {
-    // check if req.body.diseaseID is a number
-    if (!Number.isInteger(req.body.diseaseID)) {
+    if (!Number.isInteger(req.body.serviceID)) {
         return res.status(400).json({status: false})
     }
 
-    let queryStatement
-    if (req.body.diseaseID === 0) queryStatement = `
-    select r.id 
-    from rooms r, 
-         medicalservices m 
-    where r.medicalservice_id = m.id and 
-          m.id = 13`
-
-    else queryStatement = `select r.id 
-                           from rooms r, 
-                                diseases d, 
-                                medicalservices m 
-                           where d.suggested_checkup = m.id and 
-                                 r.medicalservice_id = m.id and 
-                                 d.id = ` + req.body.diseaseID
-
+    const arr = [req.body.serviceID]
+    const queryStatement = `select r.id 
+                            from rooms r, 
+                                 medicalservices m 
+                            where r.medicalservice_id = m.id and 
+                                  m.id = $1`
+  
     try {
-        let result = await db.query(queryStatement)
-        res.status(200).json(result.rows)
+        let result = await db.query(queryStatement, arr)
+        return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
-        res.status(500).json({status: false})
+        return res.status(500).json({status: false})
     }
 }
 
