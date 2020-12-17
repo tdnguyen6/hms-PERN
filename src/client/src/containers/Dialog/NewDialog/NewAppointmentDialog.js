@@ -1,13 +1,12 @@
-import React, { Component }                     from 'react';
-import Button                                   from '@material-ui/core/Button';
-import TextField                                from '@material-ui/core/TextField';
-import Dialog                             from '@material-ui/core/Dialog';
-import DialogActions                      from '@material-ui/core/DialogActions';
-import DialogContent                      from '@material-ui/core/DialogContent';
-import DialogContentText                  from '@material-ui/core/DialogContentText';
-import DialogTitle                        from '@material-ui/core/DialogTitle';
+import React, {Component} from 'react';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from "@material-ui/core/MenuItem";
-import {practitionerByDisease} from "../../../components/API/PractitionerByDisease";
 import {availableTimeByPractitioner} from "../../../components/API/AvailableTimeByPractitioner";
 import Grid from "@material-ui/core/Grid";
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
@@ -15,124 +14,134 @@ import DateFnsUtils from "@date-io/date-fns";
 import {authorizedUser} from "../../../components/API/Authenticated";
 import {allPatient} from "../../../components/API/AllPatient";
 import {createAppointment} from "../../../components/API/CreateAppointment";
+import {practitionerByMedicalService} from "../../../components/API/PractitionerByMedicalService";
+import {allMedicalService} from "../../../components/API/AllMedicalService";
 
 class NewAppointmentDialog extends Component {
-  state = {
-    disease: null,
-    patientList: [],
-    patient: null,
-    practitionerList: [],
-    practitioner: null,
-    dateList: [],
-    date: new Date(),
-    timeList: [],
-    time: null,
-  };
+    state = {
+        medicalService: [],
+        medicalServiceID: null,
+        patientList: [],
+        patient: null,
+        practitionerList: [],
+        practitioner: null,
+        dateList: [],
+        date: new Date(),
+        timeList: [],
+        time: null,
+    };
 
-  async componentDidMount() {
-    try {
-      await this.setState({ loading: true });
-      const user = await authorizedUser();
-      if (user) {
-        if (user.role === 'admin') {
-          const patient = await allPatient();
-          await this.setState({
-            patientList: patient
-          });
-        } else if (user.role === 'patient') {
-          await this.setState({
-            patient: user.patientID
-          });
+    async componentDidMount() {
+        try {
+            await this.setState({loading: true});
+            const user = await authorizedUser();
+            if (user) {
+                if (user.role !== 'patient') {
+                    const patient = await allPatient();
+                    await this.setState({
+                        patientList: patient
+                    });
+                }
+
+                if (user.role === 'patient') {
+                    await this.setState({
+                        patient: user.patientID
+                    });
+                } else if (user.role === 'practitioner') {
+                    await this.setState({
+                        practitioner: user.practitionerID
+                    });
+                }
+            }
+            await this.setState({
+                medicalService: await allMedicalService()
+            })
+        } finally {
+            await this.setState({loading: false});
         }
-      }
-    } finally {
-      await this.setState({ loading: false });
-    }
-  }
-
-  handleDialogClose = async () => {
-    await this.setState({
-      disease: null,
-      patientList: [],
-      patient: null,
-      practitionerList: [],
-      practitioner: null,
-      dateList: [],
-      date: new Date(),
-      timeList: [],
-      time: null,
-    })
-    // send close state back to parent: AppointmentTable
-    this.props.close(false, "newAppointment");
-  }
-  handleSave = async () => {
-    let appointment = {
-      diseaseID: this.state.disease,
-      practitionerID: this.state.practitioner,
-      patientID: this.state.patient,
-      date: this.state.date,
-      time: this.state.time,
     }
 
-    try {
-      await this.props.loading(true);
-      console.log('loading');
-      await createAppointment(appointment);
-    } finally {
-      await this.props.loading(false);
-      console.log('loaded');
+    handleDialogClose = async () => {
+        console.log(this.state);
+        await this.setState({
+            medicalServiceID: null,
+            practitionerList: [],
+            dateList: [],
+            date: new Date(),
+            timeList: [],
+            time: null,
+        })
+        // send close state back to parent: AppointmentTable
+        this.props.close(false, "newAppointment");
     }
-    await this.handleDialogClose();
-  };
-  handlePatientChange = async (event) => {
-    await this.setState({
-      patient: event.target.value
-    });
-  }
-  handleDiseaseChange = async (event) => {
-    await this.setState({
-      disease: event.target.value
-    });
-    try {
-      await this.props.loading(true);
-      console.log('loading');
-      let res = await practitionerByDisease(this.state.disease);
-      await this.setState({
-        practitionerList: res
-      });
-      console.log(this.state.practitionerList);
-    } finally {
-      await this.props.loading(false);
-      console.log('loaded');
+    handleSave = async () => {
+        let appointment = {
+            medicalServiceID: this.state.medicalServiceID,
+            practitionerID: this.state.practitioner,
+            patientID: this.state.patient,
+            date: this.state.date,
+            time: this.state.time,
+        }
+
+        try {
+            await this.props.loading(true);
+            console.log('loading');
+            await createAppointment(appointment);
+        } finally {
+            await this.props.loading(false);
+            console.log('loaded');
+        }
+        await this.handleDialogClose();
+    };
+    handlePatientChange = async (event) => {
+        await this.setState({
+            patient: event.target.value
+        });
     }
-  }
-  handlePractitionerChange = async (event) => {
-    await this.setState({
-      practitioner: event.target.value
-    });
-  }
-  handleDateChange = async (date) => {
-    await this.setState({
-      date: date
-    });
-    try {
-      await this.props.loading(true);
-      console.log("loading");
-      let res = await availableTimeByPractitioner(this.state.practitioner, this.state.date);
-      console.log(res);
-      await this.setState({
-        timeList: res
-      });
-    } finally {
-      await this.props.loading(false);
-      console.log("loaded");
+    handleMedicalServiceChange = async (event) => {
+        await this.setState({
+            medicalServiceID: event.target.value
+        });
+        try {
+            await this.props.loading(true);
+            console.log('loading');
+            let res = await practitionerByMedicalService(this.state.medicalServiceID);
+            console.log(res);
+            await this.setState({
+                practitionerList: res
+            });
+            console.log(this.state.practitionerList);
+        } finally {
+            await this.props.loading(false);
+            console.log('loaded');
+        }
     }
-  }
-  handleTimeChange = async (event) => {
-    await this.setState({
-      time: event.target.value
-    });
-  }
+    handlePractitionerChange = async (event) => {
+        await this.setState({
+            practitioner: event.target.value,
+            date: new Date()
+        });
+    }
+    handleDateChange = async (date) => {
+        await this.setState({
+            date: date
+        });
+        try {
+            await this.props.loading(true);
+            let res = await availableTimeByPractitioner(this.state.practitioner, this.state.date);
+            console.log(this.state.practitioner, this.state.date);
+            await this.setState({
+                timeList: res
+            });
+        } finally {
+            await this.props.loading(false);
+        }
+    }
+    handleTimeChange = async (event) => {
+        await this.setState({
+            time: event.target.value
+        });
+    }
 
   render() {
     return (
@@ -149,25 +158,25 @@ class NewAppointmentDialog extends Component {
                 To make new appointment, please enter your information here.
               </DialogContentText>
             </Grid>
-            {/* Disease */}
-            <Grid item xs = {12}>
+            {/* Medical service */}
+            <Grid item xs={(this.props.user === 'admin') ? 12 : 6}>
               <TextField
                   autoFocus fullWidth select
-                  variant       = "outlined"
-                  id            = "disease"
-                  label         = "Disease"
-                  value         = { this.state.disease }
-                  onChange      = { this.handleDiseaseChange }>{
-                this.props.disease.map((option) => (
-                    <MenuItem key = { option.id } value = { option.id }>
-                      { option.name.charAt(0).toUpperCase() + option.name.slice(1) }
+                  variant="outlined"
+                  id="medical_service"
+                  label="Medical Service"
+                  value={this.state.medicalServiceID}
+                  onChange={this.handleMedicalServiceChange}>{
+                this.state.medicalService.map((option) => (
+                    <MenuItem key={option.id} value={option.id}>
+                      {option.name.charAt(0).toUpperCase() + option.name.slice(1)} - {option.price}
                     </MenuItem>
                 ))}
               </TextField>
             </Grid>
+            {/* Patient */}
             {
-              (this.props.user === 'admin') &&
-              /* Patient */
+              (this.props.user !== 'patient') &&
               <Grid item xs = {6}>
                 <TextField
                     autoFocus fullWidth select
@@ -184,23 +193,25 @@ class NewAppointmentDialog extends Component {
                 </TextField>
               </Grid>
             }
-
             {/* Practitioner */}
-            <Grid item xs = {6}>
-                <TextField
-                    autoFocus fullWidth select
-                    variant       = "outlined"
-                    id            = "practitioner"
-                    label         = "Practitioner"
-                    value         = { this.state.practitioner }
-                    onChange      = { this.handlePractitionerChange }>{
-                  this.state.practitionerList.map((option) => (
-                      <MenuItem key = { option.id } value = { option.id }>
-                        { option.name }
-                      </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
+            {
+                (this.props.user !== 'practitioner') &&
+                <Grid item xs = {6}>
+                    <TextField
+                        autoFocus fullWidth select
+                        variant       = "outlined"
+                        id            = "practitioner"
+                        label         = "Practitioner"
+                        value         = { this.state.practitioner }
+                        onChange      = { this.handlePractitionerChange }>{
+                        this.state.practitionerList.map((option) => (
+                            <MenuItem key = { option.id } value = { option.id }>
+                                { option.name }
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </Grid>
+            }
             {/* Date */}
             <Grid item xs = {6}>
               <MuiPickersUtilsProvider utils = {DateFnsUtils}>

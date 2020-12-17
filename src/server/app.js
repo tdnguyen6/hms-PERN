@@ -106,7 +106,7 @@ app.post("/patient/appointments/findRoom", appointment.findRoom);
 app.post("/patient/appointments/last", appointment.findLastAppointment);
 app.post("/patient/appointments/makePayment", payment.makePayment);
 app.post("/patient/appointments/updatePayment", payment.updatePayment);
-app.post("/patient/appointments/findPractitioner", practitioner.findPractitionerByDisease)
+app.post("/patient/appointments/findPractitioner", practitioner.findPractitionerByMedicalService)
 
 
 // app.use("/practitioner/appointment/all", (req, res, next) => {
@@ -122,7 +122,6 @@ app.post("/medicalServices/all", medicalServices.listAllServices);
 
 app.post("/disease/findDiseases", disease.findDiseasesBySymptoms);
 app.post("/disease/all", disease.queryAllDiseases);
-
 
 app.post("/patient/create", patient.createPatient)
 app.post("/patient/update", patient.updatePatient)

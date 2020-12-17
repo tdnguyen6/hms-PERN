@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const practitionerByDisease = async (id) => {
+export const practitionerByMedicalService = async (id) => {
     let data = {
-        diseaseID: id
+        medical_serviceID: id
     };
     let res;
     try {
