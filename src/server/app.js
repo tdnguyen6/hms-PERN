@@ -13,6 +13,7 @@ else
 const auth = require('./modules/authentication');
 const disease = require('./modules/disease');
 const symptom = require('./modules/symptom');
+const medicalServices = require('./modules/medicalServices');
 const practitioner = require('./modules/practitioner');
 const patient = require('./modules/patient');
 const department = require('./modules/department');
@@ -117,6 +118,7 @@ app.post("/practitioner/appointments/update", appointment.updateAppointmentPract
 
 
 app.post("/symptom/all", symptom.queryAllSymptoms);
+app.post("/medicalServices/all", medicalServices.listAllServices);
 
 app.post("/disease/findDiseases", disease.findDiseasesBySymptoms);
 app.post("/disease/all", disease.queryAllDiseases);
