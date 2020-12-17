@@ -15,7 +15,7 @@ import {authorizedUser} from "../../../components/API/Authenticated";
 import {allPatient} from "../../../components/API/AllPatient";
 import {createAppointment} from "../../../components/API/CreateAppointment";
 import {practitionerByMedicalService} from "../../../components/API/PractitionerByMedicalService";
-import {allMedicalServices} from "../../../components/API/AllMedicalServices";
+import {allMedicalService} from "../../../components/API/AllMedicalService";
 
 class NewAppointmentDialog extends Component {
     state = {
@@ -26,7 +26,7 @@ class NewAppointmentDialog extends Component {
         practitionerList: [],
         practitioner: null,
         dateList: [],
-        date: new Date(),
+        date: new Date(0),
         timeList: [],
         time: null,
     };
@@ -48,7 +48,7 @@ class NewAppointmentDialog extends Component {
                 }
             }
             await this.setState({
-                medical_services: await allMedicalServices()
+                medical_services: await allMedicalService()
             })
         } finally {
             await this.setState({loading: false});
@@ -63,7 +63,7 @@ class NewAppointmentDialog extends Component {
             practitionerList: [],
             practitioner: null,
             dateList: [],
-            date: new Date(),
+            date: new Date(0),
             timeList: [],
             time: null,
         })
@@ -102,6 +102,7 @@ class NewAppointmentDialog extends Component {
             await this.props.loading(true);
             console.log('loading');
             let res = await practitionerByMedicalService(this.state.medical_serviceID);
+            console.log(res);
             await this.setState({
                 practitionerList: res
             });
@@ -113,7 +114,8 @@ class NewAppointmentDialog extends Component {
     }
     handlePractitionerChange = async (event) => {
         await this.setState({
-            practitioner: event.target.value
+            practitioner: event.target.value,
+            date: new Date(0)
         });
     }
     handleDateChange = async (date) => {

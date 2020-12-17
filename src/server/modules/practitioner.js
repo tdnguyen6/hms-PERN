@@ -80,8 +80,8 @@ exports.getPractitionerByID = async function (req, res) {
 }
 
 exports.findPractitionerByMedicalService = async function (req, res) {
-    // check if req.body.diseaseID is a number
-    if (!Number.isInteger(req.body.diseaseID)) return res.status(400).json({status: false})
+    // check if req.body.medical_serviceID is a number
+    if (!Number.isInteger(req.body.medical_serviceID)) return res.status(400).json({status: false})
 
     try {
         let queryStatement =
