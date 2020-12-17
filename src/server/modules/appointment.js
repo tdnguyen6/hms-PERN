@@ -112,6 +112,7 @@ exports.patientAppointments = async function (req, res) {
     const queryStatement = `
     select ap.id as appointment_id,
            ap.room_id,
+           r.medicalservice_id as service_id,
            m.name as medical_service,
            m.price as service_price,
            ap.practitioner_id,
