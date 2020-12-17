@@ -149,25 +149,6 @@ class NewAppointmentDialog extends Component {
                 To make new appointment, please enter your information here.
               </DialogContentText>
             </Grid>
-            {
-              (this.props.user === 'admin') &&
-              /* Patient */
-              <Grid item xs = {12}>
-                <TextField
-                    autoFocus fullWidth select
-                    variant       = "outlined"
-                    id            = "patient"
-                    label         = "Patient"
-                    value         = { this.state.patient }
-                    onChange      = { this.handlePatientChange }>{
-                      this.state.patientList.map((option) => (
-                          <MenuItem key = { option.id } value = { option.id }>
-                            { option.name }
-                          </MenuItem>
-                      ))}
-                </TextField>
-              </Grid>
-            }
             {/* Disease */}
             <Grid item xs = {12}>
               <TextField
@@ -184,8 +165,28 @@ class NewAppointmentDialog extends Component {
                 ))}
               </TextField>
             </Grid>
+            {
+              (this.props.user === 'admin') &&
+              /* Patient */
+              <Grid item xs = {6}>
+                <TextField
+                    autoFocus fullWidth select
+                    variant       = "outlined"
+                    id            = "patient"
+                    label         = "Patient"
+                    value         = { this.state.patient }
+                    onChange      = { this.handlePatientChange }>{
+                      this.state.patientList.map((option) => (
+                          <MenuItem key = { option.id } value = { option.id }>
+                            { option.name }
+                          </MenuItem>
+                      ))}
+                </TextField>
+              </Grid>
+            }
+
             {/* Practitioner */}
-            <Grid item xs = {12}>
+            <Grid item xs = {6}>
                 <TextField
                     autoFocus fullWidth select
                     variant       = "outlined"
@@ -201,7 +202,7 @@ class NewAppointmentDialog extends Component {
                 </TextField>
               </Grid>
             {/* Date */}
-            <Grid item xs = {12}>
+            <Grid item xs = {6}>
               <MuiPickersUtilsProvider utils = {DateFnsUtils}>
                 <KeyboardDatePicker
                     disablePast fullWidth autoFocus
@@ -214,7 +215,7 @@ class NewAppointmentDialog extends Component {
               </MuiPickersUtilsProvider>
             </Grid>
             {/* Time */}
-            <Grid item xs = {12}>
+            <Grid item xs = {6}>
               <TextField
                   autoFocus fullWidth select
                   variant       = "outlined"

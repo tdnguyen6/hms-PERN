@@ -13,6 +13,7 @@ import TextField from "@material-ui/core/TextField";
 import Chip from "@material-ui/core/Chip";
 import {withStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import LoadingDialog from "./LoadingDialog";
 
 // why do you need the below line?
 // import index from "recharts/demo/component";
@@ -46,28 +47,28 @@ class SymptomsDialog extends Component {
         checkedListOfSymptom: [],
         checkedListOfSymptomID: [],
         filteredListOfSymptom: this.props.symptom,
+        loading: false
     };
     handleDialogClose = async () => {
         await this.setState({
             searchInput: '',
             listOfSymptom: [],
             checkedListOfSymptom: [],
-            checkedListOfSymptomID: []
+            checkedListOfSymptomID: [],
+            loading: false
         });
         // send close state back to parent: AppointmentTable
         this.props.close(false, "symptoms");
     }
     handleDiseasePredict = async () => {
         try {
-            await this.props.loading(true);
-            console.log('loading');
-            console.log('disease predict test', this.state.checkedListOfSymptomID);
+            await this.setState({ loading: true });
+            // console.log('disease predict test', this.state.checkedListOfSymptomID);
             let res = await diseaseBySymptom(this.state.checkedListOfSymptomID);
-            console.log('disease by symptom res', res);
+            // console.log('disease by symptom res', res);
             await this.props.disease(res);
         } finally {
-            await this.props.loading(false);
-            console.log('loaded');
+            await this.setState({ loading: false });
         }
     }
     handleSearch = async (event) => {
@@ -88,7 +89,6 @@ class SymptomsDialog extends Component {
             });
         }
     }
-
     handleChipClick = async (chip) => {
         let selectedChip = this.props.symptom.find((symptom) => symptom.id === chip.id);
         let checkedChip = this.state.checkedListOfSymptom;
@@ -121,7 +121,6 @@ class SymptomsDialog extends Component {
 
         console.log('delete', checkedChip);
     };
-
     handleSave = async () => {
         await this.handleDiseasePredict();
         await this.handleDialogClose();
@@ -130,21 +129,22 @@ class SymptomsDialog extends Component {
     render() {
         const {classes} = this.props;
         return (
-            <Dialog
-                fullWidth
-                open={this.props.open}
-                onClose={this.handleDialogClose}
-                aria-describedby="alert-dialog-description">
-                <DialogTitle id="form-dialog-title">Symptom Log</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        What's your symptoms babe?
-                    </DialogContentText>
-                    <Grid container spacing={3}>
-                        {/* Checked Symptoms */}
-                        <Grid item xs className={classes.root}>{
-                            this.state.checkedListOfSymptom.map((symptom) => (
-                                    <span key={symptom.id} style={{margin: '0.5rem 0'}}>
+            <React.Fragment>
+                <Dialog
+                    fullWidth
+                    open={this.props.open}
+                    onClose={this.handleDialogClose}
+                    aria-describedby="alert-dialog-description">
+                    <DialogTitle id="form-dialog-title">Symptom Log</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            What's your symptoms babe?
+                        </DialogContentText>
+                        <Grid container spacing={3}>
+                            {/* Checked Symptoms */}
+                            <Grid item xs className={classes.root}>{
+                                this.state.checkedListOfSymptom.map((symptom) => (
+                                        <span key={symptom.id} style={{margin: '0.5rem 0'}}>
                                           <Chip
                                               clickable
                                               color="secondary"
@@ -154,22 +154,22 @@ class SymptomsDialog extends Component {
                                               className={classes.chip}
                                           />
                                         </span>
+                                    )
                                 )
-                            )
-                        }</Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required fullWidth autoFocus
-                                name="Symptom"
-                                variant="outlined"
-                                id="Symptom"
-                                label="Symptom"
-                                value={this.state.searchInput}
-                                onChange={this.handleSearch}/>
-                        </Grid>
-                        <Grid item xs className={classes.root}>{
-                            this.state.filteredListOfSymptom.map((symptom) => (
-                                    <span key={symptom.id} style={{margin: '0.5rem 0'}}>
+                            }</Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required fullWidth autoFocus
+                                    name="Symptom"
+                                    variant="outlined"
+                                    id="Symptom"
+                                    label="Symptom"
+                                    value={this.state.searchInput}
+                                    onChange={this.handleSearch}/>
+                            </Grid>
+                            <Grid item xs className={classes.root}>{
+                                this.state.filteredListOfSymptom.map((symptom) => (
+                                        <span key={symptom.id} style={{margin: '0.5rem 0'}}>
                                             <Chip
                                                 clickable
                                                 color="primary"
@@ -178,17 +178,20 @@ class SymptomsDialog extends Component {
                                                 className={classes.chip}
                                             />
                                         </span>
+                                    )
                                 )
-                            )
-                        }</Grid>
-                    </Grid>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={this.handleSave} color="primary" align="right">
-                        Save
-                    </Button>
-                </DialogActions>
-            </Dialog>
+                            }</Grid>
+                        </Grid>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleSave} color="primary" align="right">
+                            Save
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                <LoadingDialog open = {this.state.loading}/>
+            </React.Fragment>
+
         );
     }
 }

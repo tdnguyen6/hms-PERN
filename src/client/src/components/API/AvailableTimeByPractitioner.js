@@ -7,12 +7,10 @@ export const availableTimeByPractitioner = async (id, date) => {
         month: date.getMonth() + 1,
         year: date.getFullYear()
     };
-    console.log(data);
     let res;
     try {
         res = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/appointments/getAvailableTime`, data, { withCredentials: true });
         const time = res.data.availableTime.map(time => `${time}:00`.padStart(5, '0'));
-        console.log(time);
         return time;
     } catch (error) {
         console.log(error);
