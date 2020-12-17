@@ -23,7 +23,9 @@ exports.listAllAppointments = async function (req, res) {
                                    t1.status, 
                                    t1.log, 
                                    t1.prescription,
-                                   t1.next_appointment_period, 
+                                   t1.next_appointment_period,
+                                   t1.next_medical_service,
+                                   t1.next_service_price, 
                                    t1.practitioner_id, 
                                    t1.practitioner_name, 
                                    t1.avatar as practitioner_avatar, 
@@ -45,7 +47,13 @@ exports.listAllAppointments = async function (req, res) {
                  ap.status as status, 
                  ap.log, 
                  ap.prescription,
-                 ap.next_appointment_period, 
+                 ap.next_appointment_period,
+                 ( select medicalservices.name
+                   from medicalservices
+                   where ap.next_appointment_service = medicalservices.id)  as next_medical_service,
+                 ( select medicalservices.price
+                   from medicalservices
+                   where ap.next_appointment_service = medicalservices.id) as next_service_price,
                  ac.practitioner_id, 
                  ac.name as practitioner_name, 
                  ac.avatar, ac.gender, 
@@ -90,11 +98,11 @@ exports.listAllAppointments = async function (req, res) {
 //	}
 
     try {
-                    const result = await db.query(queryStatement)
-                    return res.status(200).json(result.rows)
+        const result = await db.query(queryStatement)
+        return res.status(200).json(result.rows)
     } catch (err) {
-                    console.log(err)
-                    return res.status(500).json({status: false})
+        console.log(err)
+        return res.status(500).json({status: false})
     }
 }
 
