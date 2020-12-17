@@ -16,6 +16,7 @@ import {allPatient} from "../../../components/API/AllPatient";
 import {createAppointment} from "../../../components/API/CreateAppointment";
 import {practitionerByMedicalService} from "../../../components/API/PractitionerByMedicalService";
 import {allMedicalService} from "../../../components/API/AllMedicalService";
+import {login} from "../../../components/API/Login";
 
 class NewAppointmentDialog extends Component {
     state = {
@@ -62,7 +63,6 @@ class NewAppointmentDialog extends Component {
     }
 
     handleDialogClose = async () => {
-        console.log(this.state);
         await this.setState({
             medicalServiceID: null,
             practitionerList: [],
@@ -85,11 +85,9 @@ class NewAppointmentDialog extends Component {
 
         try {
             await this.props.loading(true);
-            console.log('loading');
             await createAppointment(appointment);
         } finally {
             await this.props.loading(false);
-            console.log('loaded');
         }
         await this.handleDialogClose();
     };
@@ -100,20 +98,17 @@ class NewAppointmentDialog extends Component {
     }
     handleMedicalServiceChange = async (event) => {
         await this.setState({
-            medicalServiceID: event.target.value
+            medicalServiceID: event.target.value,
+            practitioner: null,
         });
         try {
             await this.props.loading(true);
-            console.log('loading');
             let res = await practitionerByMedicalService(this.state.medicalServiceID);
-            console.log(res);
             await this.setState({
                 practitionerList: res
             });
-            console.log(this.state.practitionerList);
         } finally {
             await this.props.loading(false);
-            console.log('loaded');
         }
     }
     handlePractitionerChange = async (event) => {
@@ -129,7 +124,6 @@ class NewAppointmentDialog extends Component {
         try {
             await this.props.loading(true);
             let res = await availableTimeByPractitioner(this.state.practitioner, this.state.date);
-            console.log(this.state.practitioner, this.state.date);
             await this.setState({
                 timeList: res
             });
@@ -216,6 +210,7 @@ class NewAppointmentDialog extends Component {
             <Grid item xs = {6}>
               <MuiPickersUtilsProvider utils = {DateFnsUtils}>
                 <KeyboardDatePicker
+                    disabled = {!this.state.medicalServiceID || !this.state.practitioner}
                     disablePast fullWidth autoFocus
                     variant               = "inline"
                     inputVariant          = "outlined"
