@@ -23,7 +23,7 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 let forAdmin = [
     {id: 'practitioner_name', label: 'Practitioner'},
     {id: 'patient_name', label: 'Patient'},
-    {id: 'medical_services', label: 'Medical Service', align: 'right'},
+    {id: 'medical_service', label: 'Medical Service', align: 'right'},
     {id: 'start', label: 'Time', align: 'right'},
     {id: 'date', label: 'Date', align: 'right'},
     {id: 'status', label: 'Status', align: 'right'}
@@ -31,7 +31,7 @@ let forAdmin = [
 
 let forPatient = [
     {id: 'practitioner_name', label: 'Practitioner'},
-    {id: 'medical_services', label: 'Medical Service', align: 'right'},
+    {id: 'medical_service', label: 'Medical Service', align: 'right'},
     {id: 'start', label: 'Time', align: 'right'},
     {id: 'date', label: 'Date', align: 'right'},
     {id: 'status', label: 'Status', align: 'right'}
@@ -39,7 +39,7 @@ let forPatient = [
 
 let forPractitioner = [
     {id: 'patient_name', label: 'Patient'},
-    {id: 'medical_services', label: 'Medical Service', align: 'right'},
+    {id: 'medical_service', label: 'Medical Service', align: 'right'},
     {id: 'start', label: 'Time', align: 'right'},
     {id: 'date', label: 'Date', align: 'right'},
     {id: 'status', label: 'Status', align: 'right'}
@@ -104,6 +104,7 @@ class AppointmentTable extends Component {
             });
         }
         await this.getAllAppointment();
+        console.log(this.state.appointment);
     }
 
     handleRowClick = async (event, row) => {
@@ -111,7 +112,7 @@ class AppointmentTable extends Component {
         await this.setState({
             appointmentDetail: {
                 id: row.appointment_id,
-                medical_services: row.medical_service,
+                medical_service: row.medical_service,
                 practitioner: {
                     id: row.practitioner_id,
                     avatar: row.practitioner_avatar,
@@ -133,12 +134,17 @@ class AppointmentTable extends Component {
                 },
                 time: row.start,
                 date: row.date.split('/').map(Number),
-                status: (row.status === 'booked')
+                log: row.log,
+                prescription: row.prescription,
+                next_appointment_service: row.next_appointment_service,
+                next_appointment_period: row.next_appointment_period,
+                next_appointment_service_price: row.next_appointment_service_price,
+                status: row.status
             }
         });
         // console.log(this.state.appointmentDetail);
 
-        this.setState({editAppointmentDialog: (row.status === 'booked')});
+        this.setState({editAppointmentDialog: true});
     };
 
     handleNewClick = async () => {
