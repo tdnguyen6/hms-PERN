@@ -2,8 +2,13 @@ const db = require('../db');
 
 exports.createAppointment = async function (req, res) {
     try {
-                                const query = 'INSERT INTO appointments (practitioner_id, patient_id, room_id, at, last_appointment) VALUES($1,$2,$3,$4,$5) returning *'
-                                const arr = [req.body.practitionerID, req.body.patientID, req.body.roomID, req.body.at, req.body.last_appointment]
+        const query = `INSERT INTO appointments (practitioner_id, 
+                                                 patient_id, 
+                                                 room_id, 
+                                                 at, 
+                                                 last_appointment) 
+                       VALUES($1,$2,$3,$4,$5) returning *`
+        const arr = [req.body.practitionerID, req.body.patientID, req.body.roomID, req.body.at, req.body.last_appointment]
 
         const result = await db.query(query, arr)
         return res.status(200).json({appointmentID: result.rows[0].id})
