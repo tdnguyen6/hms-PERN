@@ -146,7 +146,7 @@ class EditAppointmentDialog extends Component {
                             {/* Practitioner */}
                             {
                                 (this.props.user !== 'practitioner') &&
-                                <Grid item xs={12}>
+                                <Grid item xs={6}>
                                     <TextField
                                         autoFocus fullWidth
                                         variant="outlined"
@@ -167,7 +167,7 @@ class EditAppointmentDialog extends Component {
                             {/* Patient */}
                             {
                                 (this.props.user !== 'patient') &&
-                                <Grid item xs={12}>
+                                <Grid item xs={6}>
                                     <TextField
                                         autoFocus fullWidth
                                         variant="outlined"
@@ -186,7 +186,7 @@ class EditAppointmentDialog extends Component {
                                 </Grid>
                             }
                             {/* Date */}
-                            <Grid item xs={12}>
+                            <Grid item xs={6}>
                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                     <KeyboardDatePicker
                                         fullWidth autoFocus
@@ -203,7 +203,7 @@ class EditAppointmentDialog extends Component {
                                 </MuiPickersUtilsProvider>
                             </Grid>
                             {/* Time */}
-                            <Grid item xs={12}>
+                            <Grid item xs={6}>
                                 <TextField
                                     autoFocus fullWidth select
                                     variant="outlined"
@@ -218,15 +218,15 @@ class EditAppointmentDialog extends Component {
                                     ))}
                                 </TextField>
                             </Grid>
-                            { (this.props.user === 'admin' || this.props.user === 'practitioner') &&
+                            { (this.props.appointment.status === 'done' || this.props.user === 'practitioner') &&
                                 <React.Fragment>
-                                    // Notes and Prescription
+                                    {/* Notes and Prescription */}
                                     <Grid item xs={12}>
                                         <DialogContentText id="alert-dialog-description">
                                             Appointment note and prescription from practitioner
                                         </DialogContentText>
                                     </Grid>
-                                    // Notes
+                                    {/* Notes */}
                                     <Grid item xs={12}>
                                         <TextField
                                             autoFocus fullWidth multiline
@@ -237,7 +237,7 @@ class EditAppointmentDialog extends Component {
                                             value={this.state.log}
                                             InputProps={{readOnly: this.props.appointment.status === 'done'}}/>
                                     </Grid>
-                                    // Prescription
+                                    {/* Prescription */}
                                     <Grid item xs={12}>
                                         <TextField
                                             autoFocus fullWidth multiline
@@ -248,13 +248,13 @@ class EditAppointmentDialog extends Component {
                                             value={this.state.prescription}
                                             InputProps={{readOnly: this.props.appointment.status === 'done'}}/>
                                     </Grid>
-                                    // Next appointment
+                                    {/* Next appointment */}
                                     <Grid item xs={12}>
                                         <DialogContentText id="alert-dialog-description">
                                             Next appointment information
                                         </DialogContentText>
                                     </Grid>
-                                    // Period
+                                    {/* Period */}
                                     <Grid item xs={3}>
                                         <TextField
                                             autoFocus fullWidth
@@ -264,7 +264,7 @@ class EditAppointmentDialog extends Component {
                                             value={this.state.nextAppointment.period}
                                             InputProps={{readOnly: this.props.appointment.status === 'done'}}/>
                                     </Grid>
-                                    // Service
+                                    {/* Service */}
                                     <Grid item xs={6}>
                                         <TextField
                                             autoFocus fullWidth
@@ -274,7 +274,7 @@ class EditAppointmentDialog extends Component {
                                             value={this.state.nextAppointment.service}
                                             InputProps={{readOnly: this.props.appointment.status === 'done'}}/>
                                     </Grid>
-                                    // Price
+                                    {/* Price */}
                                     <Grid item xs={3}>
                                         <TextField
                                             autoFocus fullWidth
@@ -289,11 +289,11 @@ class EditAppointmentDialog extends Component {
                         </Grid>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleSave} color="primary" align="right">
-                            Save
-                        </Button>
                         <Button onClick={this.handleDelete} color="primary" align="left">
                             Delete
+                        </Button>
+                        <Button onClick={this.handleSave} color="primary" align="right">
+                            Save
                         </Button>
                     </DialogActions>
                 </Dialog>

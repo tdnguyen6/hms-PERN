@@ -76,12 +76,6 @@ class DefaultAppBar extends Component {
         }
     };
 
-    handleLoading = async (loading) => {
-        await this.setState({
-            loading: loading
-        });
-    };
-
     getAllSymptom = async () => {
         await allSymptom().then(data => {
             this.setState({
@@ -142,7 +136,6 @@ class DefaultAppBar extends Component {
                 </AppBar>
                 <SymptomsDialog open = { this.state.symptomsDialog }
                                 close = { this.handleDialogClose }
-                                loading = { this.handleLoading }
                                 symptom = { this.state.symptomList }
                                 disease = { this.getDisease } />
                 <DiseaseDialog open = { this.state.diseaseDialog }

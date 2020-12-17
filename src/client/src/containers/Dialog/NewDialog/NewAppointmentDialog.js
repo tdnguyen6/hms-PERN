@@ -139,111 +139,112 @@ class NewAppointmentDialog extends Component {
         });
     }
 
-    render() {
-        return (
-            <Dialog
-                open={this.props.open}
-                onClose={this.handleDialogClose}
-                aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Make new appointment</DialogTitle>
-                <DialogContent>
-                    <Grid container spacing={2}>
-                        {/* Dialog Content */}
-                        <Grid item xs={12}>
-                            <DialogContentText id="alert-dialog-description">
-                                To make new appointment, please enter your information here.
-                            </DialogContentText>
-                        </Grid>
-                        {
-                            (this.props.user === 'admin') &&
-                            /* Patient */
-                            <Grid item xs={12}>
-                                <TextField
-                                    autoFocus fullWidth select
-                                    variant="outlined"
-                                    id="patient"
-                                    label="Patient"
-                                    value={this.state.patient}
-                                    onChange={this.handlePatientChange}>{
-                                    this.state.patientList.map((option) => (
-                                        <MenuItem key={option.id} value={option.id}>
-                                            {option.name}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </Grid>
-                        }
-                        {/* medical_service */}
-                        <Grid item xs={12}>
-                            <TextField
-                                autoFocus fullWidth select
-                                variant="outlined"
-                                id="medical_service"
-                                label="Medical Service"
-                                value={this.state.medical_serviceID}
-                                onChange={this.handleMedicalServiceChange}>{
-                                this.state.medical_services.map((option) => (
-                                    <MenuItem key={option.id} value={option.id}>
-                                        {option.name.charAt(0).toUpperCase() + option.name.slice(1)} - {option.price}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
-                        </Grid>
-                        {/* Practitioner */}
-                        <Grid item xs={12}>
-                            <TextField
-                                autoFocus fullWidth select
-                                variant="outlined"
-                                id="practitioner"
-                                label="Practitioner"
-                                value={this.state.practitioner}
-                                onChange={this.handlePractitionerChange}>{
-                                this.state.practitionerList.map((option) => (
-                                    <MenuItem key={option.id} value={option.id}>
-                                        {option.name}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
-                        </Grid>
-                        {/* Date */}
-                        <Grid item xs={12}>
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <KeyboardDatePicker
-                                    disablePast fullWidth autoFocus
-                                    variant="inline"
-                                    inputVariant="outlined"
-                                    label="Date of appointment"
-                                    format="dd/MM/yyyy"
-                                    value={this.state.date}
-                                    onChange={this.handleDateChange}/>
-                            </MuiPickersUtilsProvider>
-                        </Grid>
-                        {/* Time */}
-                        <Grid item xs={12}>
-                            <TextField
-                                autoFocus fullWidth select
-                                variant="outlined"
-                                id="time"
-                                label="Time"
-                                value={this.state.time}
-                                onChange={this.handleTimeChange}>{
-                                this.state.timeList.map((option) => (
-                                    <MenuItem key={option} value={option}>
-                                        {option}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
-                        </Grid>
-                    </Grid>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={this.handleSave} color="primary" align="right">
-                        Save
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        );
-    }
+  render() {
+    return (
+      <Dialog
+        open              = { this.props.open }
+        onClose           = { this.handleDialogClose }
+        aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Make new appointment</DialogTitle>
+        <DialogContent>
+          <Grid container spacing = {2}>
+            {/* Dialog Content */}
+            <Grid item xs = {12}>
+              <DialogContentText id = "alert-dialog-description">
+                To make new appointment, please enter your information here.
+              </DialogContentText>
+            </Grid>
+            {/* medical_service */}
+            <Grid item xs={12}>
+              <TextField
+                  autoFocus fullWidth select
+                  variant="outlined"
+                  id="medical_service"
+                  label="Medical Service"
+                  value={this.state.medical_serviceID}
+                  onChange={this.handleMedicalServiceChange}>{
+                this.state.medical_services.map((option) => (
+                    <MenuItem key={option.id} value={option.id}>
+                      {option.name.charAt(0).toUpperCase() + option.name.slice(1)} - {option.price}
+                    </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            {
+              (this.props.user === 'admin') &&
+              /* Patient */
+              <Grid item xs = {6}>
+                <TextField
+                    autoFocus fullWidth select
+                    variant       = "outlined"
+                    id            = "patient"
+                    label         = "Patient"
+                    value         = { this.state.patient }
+                    onChange      = { this.handlePatientChange }>{
+                      this.state.patientList.map((option) => (
+                          <MenuItem key = { option.id } value = { option.id }>
+                            { option.name }
+                          </MenuItem>
+                      ))}
+                </TextField>
+              </Grid>
+            }
+
+            {/* Practitioner */}
+            <Grid item xs = {6}>
+                <TextField
+                    autoFocus fullWidth select
+                    variant       = "outlined"
+                    id            = "practitioner"
+                    label         = "Practitioner"
+                    value         = { this.state.practitioner }
+                    onChange      = { this.handlePractitionerChange }>{
+                  this.state.practitionerList.map((option) => (
+                      <MenuItem key = { option.id } value = { option.id }>
+                        { option.name }
+                      </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+            {/* Date */}
+            <Grid item xs = {6}>
+              <MuiPickersUtilsProvider utils = {DateFnsUtils}>
+                <KeyboardDatePicker
+                    disablePast fullWidth autoFocus
+                    variant               = "inline"
+                    inputVariant          = "outlined"
+                    label                 = "Date of appointment"
+                    format                = "dd/MM/yyyy"
+                    value                 = { this.state.date }
+                    onChange              = { this.handleDateChange }/>
+              </MuiPickersUtilsProvider>
+            </Grid>
+            {/* Time */}
+            <Grid item xs = {6}>
+              <TextField
+                  autoFocus fullWidth select
+                  variant       = "outlined"
+                  id            = "time"
+                  label         = "Time"
+                  value         = { this.state.time }
+                  onChange      = { this.handleTimeChange }>{
+                this.state.timeList.map((option) => (
+                    <MenuItem key = { option } value = { option }>
+                      { option }
+                    </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick = { this.handleSave } color = "primary" align = "right">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
 }
 
 export default NewAppointmentDialog;

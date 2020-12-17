@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export const allDisease = async () => {
+export const allMedicalService = async () => {
     let res;
     try {
-        res = await axios.post(`${process.env.REACT_APP_API_ADDR}/disease/all`, { withCredentials: true });
+        res = await axios.post(`${process.env.REACT_APP_API_ADDR}/medicalServices/all`, { withCredentials: true });
         console.log(res.data)
         return res.data;
     } catch (error) {
