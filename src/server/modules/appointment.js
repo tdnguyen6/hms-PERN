@@ -15,7 +15,8 @@ exports.createAppointment = async function (req, res) {
 
 exports.listAllAppointments = async function (req, res) {
     const queryStatement = `select t1.appointment_id, 
-                                   t1.room_id, 
+                                   t1.room_id,
+                                   t1.service_id, 
                                    t1.medical_service,
                                    t1.service_price, 
                                    t1.start, 
@@ -62,15 +63,16 @@ exports.listAllAppointments = async function (req, res) {
                  ac.email, 
                  ac.phone, 
                  d.name as specialty, 
-                 r.id as room_id, 
+                 r.id as room_id,
+                 r.medicalservice_id as service_id, 
                  m.name as medical_service,
                  m.price as service_price 
-                 from appointments ap, 
-                 practitioners p, 
-                 accounts ac, 
-                 departments d, 
-                 rooms r, 
-                 medicalservices m 
+          from appointments ap, 
+               practitioners p, 
+               accounts ac, 
+               departments d, 
+               rooms r, 
+               medicalservices m 
           where ap.practitioner_id = p.id and 
                 p.id = ac.practitioner_id and 
                 d.id = p.specialty and 
