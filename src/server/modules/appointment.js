@@ -168,7 +168,9 @@ exports.practitionerAppointments = async function (req, res) {
    select ap.id as appointment_id,
           ap.practitioner_id,
           ap.room_id,
+          r.medicalservice_id as service_id,
           m.name as medical_service,
+          m.price as service_price,
           ap.patient_id,
           a.name as patient_name,
           avatar as patient_avatar,
@@ -184,8 +186,15 @@ exports.practitionerAppointments = async function (req, res) {
           ap.log,
           ap.prescription,
           ap.next_appointment_period,
-          (select m.name as next_appointment_service
-           where ap.next_appointment_service = m.id),
+          ap.next_appointment_service as next_service_id,
+              (select medicalservices.name
+               from   medicalservices
+               where  ap.next_appointment_service = medicalservices.id) 
+          as next_service,
+              (select medicalservices.price
+              from    medicalservices
+              where   ap.next_appointment_service = medicalservices.id) 
+          as next_service_price,
           ap.last_appointment
           from appointments ap,
           rooms r,
