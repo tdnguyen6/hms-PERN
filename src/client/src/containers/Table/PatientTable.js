@@ -18,6 +18,7 @@ import {allPractitioner} from "../../components/API/AllPractitioner";
 import {allPatient} from "../../components/API/AllPatient";
 import EditPatientDialog from "../Dialog/EditDialog/EditPatientDialog";
 import {Redirect} from "react-router-dom";
+import Avatar from "@material-ui/core/Avatar";
 
 let columns = [
     {id: 'name', label: 'Name'},
@@ -29,6 +30,7 @@ let columns = [
 ];
 let patient = {
     id: '',
+    avatar: '',
     name: '',
     sex: '',
     email: '',
@@ -75,6 +77,7 @@ class PatientTable extends Component {
     handleRowClick = (event, row) => {
         patient = {
             id: row.id,
+            avatar: row.avatar,
             name: row.name,
             sex: row.gender,
             email: row.email,
@@ -123,6 +126,9 @@ class PatientTable extends Component {
                     <Table size="medium" stickyHeader>
                         <TableHead>
                             <TableRow>
+                                <TableCell>
+                                    Avatar
+                                </TableCell>
                                 {columns.map((column) => (
                                     <TableCell key = { column.id } align = { column.align }>
                                         { column.label }
@@ -134,6 +140,9 @@ class PatientTable extends Component {
                             { this.state.patient.map((row) => {
                                 return (
                                     <TableRow hover key = { row.id } onClick = {(event) => this.handleRowClick(event, row)}>
+                                        <TableCell>
+                                            <Avatar src = {row.avatar}/>
+                                        </TableCell>
                                         { columns.map((column) => {
                                             return (
                                                 <TableCell key = { column.id } align = { column.align }>

@@ -39,7 +39,7 @@ class PractitionerInfoDialog extends Component {
                               alignItems="center"
                               justify="center">
                             <Avatar className = {classes.avatar} src = {this.props.data.avatar}>
-                                M
+                                {this.props.data.name.charAt(0)}
                             </Avatar>
                         </Grid>
                     </DialogTitle>

@@ -11,6 +11,16 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from "@material-ui/core/Grid";
 import {deletePractitioner} from "../../../components/API/DeletePractitioner";
 import LoadingDialog from "../OtherDialog/LoadingDialog";
+import Avatar from "@material-ui/core/Avatar";
+import withStyles from "@material-ui/core/styles/withStyles";
+
+const style = (theme) => ({
+    avatar: {
+        width: theme.spacing(10),
+        height: theme.spacing(10),
+        marginBottom: '1rem'
+    }
+});
 
 class EditPractitionerDialog extends Component {
     state = {
@@ -38,6 +48,7 @@ class EditPractitionerDialog extends Component {
     };
 
     render() {
+        const { classes } = this.props;
         return (
             <React.Fragment>
                 <Dialog
@@ -53,6 +64,13 @@ class EditPractitionerDialog extends Component {
                                     To edit information of this practitioner, please enter new information below.
                                     There are some read only information you can not change.
                                 </DialogContentText>
+                            </Grid>
+                            <Grid container   direction="column"
+                                  alignItems="center"
+                                  justify="center">
+                                <Avatar className = {classes.avatar} src = {this.props.avatar}>
+                                    {this.props.name.charAt(0)}
+                                </Avatar>
                             </Grid>
                             {/* Name */}
                             <Grid item xs={12} sm={9}>
@@ -137,4 +155,4 @@ class EditPractitionerDialog extends Component {
     }
 }
 
-export default EditPractitionerDialog;
+export default withStyles(style)(EditPractitionerDialog);

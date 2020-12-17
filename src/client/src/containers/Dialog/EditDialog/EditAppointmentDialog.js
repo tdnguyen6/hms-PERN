@@ -61,7 +61,6 @@ class EditAppointmentDialog extends Component {
     }
 
     handleDialogClose = async () => {
-        console.log(this.props.appointment);
         await this.setState({
             medicalServiceID: this.props.appointment.medical_serviceID,
             practitionerList: [],
@@ -119,7 +118,6 @@ class EditAppointmentDialog extends Component {
         try {
             await this.setState({ loading: true });
             let res = await practitionerByMedicalService(this.state.medicalServiceID);
-            console.log(res);
             await this.setState({
                 practitionerList: res
             });

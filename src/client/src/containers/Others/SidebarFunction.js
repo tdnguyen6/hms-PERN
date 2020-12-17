@@ -22,6 +22,7 @@ let practitioner = [
 
 let patient = [
     {id: 'Dashboard', link: '/patient/dashboard', icon: <DashboardIcon/>},
+    {id: 'Practitioner', link: '/patient/practitioner', icon: <PersonAddIcon/>},
     {id: 'Appointment', link: '/patient/appointment', icon: <EventIcon/>}
 ];
 

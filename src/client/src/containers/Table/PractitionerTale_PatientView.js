@@ -25,22 +25,11 @@ import Avatar from "@material-ui/core/Avatar";
 let columns = [
     {id: 'name', label: 'Name'},
     {id: 'gender', label: 'Sex', align: 'right'},
-    {id: 'email', label: 'Email', align: 'right'},
-    {id: 'phone', label: 'Phone', align: 'right'},
     {id: 'specialty', label: 'Specialty', align: 'right'},
     // {id: 'experience', label: 'Experience', align: 'center'}
 ];
-let practitioner = {
-    id: '',
-    name: '',
-    avatar: '',
-    sex: '',
-    email: '',
-    phone: '',
-    speciality: ''
-};
 
-class PractitionerTable extends Component {
+class PractitionerTable_PatientView extends Component {
     state = {
         practitioner: [],
         specialtyList: [],
@@ -55,62 +44,12 @@ class PractitionerTable extends Component {
         this.getAllPractitioner().then();
     }
 
-    handleDialogClose = async (close, type) => {
-        if (type === "editPractitioner") {
-            await this.setState({
-                editPractitionerDialog: close
-            });
-            this.getAllPractitioner().then();
-        } else if (type === "newPractitioner") {
-            await this.setState({
-                newPractitionerDialog: close
-            });
-            this.getAllPractitioner().then();
-        } else if (type === 'error') {
-            await this.setState({
-                errorDialog: close
-            });
-        }
-    };
     handleLoading = async (loading) => {
         await this.setState({
             loading: loading
         })
     };
-    handleRowClick = (event, row) => {
-        practitioner = {
-            id: row.id,
-            avatar: row.avatar,
-            name: row.name,
-            sex: row.gender,
-            email: row.email,
-            phone: row.phone,
-            specialty: row.specialty
-        }
-        this.setState({ editPractitionerDialog: true });
-    };
 
-    /*
-    * Click New -> Yes/No Dialog
-    *             -> Yes: symptomsKnown = true
-    *               -> New Appointment Dialog
-    *             -> No:  symptomsKnown = false
-    *               -> Symptoms Dialog -> Click Save -> Return Predicted Disease
-    *                 -> New Appointment Dialog
-    */
-    handleNewClick = async () => {
-        let specialty;
-        try {
-            await this.setState({ loading: true });
-            specialty = await allSpecialty();
-        } finally {
-            await this.setState( { loading: false });
-        }
-        await this.setState({
-            newPractitionerDialog: true,
-            specialtyList: specialty
-        });
-    };
     getError = async (error) => {
         await this.setState({
             errorDialog: error.error,
@@ -136,13 +75,7 @@ class PractitionerTable extends Component {
                         <TableHead>
                             <TableRow>
                                 <TableCell>
-                                    <Button variant = "contained"
-                                            color = "primary"
-                                            align = "right"
-                                            onClick = {this.handleNewClick}
-                                            startIcon = {<PersonAddIcon />}>
-                                        New
-                                    </Button>
+                                    Avatar
                                 </TableCell>
                                 {columns.map((column) => (
                                     <TableCell key = { column.id } align = { column.align }>
@@ -154,7 +87,7 @@ class PractitionerTable extends Component {
                         <TableBody>
                             { this.state.practitioner.map((row) => {
                                 return (
-                                    <TableRow hover key = { row.id } onClick = {(event) => this.handleRowClick(event, row)}>
+                                    <TableRow hover key = { row.id } >
                                         <TableCell>
                                             <Avatar src = {row.avatar}/>
                                         </TableCell>
@@ -171,22 +104,10 @@ class PractitionerTable extends Component {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <EditPractitionerDialog open = { this.state.editPractitionerDialog }
-                                        close = {this.handleDialogClose}
-                                        loading = {this.handleLoading}
-                                        {...practitioner} />
-                <NewPractitionerDialog open = { this.state.newPractitionerDialog }
-                                       close = { this.handleDialogClose }
-                                       loading = { this.handleLoading }
-                                       error = { this.getError }
-                                       specialty = { this.state.specialtyList } />
-                <ErrorDialog open = {this.state.errorDialog}
-                             close = {this.handleDialogClose}
-                             error = {this.state.errorMessage}/>
                 <LoadingDialog open = {this.state.loading}/>
             </React.Fragment>
         );
     }
 }
 
-export default PractitionerTable;
+export default PractitionerTable_PatientView;

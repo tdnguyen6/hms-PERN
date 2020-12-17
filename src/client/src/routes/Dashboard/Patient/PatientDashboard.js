@@ -12,6 +12,7 @@ import DrawerAppBar from '../../../containers/Others/DrawerAppBar';
 import Dashboard from "../../../components/Others/Dashboard";
 import {authorizedUser} from "../../../components/API/Authenticated";
 import AuthContainer from "../../../containers/Authentication/AuthContainer";
+import PractitionerTable_PatientView from "../../../containers/Table/PractitionerTale_PatientView";
 
 const style = (theme) => ({
     root: {
@@ -60,6 +61,7 @@ class PatientDashboard extends Component {
                                         <Route exact path="/patient" exact component={Dashboard}/>
                                         <Route exact path="/patient/dashboard" exact component={Dashboard}/>
                                         <Route path="/patient/appointment" exact component={AppointmentTable}/>
+                                        <Route path="/patient/practitioner" exact component={PractitionerTable_PatientView}/>
                                     </Paper>
                                 </Grid>
                             </Grid>
