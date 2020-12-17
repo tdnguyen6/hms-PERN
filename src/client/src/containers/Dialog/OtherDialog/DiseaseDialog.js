@@ -53,7 +53,7 @@ class DiseaseDialog extends Component {
                                 this.props.diseaseList.map((disease) => (
                                     <Chip
                                         clickable
-                                        label = { disease.name }
+                                        label = { disease.disease }
                                         color = "primary"
                                         className = { classes.chip }
                                         onClick = { () => this.handleChipClick(disease) } />
