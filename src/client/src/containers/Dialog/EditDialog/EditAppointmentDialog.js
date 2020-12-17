@@ -28,6 +28,13 @@ class EditAppointmentDialog extends Component {
             this.props.appointment.date[0], 0, 0, 0),
         timeList: [this.props.appointment.time],
         time: this.props.appointment.time,
+        log: this.props.appointment.log,
+        prescription: this.props.appointment.prescription,
+        nextAppointment: {
+            period: this.props.appointment.next_appointment_period,
+            service: this.props.appointment.next_appointment_service,
+            price: this.props.appointment.next_appointment_service_price,
+        },
         diseaseInfoDialog: false,
         userInfoDialog: false,
         userInfo: null,
@@ -133,7 +140,7 @@ class EditAppointmentDialog extends Component {
                                     variant="outlined"
                                     id="medical_service"
                                     label="Medical Service"
-                                    value={this.props.appointment.medical_services}
+                                    value={this.props.appointment.medical_service}
                                     InputProps={{readOnly: true}}/>
                             </Grid>
                             {/* Practitioner */}
@@ -147,7 +154,8 @@ class EditAppointmentDialog extends Component {
                                         label="Practitioner"
                                         value={this.props.appointment.practitioner.name}
                                         InputProps={{
-                                            readOnly: true, endAdornment:
+                                            readOnly: true,
+                                            endAdornment:
                                                 <IconButton aria-label="information">
                                                     <InfoOutlinedIcon
                                                         onClick={() => this.handleUserInfoClick('practitioner')}/>
@@ -167,7 +175,8 @@ class EditAppointmentDialog extends Component {
                                         label="Patient"
                                         value={this.props.appointment.patient.name}
                                         InputProps={{
-                                            readOnly: true, endAdornment:
+                                            readOnly: true,
+                                            endAdornment:
                                                 <IconButton aria-label="information">
                                                     <InfoOutlinedIcon
                                                         onClick={() => this.handleUserInfoClick('patient')}/>
@@ -180,8 +189,12 @@ class EditAppointmentDialog extends Component {
                             <Grid item xs={12}>
                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                     <KeyboardDatePicker
-                                        disablePast fullWidth autoFocus
-                                        variant="inline"
+                                        fullWidth autoFocus
+                                        disablePast = { this.props.appointment.status !== 'done' }
+                                        readOnly    = { this.props.appointment.status === 'done' }
+                                        error       = { this.props.appointment.status === 'done' && false }
+                                        helperText  = { null }
+                                        variant="dialog"
                                         inputVariant="outlined"
                                         label="Date of appointment"
                                         format="dd/MM/yyyy"
@@ -205,6 +218,74 @@ class EditAppointmentDialog extends Component {
                                     ))}
                                 </TextField>
                             </Grid>
+                            { (this.props.user === 'admin' || this.props.user === 'practitioner') &&
+                                <React.Fragment>
+                                    // Notes and Prescription
+                                    <Grid item xs={12}>
+                                        <DialogContentText id="alert-dialog-description">
+                                            Appointment note and prescription from practitioner
+                                        </DialogContentText>
+                                    </Grid>
+                                    // Notes
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            autoFocus fullWidth multiline
+                                            rowsMax = {4}
+                                            variant="outlined"
+                                            id="log"
+                                            label="Log"
+                                            value={this.state.log}
+                                            InputProps={{readOnly: this.props.appointment.status === 'done'}}/>
+                                    </Grid>
+                                    // Prescription
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            autoFocus fullWidth multiline
+                                            rowsMax = {4}
+                                            variant="outlined"
+                                            id="prescription"
+                                            label="Prescription"
+                                            value={this.state.prescription}
+                                            InputProps={{readOnly: this.props.appointment.status === 'done'}}/>
+                                    </Grid>
+                                    // Next appointment
+                                    <Grid item xs={12}>
+                                        <DialogContentText id="alert-dialog-description">
+                                            Next appointment information
+                                        </DialogContentText>
+                                    </Grid>
+                                    // Period
+                                    <Grid item xs={3}>
+                                        <TextField
+                                            autoFocus fullWidth
+                                            variant="outlined"
+                                            id="next_appointment_period"
+                                            label="Period"
+                                            value={this.state.nextAppointment.period}
+                                            InputProps={{readOnly: this.props.appointment.status === 'done'}}/>
+                                    </Grid>
+                                    // Service
+                                    <Grid item xs={6}>
+                                        <TextField
+                                            autoFocus fullWidth
+                                            variant="outlined"
+                                            id="next_appointment_service"
+                                            label="Service"
+                                            value={this.state.nextAppointment.service}
+                                            InputProps={{readOnly: this.props.appointment.status === 'done'}}/>
+                                    </Grid>
+                                    // Price
+                                    <Grid item xs={3}>
+                                        <TextField
+                                            autoFocus fullWidth
+                                            variant="outlined"
+                                            id="next_appointment_price"
+                                            label="Price"
+                                            value={this.state.nextAppointment.price}
+                                            InputProps={{readOnly: true}}/>
+                                    </Grid>
+                                </React.Fragment>
+                            }
                         </Grid>
                     </DialogContent>
                     <DialogActions>
