@@ -20,11 +20,14 @@ import Avatar from "@material-ui/core/Avatar";
 import {authorizedUser} from "../../components/API/Authenticated";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
+import CyclicSortButton from "../../components/Others/CyclicSortButton";
 
 let forAdmin = [
+    {id: 'avatar', label: 'Avatar'},
     {
         id: 'id',
         label: 'ID',
+        align: 'center',
         compareFn: (a, b, dir) => {
             const res = a.id - b.id;
             return dir === 'asc' ? res : -res;
@@ -72,9 +75,11 @@ let forAdmin = [
 ];
 
 let forPatient = [
+    {id: 'avatar', label: 'Avatar', align: 'center'},
     {
         id: 'id',
         label: 'ID',
+        align: 'center',
         compareFn: (a, b, dir) => {
             const res = a.id - b.id;
             return dir === 'asc' ? res : -res;
@@ -118,8 +123,7 @@ let practitioner = {
 
 const style = (theme) => ({
     avatar: {
-        width: theme.spacing(3),
-        height: theme.spacing(3),
+        margin: '0 auto'
     }
 });
 
@@ -223,7 +227,7 @@ class PractitionerTable extends Component {
     }
 
     async sort() {
-        let l = this.state.practitioner;
+        let l = this.state.practitionerList;
         console.log(this.state.sortColumns);
         this.state.sortColumns.forEach(c => {
             l.sort((a, b) => this.state.columns.find(v => v.id === c.key).compareFn(a, b, c.dir));
@@ -257,13 +261,19 @@ class PractitionerTable extends Component {
                             <TableRow>
                                 {this.state.columns.map((column) => (
                                     <TableCell key={column.id} align={column.align}>
-                                        { (column.id === 'avatar' && this.state.user === "admin") ?
-                                            <Button variant="contained"
-                                                    color="primary"
-                                                    onClick={this.handleNewClick}
+                                        { column.id === 'avatar' ?
+                                            this.state.user === "admin" ?
+                                                <Button variant="contained"
+                                                        color="primary"
+                                                        onClick={this.handleNewClick}
                                                         startIcon = {<PersonAddIcon />} >
-                                                New
-                                            </Button> : column.label
+                                                    New
+                                                </Button>
+                                            : column.label
+                                        :
+                                            <CyclicSortButton sortTools={this.sortTools} columnID={column.id}>
+                                                {column.label}
+                                            </CyclicSortButton>
                                         }
                                     </TableCell>
                                 ))}
