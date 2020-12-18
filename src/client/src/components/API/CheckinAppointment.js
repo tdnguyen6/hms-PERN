@@ -6,7 +6,8 @@ export const checkinAppointment = async (appointment) => {
         log: appointment.log,
         prescription: appointment.prescription,
         nextAppointmentPeriod: appointment.nextAppointmentPeriod,
-        nextAppointmentService: appointment.nextAppointmentServiceID
+        nextAppointmentService: appointment.nextAppointmentServiceID,
+        status: 'done'
     }
     console.log('checkin appointment', data);
     try {

@@ -174,7 +174,11 @@ class AppointmentTable extends Component {
         user: null,
         appointmentDetail: {
             id: null,
-            medical_services: null,
+            medicalService: {
+                id: null,
+                name: null,
+                price: null,
+            },
             practitioner: {
                 id: null,
                 avatar: null,
@@ -216,17 +220,23 @@ class AppointmentTable extends Component {
                 await this.setState({columns: forPatient});
             }
             await this.setState({
-                user: user.role,
+                user: user.role
             });
         }
         await this.getAllAppointment();
+        console.log(this.state.appointment);
     }
 
     handleRowClick = async (event, row) => {
+        console.log(row);
         await this.setState({
             appointmentDetail: {
                 id: row.appointment_id,
-                medical_service: row.medical_service,
+                medicalService: {
+                    id: row.service_id,
+                    name: row.medical_service,
+                    price: row.service_price
+                },
                 practitioner: {
                     id: row.practitioner_id,
                     avatar: row.practitioner_avatar,
@@ -251,13 +261,12 @@ class AppointmentTable extends Component {
                 date: row.date.split('/').map(Number),
                 log: row.log,
                 prescription: row.prescription,
-                next_appointment_service: row.next_appointment_service,
+                next_appointment_service: row.next_service,
+                next_appointment_service_id: row.next_service_id,
                 next_appointment_period: row.next_appointment_period,
-                next_appointment_service_price: row.next_appointment_service_price,
                 status: row.status
             }
         });
-
         this.setState({editAppointmentDialog: true});
     };
 
@@ -340,7 +349,7 @@ class AppointmentTable extends Component {
                             <TableRow>
                                 {this.state.columns.map((column) => (
                                     <TableCell key={column.id} align={column.align}>
-                                        {(column.label === 'Status')
+                                        {(column.label === 'Status' && this.state.user !== 'practitioner')
                                             ? <Button variant="contained"
                                                       color="primary"
                                                       align="right"

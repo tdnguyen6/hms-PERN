@@ -106,13 +106,14 @@ let forPatient = [
 ]
 
 let practitioner = {
-    id: '',
-    name: '',
-    avatar: '',
-    sex: '',
-    email: '',
-    phone: '',
-    speciality: ''
+    id: null,
+    name: null,
+    avatar: null,
+    sex: null,
+    email: null,
+    phone: null,
+    speciality: null,
+    experience: null
 };
 
 const style = (theme) => ({
@@ -124,7 +125,7 @@ const style = (theme) => ({
 
 class PractitionerTable extends Component {
     state = {
-        practitioner: [],
+        practitionerList: [],
         specialtyList: [],
         columns: [],
         user: null,
@@ -138,21 +139,27 @@ class PractitionerTable extends Component {
     };
 
     async componentDidMount() {
-        const user = await authorizedUser();
-        if (user) {
-            if (user.role === "admin") {
-                await this.setState({columns: forAdmin});
-            } else if (user.role === "patient") {
-                await this.setState({columns: forPatient});
+        try {
+            this.setState({loading: true});
+            const user = await authorizedUser();
+            if (user) {
+                if (user.role === "admin") {
+                    await this.setState({columns: forAdmin});
+                } else if (user.role === "patient") {
+                    await this.setState({columns: forPatient});
+                }
+                await this.setState({
+                    user: user.role,
+                });
             }
-            await this.setState({
-                user: user.role,
-            });
+            await this.getAllPractitioner();
+        } finally {
+            this.setState({loading: false});
         }
-        await this.getAllPractitioner();
     }
 
     handleDialogClose = async (close, type) => {
+        this.setState({loading: true});
         if (type === "editPractitioner") {
             await this.setState({
                 editPractitionerDialog: close
@@ -168,6 +175,7 @@ class PractitionerTable extends Component {
                 errorDialog: close
             });
         }
+        this.setState({loading: false});
     };
     handleLoading = async (loading) => {
         await this.setState({
@@ -182,18 +190,19 @@ class PractitionerTable extends Component {
             sex: row.gender,
             email: row.email,
             phone: row.phone,
-            specialty: row.specialty
+            specialty: row.specialty,
+            experience: row.experience
         }
-        if (this.state.user === 'admin') await this.setState({ editPractitionerDialog: true });
+        if (this.state.user === 'admin') await this.setState({editPractitionerDialog: true});
     };
 
     handleNewClick = async () => {
         let specialty;
         try {
-            await this.setState({ loading: true });
+            await this.setState({loading: true});
             specialty = await allSpecialty();
         } finally {
-            await this.setState( { loading: false });
+            await this.setState({loading: false});
         }
         await this.setState({
             newPractitionerDialog: true,
@@ -207,15 +216,10 @@ class PractitionerTable extends Component {
         })
     }
     getAllPractitioner = async () => {
-        this.setState({ loading: true });
-        await allPractitioner()
-            .then(data => {
-                this.setState({
-                    practitioner: data,
-                    loading: false
-                })
-            });
-        this.setState({ loading: false });
+        const data = await allPractitioner();
+        this.setState({
+            practitionerList: data,
+        });
     }
 
     async sort() {
@@ -243,7 +247,7 @@ class PractitionerTable extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
         return (
             <React.Fragment>
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>Practitioners</Typography>
@@ -251,37 +255,30 @@ class PractitionerTable extends Component {
                     <Table size="medium" stickyHeader>
                         <TableHead>
                             <TableRow>
-                                { this.state.columns.map((column) => (
-                                    <TableCell key = { column.id } align = { column.align }>
-                                        { (column.id === 'id' && this.state.user === "admin") ?
-                                                <Button variant = "contained"
-                                                        color = "primary"
-                                                        align = "right"
-                                                        onClick = {this.handleNewClick}
-                                                        startIcon = {<PersonAddIcon />}>
-                                                    New
-                                                </Button> : column.label
+                                {this.state.columns.map((column) => (
+                                    <TableCell key={column.id} align={column.align}>
+                                        { (column.id === 'avatar' && this.state.user === "admin") ?
+                                            <Button variant="contained"
+                                                    color="primary"
+                                                    onClick={this.handleNewClick}
+                                                        startIcon = {<PersonAddIcon />} >
+                                                New
+                                            </Button> : column.label
                                         }
                                     </TableCell>
                                 ))}
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            { this.state.practitioner.map((row) => {
+                            { this.state.practitionerList.map((row) => {
                                 return (
-                                    <TableRow hover key = { row.id } onClick = {(event) => this.handleRowClick(event, row)}>
-                                        { this.state.columns.map((column) => {
+                                    <TableRow hover key={row.id} onClick={(event) => this.handleRowClick(event, row)}>
+                                        {this.state.columns.map((column) => {
                                             return (
-                                                <TableCell key = {column.id} align = {column.align}>
-                                                    { (column.id === 'name') ?
-                                                        <Grid container>
-                                                            <Grid item xs = {2}>
-                                                                <Avatar className = { classes.avatar } src = { row.avatar }/>
-                                                            </Grid>
-                                                            <Grid item xs = {10}>
-                                                                { row[column.id] }
-                                                            </Grid>
-                                                        </Grid> : row[column.id]
+                                                <TableCell key={column.id} align={column.align}>
+                                                    { (column.id === 'avatar') ?
+                                                        <Avatar className = { classes.avatar } src = { row.avatar }/>
+                                                        : (column.id === 'experience') ? `${row[column.id]} years` : row[column.id]
                                                     }
                                                 </TableCell>
                                             );
@@ -292,19 +289,19 @@ class PractitionerTable extends Component {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <EditPractitionerDialog open = { this.state.editPractitionerDialog }
-                                        close = {this.handleDialogClose}
-                                        loading = {this.handleLoading}
+                <EditPractitionerDialog open={this.state.editPractitionerDialog}
+                                        close={this.handleDialogClose}
+                                        loading={this.handleLoading}
                                         {...practitioner} />
-                <NewPractitionerDialog open = { this.state.newPractitionerDialog }
-                                       close = { this.handleDialogClose }
-                                       loading = { this.handleLoading }
-                                       error = { this.getError }
-                                       specialty = { this.state.specialtyList } />
-                <ErrorDialog open = {this.state.errorDialog}
-                             close = {this.handleDialogClose}
-                             error = {this.state.errorMessage}/>
-                <LoadingDialog open = {this.state.loading}/>
+                <NewPractitionerDialog open={this.state.newPractitionerDialog}
+                                       close={this.handleDialogClose}
+                                       loading={this.handleLoading}
+                                       error={this.getError}
+                                       specialty={this.state.specialtyList}/>
+                <ErrorDialog open={this.state.errorDialog}
+                             close={this.handleDialogClose}
+                             error={this.state.errorMessage}/>
+                <LoadingDialog open={this.state.loading}/>
             </React.Fragment>
         );
     }
