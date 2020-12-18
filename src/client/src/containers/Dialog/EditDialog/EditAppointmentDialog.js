@@ -199,21 +199,21 @@ class EditAppointmentDialog extends Component {
                                     label="Medical Service"
                                     value={this.props.appointment.medical_service}/>
                             </Grid>
-                            {/*<Grid item xs={12}>*/}
-                            {/*    <TextField*/}
-                            {/*        autoFocus fullWidth select*/}
-                            {/*        variant="outlined"*/}
-                            {/*        id="medical_service"*/}
-                            {/*        label="Medical Service"*/}
-                            {/*        value={this.state.medicalServiceID}*/}
-                            {/*        onChange={this.handleMedicalServiceChange}>{*/}
-                            {/*        this.state.medicalServiceList.map((option) => (*/}
-                            {/*            <MenuItem key={option.id} value={option.id}>*/}
-                            {/*                {option.name.charAt(0).toUpperCase() + option.name.slice(1)} - {option.price}*/}
-                            {/*            </MenuItem>*/}
-                            {/*        ))}*/}
-                            {/*    </TextField>*/}
-                            {/*</Grid>*/}
+                            <Grid item xs={12}>
+                                <TextField
+                                    autoFocus fullWidth select
+                                    variant="outlined"
+                                    id="medical_service"
+                                    label="Medical Service"
+                                    value={this.state.medicalServiceID}
+                                    onChange={this.handleMedicalServiceChange}>{
+                                    this.state.medicalServiceList.map((option) => (
+                                        <MenuItem key={option.id} value={option.id}>
+                                            {option.name.charAt(0).toUpperCase() + option.name.slice(1)} - {option.price}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </Grid>
                             {/* Practitioner */}
                             {
                                 (this.props.user !== 'practitioner') &&

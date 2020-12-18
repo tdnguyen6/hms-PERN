@@ -194,7 +194,7 @@ class AppointmentTable extends Component {
     render() {
         return (
             <React.Fragment>
-                <Typography component="h2" variant="h6" color="primary" gutterBottom>Upcomming appointment</Typography>
+                <Typography component="h2" variant="h6" color="primary" gutterBottom>Upcoming appointment</Typography>
                 <TableContainer>
                     <Table size="medium" stickyHeader>
                         <TableHead>

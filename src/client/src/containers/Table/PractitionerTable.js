@@ -13,24 +13,29 @@ import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import EditPractitionerDialog from "../Dialog/EditDialog/EditPractitionerDialog";
 import NewPractitionerDialog from "../Dialog/NewDialog/NewPractitionerDialog";
 import ErrorDialog from "../Dialog/OtherDialog/ErrorDialog";
-import {allAppointment} from "../../components/API/AllAppointment";
 import {allPractitioner} from "../../components/API/AllPractitioner";
-import {Redirect} from "react-router-dom";
-import {allDisease} from "../../components/API/AllDisease";
-import {allSymptom} from "../../components/API/AllSymptom";
 import {allSpecialty} from "../../components/API/AllSpecialty";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import Avatar from "@material-ui/core/Avatar";
+import {authorizedUser} from "../../components/API/Authenticated";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Grid from "@material-ui/core/Grid";
 
-let columns = [
+let forAdmin = [
     {id: 'id', label: 'ID'},
     {id: 'name', label: 'Name'},
     {id: 'gender', label: 'Sex', align: 'right'},
     {id: 'email', label: 'Email', align: 'right'},
     {id: 'phone', label: 'Phone', align: 'right'},
     {id: 'specialty', label: 'Specialty', align: 'right'},
-    {id: 'experience', label: 'Years of Experience', align: 'center'}
 ];
+
+let forPatient = [
+    {id: 'name', label: 'Name'},
+    {id: 'gender', label: 'Sex', align: 'right'},
+    {id: 'specialty', label: 'Specialty', align: 'right'},
+]
+
 let practitioner = {
     id: '',
     name: '',
@@ -38,23 +43,41 @@ let practitioner = {
     sex: '',
     email: '',
     phone: '',
-    speciality: '',
-    experience: '',
+    speciality: ''
 };
+
+const style = (theme) => ({
+    avatar: {
+        width: theme.spacing(3),
+        height: theme.spacing(3),
+    }
+});
 
 class PractitionerTable extends Component {
     state = {
         practitioner: [],
         specialtyList: [],
+        columns: [],
+        user: null,
         loading: false,
         editPractitionerDialog: false,
         newPractitionerDialog: false,
         errorDialog: false
     };
 
-    componentDidMount() {
-        this.setState({ loading: true });
-        this.getAllPractitioner().then();
+    async componentDidMount() {
+        const user = await authorizedUser();
+        if (user) {
+            if (user.role === "admin") {
+                await this.setState({columns: forAdmin});
+            } else if (user.role === "patient") {
+                await this.setState({columns: forPatient});
+            }
+            await this.setState({
+                user: user.role,
+            });
+        }
+        await this.getAllPractitioner();
     }
 
     handleDialogClose = async (close, type) => {
@@ -79,7 +102,7 @@ class PractitionerTable extends Component {
             loading: loading
         })
     };
-    handleRowClick = (event, row) => {
+    handleRowClick = async (event, row) => {
         practitioner = {
             id: row.id,
             avatar: row.avatar,
@@ -87,20 +110,11 @@ class PractitionerTable extends Component {
             sex: row.gender,
             email: row.email,
             phone: row.phone,
-            specialty: row.specialty,
-            experience: row.experience
+            specialty: row.specialty
         }
-        this.setState({ editPractitionerDialog: true });
+        if (this.state.user === 'admin') await this.setState({ editPractitionerDialog: true });
     };
 
-    /*
-    * Click New -> Yes/No Dialog
-    *             -> Yes: symptomsKnown = true
-    *               -> New Appointment Dialog
-    *             -> No:  symptomsKnown = false
-    *               -> Symptoms Dialog -> Click Save -> Return Predicted Disease
-    *                 -> New Appointment Dialog
-    */
     handleNewClick = async () => {
         let specialty;
         try {
@@ -121,6 +135,7 @@ class PractitionerTable extends Component {
         })
     }
     getAllPractitioner = async () => {
+        this.setState({ loading: true });
         await allPractitioner()
             .then(data => {
                 this.setState({
@@ -128,9 +143,11 @@ class PractitionerTable extends Component {
                     loading: false
                 })
             });
+        this.setState({ loading: false });
     }
 
     render() {
+        const { classes } = this.props;
         return (
             <React.Fragment>
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>Practitioners</Typography>
@@ -138,18 +155,17 @@ class PractitionerTable extends Component {
                     <Table size="medium" stickyHeader>
                         <TableHead>
                             <TableRow>
-                                <TableCell>
-                                    <Button variant = "contained"
-                                            color = "primary"
-                                            align = "right"
-                                            onClick = {this.handleNewClick}
-                                            startIcon = {<PersonAddIcon />}>
-                                        New
-                                    </Button>
-                                </TableCell>
-                                {columns.map((column) => (
+                                { this.state.columns.map((column) => (
                                     <TableCell key = { column.id } align = { column.align }>
-                                        {column.label}
+                                        { (column.id === 'id' && this.state.user === "admin") ?
+                                                <Button variant = "contained"
+                                                        color = "primary"
+                                                        align = "right"
+                                                        onClick = {this.handleNewClick}
+                                                        startIcon = {<PersonAddIcon />}>
+                                                    New
+                                                </Button> : column.label
+                                        }
                                     </TableCell>
                                 ))}
                             </TableRow>
@@ -158,13 +174,19 @@ class PractitionerTable extends Component {
                             { this.state.practitioner.map((row) => {
                                 return (
                                     <TableRow hover key = { row.id } onClick = {(event) => this.handleRowClick(event, row)}>
-                                        <TableCell>
-                                            <Avatar  style={{marginLeft: '20px'}} src = {row.avatar}/>
-                                        </TableCell>
-                                        { columns.map((column) => {
+                                        { this.state.columns.map((column) => {
                                             return (
                                                 <TableCell key = {column.id} align = {column.align}>
-                                                    { row[column.id] }
+                                                    { (column.id === 'name') ?
+                                                        <Grid container>
+                                                            <Grid item xs = {2}>
+                                                                <Avatar className = { classes.avatar } src = { row.avatar }/>
+                                                            </Grid>
+                                                            <Grid item xs = {10}>
+                                                                { row[column.id] }
+                                                            </Grid>
+                                                        </Grid> : row[column.id]
+                                                    }
                                                 </TableCell>
                                             );
                                         })}
@@ -192,4 +214,4 @@ class PractitionerTable extends Component {
     }
 }
 
-export default PractitionerTable;
+export default withStyles(style)(PractitionerTable);
