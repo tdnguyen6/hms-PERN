@@ -121,7 +121,7 @@ class EditPractitionerDialog extends Component {
                                     InputProps={{readOnly: true}}/>
                             </Grid>
                             {/* Specialty */}
-                            <Grid item xs={12} sm={12}>
+                            <Grid item xs={12} sm={6}>
                                 <TextField
                                     autoComplete="specialty"
                                     name="Specialty"
@@ -135,7 +135,7 @@ class EditPractitionerDialog extends Component {
                                     InputProps={{readOnly: true}}/>
                             </Grid>
                             {/* Years of Experience */}
-                            <Grid item xs={12} sm={12}>
+                            <Grid item xs={12} sm={6}>
                                 <TextField
                                     fullWidth autoFocus
                                     autoComplete            = "experience"
