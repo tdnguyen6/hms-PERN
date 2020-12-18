@@ -16,6 +16,7 @@ let columns = [
     {
         id: 'id',
         label: 'ID',
+        align: 'center',
         compareFn: (a, b, dir) => {
             const res = a.id - b.id;
             return dir === 'asc' ? res : -res;
