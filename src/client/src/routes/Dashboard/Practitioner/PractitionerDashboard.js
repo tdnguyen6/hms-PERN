@@ -12,6 +12,7 @@ import {authorizedUser} from "../../../components/API/Authenticated";
 import AuthContainer from "../../../containers/Authentication/AuthContainer";
 
 import AppointmentTable from '../../../containers/Table/AppointmentTable';
+import MedicalServiceTable from "../../../containers/Table/MedicalServiceTable";
 // import PatientTable from "../../Table/Practitioner/PatientTable";
 
 const style = (theme) => ({
@@ -63,6 +64,7 @@ class PractitionerDashboard extends Component {
                                         <Route exact path="/practitioner" component = { Dashboard } />
                                         <Route exact path="/practitioner/dashboard" component = { Dashboard } />
                                         <Route exact path="/practitioner/appointment" component = { AppointmentTable }/>
+                                        <Route exact path="/practitioner/medicalService" component = { MedicalServiceTable } />
                                     </Paper>
                                 </Grid>
                             </Grid>

@@ -12,7 +12,8 @@ import DrawerAppBar from '../../../containers/Others/DrawerAppBar';
 import Dashboard from "../../../components/Others/Dashboard";
 import {authorizedUser} from "../../../components/API/Authenticated";
 import AuthContainer from "../../../containers/Authentication/AuthContainer";
-import PractitionerTable_PatientView from "../../../containers/Table/PractitionerTale_PatientView";
+import PractitionerTable from "../../../containers/Table/PractitionerTable";
+import MedicalServiceTable from "../../../containers/Table/MedicalServiceTable";
 
 const style = (theme) => ({
     root: {
@@ -58,10 +59,11 @@ class PatientDashboard extends Component {
                             <Grid container spacing={3}>
                                 <Grid item xs={12}>
                                     <Paper className={classes.paper}>
-                                        <Route exact path="/patient" exact component={Dashboard}/>
-                                        <Route exact path="/patient/dashboard" exact component={Dashboard}/>
-                                        <Route path="/patient/appointment" exact component={AppointmentTable}/>
-                                        <Route path="/patient/practitioner" exact component={PractitionerTable_PatientView}/>
+                                        <Route exact path="/patient" component={Dashboard}/>
+                                        <Route exact path="/patient/dashboard" component={Dashboard}/>
+                                        <Route exact path="/patient/appointment" component={AppointmentTable}/>
+                                        <Route exact path="/patient/practitioner" component={PractitionerTable}/>
+                                        <Route exact path="/patient/medicalService" component = { MedicalServiceTable } />
                                     </Paper>
                                 </Grid>
                             </Grid>

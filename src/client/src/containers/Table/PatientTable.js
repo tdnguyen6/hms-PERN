@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,24 +8,69 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
-import EditPractitionerDialog from "../Dialog/EditDialog/EditPractitionerDialog";
-import NewPractitionerDialog from "../Dialog/NewDialog/NewPractitionerDialog";
 import ErrorDialog from "../Dialog/OtherDialog/ErrorDialog";
-import {allAppointment} from "../../components/API/AllAppointment";
-import {allPractitioner} from "../../components/API/AllPractitioner";
 import {allPatient} from "../../components/API/AllPatient";
 import EditPatientDialog from "../Dialog/EditDialog/EditPatientDialog";
-import {Redirect} from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
+import CyclicSortButton from "../../components/Others/CyclicSortButton";
 
 let columns = [
-    {id: 'id', label: 'ID'},
-    {id: 'name', label: 'Name'},
-    {id: 'gender', label: 'Sex', align: 'right'},
-    {id: 'email', label: 'Email', align: 'right'},
-    {id: 'phone', label: 'Phone', align: 'right'},
-    {id: 'ssn', label: 'Social Security No.', align: 'right'},
-    {id: 'dob', label: 'Date of Birth', align: 'right'}
+    {
+        id: 'id',
+        label: 'ID',
+        align: 'center',
+        compareFn: (a, b, dir) => {
+            const res = a.id - b.id;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'name',
+        label: 'Name',
+        compareFn: (a, b, dir) => {
+            const res = a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'gender',
+        label: 'Sex',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.gender.toUpperCase() > b.gender.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'email',
+        label: 'Email',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.email.toUpperCase() > b.email.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'phone',
+        label: 'Phone',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.phone.toUpperCase() > b.phone.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'ssn',
+        label: 'Social Security No.',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.ssn.toUpperCase() > b.ssn.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'dob',
+        label: 'Date of Birth',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.dob > b.dob ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }
 ];
 let patient = {
     id: '',
@@ -46,7 +89,10 @@ class PatientTable extends Component {
         loading: false,
         editPatientDialog: false,
         newPractitionerDialog: false,
-        errorDialog: false
+        errorDialog: false,
+        sortColumns: [
+            // {key: 'id', dir: 'asc'}
+        ],
     };
 
     async componentDidMount() {
@@ -119,6 +165,30 @@ class PatientTable extends Component {
             });
     }
 
+    async sort() {
+        let l = this.state.patient;
+        console.log(this.state.sortColumns);
+        this.state.sortColumns.forEach(c => {
+            l.sort((a, b) => columns.find(v => v.id === c.key).compareFn(a, b, c.dir));
+        });
+        await this.setState({medicalServiceList: l});
+    }
+
+    async updateSortColumns(operation, columnID, dir = '') {
+        let s = this.state.sortColumns;
+        s = s.filter(e => e.key !== columnID);
+        if (operation === 'add') {
+            s.splice(1, 0, {key: columnID, dir: dir});
+        }
+        if (!s.length) s.push({key: 'id', dir: 'asc'});
+        await this.setState({sortColumns: s});
+    }
+
+    sortTools = {
+        sort: this.sort.bind(this),
+        updateCriteria: this.updateSortColumns.bind(this)
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -132,7 +202,9 @@ class PatientTable extends Component {
                                 </TableCell>
                                 {columns.map((column) => (
                                     <TableCell key = { column.id } align = { column.align }>
-                                        { column.label }
+                                        <CyclicSortButton sortTools={this.sortTools} columnID={column.id}>
+                                            {column.label}
+                                        </CyclicSortButton>
                                     </TableCell>
                                 ))}
                             </TableRow>

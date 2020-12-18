@@ -6,7 +6,7 @@ export const createAppointment = async (appointment) => {
     let year = appointment.date.getFullYear();
     let time = appointment.time.split(':');
     let data = {
-        medicalServiceIDr: appointment.medicalServiceID,
+        serviceID: appointment.medicalServiceID,
         practitionerID: appointment.practitionerID,
         patientID: appointment.patientID,
         at: new Date(Date.UTC(year, month, day, time[0], time[1])),

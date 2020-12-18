@@ -13,50 +13,173 @@ import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import EditPractitionerDialog from "../Dialog/EditDialog/EditPractitionerDialog";
 import NewPractitionerDialog from "../Dialog/NewDialog/NewPractitionerDialog";
 import ErrorDialog from "../Dialog/OtherDialog/ErrorDialog";
-import {allAppointment} from "../../components/API/AllAppointment";
 import {allPractitioner} from "../../components/API/AllPractitioner";
-import {Redirect} from "react-router-dom";
-import {allDisease} from "../../components/API/AllDisease";
-import {allSymptom} from "../../components/API/AllSymptom";
 import {allSpecialty} from "../../components/API/AllSpecialty";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import Avatar from "@material-ui/core/Avatar";
+import {authorizedUser} from "../../components/API/Authenticated";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Grid from "@material-ui/core/Grid";
+import CyclicSortButton from "../../components/Others/CyclicSortButton";
 
-let columns = [
-    {id: 'id', label: 'ID'},
-    {id: 'name', label: 'Name'},
-    {id: 'gender', label: 'Sex', align: 'right'},
-    {id: 'email', label: 'Email', align: 'right'},
-    {id: 'phone', label: 'Phone', align: 'right'},
-    {id: 'specialty', label: 'Specialty', align: 'right'},
-    // {id: 'experience', label: 'Experience', align: 'center'}
+let forAdmin = [
+    {id: 'avatar', label: 'Avatar'},
+    {
+        id: 'id',
+        label: 'ID',
+        align: 'center',
+        compareFn: (a, b, dir) => {
+            const res = a.id - b.id;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'name',
+        label: 'Name',
+        compareFn: (a, b, dir) => {
+            const res = a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'gender',
+        label: 'Sex',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.gender.toUpperCase() > b.gender.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'email',
+        label: 'Email',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.email.toUpperCase() > b.email.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'phone',
+        label: 'Phone',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.phone.toUpperCase() > b.phone.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'specialty',
+        label: 'Specialty',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.specialty.toUpperCase() > b.specialty.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'experience',
+        label: 'Experience',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.experience > b.experience ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }
 ];
+
+let forPatient = [
+    {id: 'avatar', label: 'Avatar', align: 'center'},
+    {
+        id: 'id',
+        label: 'ID',
+        align: 'center',
+        compareFn: (a, b, dir) => {
+            const res = a.id - b.id;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'name',
+        label: 'Name',
+        compareFn: (a, b, dir) => {
+            const res = a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'gender',
+        label: 'Sex',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.gender.toUpperCase() > b.gender.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'specialty',
+        label: 'Specialty',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.specialty.toUpperCase() > b.specialty.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'experience',
+        label: 'Experience',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.experience > b.experience ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }
+]
+
 let practitioner = {
-    id: '',
-    name: '',
-    avatar: '',
-    sex: '',
-    email: '',
-    phone: '',
-    speciality: ''
+    id: null,
+    name: null,
+    avatar: null,
+    sex: null,
+    email: null,
+    phone: null,
+    speciality: null,
+    experience: null
 };
+
+const style = theme => ({
+    avatar: {
+        margin: '0 auto'
+    }
+});
 
 class PractitionerTable extends Component {
     state = {
-        practitioner: [],
+        practitionerList: [],
         specialtyList: [],
+        columns: [],
+        user: null,
         loading: false,
         editPractitionerDialog: false,
         newPractitionerDialog: false,
-        errorDialog: false
+        errorDialog: false,
+        sortColumns: [
+            // {key: 'id', dir: 'asc'}
+        ],
     };
 
-    componentDidMount() {
-        this.setState({ loading: true });
-        this.getAllPractitioner().then();
+    async componentDidMount() {
+        try {
+            this.setState({loading: true});
+            const user = await authorizedUser();
+            if (user) {
+                if (user.role === "admin") {
+                    await this.setState({columns: forAdmin});
+                } else if (user.role === "patient") {
+                    await this.setState({columns: forPatient});
+                }
+                await this.setState({
+                    user: user.role,
+                });
+            }
+            await this.getAllPractitioner();
+        } finally {
+            this.setState({loading: false});
+        }
     }
 
     handleDialogClose = async (close, type) => {
+        this.setState({loading: true});
         if (type === "editPractitioner") {
             await this.setState({
                 editPractitionerDialog: close
@@ -72,13 +195,14 @@ class PractitionerTable extends Component {
                 errorDialog: close
             });
         }
+        this.setState({loading: false});
     };
     handleLoading = async (loading) => {
         await this.setState({
             loading: loading
         })
     };
-    handleRowClick = (event, row) => {
+    handleRowClick = async (event, row) => {
         practitioner = {
             id: row.id,
             avatar: row.avatar,
@@ -86,26 +210,19 @@ class PractitionerTable extends Component {
             sex: row.gender,
             email: row.email,
             phone: row.phone,
-            specialty: row.specialty
+            specialty: row.specialty,
+            experience: row.experience
         }
-        this.setState({ editPractitionerDialog: true });
+        if (this.state.user === 'admin') await this.setState({editPractitionerDialog: true});
     };
 
-    /*
-    * Click New -> Yes/No Dialog
-    *             -> Yes: symptomsKnown = true
-    *               -> New Appointment Dialog
-    *             -> No:  symptomsKnown = false
-    *               -> Symptoms Dialog -> Click Save -> Return Predicted Disease
-    *                 -> New Appointment Dialog
-    */
     handleNewClick = async () => {
         let specialty;
         try {
-            await this.setState({ loading: true });
+            await this.setState({loading: true});
             specialty = await allSpecialty();
         } finally {
-            await this.setState( { loading: false });
+            await this.setState({loading: false});
         }
         await this.setState({
             newPractitionerDialog: true,
@@ -119,16 +236,37 @@ class PractitionerTable extends Component {
         })
     }
     getAllPractitioner = async () => {
-        await allPractitioner()
-            .then(data => {
-                this.setState({
-                    practitioner: data,
-                    loading: false
-                })
-            });
+        const data = await allPractitioner();
+        this.setState({
+            practitionerList: data,
+        });
+    }
+
+    async sort() {
+        let l = this.state.practitionerList;
+        console.log(this.state.sortColumns);
+        this.state.sortColumns.forEach(c => {
+            l.sort((a, b) => this.state.columns.find(v => v.id === c.key).compareFn(a, b, c.dir));
+        });
+        await this.setState({medicalServiceList: l});
+    }
+    async updateSortColumns(operation, columnID, dir = '') {
+        let s = this.state.sortColumns;
+        s = s.filter(e => e.key !== columnID);
+        if (operation === 'add') {
+            s.splice(1, 0, {key: columnID, dir: dir});
+        }
+        if (!s.length) s.push({key: 'id', dir: 'asc'});
+        await this.setState({sortColumns: s});
+    }
+
+    sortTools = {
+        sort: this.sort.bind(this),
+        updateCriteria: this.updateSortColumns.bind(this)
     }
 
     render() {
+        const {classes} = this.props;
         return (
             <React.Fragment>
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>Practitioners</Typography>
@@ -136,33 +274,36 @@ class PractitionerTable extends Component {
                     <Table size="medium" stickyHeader>
                         <TableHead>
                             <TableRow>
-                                <TableCell>
-                                    <Button variant = "contained"
-                                            color = "primary"
-                                            align = "right"
-                                            onClick = {this.handleNewClick}
-                                            startIcon = {<PersonAddIcon />}>
-                                        New
-                                    </Button>
-                                </TableCell>
-                                {columns.map((column) => (
-                                    <TableCell key = { column.id } align = { column.align }>
-                                        {column.label}
+                                {this.state.columns.map((column) => (
+                                    <TableCell key={column.id} align={column.align}>
+                                        { column.id === 'avatar' ?
+                                            this.state.user === "admin" ?
+                                                <Button variant="contained"
+                                                        color="primary"
+                                                        onClick={this.handleNewClick}
+                                                        startIcon = {<PersonAddIcon />} >
+                                                    New
+                                                </Button>
+                                            : column.label :
+                                            <CyclicSortButton sortTools={this.sortTools} columnID={column.id}>
+                                                {column.label}
+                                            </CyclicSortButton>
+                                        }
                                     </TableCell>
                                 ))}
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            { this.state.practitioner.map((row) => {
+                            { this.state.practitionerList.map((row) => {
                                 return (
-                                    <TableRow hover key = { row.id } onClick = {(event) => this.handleRowClick(event, row)}>
-                                        <TableCell>
-                                            <Avatar  style={{marginLeft: '20px'}} src = {row.avatar}/>
-                                        </TableCell>
-                                        { columns.map((column) => {
+                                    <TableRow hover key={row.id} onClick={(event) => this.handleRowClick(event, row)}>
+                                        {this.state.columns.map((column) => {
                                             return (
-                                                <TableCell key = {column.id} align = {column.align}>
-                                                    { row[column.id] }
+                                                <TableCell key={column.id} align={column.align}>
+                                                    { (column.id === 'avatar') ?
+                                                        <Avatar className = { classes.avatar } src = { row.avatar }/>
+                                                        : (column.id === 'experience') ? `${row[column.id]} years` : row[column.id]
+                                                    }
                                                 </TableCell>
                                             );
                                         })}
@@ -172,22 +313,22 @@ class PractitionerTable extends Component {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <EditPractitionerDialog open = { this.state.editPractitionerDialog }
-                                        close = {this.handleDialogClose}
-                                        loading = {this.handleLoading}
+                <EditPractitionerDialog open={this.state.editPractitionerDialog}
+                                        close={this.handleDialogClose}
+                                        loading={this.handleLoading}
                                         {...practitioner} />
-                <NewPractitionerDialog open = { this.state.newPractitionerDialog }
-                                       close = { this.handleDialogClose }
-                                       loading = { this.handleLoading }
-                                       error = { this.getError }
-                                       specialty = { this.state.specialtyList } />
-                <ErrorDialog open = {this.state.errorDialog}
-                             close = {this.handleDialogClose}
-                             error = {this.state.errorMessage}/>
-                <LoadingDialog open = {this.state.loading}/>
+                <NewPractitionerDialog open={this.state.newPractitionerDialog}
+                                       close={this.handleDialogClose}
+                                       loading={this.handleLoading}
+                                       error={this.getError}
+                                       specialty={this.state.specialtyList}/>
+                <ErrorDialog open={this.state.errorDialog}
+                             close={this.handleDialogClose}
+                             error={this.state.errorMessage}/>
+                <LoadingDialog open={this.state.loading}/>
             </React.Fragment>
         );
     }
 }
 
-export default PractitionerTable;
+export default withStyles(style)(PractitionerTable);

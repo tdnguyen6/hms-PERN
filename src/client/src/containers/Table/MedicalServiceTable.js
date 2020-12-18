@@ -10,29 +10,89 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import {allMedicalService} from "../../components/API/AllMedicalService";
+import CyclicSortButton from "../../components/Others/CyclicSortButton";
 
 let columns = [
-    {id: 'id', label: 'ID'},
-    {id: 'name', label: 'Name'},
-    {id: 'price', label: 'Price', align: 'right'},
-    {id: 'department', label: 'Department', align: 'right'},
+    {
+        id: 'id',
+        label: 'ID',
+        align: 'center',
+        compareFn: (a, b, dir) => {
+            const res = a.id - b.id;
+            return dir === 'asc' ? res : -res;
+        }
+    },
+    {
+        id: 'name',
+        label: 'Name',
+        compareFn: (a, b, dir) => {
+            const res = a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    },
+    {
+        id: 'price',
+        label: 'Price',
+        compareFn: (a, b, dir) => {
+            const res = +a.price.slice(1) - +b.price.slice(1);
+            return dir === 'asc' ? res : -res;
+        }
+    },
+    {
+        id: 'department',
+        label: 'Department',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.department.toUpperCase() > b.department.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    },
 ];
 
 class MedicalServiceTable extends Component {
     state = {
-        medical_services: [],
+        medicalServiceList: [],
+        sortColumns: [
+            // {key: 'id', dir: 'asc'}
+        ],
         loading: false,
     };
 
     async componentDidMount() {
         try {
-            await this.setState({ loading: true });
+            await this.setState({loading: true});
             await this.setState({
-                medical_services: await allMedicalService()
+                medicalServiceList: await allMedicalService()
             })
+
         } finally {
             await this.setState({loading: false})
         }
+        await this.sort();
+    }
+
+    async sort() {
+        let l = this.state.medicalServiceList;
+        console.log(this.state.sortColumns);
+        this.state.sortColumns.forEach(c => {
+            l.sort((a, b) => columns.find(v => v.id === c.key).compareFn(a, b, c.dir));
+        });
+        await this.setState({medicalServiceList: l});
+    }
+
+    async updateSortColumns(operation, columnID, dir = '') {
+        let s = this.state.sortColumns;
+        s = s.filter(e => e.key !== columnID);
+        if (operation === 'add') {
+            s.splice(1, 0, {key: columnID, dir: dir});
+        }
+        if (!s.length) s.push({key: 'id', dir: 'asc'});
+        await this.setState({sortColumns: s});
+    }
+
+    sortTools = {
+        sort: this.sort.bind(this),
+        updateCriteria: this.updateSortColumns.bind(this)
     }
 
     render() {
@@ -44,20 +104,22 @@ class MedicalServiceTable extends Component {
                         <TableHead>
                             <TableRow>
                                 {columns.map((column) => (
-                                    <TableCell key = { column.id } align = { column.align }>
-                                        { column.label }
+                                    <TableCell key={column.id} align={column.align}>
+                                        <CyclicSortButton sortTools={this.sortTools} columnID={column.id}>
+                                            {column.label}
+                                        </CyclicSortButton>
                                     </TableCell>
                                 ))}
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            { this.state.medical_services.map((row) => {
+                            {this.state.medicalServiceList.map((row) => {
                                 return (
-                                    <TableRow hover key = { row.id }>
-                                        { columns.map((column) => {
+                                    <TableRow hover key={row.id}>
+                                        {columns.map((column) => {
                                             return (
-                                                <TableCell key = { column.id } align = { column.align }>
-                                                    { row[column.id] }
+                                                <TableCell key={column.id} align={column.align}>
+                                                    {row[column.id]}
                                                 </TableCell>
                                             );
                                         })}

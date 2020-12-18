@@ -7,6 +7,8 @@ import {withStyles} from '@material-ui/core/styles';
 import {Link as RouteLink} from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import DefaultAppBar from "../containers/Others/DefaultAppBar";
+import MedicalServiceTable from "../containers/Table/MedicalServiceTable";
+import CyclicSortButton from "../components/Others/CyclicSortButton";
 
 const style = (theme) => ({
     '@global': {
@@ -73,7 +75,7 @@ class Home extends Component {
                         ducimus eius nemo obcaecati, quaerat soluta voluptatum?
                     </Typography>
                 </Container>
-                <Container maxWidth="xs" component="main">
+                <Container maxWidth="xs">
                     <Grid container>
                         <Grid item xs>
                             <Link component={RouteLink} to="/login">

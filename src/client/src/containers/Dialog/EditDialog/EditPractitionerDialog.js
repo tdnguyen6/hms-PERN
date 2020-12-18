@@ -31,11 +31,9 @@ class EditPractitionerDialog extends Component {
         // send close state back to parent: PractitionerTable
         this.props.close(false, "editPractitioner");
     }
-
     handleSave = () => {
         this.handleDialogClose();
     };
-
     handleDelete = async () => {
         try {
             await this.setState({ loading: true });
@@ -68,9 +66,7 @@ class EditPractitionerDialog extends Component {
                             <Grid container   direction="column"
                                   alignItems="center"
                                   justify="center">
-                                <Avatar className = {classes.avatar} src = {this.props.avatar}>
-                                    {this.props.name.charAt(0)}
-                                </Avatar>
+                                <Avatar className = {classes.avatar} src = {this.props.avatar} />
                             </Grid>
                             {/* Name */}
                             <Grid item xs={12} sm={9}>
@@ -125,7 +121,7 @@ class EditPractitionerDialog extends Component {
                                     InputProps={{readOnly: true}}/>
                             </Grid>
                             {/* Specialty */}
-                            <Grid item xs={12} sm={12}>
+                            <Grid item xs={12} sm={6}>
                                 <TextField
                                     autoComplete="specialty"
                                     name="Specialty"
@@ -137,6 +133,18 @@ class EditPractitionerDialog extends Component {
                                     autoFocus
                                     value={this.props.specialty}
                                     InputProps={{readOnly: true}}/>
+                            </Grid>
+                            {/* Years of Experience */}
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    fullWidth autoFocus
+                                    autoComplete            = "experience"
+                                    name                    = "Years of Experience"
+                                    variant                 = "outlined"
+                                    id                      = "experience"
+                                    label                   = "Years of Experience"
+                                    value                   = { this.props.experience }
+                                    InputProps              = {{ readOnly: true }}/>
                             </Grid>
                         </Grid>
                     </DialogContent>

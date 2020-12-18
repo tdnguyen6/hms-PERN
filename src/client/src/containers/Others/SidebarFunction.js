@@ -14,20 +14,20 @@ let admin = [
     {id: 'Practitioner', link: '/admin/practitioner', icon: <PersonAddIcon/>},
     {id: 'Patient', link: '/admin/patient', icon: <AirlineSeatIndividualSuiteIcon/>},
     {id: 'Appointment', link: '/admin/appointment', icon: <EventIcon/>},
-    {id: 'Services', link: '/medical-services', icon: <LocalHospitalIcon/>}
+    {id: 'Services', link: '/admin/medicalService', icon: <LocalHospitalIcon/>}
 ];
 
 let practitioner = [
     {id: 'Dashboard', link: '/practitioner/dashboard', icon: <DashboardIcon/>},
     {id: 'Appointment', link: '/practitioner/appointment', icon: <EventIcon/>},
-    {id: 'Services', link: '/medical-services', icon: <LocalHospitalIcon/>}
+    {id: 'Services', link: '/practitioner/medicalService', icon: <LocalHospitalIcon/>}
 ];
 
 let patient = [
     {id: 'Dashboard', link: '/patient/dashboard', icon: <DashboardIcon/>},
     {id: 'Practitioner', link: '/patient/practitioner', icon: <PersonAddIcon/>},
     {id: 'Appointment', link: '/patient/appointment', icon: <EventIcon/>},
-    {id: 'Services', link: '/medical-services', icon: <LocalHospitalIcon/>}
+    {id: 'Services', link: '/patient/medicalService', icon: <LocalHospitalIcon/>}
 ];
 
 class SidebarFunction extends Component {

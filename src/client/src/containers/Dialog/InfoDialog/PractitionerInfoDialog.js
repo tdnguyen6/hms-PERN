@@ -38,9 +38,7 @@ class PractitionerInfoDialog extends Component {
                         <Grid container   direction="column"
                               alignItems="center"
                               justify="center">
-                            <Avatar className = {classes.avatar} src = {this.props.data.avatar}>
-                                {this.props.data.name.charAt(0)}
-                            </Avatar>
+                            <Avatar className = {classes.avatar} src = {this.props.data.avatar} />
                         </Grid>
                     </DialogTitle>
                     <DialogContentText id="alert-dialog-description">
@@ -135,6 +133,22 @@ class PractitionerInfoDialog extends Component {
                                         id                      = "specialty"
                                         label                   = "Specialty"
                                         value                   = { this.props.data.specialty }
+                                        InputProps              = {{ readOnly: true }}/>
+                                </Grid>
+
+                            }
+                            {/* Years of Experience */}
+                            {
+                                (this.props.user === 'practitioner') &&
+                                <Grid item xs={12} sm={12}>
+                                    <TextField
+                                        fullWidth autoFocus
+                                        autoComplete            = "experience"
+                                        name                    = "Years of Experience"
+                                        variant                 = "outlined"
+                                        id                      = "experience"
+                                        label                   = "Years of Experience"
+                                        value                   = { this.props.data.experience }
                                         InputProps              = {{ readOnly: true }}/>
                                 </Grid>
                             }

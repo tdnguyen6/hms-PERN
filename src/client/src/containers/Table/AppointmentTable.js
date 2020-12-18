@@ -19,30 +19,166 @@ import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import {allAppointment} from "../../components/API/AllAppointment";
 import {authorizedUser} from "../../components/API/Authenticated";
 import PostAddIcon from '@material-ui/icons/PostAdd';
+import CyclicSortButton from "../../components/Others/CyclicSortButton";
 
 let forAdmin = [
-    {id: 'practitioner_name', label: 'Practitioner'},
-    {id: 'patient_name', label: 'Patient'},
-    {id: 'medical_service', label: 'Medical Service', align: 'right'},
-    {id: 'start', label: 'Time', align: 'right'},
-    {id: 'date', label: 'Date', align: 'right'},
-    {id: 'status', label: 'Status', align: 'right'}
+    {
+        id: 'practitioner_name',
+        label: 'Practitioner',
+        compareFn: (a, b, dir) => {
+            const res = a.practitioner_name.toUpperCase() > b.practitioner_name.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'patient_name',
+        label: 'Patient',
+        compareFn: (a, b, dir) => {
+            const res = a.patient_name.toUpperCase() > b.patient_name.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'medical_service',
+        label: 'Medical Service',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.medical_service.toUpperCase() > b.medical_service.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'room_id',
+        label: 'Room',
+        align: 'center',
+        compareFn: (a, b, dir) => {
+            const res = a.room_id - b.room_id;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'start',
+        label: 'Time',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.start > b.start ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'date',
+        label: 'Date',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.date > b.date ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'status',
+        label: 'Status',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.status.toUpperCase() > b.status.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }
 ];
 
 let forPatient = [
-    {id: 'practitioner_name', label: 'Practitioner'},
-    {id: 'medical_service', label: 'Medical Service', align: 'right'},
-    {id: 'start', label: 'Time', align: 'right'},
-    {id: 'date', label: 'Date', align: 'right'},
-    {id: 'status', label: 'Status', align: 'right'}
+    {
+        id: 'practitioner_name',
+        label: 'Practitioner',
+        compareFn: (a, b, dir) => {
+            const res = a.practitioner_name.toUpperCase() > b.practitioner_name.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'medical_service',
+        label: 'Medical Service',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.medical_service.toUpperCase() > b.medical_service.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'room_id',
+        label: 'Room',
+        align: 'center',
+        compareFn: (a, b, dir) => {
+            const res = a.room_id - b.room_id;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'start',
+        label: 'Time',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.start > b.start ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'date',
+        label: 'Date',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.date > b.date ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'status',
+        label: 'Status',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.status.toUpperCase() > b.status.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }
 ];
 
 let forPractitioner = [
-    {id: 'patient_name', label: 'Patient'},
-    {id: 'medical_service', label: 'Medical Service', align: 'right'},
-    {id: 'start', label: 'Time', align: 'right'},
-    {id: 'date', label: 'Date', align: 'right'},
-    {id: 'status', label: 'Status', align: 'right'}
+    {
+        id: 'patient_name',
+        label: 'Patient',
+        compareFn: (a, b, dir) => {
+            const res = a.patient_name.toUpperCase() > b.patient_name.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'medical_service',
+        label: 'Medical Service',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.medical_service.toUpperCase() > b.medical_service.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'room_id',
+        label: 'Room',
+        align: 'center',
+        compareFn: (a, b, dir) => {
+            const res = a.room_id - b.room_id;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'start',
+        label: 'Time',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.start > b.start ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'date',
+        label: 'Date',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.date > b.date ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'status',
+        label: 'Status',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.status.toUpperCase() > b.status.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }
 ];
 
 
@@ -62,7 +198,11 @@ class AppointmentTable extends Component {
         user: null,
         appointmentDetail: {
             id: null,
-            medical_services: null,
+            medicalService: {
+                id: null,
+                name: null,
+                price: null,
+            },
             practitioner: {
                 id: null,
                 avatar: null,
@@ -71,6 +211,7 @@ class AppointmentTable extends Component {
                 name: null,
                 phone: null,
                 specialty: null,
+                experience: null
             },
             patient: {
                 id: null,
@@ -82,10 +223,14 @@ class AppointmentTable extends Component {
                 phone: null,
                 ssn: null
             },
+            room: null,
             time: null,
             date: new Date(),
             status: null
-        }
+        },
+        sortColumns: [
+            // {key: 'id', dir: 'asc'}
+        ],
     };
 
     async componentDidMount() {
@@ -100,17 +245,24 @@ class AppointmentTable extends Component {
                 await this.setState({columns: forPatient});
             }
             await this.setState({
-                user: user.role,
+                user: user.role
             });
         }
         await this.getAllAppointment();
+        // console.log(this.state.appointment);
     }
 
     handleRowClick = async (event, row) => {
+        console.log(row);
         await this.setState({
             appointmentDetail: {
                 id: row.appointment_id,
-                medical_service: row.medical_service,
+                medicalService: {
+                    id: row.service_id,
+                    name: row.medical_service,
+                    price: row.service_price
+                },
+                room: row.room_id,
                 practitioner: {
                     id: row.practitioner_id,
                     avatar: row.practitioner_avatar,
@@ -119,6 +271,7 @@ class AppointmentTable extends Component {
                     name: row.practitioner_name,
                     phone: row.practitioner_phone,
                     specialty: row.practitioner_specialty,
+                    experience: row.practitioner_experience
                 },
                 patient: {
                     id: row.patient_id,
@@ -134,13 +287,12 @@ class AppointmentTable extends Component {
                 date: row.date.split('/').map(Number),
                 log: row.log,
                 prescription: row.prescription,
-                next_appointment_service: row.next_appointment_service,
+                next_appointment_service: row.next_service,
+                next_appointment_service_id: row.next_service_id,
                 next_appointment_period: row.next_appointment_period,
-                next_appointment_service_price: row.next_appointment_service_price,
                 status: row.status
             }
         });
-
         this.setState({editAppointmentDialog: true});
     };
 
@@ -189,17 +341,41 @@ class AppointmentTable extends Component {
         await this.setState({loading: false});
     }
 
+    async sort() {
+        let l = this.state.appointment;
+        console.log(this.state.sortColumns);
+        this.state.sortColumns.forEach(c => {
+            l.sort((a, b) => this.state.columns.find(v => v.id === c.key).compareFn(a, b, c.dir));
+        });
+        await this.setState({medicalServiceList: l});
+    }
+
+    async updateSortColumns(operation, columnID, dir = '') {
+        let s = this.state.sortColumns;
+        s = s.filter(e => e.key !== columnID);
+        if (operation === 'add') {
+            s.splice(1, 0, {key: columnID, dir: dir});
+        }
+        if (!s.length) s.push({key: 'date', dir: 'dsc'});
+        await this.setState({sortColumns: s});
+    }
+
+    sortTools = {
+        sort: this.sort.bind(this),
+        updateCriteria: this.updateSortColumns.bind(this)
+    }
+
     render() {
         return (
             <React.Fragment>
-                <Typography component="h2" variant="h6" color="primary" gutterBottom>Upcomming appointment</Typography>
+                <Typography component="h2" variant="h6" color="primary" gutterBottom>Upcoming appointment</Typography>
                 <TableContainer>
                     <Table size="medium" stickyHeader>
                         <TableHead>
                             <TableRow>
                                 {this.state.columns.map((column) => (
                                     <TableCell key={column.id} align={column.align}>
-                                        {(column.label === 'Status')
+                                        {(column.label === 'Status' && this.state.user !== 'practitioner')
                                             ? <Button variant="contained"
                                                       color="primary"
                                                       align="right"
@@ -207,7 +383,11 @@ class AppointmentTable extends Component {
                                                       startIcon={<PostAddIcon/>}>
                                                 New
                                             </Button>
-                                            : column.label}
+                                            :
+                                            <CyclicSortButton sortTools={this.sortTools} columnID={column.id}>
+                                                {column.label}
+                                            </CyclicSortButton>
+                                        }
                                     </TableCell>
                                 ))}
                             </TableRow>
@@ -236,11 +416,11 @@ class AppointmentTable extends Component {
                                       loading={this.handleLoading}
                                       disease={this.state.diseaseList}
                                       user={this.state.user}/>
-                { this.state.appointmentDetail.id && <EditAppointmentDialog open={this.state.editAppointmentDialog}
-                                                                       close={this.handleDialogClose}
-                                                                       appointment={this.state.appointmentDetail}
-                                                                       user={this.state.user}
-                                                                       key={this.state.appointmentDetail.id}/> }
+                {this.state.appointmentDetail.id && <EditAppointmentDialog open={this.state.editAppointmentDialog}
+                                                                           close={this.handleDialogClose}
+                                                                           appointment={this.state.appointmentDetail}
+                                                                           user={this.state.user}
+                                                                           key={this.state.appointmentDetail.id}/>}
                 <LoadingDialog open={this.state.loading}/>
             </React.Fragment>
         );
