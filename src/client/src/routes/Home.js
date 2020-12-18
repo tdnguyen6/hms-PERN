@@ -89,7 +89,6 @@ class Home extends Component {
                         </Grid>
                     </Grid>
                 </Container>
-                <CyclicSortButton/>
             </React.Fragment>
         );
     }
