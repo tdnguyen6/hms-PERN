@@ -5,7 +5,7 @@ exports.createPractitioner = async function (req, res) {
     if (!Number.isInteger(req.body.specialtyID)) {
         return res.status(400).json({status: false})
     }
-    const insertStatement = 'insert into practitioners (specialty) values $1 returning id'
+    const insertStatement = 'insert into practitioners (specialty) values ($1) returning id'
     const arr = [req.body.specialtyID]
     try {
         const result = await db.query(insertStatement, arr)

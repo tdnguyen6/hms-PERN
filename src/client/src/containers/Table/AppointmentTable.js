@@ -45,6 +45,14 @@ let forAdmin = [
             return dir === 'asc' ? res : -res;
         }
     }, {
+        id: 'room_id',
+        label: 'Room',
+        align: 'center',
+        compareFn: (a, b, dir) => {
+            const res = a.room_id - b.room_id;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
         id: 'start',
         label: 'Time',
         align: 'right',
@@ -88,6 +96,14 @@ let forPatient = [
             return dir === 'asc' ? res : -res;
         }
     }, {
+        id: 'room_id',
+        label: 'Room',
+        align: 'center',
+        compareFn: (a, b, dir) => {
+            const res = a.room_id - b.room_id;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
         id: 'start',
         label: 'Time',
         align: 'right',
@@ -128,6 +144,14 @@ let forPractitioner = [
         align: 'right',
         compareFn: (a, b, dir) => {
             const res = a.medical_service.toUpperCase() > b.medical_service.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'room_id',
+        label: 'Room',
+        align: 'center',
+        compareFn: (a, b, dir) => {
+            const res = a.room_id - b.room_id;
             return dir === 'asc' ? res : -res;
         }
     }, {
@@ -199,6 +223,7 @@ class AppointmentTable extends Component {
                 phone: null,
                 ssn: null
             },
+            room: null,
             time: null,
             date: new Date(),
             status: null
@@ -224,7 +249,7 @@ class AppointmentTable extends Component {
             });
         }
         await this.getAllAppointment();
-        console.log(this.state.appointment);
+        // console.log(this.state.appointment);
     }
 
     handleRowClick = async (event, row) => {
@@ -237,6 +262,7 @@ class AppointmentTable extends Component {
                     name: row.medical_service,
                     price: row.service_price
                 },
+                room: row.room_id,
                 practitioner: {
                     id: row.practitioner_id,
                     avatar: row.practitioner_avatar,

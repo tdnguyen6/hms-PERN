@@ -137,10 +137,9 @@ let practitioner = {
     experience: null
 };
 
-const style = (theme) => ({
+const style = theme => ({
     avatar: {
-        width: theme.spacing(3),
-        height: theme.spacing(3)
+        margin: '0 auto'
     }
 });
 

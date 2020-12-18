@@ -15,6 +15,7 @@ import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers"
 import DateFnsUtils from "@date-io/date-fns";
 import {checkEmailExist} from "../../../components/API/CheckEmailExist";
 import {createPractitioner} from "../../../components/API/CreatePractitioner";
+import {checkPhoneExist} from "../../../components/API/checkPhoneExist";
 
 class NewPractitionerDialog extends Component {
     state = {
@@ -64,7 +65,8 @@ class NewPractitionerDialog extends Component {
             phone: {
                 value: '',
                 hasError: false,
-                error: ''
+                error: '',
+                exist: false
             },
             specialty: {
                 value: ''
@@ -77,33 +79,36 @@ class NewPractitionerDialog extends Component {
     handleSave = async () => {
         try {
             await this.props.loading(true);
-            let res = await checkEmailExist(this.state.email.value);
-            if (res) {
-                await this.setState({
-                    email: {
-                        exist: true
-                    }
-                })
+
+            const email = this.state.email;
+            const phone = this.state.phone;
+
+            email.exist = await checkEmailExist(this.state.email.value);
+            phone.exist = await checkPhoneExist(this.state.phone.value);
+
+            await this.setState({
+                email: {...email},
+                phone: {...phone}
+            });
+
+            let errorStatus = this.getError();
+
+            if (errorStatus.error) await this.props.error(errorStatus);
+            else {
+                let practitioner = {
+                    name: this.state.name.value,
+                    email: this.state.email.value,
+                    phone: this.state.phone.value,
+                    gender: this.state.sex.value,
+                    password: '',
+                    id: '',
+                    specialty: this.state.specialty.value
+                }
+                await createPractitioner(practitioner);
+                await this.handleDialogClose();
             }
         } finally {
             await this.props.loading(false);
-        }
-
-        let errorStatus = this.getError();
-
-        if (errorStatus.error) await this.props.error(errorStatus);
-        else {
-            let practitioner = {
-                name: this.state.name.value,
-                email: this.state.email.value,
-                phone: this.state.phone.value,
-                gender: this.state.sex.value,
-                password: '',
-                id: '',
-                specialty: this.state.specialty.value
-            }
-            await createPractitioner(practitioner);
-            await this.handleDialogClose();
         }
     };
     handleNameChange = async (event) => {
@@ -185,6 +190,9 @@ class NewPractitionerDialog extends Component {
         } else if (this.state.phone.value === '') {
             errorStatus.error = true;
             errorStatus.message = 'Phone is required';
+        } else if (this.state.phone.exist) {
+            errorStatus.error = true;
+            errorStatus.message = 'This phone number is registered. Please use another phone number';
         } else if (this.state.sex.value === '') {
             errorStatus.error = true;
             errorStatus.message = 'Sex is required';

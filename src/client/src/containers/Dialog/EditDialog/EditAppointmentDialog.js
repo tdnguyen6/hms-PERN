@@ -36,6 +36,7 @@ class EditAppointmentDialog extends Component {
         timeList: [this.props.appointment.time],
         time: this.props.appointment.time,
         log: this.props.appointment.log,
+        room: this.props.appointment.room,
         prescription: this.props.appointment.prescription,
         nextAppointment: {
             period: this.props.appointment.next_appointment_period,
