@@ -116,19 +116,21 @@ class DefaultAppBar extends Component {
                                 </ListItemIcon>
                                 <Typography variant="inherit">Home</Typography>
                             </MenuItem>
+                            <Divider variant = 'inset' />
                             <MenuItem component = { RouteLink } to = '/login'>
                                 <ListItemIcon>
                                     <LockOpenIcon fontSize="small" />
                                 </ListItemIcon>
                                 <Typography variant="inherit">Login</Typography>
                             </MenuItem>
+                            <Divider variant = 'inset' />
                             <MenuItem component = { RouteLink } to = '/register'>
                                 <ListItemIcon>
                                     <HowToRegIcon fontSize="small" />
                                 </ListItemIcon>
                                 <Typography variant="inherit">Register</Typography>
                             </MenuItem>
-                            <Divider />
+                            <Divider variant = 'inset' />
                             <MenuItem onClick = { this.handleDiseasePredict }>
                                 <ListItemIcon>
                                     <AssignmentIndIcon fontSize="small" />
