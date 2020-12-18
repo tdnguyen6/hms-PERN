@@ -169,8 +169,7 @@ class NewAppointmentDialog extends Component {
               </TextField>
             </Grid>
             {/* Patient */}
-            {
-              (this.props.user !== 'patient') &&
+            { (this.props.user !== 'patient') &&
               <Grid item xs = {6}>
                 <TextField
                     autoFocus fullWidth select
@@ -188,8 +187,7 @@ class NewAppointmentDialog extends Component {
               </Grid>
             }
             {/* Practitioner */}
-            {
-                (this.props.user !== 'practitioner') &&
+            { (this.props.user !== 'practitioner') &&
                 <Grid item xs = {6}>
                     <TextField
                         autoFocus fullWidth select
