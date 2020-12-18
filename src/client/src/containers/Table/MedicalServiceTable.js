@@ -20,7 +20,7 @@ let columns = [
 
 class MedicalServiceTable extends Component {
     state = {
-        medical_services: [],
+        medicalServiceList: [],
         loading: false,
     };
 
@@ -28,7 +28,7 @@ class MedicalServiceTable extends Component {
         try {
             await this.setState({ loading: true });
             await this.setState({
-                medical_services: await allMedicalService()
+                medicalServiceList: await allMedicalService()
             })
         } finally {
             await this.setState({loading: false})
@@ -51,7 +51,7 @@ class MedicalServiceTable extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            { this.state.medical_services.map((row) => {
+                            { this.state.medicalServiceList.map((row) => {
                                 return (
                                     <TableRow hover key = { row.id }>
                                         { columns.map((column) => {
