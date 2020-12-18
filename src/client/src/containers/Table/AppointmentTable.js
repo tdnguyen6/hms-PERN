@@ -71,6 +71,7 @@ class AppointmentTable extends Component {
                 name: null,
                 phone: null,
                 specialty: null,
+                experience: null
             },
             patient: {
                 id: null,
@@ -119,6 +120,7 @@ class AppointmentTable extends Component {
                     name: row.practitioner_name,
                     phone: row.practitioner_phone,
                     specialty: row.practitioner_specialty,
+                    experience: row.practitioner_experience
                 },
                 patient: {
                     id: row.patient_id,

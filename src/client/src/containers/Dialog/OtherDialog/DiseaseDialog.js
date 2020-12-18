@@ -35,7 +35,6 @@ class DiseaseDialog extends Component {
             diseaseInfoDialog: true,
             diseaseInfo: disease
         });
-        console.log(this.state.diseaseInfo);
     }
 
     render() {
@@ -50,6 +49,7 @@ class DiseaseDialog extends Component {
                         <DialogTitle id="form-dialog-title">Possible Disease</DialogTitle>
                         <DialogContentText id="alert-dialog-description">
                             {
+                                // this.props.diseaseList !== [] ?
                                 this.props.diseaseList.map((disease) => (
                                     <Chip
                                         clickable

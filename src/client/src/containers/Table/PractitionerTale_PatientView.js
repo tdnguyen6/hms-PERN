@@ -26,7 +26,7 @@ let columns = [
     {id: 'name', label: 'Name'},
     {id: 'gender', label: 'Sex', align: 'right'},
     {id: 'specialty', label: 'Specialty', align: 'right'},
-    // {id: 'experience', label: 'Experience', align: 'center'}
+    {id: 'experience', label: 'Years of Experience', align: 'center'}
 ];
 
 class PractitionerTable_PatientView extends Component {

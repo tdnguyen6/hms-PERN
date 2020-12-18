@@ -137,6 +137,22 @@ class PractitionerInfoDialog extends Component {
                                         value                   = { this.props.data.specialty }
                                         InputProps              = {{ readOnly: true }}/>
                                 </Grid>
+
+                            }
+                            {/* Years of Experience */}
+                            {
+                                (this.props.user === 'practitioner') &&
+                                <Grid item xs={12} sm={12}>
+                                    <TextField
+                                        fullWidth autoFocus
+                                        autoComplete            = "experience"
+                                        name                    = "Years of Experience"
+                                        variant                 = "outlined"
+                                        id                      = "experience"
+                                        label                   = "Years of Experience"
+                                        value                   = { this.props.data.experience }
+                                        InputProps              = {{ readOnly: true }}/>
+                                </Grid>
                             }
                         </Grid>
                     </DialogContentText>

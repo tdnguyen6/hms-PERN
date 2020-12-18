@@ -119,6 +119,7 @@ app.post("/practitioner/appointments/update", appointment.updateAppointmentPract
 
 app.post("/symptom/all", symptom.queryAllSymptoms);
 app.post("/medicalServices/all", medicalServices.listAllServices);
+app.post("/medicalServices/general-checkup", medicalServices.getGeneralCheckup);
 
 app.post("/disease/findDiseases", disease.findDiseasesBySymptoms);
 app.post("/disease/all", disease.queryAllDiseases);

@@ -55,6 +55,7 @@ class SymptomsDialog extends Component {
             listOfSymptom: [],
             checkedListOfSymptom: [],
             checkedListOfSymptomID: [],
+            filteredListOfSymptom: [],
             loading: false
         });
         // send close state back to parent: AppointmentTable
@@ -102,12 +103,12 @@ class SymptomsDialog extends Component {
             checkedListOfSymptomID: checkedChipID
         });
 
-        console.log('click', checkedChip);
+        // console.log('click', checkedChip);
     };
     handleChipDelete = async (chip) => {
         let checkedChip = this.state.checkedListOfSymptom;
         let checkedChipID = this.state.checkedListOfSymptomID;
-        console.log('delete', checkedChip);
+        // console.log('delete', checkedChip);
         let selectedChip = checkedChip.find((symptom) => symptom.id === chip.id);
         let indexOfSelectedChip = checkedChip.indexOf(selectedChip);
         if (indexOfSelectedChip > -1) {
@@ -119,7 +120,7 @@ class SymptomsDialog extends Component {
             checkedListOfSymptomID: checkedChipID
         });
 
-        console.log('delete', checkedChip);
+        // console.log('delete', checkedChip);
     };
     handleSave = async () => {
         await this.handleDiseasePredict();

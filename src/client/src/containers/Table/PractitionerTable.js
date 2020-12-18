@@ -29,7 +29,7 @@ let columns = [
     {id: 'email', label: 'Email', align: 'right'},
     {id: 'phone', label: 'Phone', align: 'right'},
     {id: 'specialty', label: 'Specialty', align: 'right'},
-    // {id: 'experience', label: 'Experience', align: 'center'}
+    {id: 'experience', label: 'Years of Experience', align: 'center'}
 ];
 let practitioner = {
     id: '',
@@ -38,7 +38,8 @@ let practitioner = {
     sex: '',
     email: '',
     phone: '',
-    speciality: ''
+    speciality: '',
+    experience: '',
 };
 
 class PractitionerTable extends Component {
@@ -86,7 +87,8 @@ class PractitionerTable extends Component {
             sex: row.gender,
             email: row.email,
             phone: row.phone,
-            specialty: row.specialty
+            specialty: row.specialty,
+            experience: row.experience
         }
         this.setState({ editPractitionerDialog: true });
     };

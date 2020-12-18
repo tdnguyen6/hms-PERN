@@ -7,6 +7,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import {Divider} from "@material-ui/core";
 
 class DiseaseInfoDialog extends Component {
     handleDialogClose = () => {
@@ -22,11 +23,18 @@ class DiseaseInfoDialog extends Component {
                 aria-describedby = "alert-dialog-description">
                 <DialogContent>
                     <DialogTitle id="form-dialog-title">
-                        { this.props.disease }
+                        { this.props.disease ? this.props.disease.charAt(0).toUpperCase() + this.props.disease.slice(1) : '' }
                     </DialogTitle>
-                    <DialogContentText id="alert-dialog-description">
+                    {/*<DialogContentText id="alert-dialog-description">*/}
                         { this.props.descriptions }
-                    </DialogContentText>
+                    {/*</DialogContentText>*/}
+                    <Divider style={{marginTop: '2rem'}}/>
+                    <DialogTitle id="form-dialog-title">
+                        Suggested Treatment
+                    </DialogTitle>
+                    {/*<DialogContentText id="alert-dialog-description">*/}
+                        { this.props.medical_service } - { this.props.price }
+                    {/*</DialogContentText>*/}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick = { this.handleDialogClose } color="primary">
