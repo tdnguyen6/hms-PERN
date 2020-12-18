@@ -62,7 +62,11 @@ class AppointmentTable extends Component {
         user: null,
         appointmentDetail: {
             id: null,
-            medical_services: null,
+            medicalService: {
+                id: null,
+                name: null,
+                price: null,
+            },
             practitioner: {
                 id: null,
                 avatar: null,
@@ -109,11 +113,15 @@ class AppointmentTable extends Component {
     }
 
     handleRowClick = async (event, row) => {
+        console.log(row);
         await this.setState({
             appointmentDetail: {
                 id: row.appointment_id,
-                medical_service: row.medical_service,
-                medical_service_id: row.service_id,
+                medicalService: {
+                    id: row.service_id,
+                    name: row.medical_service,
+                    price: row.service_price
+                },
                 practitioner: {
                     id: row.practitioner_id,
                     avatar: row.practitioner_avatar,

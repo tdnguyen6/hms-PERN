@@ -26,14 +26,14 @@ import {checkinAppointment} from "../../../components/API/CheckinAppointment";
 
 class EditAppointmentDialog extends Component {
     state = {
-        medicalServiceList: [],
-        medicalServiceID: this.props.appointment.medical_service_id,
-        practitionerList: [],
+        medicalServiceList: [this.props.appointment.medicalService],
+        medicalServiceID: this.props.appointment.medicalService.id,
+        practitionerList: [this.props.appointment.practitioner],
         practitionerID: this.props.appointment.practitioner.id,
         date: new Date(this.props.appointment.date[2],
             this.props.appointment.date[1] - 1,
             this.props.appointment.date[0], 0, 0, 0),
-        timeList: [],
+        timeList: [this.props.appointment.time],
         time: this.props.appointment.time,
         log: this.props.appointment.log,
         prescription: this.props.appointment.prescription,
@@ -50,13 +50,17 @@ class EditAppointmentDialog extends Component {
 
     async componentDidMount() {
         try {
-            await this.setState({loading: true});
-            const res = await availableTimeByPractitioner(this.props.appointment.practitioner.id, this.state.date);
+            await this.setState({ loading: true });
+            console.log('loading time');
+            const time = await availableTimeByPractitioner(this.state.practitionerID, this.state.date);
+            const practitioner = await practitionerByMedicalService(this.state.medicalServiceID)
+            console.log('loaded time');
             await this.setState({
-                timeList: res.concat(this.state.time).sort(),
-                practitionerList: [this.props.appointment.practitioner],
+                timeList: time.concat(this.state.time).sort(),
+                practitionerList: practitioner.concat(this.state.practitionerList),
                 medicalServiceList: await allMedicalService(),
             });
+            console.log('finish set state', this.state.medicalServiceList);
         } finally {
             await this.setState({loading: false});
         }
