@@ -334,9 +334,9 @@ exports.updateAppointmentPractitioner = async function (req, res) {
                                             prescription = $2,
                                             next_appointment_period = $3,
                                             next_appointment_service = $4,
-                                            status = 'done'
-                                        where id = $5`
-        const arr = [req.body.log, req.body.prescription, req.body.nextAppointmentPeriod, req.body.nextAppointmentService, req.body.appointmentID]
+                                            status = $5
+                                        where id = $6`
+        const arr = [req.body.log, req.body.prescription, req.body.nextAppointmentPeriod, req.body.nextAppointmentService, req.body.status, req.body.appointmentID]
 
         await db.query(appointmentUpdateQuery, arr)
         return res.status(200).json({status: true})
