@@ -71,6 +71,14 @@ let forAdmin = [
             const res = a.specialty.toUpperCase() > b.specialty.toUpperCase() ? 1 : -1;
             return dir === 'asc' ? res : -res;
         }
+    }, {
+        id: 'experience',
+        label: 'Experience',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.experience > b.experience ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
     }
 ];
 
@@ -107,6 +115,14 @@ let forPatient = [
             const res = a.specialty.toUpperCase() > b.specialty.toUpperCase() ? 1 : -1;
             return dir === 'asc' ? res : -res;
         }
+    }, {
+        id: 'experience',
+        label: 'Experience',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.experience > b.experience ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
     }
 ]
 
@@ -123,7 +139,8 @@ let practitioner = {
 
 const style = (theme) => ({
     avatar: {
-        margin: '0 auto'
+        width: theme.spacing(3),
+        height: theme.spacing(3)
     }
 });
 
@@ -234,7 +251,6 @@ class PractitionerTable extends Component {
         });
         await this.setState({medicalServiceList: l});
     }
-
     async updateSortColumns(operation, columnID, dir = '') {
         let s = this.state.sortColumns;
         s = s.filter(e => e.key !== columnID);
@@ -269,8 +285,7 @@ class PractitionerTable extends Component {
                                                         startIcon = {<PersonAddIcon />} >
                                                     New
                                                 </Button>
-                                            : column.label
-                                        :
+                                            : column.label :
                                             <CyclicSortButton sortTools={this.sortTools} columnID={column.id}>
                                                 {column.label}
                                             </CyclicSortButton>
