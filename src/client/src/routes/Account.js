@@ -37,7 +37,7 @@ const style = theme => ({
         display: 'flex',
         overflow: 'auto',
         flexDirection: 'column',
-        height: 640,
+        // height: 640,
         alignItems: 'center'
     },
     avatar: {
@@ -45,6 +45,7 @@ const style = theme => ({
     },
     form: {
         width: '100%',
+        maxWidth: '500px',
         marginTop: theme.spacing(3),
     },
     submit: {
@@ -54,6 +55,8 @@ const style = theme => ({
 
 const Account = props => {
     const {classes} = props;
+
+    const [user, setUser] = useState(null);
     const [name, setName] = useState({
         value: '',
         hasError: false,
@@ -210,8 +213,9 @@ const Account = props => {
     };
 
     const loggedIn = async () => {
-        const user = await authorizedUser();
-        if (user) {
+        const fetchedUser = await authorizedUser();
+        await setUser(fetchedUser);
+        if (fetchedUser) {
             return Promise.resolve();
         }
         return Promise.reject();
@@ -221,7 +225,7 @@ const Account = props => {
         <AuthContainer authorize={loggedIn}>
             <div className={classes.root}>
                 <CssBaseline/>
-                <DrawerAppBar type="patient"/>
+                <DrawerAppBar type={user ? user.role : ''}/>
                 <div className={classes.content}>
                     <div className={classes.appBarSpacer}/>
                     <Container maxWidth="lg" className={classes.container}>

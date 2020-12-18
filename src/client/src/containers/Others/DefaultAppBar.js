@@ -3,12 +3,14 @@ import {withStyles} from '@material-ui/core/styles';
 import {AppBar, Button, Divider, Toolbar, Typography} from '@material-ui/core';
 import {Link as RouteLink} from 'react-router-dom';
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
-import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';import Menu from "@material-ui/core/Menu";
+import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
+import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import SymptomsDialog from "../Dialog/OtherDialog/SymptomsDialog";
 import DiseaseDialog from "../Dialog/OtherDialog/DiseaseDialog";
 import {allSymptom} from "../../components/API/AllSymptom";
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import HomeIcon from '@material-ui/icons/Home';
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
@@ -104,6 +106,12 @@ class DefaultAppBar extends Component {
                             keepMounted
                             open            = { Boolean(this.state.anchorEl) }
                             onClose         = { this.handleMenuClose }>
+                            <MenuItem component = { RouteLink } to = '/'>
+                                <ListItemIcon>
+                                    <HomeIcon fontSize="small" />
+                                </ListItemIcon>
+                                <Typography variant="inherit">Home</Typography>
+                            </MenuItem>
                             <MenuItem component = { RouteLink } to = '/login'>
                                 <ListItemIcon>
                                     <LockOpenIcon fontSize="small" />
@@ -122,6 +130,12 @@ class DefaultAppBar extends Component {
                                     <AssignmentIndIcon fontSize="small" />
                                 </ListItemIcon>
                                 <Typography variant="inherit">Predict Disease</Typography>
+                            </MenuItem>
+                            <MenuItem component = { RouteLink } to = '/medical-services'>
+                                <ListItemIcon>
+                                    <LockOpenIcon fontSize="small" />
+                                </ListItemIcon>
+                                <Typography variant="inherit">Medical Services</Typography>
                             </MenuItem>
                         </Menu>
                     </Toolbar>

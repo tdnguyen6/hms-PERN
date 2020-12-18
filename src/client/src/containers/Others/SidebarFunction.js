@@ -7,23 +7,27 @@ import {Link as RouteLink} from 'react-router-dom';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import AirlineSeatIndividualSuiteIcon from '@material-ui/icons/AirlineSeatIndividualSuite';
 import EventIcon from '@material-ui/icons/Event';
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 
 let admin = [
     {id: 'Dashboard', link: '/admin/dashboard', icon: <DashboardIcon/>},
     {id: 'Practitioner', link: '/admin/practitioner', icon: <PersonAddIcon/>},
     {id: 'Patient', link: '/admin/patient', icon: <AirlineSeatIndividualSuiteIcon/>},
-    {id: 'Appointment', link: '/admin/appointment', icon: <EventIcon/>}
+    {id: 'Appointment', link: '/admin/appointment', icon: <EventIcon/>},
+    {id: 'Services', link: '/medical-services', icon: <LocalHospitalIcon/>}
 ];
 
 let practitioner = [
     {id: 'Dashboard', link: '/practitioner/dashboard', icon: <DashboardIcon/>},
-    {id: 'Appointment', link: '/practitioner/appointment', icon: <EventIcon/>}
+    {id: 'Appointment', link: '/practitioner/appointment', icon: <EventIcon/>},
+    {id: 'Services', link: '/medical-services', icon: <LocalHospitalIcon/>}
 ];
 
 let patient = [
     {id: 'Dashboard', link: '/patient/dashboard', icon: <DashboardIcon/>},
     {id: 'Practitioner', link: '/patient/practitioner', icon: <PersonAddIcon/>},
-    {id: 'Appointment', link: '/patient/appointment', icon: <EventIcon/>}
+    {id: 'Appointment', link: '/patient/appointment', icon: <EventIcon/>},
+    {id: 'Services', link: '/medical-services', icon: <LocalHospitalIcon/>}
 ];
 
 class SidebarFunction extends Component {

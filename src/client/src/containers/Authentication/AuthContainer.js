@@ -14,7 +14,7 @@ const AuthContainer = (props) => {
                 await setAuth('forbidden');
             }
         })();
-    }, [authorize]);
+    }, []);
     if (authState === 'loading') {
         return <LoadingDialog open={true}/>
     } else if (authState === 'forbidden') {

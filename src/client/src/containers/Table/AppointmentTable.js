@@ -104,11 +104,9 @@ class AppointmentTable extends Component {
             });
         }
         await this.getAllAppointment();
-        console.log(this.state.appointment);
     }
 
     handleRowClick = async (event, row) => {
-        console.log(row);
         await this.setState({
             appointmentDetail: {
                 id: row.appointment_id,
@@ -142,7 +140,6 @@ class AppointmentTable extends Component {
                 status: row.status
             }
         });
-        // console.log(this.state.appointmentDetail);
 
         this.setState({editAppointmentDialog: true});
     };

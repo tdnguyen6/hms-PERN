@@ -21,6 +21,7 @@ import {Redirect} from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 
 let columns = [
+    {id: 'id', label: 'ID'},
     {id: 'name', label: 'Name'},
     {id: 'gender', label: 'Sex', align: 'right'},
     {id: 'email', label: 'Email', align: 'right'},
@@ -48,9 +49,9 @@ class PatientTable extends Component {
         errorDialog: false
     };
 
-    componentDidMount() {
-        this.setState({ loading: true });
-        this.getAllPatient().then().catch();
+    async componentDidMount() {
+        await this.setState({ loading: true });
+        await this.getAllPatient();
     }
 
     handleDialogClose = async (close, type) => {

@@ -23,6 +23,7 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import Avatar from "@material-ui/core/Avatar";
 
 let columns = [
+    {id: 'id', label: 'ID'},
     {id: 'name', label: 'Name'},
     {id: 'gender', label: 'Sex', align: 'right'},
     {id: 'email', label: 'Email', align: 'right'},
@@ -156,7 +157,7 @@ class PractitionerTable extends Component {
                                 return (
                                     <TableRow hover key = { row.id } onClick = {(event) => this.handleRowClick(event, row)}>
                                         <TableCell>
-                                            <Avatar src = {row.avatar}/>
+                                            <Avatar  style={{marginLeft: '20px'}} src = {row.avatar}/>
                                         </TableCell>
                                         { columns.map((column) => {
                                             return (

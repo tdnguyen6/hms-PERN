@@ -5,7 +5,7 @@ import {AppBar, Button, Divider, Drawer, Grid, IconButton, List, Toolbar, Typogr
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import SidebarFunction from './SidebarFunction';
-import {Link, Redirect} from 'react-router-dom';
+import {Link as RouteLink, Link, Redirect} from 'react-router-dom';
 import { delCookie } from "../../components/Services/Cookie";
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import {logout} from "../../components/API/Logout";
@@ -21,6 +21,7 @@ import {allSymptom} from "../../components/API/AllSymptom";
 import ChangePasswordDialog from "../Dialog/OtherDialog/ChangePasswordDialog";
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import HomeIcon from "@material-ui/icons/Home";
 
 const style = (theme) => ({
     appBar: {
@@ -196,6 +197,13 @@ class DrawerAppBar extends Component {
                             anchorEl        = { this.state.anchorEl }
                             open            = { Boolean(this.state.anchorEl) }
                             onClose         = { this.handleMenuClose }>
+                            <MenuItem component = { RouteLink } to = '/'>
+                                <ListItemIcon>
+                                    <HomeIcon fontSize="small" />
+                                </ListItemIcon>
+                                <Typography variant="inherit">Home</Typography>
+                            </MenuItem>
+                            <Divider variant = 'inset' />
                             <MenuItem onClick = { this.handleDiseasePredict }>
                                 <ListItemIcon>
                                     <AssignmentIndIcon fontSize="small" />

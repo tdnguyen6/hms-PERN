@@ -15,6 +15,7 @@ import Error from '../src/components/Others/Error';
 
 import './App.css';
 import UserDashboard from "./routes/Dashboard/UserDashboard";
+import MedicalServices from "./routes/MedicalServices";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/login" component={Login}/>
                 <Route path="/account" component={Account}/>
                 <Route path="/resetPassword" component={ResetPassword}/>
+                <Route path="/medical-services" component={MedicalServices}/>
                 <Route exact path="/" component={Home}/>
                 <Route render={(props) => <Error code={404} mess='Not Found'/>}/>
             </Switch>
