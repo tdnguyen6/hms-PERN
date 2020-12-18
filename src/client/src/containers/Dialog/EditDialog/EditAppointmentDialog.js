@@ -229,7 +229,7 @@ class EditAppointmentDialog extends Component {
                                             variant="outlined"
                                             id="medical_service"
                                             label="Medical Service"
-                                            value={this.props.appointment.medical_service}
+                                            value={this.props.appointment.medicalService.name}
                                             InputProps={{ readOnly: true }}/>
                                     </Grid>
                             }
