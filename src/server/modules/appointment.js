@@ -31,7 +31,7 @@ exports.listAllAppointments = async function (req, res) {
                                    t1.prescription,
                                    t1.next_appointment_period,
                                    t1.next_service_id,
-                                   t1.next_medical_service,
+                                   t1.next_service,
                                    t1.next_service_price, 
                                    t1.practitioner_id, 
                                    t1.practitioner_name, 
@@ -59,7 +59,7 @@ exports.listAllAppointments = async function (req, res) {
                  ap.next_appointment_service as next_service_id,
                  ( select medicalservices.name
                    from medicalservices
-                   where ap.next_appointment_service = medicalservices.id)  as next_medical_service,
+                   where ap.next_appointment_service = medicalservices.id)  as next_service,
                  ( select medicalservices.price
                    from medicalservices
                    where ap.next_appointment_service = medicalservices.id) as next_service_price,
