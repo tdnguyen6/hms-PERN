@@ -14,7 +14,7 @@ let admin = [
     {id: 'Practitioner', link: '/admin/practitioner', icon: <PersonAddIcon/>},
     {id: 'Patient', link: '/admin/patient', icon: <AirlineSeatIndividualSuiteIcon/>},
     {id: 'Appointment', link: '/admin/appointment', icon: <EventIcon/>},
-    {id: 'Services', link: 'admin/medicalService', icon: <LocalHospitalIcon/>}
+    {id: 'Services', link: '/admin/medicalService', icon: <LocalHospitalIcon/>}
 ];
 
 let practitioner = [

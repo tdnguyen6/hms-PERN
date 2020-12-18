@@ -8,6 +8,7 @@ import {Link as RouteLink} from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import DefaultAppBar from "../containers/Others/DefaultAppBar";
 import MedicalServiceTable from "../containers/Table/MedicalServiceTable";
+import CyclicSortButton from "../components/Others/CyclicSortButton";
 
 const style = (theme) => ({
     '@global': {
@@ -88,6 +89,7 @@ class Home extends Component {
                         </Grid>
                     </Grid>
                 </Container>
+                <CyclicSortButton/>
             </React.Fragment>
         );
     }

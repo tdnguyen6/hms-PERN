@@ -22,18 +22,87 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 
 let forAdmin = [
-    {id: 'id', label: 'ID'},
-    {id: 'name', label: 'Name'},
-    {id: 'gender', label: 'Sex', align: 'right'},
-    {id: 'email', label: 'Email', align: 'right'},
-    {id: 'phone', label: 'Phone', align: 'right'},
-    {id: 'specialty', label: 'Specialty', align: 'right'},
+    {
+        id: 'id',
+        label: 'ID',
+        compareFn: (a, b, dir) => {
+            const res = a.id - b.id;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'name',
+        label: 'Name',
+        compareFn: (a, b, dir) => {
+            const res = a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'gender',
+        label: 'Sex',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.gender.toUpperCase() > b.gender.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'email',
+        label: 'Email',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.email.toUpperCase() > b.email.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'phone',
+        label: 'Phone',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.phone.toUpperCase() > b.phone.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'specialty',
+        label: 'Specialty',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.specialty.toUpperCase() > b.specialty.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }
 ];
 
 let forPatient = [
-    {id: 'name', label: 'Name'},
-    {id: 'gender', label: 'Sex', align: 'right'},
-    {id: 'specialty', label: 'Specialty', align: 'right'},
+    {
+        id: 'id',
+        label: 'ID',
+        compareFn: (a, b, dir) => {
+            const res = a.id - b.id;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'name',
+        label: 'Name',
+        compareFn: (a, b, dir) => {
+            const res = a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'gender',
+        label: 'Sex',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.gender.toUpperCase() > b.gender.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }, {
+        id: 'specialty',
+        label: 'Specialty',
+        align: 'right',
+        compareFn: (a, b, dir) => {
+            const res = a.specialty.toUpperCase() > b.specialty.toUpperCase() ? 1 : -1;
+            return dir === 'asc' ? res : -res;
+        }
+    }
 ]
 
 let practitioner = {
@@ -62,7 +131,10 @@ class PractitionerTable extends Component {
         loading: false,
         editPractitionerDialog: false,
         newPractitionerDialog: false,
-        errorDialog: false
+        errorDialog: false,
+        sortColumns: [
+            // {key: 'id', dir: 'asc'}
+        ],
     };
 
     async componentDidMount() {
@@ -144,6 +216,30 @@ class PractitionerTable extends Component {
                 })
             });
         this.setState({ loading: false });
+    }
+
+    async sort() {
+        let l = this.state.practitioner;
+        console.log(this.state.sortColumns);
+        this.state.sortColumns.forEach(c => {
+            l.sort((a, b) => this.state.columns.find(v => v.id === c.key).compareFn(a, b, c.dir));
+        });
+        await this.setState({medicalServiceList: l});
+    }
+
+    async updateSortColumns(operation, columnID, dir = '') {
+        let s = this.state.sortColumns;
+        s = s.filter(e => e.key !== columnID);
+        if (operation === 'add') {
+            s.splice(1, 0, {key: columnID, dir: dir});
+        }
+        if (!s.length) s.push({key: 'id', dir: 'asc'});
+        await this.setState({sortColumns: s});
+    }
+
+    sortTools = {
+        sort: this.sort.bind(this),
+        updateCriteria: this.updateSortColumns.bind(this)
     }
 
     render() {
