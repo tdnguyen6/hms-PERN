@@ -212,7 +212,7 @@ class NewAppointmentDialog extends Component {
                 <KeyboardDatePicker
                     disabled = {!this.state.medicalServiceID || !this.state.practitioner}
                     disablePast fullWidth autoFocus
-                    variant               = "inline"
+                    variant               = "dialog"
                     inputVariant          = "outlined"
                     label                 = "Date of appointment"
                     format                = "dd/MM/yyyy"

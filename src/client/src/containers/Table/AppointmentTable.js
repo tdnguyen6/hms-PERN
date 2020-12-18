@@ -101,13 +101,15 @@ class AppointmentTable extends Component {
                 await this.setState({columns: forPatient});
             }
             await this.setState({
-                user: user.role,
+                user: user.role
             });
         }
         await this.getAllAppointment();
+        console.log(this.state.appointment);
     }
 
     handleRowClick = async (event, row) => {
+        console.log('row in appointmentTable', row);
         await this.setState({
             appointmentDetail: {
                 id: row.appointment_id,
@@ -136,12 +138,13 @@ class AppointmentTable extends Component {
                 date: row.date.split('/').map(Number),
                 log: row.log,
                 prescription: row.prescription,
-                next_appointment_service: row.next_appointment_service,
+                next_appointment_service: row.next_service,
+                next_appointment_service_id: row.next_service_id,
                 next_appointment_period: row.next_appointment_period,
-                next_appointment_service_price: row.next_appointment_service_price,
                 status: row.status
             }
         });
+        console.log('appointmentDetail from appointmentTable', this.state.appointmentDetail);
 
         this.setState({editAppointmentDialog: true});
     };

@@ -39,7 +39,8 @@ class EditAppointmentDialog extends Component {
         prescription: this.props.appointment.prescription,
         nextAppointment: {
             period: this.props.appointment.next_appointment_period,
-            serviceID: this.props.appointment.next_appointment_service,
+            service: this.props.appointment.next_appointment_service,
+            serviceID: this.props.appointment.next_appointment_service_id,
         },
         diseaseInfoDialog: false,
         userInfoDialog: false,
@@ -92,7 +93,6 @@ class EditAppointmentDialog extends Component {
             practitionerInfoDialog: false,
             loading: false
         })
-        // send close state back to parent: AppointmentTable
         await this.handleDialogClose();
     };
     handleDelete = async () => {
@@ -100,12 +100,13 @@ class EditAppointmentDialog extends Component {
         await this.handleDialogClose();
     };
     handleCheckin = async () => {
+        console.log(this.state);
         let appointment = {
             id: this.props.appointment.id,
             log: this.state.log,
             prescription: this.state.prescription,
             nextAppointmentPeriod: this.state.nextAppointment.period,
-            nextAppointmentService: this.state.nextAppointment.serviceID,
+            nextAppointmentServiceID: this.state.nextAppointment.serviceID,
         }
         await checkinAppointment(appointment);
         await this.handleDialogClose();
@@ -156,15 +157,20 @@ class EditAppointmentDialog extends Component {
     }
     handleNextAppointmentPeriodChange = async (event) => {
         await this.setState({
-            nextAppointmentPeriod: event.target.value
-        })
+            nextAppointment: {
+                period: event.target.value,
+                serviceID: this.state.nextAppointment.serviceID
+            }
+        });
     }
     handleNextAppointmentServiceChange = async (event) => {
         await this.setState({
-            nextAppointmentServiceID: event.target.value
-        })
+            nextAppointment: {
+                period: this.state.nextAppointment.period,
+                serviceID: event.target.value
+            }
+        });
     }
-
     handleUserInfoClick = async (user) => {
         await this.setState({
             userInfoDialog: true,
@@ -191,29 +197,33 @@ class EditAppointmentDialog extends Component {
                                 </DialogContentText>
                             </Grid>
                             {/* Medical Service */}
-                            <Grid item xs={ (this.props.user === 'admin') ? 12 : 6}>
-                                <TextField
-                                    autoFocus fullWidth
-                                    variant="outlined"
-                                    id="medical_service"
-                                    label="Medical Service"
-                                    value={this.props.appointment.medical_service}/>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    autoFocus fullWidth select
-                                    variant="outlined"
-                                    id="medical_service"
-                                    label="Medical Service"
-                                    value={this.state.medicalServiceID}
-                                    onChange={this.handleMedicalServiceChange}>{
-                                    this.state.medicalServiceList.map((option) => (
-                                        <MenuItem key={option.id} value={option.id}>
-                                            {option.name.charAt(0).toUpperCase() + option.name.slice(1)} - {option.price}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </Grid>
+                            {
+                                (this.props.user === 'admin') ?
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            autoFocus fullWidth select
+                                            variant="outlined"
+                                            id="medical_service"
+                                            label="Medical Service"
+                                            value={this.state.medicalServiceID}
+                                            onChange={this.handleMedicalServiceChange}>{
+                                            this.state.medicalServiceList.map((option) => (
+                                                <MenuItem key={option.id} value={option.id}>
+                                                    {option.name.charAt(0).toUpperCase() + option.name.slice(1)} - {option.price}
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
+                                    </Grid>
+                                    : <Grid item xs={6}>
+                                        <TextField
+                                            autoFocus fullWidth
+                                            variant="outlined"
+                                            id="medical_service"
+                                            label="Medical Service"
+                                            value={this.props.appointment.medical_service}
+                                            InputProps={{ readOnly: true }}/>
+                                    </Grid>
+                            }
                             {/* Practitioner */}
                             {
                                 (this.props.user !== 'practitioner') &&
@@ -274,21 +284,29 @@ class EditAppointmentDialog extends Component {
                                 </MuiPickersUtilsProvider>
                             </Grid>
                             {/* Time */}
-                            <Grid item xs={6}>
-                                <TextField
-                                    autoFocus fullWidth select
-                                    variant="outlined"
-                                    id="time"
-                                    label="Time"
-                                    value={this.state.time}
-                                    onChange={this.handleTimeChange}>{
-                                    this.state.timeList.map((option) => (
-                                        <MenuItem key={option} value={option}>
-                                            {option}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </Grid>
+                            <Grid item xs={6}>{
+                                (this.props.appointment.status === 'done') ?
+                                    <TextField
+                                        autoFocus fullWidth
+                                        variant="outlined"
+                                        id="time"
+                                        label="Time"
+                                        value={this.state.time}
+                                        onChange={this.handleTimeChange} /> :
+                                    <TextField
+                                        autoFocus fullWidth select
+                                        variant="outlined"
+                                        id="time"
+                                        label="Time"
+                                        value={this.state.time}
+                                        onChange={this.handleTimeChange}>{
+                                        this.state.timeList.map((option) => (
+                                            <MenuItem key={option} value={option}>
+                                                {option}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                            } </Grid>
                             { (this.props.appointment.status === 'done' || this.props.user === 'practitioner') &&
                                 <React.Fragment>
                                     {/* Notes and Prescription */}
@@ -340,38 +358,55 @@ class EditAppointmentDialog extends Component {
                                     </Grid>
                                     {/* Service */}
                                     <Grid item xs={9}>
-                                        <TextField
-                                            autoFocus fullWidth select
-                                            variant="outlined"
-                                            id="next_appointment_service"
-                                            label="Service"
-                                            value={this.state.nextAppointment.service}
-                                            InputProps={{readOnly: this.props.appointment.status === 'done'}}
-                                            onChange = { this.handleNextAppointmentServiceChange }>{
-                                            this.state.medicalServiceList.map((option) => (
-                                                <MenuItem key={option.id} value={option.id}>
-                                                    {option.name.charAt(0).toUpperCase() + option.name.slice(1)} - {option.price}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
+                                        {
+                                            (this.props.appointment.status === 'done') ?
+                                                <TextField
+                                                    autoFocus fullWidth
+                                                    variant="outlined"
+                                                    id="medical_service"
+                                                    label="Medical Service"
+                                                    value={this.state.nextAppointment.service}
+                                                    InputProps={{ readOnly: true }}/> :
+                                                <TextField
+                                                    autoFocus fullWidth select
+                                                    variant="outlined"
+                                                    id="next_appointment_service"
+                                                    label="Service"
+                                                    value={this.state.nextAppointment.serviceID}
+                                                    onChange = { this.handleNextAppointmentServiceChange }>{
+                                                    this.state.medicalServiceList.map((option) => (
+                                                        <MenuItem key={option.id} value={option.id}>
+                                                            {option.name.charAt(0).toUpperCase() + option.name.slice(1)} - {option.price}
+                                                        </MenuItem>
+                                                    ))}
+                                                </TextField>
+                                        }
                                     </Grid>
                                 </React.Fragment>
                             }
                         </Grid>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleDelete} color="primary" align="left">
-                            Delete
-                        </Button>
                         {
-                            (this.props.user === 'practitioner') &&
-                            <Button onClick={this.handleCheckin} color="primary" align="right">
-                                Checkin
-                            </Button>
+                            (this.props.appointment.status === 'done') ?
+                                <Button onClick={this.handleDialogClose} color="primary" align="right">
+                                    Got It!
+                                </Button>
+                                : <React.Fragment>
+                                    <Button onClick={this.handleDelete} color="primary" align="left">
+                                        Delete
+                                    </Button>
+                                    {
+                                        (this.props.user === 'practitioner') &&
+                                        <Button onClick={this.handleCheckin} color="primary" align="right">
+                                            Checkin
+                                        </Button>
+                                    }
+                                    <Button onClick={this.handleSave} color="primary" align="right">
+                                        Save
+                                    </Button>
+                                </React.Fragment>
                         }
-                        <Button onClick={this.handleSave} color="primary" align="right">
-                            Save
-                        </Button>
                     </DialogActions>
                 </Dialog>
                 <PractitionerInfoDialog open={this.state.userInfoDialog}
