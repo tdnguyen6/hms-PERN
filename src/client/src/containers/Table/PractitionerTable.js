@@ -22,28 +22,33 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 
 let forAdmin = [
+    {id: 'avatar', label: 'Avatar'},
     {id: 'id', label: 'ID'},
     {id: 'name', label: 'Name'},
     {id: 'gender', label: 'Sex', align: 'right'},
     {id: 'email', label: 'Email', align: 'right'},
     {id: 'phone', label: 'Phone', align: 'right'},
     {id: 'specialty', label: 'Specialty', align: 'right'},
+    {id: 'experience', label: 'Experience', align: 'right'},
 ];
 
 let forPatient = [
+    {id: 'avatar', label: 'Avatar'},
     {id: 'name', label: 'Name'},
     {id: 'gender', label: 'Sex', align: 'right'},
     {id: 'specialty', label: 'Specialty', align: 'right'},
+    {id: 'experience', label: 'Experience', align: 'right'},
 ]
 
 let practitioner = {
-    id: '',
-    name: '',
-    avatar: '',
-    sex: '',
-    email: '',
-    phone: '',
-    speciality: ''
+    id: null,
+    name: null,
+    avatar: null,
+    sex: null,
+    email: null,
+    phone: null,
+    speciality: null,
+    experience: null
 };
 
 const style = (theme) => ({
@@ -55,7 +60,7 @@ const style = (theme) => ({
 
 class PractitionerTable extends Component {
     state = {
-        practitioner: [],
+        practitionerList: [],
         specialtyList: [],
         columns: [],
         user: null,
@@ -66,6 +71,7 @@ class PractitionerTable extends Component {
     };
 
     async componentDidMount() {
+        this.setState({ loading: true });
         const user = await authorizedUser();
         if (user) {
             if (user.role === "admin") {
@@ -78,9 +84,11 @@ class PractitionerTable extends Component {
             });
         }
         await this.getAllPractitioner();
+        this.setState({ loading: false });
     }
 
     handleDialogClose = async (close, type) => {
+        this.setState({ loading: true });
         if (type === "editPractitioner") {
             await this.setState({
                 editPractitionerDialog: close
@@ -96,6 +104,7 @@ class PractitionerTable extends Component {
                 errorDialog: close
             });
         }
+        this.setState({ loading: false });
     };
     handleLoading = async (loading) => {
         await this.setState({
@@ -110,7 +119,8 @@ class PractitionerTable extends Component {
             sex: row.gender,
             email: row.email,
             phone: row.phone,
-            specialty: row.specialty
+            specialty: row.specialty,
+            experience: row.experience
         }
         if (this.state.user === 'admin') await this.setState({ editPractitionerDialog: true });
     };
@@ -135,15 +145,12 @@ class PractitionerTable extends Component {
         })
     }
     getAllPractitioner = async () => {
-        this.setState({ loading: true });
         await allPractitioner()
             .then(data => {
                 this.setState({
-                    practitioner: data,
-                    loading: false
-                })
+                    practitionerList: data,
+                });
             });
-        this.setState({ loading: false });
     }
 
     render() {
@@ -157,12 +164,11 @@ class PractitionerTable extends Component {
                             <TableRow>
                                 { this.state.columns.map((column) => (
                                     <TableCell key = { column.id } align = { column.align }>
-                                        { (column.id === 'id' && this.state.user === "admin") ?
+                                        { (column.id === 'avatar' && this.state.user === "admin") ?
                                                 <Button variant = "contained"
                                                         color = "primary"
-                                                        align = "right"
                                                         onClick = {this.handleNewClick}
-                                                        startIcon = {<PersonAddIcon />}>
+                                                        startIcon = {<PersonAddIcon />} >
                                                     New
                                                 </Button> : column.label
                                         }
@@ -171,21 +177,15 @@ class PractitionerTable extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            { this.state.practitioner.map((row) => {
+                            { this.state.practitionerList.map((row) => {
                                 return (
                                     <TableRow hover key = { row.id } onClick = {(event) => this.handleRowClick(event, row)}>
                                         { this.state.columns.map((column) => {
                                             return (
                                                 <TableCell key = {column.id} align = {column.align}>
-                                                    { (column.id === 'name') ?
-                                                        <Grid container>
-                                                            <Grid item xs = {2}>
-                                                                <Avatar className = { classes.avatar } src = { row.avatar }/>
-                                                            </Grid>
-                                                            <Grid item xs = {10}>
-                                                                { row[column.id] }
-                                                            </Grid>
-                                                        </Grid> : row[column.id]
+                                                    { (column.id === 'avatar') ?
+                                                        <Avatar className = { classes.avatar } src = { row.avatar }/>
+                                                        : (column.id === 'experience') ? `${row[column.id]} years` : row[column.id]
                                                     }
                                                 </TableCell>
                                             );
