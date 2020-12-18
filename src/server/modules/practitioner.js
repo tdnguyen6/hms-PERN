@@ -35,7 +35,8 @@ exports.listAllPractitioners = async function (req, res) {
                                 a.email, 
                                 a.phone, 
                                 a.gender, 
-                                d.name as specialty 
+                                d.name as specialty,
+                                date_part('year', age(now(), join_date)) as experience 
                          from 		practitioners p, 
                                 accounts a, 
                                 departments d 
@@ -61,7 +62,8 @@ exports.getPractitionerByID = async function (req, res) {
                                 a.email, 
                                 a.phone, 
                                 a.gender, 
-                                d.name as specialty 
+                                d.name as specialty,
+                                date_part('year', age(now(), join_date)) as experience 
                          from 		practitioners p, 
                                 accounts a, 
                                 departments d 
@@ -84,7 +86,7 @@ exports.findPractitionerByMedicalService = async function (req, res) {
     if (!Number.isInteger(req.body.medical_serviceID)) return res.status(400).json({status: false})
 
     try {
-        let queryStatement =
+        const queryStatement =
             `SELECT distinct p.id,
                             d.name specialty,
                             p.join_date,
@@ -92,7 +94,8 @@ exports.findPractitionerByMedicalService = async function (req, res) {
                             a.name,
                             a.avatar,
                             a.email,
-                            a.phone
+                            a.phone,
+                            date_part('year', age(now(), join_date)) as experience
                 FROM practitioners p
                 JOIN accounts a ON a.practitioner_id = p.id
                 JOIN departments d ON p.specialty = d.id
