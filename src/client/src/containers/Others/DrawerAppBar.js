@@ -131,10 +131,15 @@ class DrawerAppBar extends Component {
         });
     }
     handleDiseasePredict = async () => {
-        await this.getAllSymptom();
-        await this.setState({
-            symptomsDialog: true
-        });
+        try {
+            this.setState({loading: true});
+            await this.getAllSymptom();
+            await this.setState({
+                symptomsDialog: true
+            });
+        } finally {
+            this.setState({loading: false});
+        }
     }
 
     handleDialogClose = async (close, type) => {
@@ -154,18 +159,16 @@ class DrawerAppBar extends Component {
     }
 
     getAllSymptom = async () => {
-        await allSymptom().then(data => {
-            this.setState({
+        const data = await allSymptom();
+        await this.setState({
                 symptomList: data
-            })
-        })
+            });
     }
     getDisease = async (disease) => {
         await this.setState({
             diseaseList: disease,
             diseaseDialog: true
         });
-        console.log(disease);
     }
 
     render() {

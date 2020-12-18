@@ -53,11 +53,16 @@ class DefaultAppBar extends Component {
         });
     };
     handleDiseasePredict = async () => {
-        await this.getAllSymptom();
-        await this.setState({
-            symptomsDialog: true
-        });
-    };
+        try {
+            this.setState({loading: true});
+            await this.getAllSymptom();
+            await this.setState({
+                symptomsDialog: true
+            });
+        } finally {
+            this.setState({loading: false});
+        }
+    }
     handleDialogClose = async (close, type) => {
         if (type === "symptoms") {
             await this.setState({
@@ -82,7 +87,6 @@ class DefaultAppBar extends Component {
             diseaseList: disease,
             diseaseDialog: true
         });
-        console.log(disease);
     };
 
     render() {
@@ -130,12 +134,6 @@ class DefaultAppBar extends Component {
                                     <AssignmentIndIcon fontSize="small" />
                                 </ListItemIcon>
                                 <Typography variant="inherit">Predict Disease</Typography>
-                            </MenuItem>
-                            <MenuItem component = { RouteLink } to = '/medical-services'>
-                                <ListItemIcon>
-                                    <LockOpenIcon fontSize="small" />
-                                </ListItemIcon>
-                                <Typography variant="inherit">Medical Services</Typography>
                             </MenuItem>
                         </Menu>
                     </Toolbar>

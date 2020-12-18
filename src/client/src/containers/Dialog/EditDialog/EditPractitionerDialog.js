@@ -138,6 +138,20 @@ class EditPractitionerDialog extends Component {
                                     value={this.props.specialty}
                                     InputProps={{readOnly: true}}/>
                             </Grid>
+                            {/* Years of Experience */}
+                            {
+                                <Grid item xs={12} sm={12}>
+                                    <TextField
+                                        fullWidth autoFocus
+                                        autoComplete            = "experience"
+                                        name                    = "Years of Experience"
+                                        variant                 = "outlined"
+                                        id                      = "experience"
+                                        label                   = "Years of Experience"
+                                        value                   = { this.props.experience }
+                                        InputProps              = {{ readOnly: true }}/>
+                                </Grid>
+                            }
                         </Grid>
                     </DialogContent>
                     <DialogActions>
