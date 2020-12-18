@@ -13,6 +13,7 @@ import {allPatient} from "../../components/API/AllPatient";
 import EditPatientDialog from "../Dialog/EditDialog/EditPatientDialog";
 import Avatar from "@material-ui/core/Avatar";
 import CyclicSortButton from "../../components/Others/CyclicSortButton";
+import FilterBox from "../../components/Others/FilterBox";
 
 let columns = [
     {
@@ -189,9 +190,26 @@ class PatientTable extends Component {
         updateCriteria: this.updateSortColumns.bind(this)
     }
 
+    async updateRowHandle(rows) {
+        await this.setState({patient: rows});
+        await this.sort();
+    }
+
+    handleLoading = async (loading) => {
+        await this.setState({
+            loading: loading
+        })
+    }
+
     render() {
         return (
             <React.Fragment>
+                <FilterBox
+                    columns={columns}
+                    updateRowHandle={this.updateRowHandle.bind(this)}
+                    defaultRows={allPatient}
+                    loadingHandle={this.handleLoading}
+                />
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>Patients</Typography>
                 <TableContainer>
                     <Table size="medium" stickyHeader>
