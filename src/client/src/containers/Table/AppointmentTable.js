@@ -201,7 +201,7 @@ class AppointmentTable extends Component {
                             <TableRow>
                                 {this.state.columns.map((column) => (
                                     <TableCell key={column.id} align={column.align}>
-                                        {(column.label === 'Status')
+                                        {(column.label === 'Status' && this.state.user !== 'practitioner')
                                             ? <Button variant="contained"
                                                       color="primary"
                                                       align="right"
