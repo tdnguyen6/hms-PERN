@@ -250,7 +250,7 @@ class AppointmentTable extends Component {
                 user: user.role
             });
         }
-        await this.getAllAppointment();
+        // await this.getAllAppointment();
         // console.log(this.state.appointment);
     }
 
@@ -378,7 +378,7 @@ class AppointmentTable extends Component {
                     columns={this.state.columns.filter(c => !['status'].includes(c.id))}
                     updateRowHandle={this.updateRowHandle.bind(this)}
                     defaultRows={allAppointment}
-                    loadingHandle={this.handleLoading}
+                    loadingHandle={this.handleLoading.bind(this)}
                 />
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>Upcoming appointment</Typography>
                 <TableContainer>

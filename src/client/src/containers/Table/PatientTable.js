@@ -96,11 +96,6 @@ class PatientTable extends Component {
         ],
     };
 
-    async componentDidMount() {
-        await this.setState({ loading: true });
-        await this.getAllPatient();
-    }
-
     handleDialogClose = async (close, type) => {
         if (type === "editPatient") {
             await this.setState({
@@ -208,7 +203,7 @@ class PatientTable extends Component {
                     columns={columns}
                     updateRowHandle={this.updateRowHandle.bind(this)}
                     defaultRows={allPatient}
-                    loadingHandle={this.handleLoading}
+                    loadingHandle={this.handleLoading.bind(this)}
                 />
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>Patients</Typography>
                 <TableContainer>

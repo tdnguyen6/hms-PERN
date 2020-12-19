@@ -60,19 +60,6 @@ class MedicalServiceTable extends Component {
         loading: false,
     };
 
-    async componentDidMount() {
-        try {
-            await this.setState({loading: true});
-            await this.setState({
-                medicalServiceList: await allMedicalService()
-            })
-
-        } finally {
-            await this.setState({loading: false})
-        }
-        await this.sort();
-    }
-
     async sort() {
         let l = this.state.medicalServiceList;
         console.log(this.state.sortColumns);
@@ -98,7 +85,7 @@ class MedicalServiceTable extends Component {
     }
 
     async updateRowHandle(rows) {
-        await this.setState({appointment: rows});
+        await this.setState({medicalServiceList: rows});
         await this.sort();
     }
 
@@ -115,7 +102,7 @@ class MedicalServiceTable extends Component {
                     columns={columns}
                     updateRowHandle={this.updateRowHandle.bind(this)}
                     defaultRows={allMedicalService}
-                    loadingHandle={this.handleLoading}
+                    loadingHandle={this.handleLoading.bind(this)}
                 />
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>Medical Services</Typography>
                 <TableContainer>

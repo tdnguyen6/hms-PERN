@@ -41,12 +41,20 @@ const FilterBox = props => {
 
     useEffect(() => {
         (async () => {
-            await props.loadingHandle(true);
-            await setDefaultRows(await props.defaultRows());
-            await props.loadingHandle(false);
+            // try {
+                await props.loadingHandle(true);
+                await setDefaultRows(await props.defaultRows());
         })()
-
     },[]);
+
+    useEffect(() => {
+        (async () => {
+            if (defaultRows) {
+                props.updateRowHandle(defaultRows);
+                await props.loadingHandle(false);
+            }
+        })()
+    }, [defaultRows]);
 
     useEffect(() => {
         if (props.columns.length && !column)
@@ -65,6 +73,12 @@ const FilterBox = props => {
             filteredRows = defaultRows.filter(r => (r[column] + '').toUpperCase().includes(keyword.toUpperCase()));
         }
         await props.updateRowHandle(filteredRows);
+    }
+
+    const handleEnterKW = async event => {
+        if (event.keyCode === 13) {
+            await filter(event);
+        }
     }
 
     const handleKWChange = async event => {
@@ -97,6 +111,7 @@ const FilterBox = props => {
                             required
                             value={keyword}
                             onChange={handleKWChange}
+                            onKeyDown={handleEnterKW}
                         />
                     </Grid>
                     <Grid container item xs={12} md={4} className={classes.byContainer}>

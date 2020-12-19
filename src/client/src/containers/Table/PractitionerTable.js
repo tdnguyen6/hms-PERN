@@ -173,7 +173,7 @@ class PractitionerTable extends Component {
                     user: user.role,
                 });
             }
-            await this.getAllPractitioner();
+            // await this.getAllPractitioner();
         } finally {
             this.setState({loading: false});
         }
@@ -278,7 +278,7 @@ class PractitionerTable extends Component {
                     columns={this.state.columns.filter(c => !['avatar'].includes(c.id))}
                     updateRowHandle={this.updateRowHandle.bind(this)}
                     defaultRows={allPractitioner}
-                    loadingHandle={this.handleLoading}
+                    loadingHandle={this.handleLoading.bind(this)}
                 />
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>Practitioners</Typography>
                 <TableContainer>
