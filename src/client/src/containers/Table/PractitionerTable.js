@@ -21,6 +21,7 @@ import {authorizedUser} from "../../components/API/Authenticated";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 import CyclicSortButton from "../../components/Others/CyclicSortButton";
+import FilterBox from "../../components/Others/FilterBox";
 
 let forAdmin = [
     {id: 'avatar', label: 'Avatar'},
@@ -244,7 +245,6 @@ class PractitionerTable extends Component {
 
     async sort() {
         let l = this.state.practitionerList;
-        console.log(this.state.sortColumns);
         this.state.sortColumns.forEach(c => {
             l.sort((a, b) => this.state.columns.find(v => v.id === c.key).compareFn(a, b, c.dir));
         });
@@ -265,10 +265,21 @@ class PractitionerTable extends Component {
         updateCriteria: this.updateSortColumns.bind(this)
     }
 
+    async updateRowHandle(rows) {
+        await this.setState({practitionerList: rows});
+        await this.sort();
+    }
+
     render() {
         const {classes} = this.props;
         return (
             <React.Fragment>
+                <FilterBox
+                    columns={this.state.columns.filter(c => !['avatar'].includes(c.id))}
+                    updateRowHandle={this.updateRowHandle.bind(this)}
+                    defaultRows={allPractitioner}
+                    loadingHandle={this.handleLoading}
+                />
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>Practitioners</Typography>
                 <TableContainer>
                     <Table size="medium" stickyHeader>

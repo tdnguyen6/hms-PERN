@@ -11,6 +11,8 @@ import TableRow from '@material-ui/core/TableRow';
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import {allMedicalService} from "../../components/API/AllMedicalService";
 import CyclicSortButton from "../../components/Others/CyclicSortButton";
+import FilterBox from "../../components/Others/FilterBox";
+import {allAppointment} from "../../components/API/AllAppointment";
 
 let columns = [
     {
@@ -95,9 +97,26 @@ class MedicalServiceTable extends Component {
         updateCriteria: this.updateSortColumns.bind(this)
     }
 
+    async updateRowHandle(rows) {
+        await this.setState({appointment: rows});
+        await this.sort();
+    }
+
+    handleLoading = async (loading) => {
+        await this.setState({
+            loading: loading
+        })
+    }
+
     render() {
         return (
             <React.Fragment>
+                <FilterBox
+                    columns={columns}
+                    updateRowHandle={this.updateRowHandle.bind(this)}
+                    defaultRows={allMedicalService}
+                    loadingHandle={this.handleLoading}
+                />
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>Medical Services</Typography>
                 <TableContainer>
                     <Table size="medium" stickyHeader>

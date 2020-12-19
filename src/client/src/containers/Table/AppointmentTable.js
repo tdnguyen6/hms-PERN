@@ -20,6 +20,8 @@ import {allAppointment} from "../../components/API/AllAppointment";
 import {authorizedUser} from "../../components/API/Authenticated";
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import CyclicSortButton from "../../components/Others/CyclicSortButton";
+import {Divider} from "@material-ui/core";
+import FilterBox from "../../components/Others/FilterBox";
 
 let forAdmin = [
     {
@@ -343,7 +345,6 @@ class AppointmentTable extends Component {
 
     async sort() {
         let l = this.state.appointment;
-        console.log(this.state.sortColumns);
         this.state.sortColumns.forEach(c => {
             l.sort((a, b) => this.state.columns.find(v => v.id === c.key).compareFn(a, b, c.dir));
         });
@@ -365,9 +366,20 @@ class AppointmentTable extends Component {
         updateCriteria: this.updateSortColumns.bind(this)
     }
 
+    async updateRowHandle(rows) {
+        await this.setState({appointment: rows});
+        await this.sort();
+    }
+
     render() {
         return (
             <React.Fragment>
+                <FilterBox
+                    columns={this.state.columns.filter(c => !['status'].includes(c.id))}
+                    updateRowHandle={this.updateRowHandle.bind(this)}
+                    defaultRows={allAppointment}
+                    loadingHandle={this.handleLoading}
+                />
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>Upcoming appointment</Typography>
                 <TableContainer>
                     <Table size="medium" stickyHeader>
