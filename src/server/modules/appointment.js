@@ -227,6 +227,24 @@ exports.practitionerAppointments = async function (req, res) {
     }
 }
 
+exports.nAppointmentsByHour = async function (req, res) {
+    const queryStatement = `
+    select date_part('hour', at) as time,
+           count(id) as number
+    from appointments
+    group by time
+    order by time
+    `
+
+     try {
+         const result = await db.query(queryStatement)
+         return res.status(200).json(result.rows)
+     } catch (err) {
+         console.log(err)
+         return res.status(500).json({status: false})
+     }
+ }
+
 exports.findRoom = async function (req, res) {
     if (!Number.isInteger(req.body.serviceID)) {
         return res.status(400).json({status: false})
