@@ -12,8 +12,9 @@ import ErrorDialog from "../Dialog/OtherDialog/ErrorDialog";
 import {allPatient} from "../../components/API/AllPatient";
 import EditPatientDialog from "../Dialog/EditDialog/EditPatientDialog";
 import Avatar from "@material-ui/core/Avatar";
-import CyclicSortButton from "../../components/Others/CyclicSortButton";
-import FilterBox from "../../components/Others/FilterBox";
+import CyclicSortButton from "../Others/CyclicSortButton";
+import FilterBox from "../Others/TableToolbar";
+import TableToolbar from "../Others/TableToolbar";
 
 let columns = [
     {
@@ -199,13 +200,12 @@ class PatientTable extends Component {
     render() {
         return (
             <React.Fragment>
-                <FilterBox
+                <TableToolbar
                     columns={columns}
                     updateRowHandle={this.updateRowHandle.bind(this)}
                     defaultRows={allPatient}
                     loadingHandle={this.handleLoading.bind(this)}
-                />
-                <Typography component="h2" variant="h6" color="primary" gutterBottom>Patients</Typography>
+                    title = "Patients"/>
                 <TableContainer>
                     <Table size="medium" stickyHeader>
                         <TableHead>
