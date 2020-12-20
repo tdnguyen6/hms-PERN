@@ -4,6 +4,7 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import TableSortLabel from "@material-ui/core/TableSortLabel";
 
 const style = theme => ({
     icon: {
@@ -40,17 +41,12 @@ const CyclicSortButton = props => {
     };
 
     return (
-        <Button onClick={handleClick}>
-            {props.children}
-            <Box flexDirection="column" justifyContent='center' alignItems='center'>
-                <div className={classes.iconContainer}>
-                    <ArrowDropUpIcon className={classes.icon} color={iconState === 2 ? 'disabled': 'inherit'}/>
-                </div>
-                <div className={classes.iconContainer}>
-                    <ArrowDropDownIcon className={classes.icon} color={iconState === 1 ? 'disabled': 'inherit'}/>
-                </div>
-            </Box>
-        </Button>
+        <TableSortLabel
+            active = { iconState === 1 || iconState === 2 }
+            direction = { iconState === 2 ? 'dsc' : 'asc'}
+            onClick = { handleClick }>
+            { props.children }
+        </TableSortLabel>
     );
 }
 
