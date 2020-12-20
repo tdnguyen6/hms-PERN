@@ -19,9 +19,14 @@ import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import {allAppointment} from "../../components/API/AllAppointment";
 import {authorizedUser} from "../../components/API/Authenticated";
 import PostAddIcon from '@material-ui/icons/PostAdd';
-import CyclicSortButton from "../../components/Others/CyclicSortButton";
+import CyclicSortButton from "../Others/CyclicSortButton";
 import {Divider} from "@material-ui/core";
-import FilterBox from "../../components/Others/FilterBox";
+import FilterBox from "../Others/TableToolbar";
+import Grid from "@material-ui/core/Grid";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import InputBase from "@material-ui/core/InputBase";
+import TableToolbar from "../Others/TableToolbar";
 
 let forAdmin = [
     {
@@ -250,7 +255,7 @@ class AppointmentTable extends Component {
                 user: user.role
             });
         }
-        await this.getAllAppointment();
+        // await this.getAllAppointment();
         // console.log(this.state.appointment);
     }
 
@@ -374,13 +379,12 @@ class AppointmentTable extends Component {
     render() {
         return (
             <React.Fragment>
-                <FilterBox
-                    columns={this.state.columns.filter(c => !['status'].includes(c.id))}
-                    updateRowHandle={this.updateRowHandle.bind(this)}
-                    defaultRows={allAppointment}
-                    loadingHandle={this.handleLoading}
-                />
-                <Typography component="h2" variant="h6" color="primary" gutterBottom>Upcoming appointment</Typography>
+                <TableToolbar
+                    columns = {this.state.columns.filter(column => !['status'].includes(column.id))}
+                    updateRowHandle = {this.updateRowHandle.bind(this)}
+                    defaultRows = {allAppointment}
+                    loadingHandle = { this.handleLoading.bind(this) }
+                    title = "Upcoming Appointment"/>
                 <TableContainer>
                     <Table size="medium" stickyHeader>
                         <TableHead>
@@ -428,11 +432,12 @@ class AppointmentTable extends Component {
                                       loading={this.handleLoading}
                                       disease={this.state.diseaseList}
                                       user={this.state.user}/>
-                {this.state.appointmentDetail.id && <EditAppointmentDialog open={this.state.editAppointmentDialog}
-                                                                           close={this.handleDialogClose}
-                                                                           appointment={this.state.appointmentDetail}
-                                                                           user={this.state.user}
-                                                                           key={this.state.appointmentDetail.id}/>}
+                {this.state.appointmentDetail.id &&
+                <EditAppointmentDialog open={this.state.editAppointmentDialog}
+                                       close={this.handleDialogClose}
+                                       appointment={this.state.appointmentDetail}
+                                       user={this.state.user}
+                                       key={this.state.appointmentDetail.id}/>}
                 <LoadingDialog open={this.state.loading}/>
             </React.Fragment>
         );

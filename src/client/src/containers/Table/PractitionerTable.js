@@ -20,8 +20,9 @@ import Avatar from "@material-ui/core/Avatar";
 import {authorizedUser} from "../../components/API/Authenticated";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
-import CyclicSortButton from "../../components/Others/CyclicSortButton";
-import FilterBox from "../../components/Others/FilterBox";
+import CyclicSortButton from "../Others/CyclicSortButton";
+import FilterBox from "../Others/TableToolbar";
+import TableToolbar from "../Others/TableToolbar";
 
 let forAdmin = [
     {id: 'avatar', label: 'Avatar'},
@@ -173,7 +174,7 @@ class PractitionerTable extends Component {
                     user: user.role,
                 });
             }
-            await this.getAllPractitioner();
+            // await this.getAllPractitioner();
         } finally {
             this.setState({loading: false});
         }
@@ -274,13 +275,12 @@ class PractitionerTable extends Component {
         const {classes} = this.props;
         return (
             <React.Fragment>
-                <FilterBox
+                <TableToolbar
                     columns={this.state.columns.filter(c => !['avatar'].includes(c.id))}
                     updateRowHandle={this.updateRowHandle.bind(this)}
                     defaultRows={allPractitioner}
-                    loadingHandle={this.handleLoading}
-                />
-                <Typography component="h2" variant="h6" color="primary" gutterBottom>Practitioners</Typography>
+                    loadingHandle={this.handleLoading.bind(this)}
+                    title = "Practitioners"/>
                 <TableContainer>
                     <Table size="medium" stickyHeader>
                         <TableHead>

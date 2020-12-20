@@ -138,17 +138,21 @@ class EditAppointmentDialog extends Component {
         });
     }
     handleDateChange = async (date) => {
-        await this.setState({
-            date: date
-        });
-        try {
-            await this.setState({loading: true});
-            const res = await availableTimeByPractitioner(this.state.practitionerID, this.state.date);
+        if (this.daysFromToday(date) < 3) {
+            alert('The chosen day is too close to today (< 3 days)')
+        } else {
             await this.setState({
-                timeList: res
+                date: date
             });
-        } finally {
-            await this.setState({loading: false});
+            try {
+                await this.setState({loading: true});
+                const res = await availableTimeByPractitioner(this.state.practitionerID, this.state.date);
+                await this.setState({
+                    timeList: res
+                });
+            } finally {
+                await this.setState({loading: false});
+            }
         }
     }
     handleTimeChange = async (event) => {
@@ -189,6 +193,11 @@ class EditAppointmentDialog extends Component {
         });
     }
 
+    daysFromToday(date) {
+        const secondDiff = date.getTime() - (new Date()).getTime();
+        return secondDiff / (1000 * 60 * 60 * 24);
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -216,6 +225,7 @@ class EditAppointmentDialog extends Component {
                                             id="medical_service"
                                             label="Medical Service"
                                             value={this.state.medicalServiceID}
+                                            InputProps={{readOnly: this.daysFromToday(this.state.date) < 3}}
                                             onChange={this.handleMedicalServiceChange}>{
                                             this.state.medicalServiceList.map((option) => (
                                                 <MenuItem key={option.id} value={option.id}>
@@ -244,6 +254,7 @@ class EditAppointmentDialog extends Component {
                                             id            = "practitioner"
                                             label         = "Practitioner"
                                             value         = { this.state.practitionerID }
+                                            InputProps={{readOnly: this.daysFromToday(this.state.date) < 3}}
                                             onChange      = { this.handlePractitionerChange }>{
                                             this.state.practitionerList.map((option) => (
                                                 <MenuItem key = { option.id } value = { option.id }>
@@ -295,7 +306,7 @@ class EditAppointmentDialog extends Component {
                                     <KeyboardDatePicker
                                         fullWidth autoFocus
                                         disablePast = { this.props.appointment.status !== 'done' }
-                                        readOnly    = { this.props.appointment.status === 'done' }
+                                        readOnly    = { this.props.appointment.status === 'done' || this.daysFromToday(this.state.date) < 3}
                                         error       = { this.props.appointment.status === 'done' && false }
                                         helperText  = { null }
                                         variant="dialog"
@@ -315,10 +326,12 @@ class EditAppointmentDialog extends Component {
                                         id="time"
                                         label="Time"
                                         value={this.state.time}
+                                        InputProps={{readOnly: this.daysFromToday(this.state.date) < 3}}
                                         onChange={this.handleTimeChange} /> :
                                     <TextField
                                         autoFocus fullWidth select
                                         variant="outlined"
+                                        InputProps={{readOnly: this.daysFromToday(this.state.date) < 3}}
                                         id="time"
                                         label="Time"
                                         value={this.state.time}
@@ -422,7 +435,7 @@ class EditAppointmentDialog extends Component {
                                     {
                                         (this.props.user === 'practitioner') &&
                                         <Button onClick={this.handleCheckin} color="primary" align="right">
-                                            Checkin
+                                            Release
                                         </Button>
                                     }
                                     <Button onClick={this.handleSave} color="primary" align="right">
