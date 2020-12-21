@@ -6,14 +6,14 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
 import DrawerAppBar from '../../../containers/Others/DrawerAppBar';
-import Dashboard from "../../../components/Others/Dashboard";
+import Dashboard from "../../../containers/Dashboard/Dashboard";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {authorizedUser} from "../../../components/API/Authenticated";
 import AuthContainer from "../../../containers/Authentication/AuthContainer";
 
 import AppointmentTable from '../../../containers/Table/AppointmentTable';
 import MedicalServiceTable from "../../../containers/Table/MedicalServiceTable";
-// import PatientTable from "../../Table/Practitioner/PatientTable";
+// import PatientTable from "../../Table/AppointmentByHour/PatientTable";
 
 const style = (theme) => ({
     root: {

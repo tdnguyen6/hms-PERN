@@ -35,7 +35,7 @@ exports.loginAccount = async function (req, res) {
     /* this will return json object with format
     {
         loginStatus: true | false
-        role: Appointment | Practitioner | Admin
+        role: Appointment | AppointmentByHour | Admin
     }
     */
     try {

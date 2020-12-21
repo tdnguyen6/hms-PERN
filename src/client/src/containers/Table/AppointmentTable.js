@@ -193,7 +193,7 @@ class AppointmentTable extends Component {
         yesNoDialog: false,
         newAppointmentDialog: false,
         symptomsDialog: false,
-        paymentDialog: true,
+        paymentDialog: false,
         price: null,
         appointment: [],
         symptomList: [],

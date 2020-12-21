@@ -6,7 +6,8 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Patient from "./Patient";
 import Appointment from "./Appointment";
-import Practitioner from "./Practitioner";
+import AppointmentByHour from "./AppointmentByHour";
+import Covid from "./Covid";
 
 const styles = (theme) => ({
     root: {
@@ -40,10 +41,10 @@ class Dashboard extends Component {
             <main className={classes.content}>
                 <Container maxWidth="lg" className={classes.container}>
                     <Grid container spacing={3}>
-                        {/* Practitioner */}
+                        {/* AppointmentByHour */}
                         <Grid item xs={12} md={8} lg={9}>
                             <Paper className={fixedHeightPaper}>
-                                <Practitioner/>
+                                <AppointmentByHour />
                             </Paper>
                         </Grid>
                         {/* Appointment */}
