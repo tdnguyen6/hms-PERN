@@ -23,6 +23,7 @@ import {editAppointment} from "../../../components/API/EditAppointment";
 import {allMedicalService} from "../../../components/API/AllMedicalService";
 import {practitionerByMedicalService} from "../../../components/API/PractitionerByMedicalService";
 import {checkinAppointment} from "../../../components/API/CheckinAppointment";
+import {roomByMedicalService} from "../../../components/API/RoomByMedicalService";
 
 class EditAppointmentDialog extends Component {
     state = {
@@ -125,7 +126,8 @@ class EditAppointmentDialog extends Component {
         try {
             await this.setState({ loading: true });
             await this.setState({
-                practitionerList: await practitionerByMedicalService(this.state.medicalServiceID)
+                practitionerList: await practitionerByMedicalService(this.state.medicalServiceID),
+                room: await roomByMedicalService(this.state.medicalServiceID)
             });
         } finally {
             await this.setState({ loading: false });
@@ -218,7 +220,7 @@ class EditAppointmentDialog extends Component {
                             </Grid>
                             {/* Medical Service */}
                             { (this.props.user === 'admin') ?
-                                    <Grid item xs={12}>
+                                    <Grid item xs={6}>
                                         <TextField
                                             autoFocus fullWidth select
                                             variant="outlined"
@@ -244,6 +246,16 @@ class EditAppointmentDialog extends Component {
                                             InputProps={{ readOnly: true }}/>
                                     </Grid>
                             }
+                            {/* Room */}
+                            <Grid item xs={6}>
+                                <TextField
+                                    autoFocus fullWidth
+                                    variant="outlined"
+                                    id="room"
+                                    label="Room"
+                                    value={this.state.room}
+                                    InputProps={{ readOnly: true }}/>
+                            </Grid>
                             {/* Practitioner */}
                             { (this.props.user !== 'practitioner') && (
                                 (this.props.user === 'admin') ?
@@ -262,7 +274,7 @@ class EditAppointmentDialog extends Component {
                                                 </MenuItem>
                                             ))}
                                         </TextField>
-                                    </Grid> : <Grid item xs={6}>
+                                    </Grid> : <Grid item xs={12}>
                                         <TextField
                                             autoFocus fullWidth
                                             variant="outlined"

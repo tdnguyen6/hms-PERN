@@ -238,7 +238,7 @@ class NewAppointmentDialog extends Component {
         </DialogContent>
         <DialogActions>
           <Button onClick = { this.handleSave } color = "primary" align = "right">
-            Save
+              Save
           </Button>
         </DialogActions>
       </Dialog>
