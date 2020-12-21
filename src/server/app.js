@@ -76,6 +76,7 @@ app.post("/user/account/update", auth.updateAccount);
 //     next()
 // })
 
+app.post("/appointments/totalnumber", appointment.numberOfAppointments);
 app.post("/admin/appointments/all", appointment.listAllAppointments);
 app.post("/admin/appointments/byHour", appointment.nAppointmentsByHour);
 app.post("/admin/appointments/recent", appointment.recentAppointments);
