@@ -27,6 +27,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import InputBase from "@material-ui/core/InputBase";
 import TableToolbar from "../Others/TableToolbar";
+import PaymentDialog from "../Dialog/OtherDialog/PaymentDialog";
 
 let forAdmin = [
     {
@@ -85,7 +86,6 @@ let forAdmin = [
         }
     }
 ];
-
 let forPatient = [
     {
         id: 'practitioner_name',
@@ -136,7 +136,6 @@ let forPatient = [
         }
     }
 ];
-
 let forPractitioner = [
     {
         id: 'patient_name',
@@ -188,13 +187,14 @@ let forPractitioner = [
     }
 ];
 
-
 class AppointmentTable extends Component {
     state = {
         editAppointmentDialog: false,
         yesNoDialog: false,
         newAppointmentDialog: false,
         symptomsDialog: false,
+        paymentDialog: true,
+        price: null,
         appointment: [],
         symptomList: [],
         diseaseKnown: false,
@@ -239,6 +239,10 @@ class AppointmentTable extends Component {
             // {key: 'id', dir: 'asc'}
         ],
     };
+    sortTools = {
+        sort: this.sort.bind(this),
+        updateCriteria: this.updateSortColumns.bind(this)
+    }
 
     async componentDidMount() {
         this.setState({loading: true});
@@ -258,7 +262,6 @@ class AppointmentTable extends Component {
         // await this.getAllAppointment();
         // console.log(this.state.appointment);
     }
-
     handleRowClick = async (event, row) => {
         console.log(row);
         await this.setState({
@@ -302,7 +305,6 @@ class AppointmentTable extends Component {
         });
         this.setState({editAppointmentDialog: true});
     };
-
     handleNewClick = async () => {
         let diseases;
         try {
@@ -318,18 +320,15 @@ class AppointmentTable extends Component {
     };
     handleDialogClose = async (close, type) => {
         if (type === "newAppointment") {
-            await this.setState({
-                newAppointmentDialog: close
-            });
-            await this.getAllAppointment();
+            await this.setState({ newAppointmentDialog: close });
+            if (this.state.user === "patient") await this.setState({ paymentDialog: true });
         } else if (type === "symptoms") {
-            await this.setState({
-                symptomsDialog: close
-            });
+            await this.setState({ symptomsDialog: close });
         } else if (type === "editAppointment") {
-            await this.setState({
-                editAppointmentDialog: close
-            });
+            await this.setState({ editAppointmentDialog: close });
+            await this.getAllAppointment();
+        } else if (type === "payment") {
+            await this.setState({ paymentDialog: close });
             await this.getAllAppointment();
         }
     }
@@ -338,7 +337,6 @@ class AppointmentTable extends Component {
             loading: loading
         })
     }
-
     getAllAppointment = async () => {
         await this.setState({loading: true});
         await this.setState({
@@ -347,7 +345,13 @@ class AppointmentTable extends Component {
         });
         await this.setState({loading: false});
     }
-
+    getPrice = async (price) => {
+        await this.setState({loading: true});
+        await this.setState({
+            price: price
+        });
+        await this.setState({loading: false});
+    }
     async sort() {
         let l = this.state.appointment;
         this.state.sortColumns.forEach(c => {
@@ -355,7 +359,6 @@ class AppointmentTable extends Component {
         });
         await this.setState({medicalServiceList: l});
     }
-
     async updateSortColumns(operation, columnID, dir = '') {
         let s = this.state.sortColumns;
         s = s.filter(e => e.key !== columnID);
@@ -365,12 +368,6 @@ class AppointmentTable extends Component {
         if (!s.length) s.push({key: 'date', dir: 'dsc'});
         await this.setState({sortColumns: s});
     }
-
-    sortTools = {
-        sort: this.sort.bind(this),
-        updateCriteria: this.updateSortColumns.bind(this)
-    }
-
     async updateRowHandle(rows) {
         await this.setState({appointment: rows});
         await this.sort();
@@ -429,6 +426,7 @@ class AppointmentTable extends Component {
                 </TableContainer>
                 <NewAppointmentDialog open={this.state.newAppointmentDialog}
                                       close={this.handleDialogClose}
+                                      price = {this.getPrice}
                                       loading={this.handleLoading}
                                       disease={this.state.diseaseList}
                                       user={this.state.user}/>
@@ -438,6 +436,9 @@ class AppointmentTable extends Component {
                                        appointment={this.state.appointmentDetail}
                                        user={this.state.user}
                                        key={this.state.appointmentDetail.id}/>}
+                <PaymentDialog open = { this.state.paymentDialog }
+                               close = { this.handleDialogClose }
+                               price = {this.state.price}/>
                 <LoadingDialog open={this.state.loading}/>
             </React.Fragment>
         );

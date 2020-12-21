@@ -19,6 +19,7 @@ export const createAppointment = async (appointment) => {
         data.roomID = room.data[0].id;
         // let lastAppointment = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/appointment/last`, data, { withCredentials: true });
         res = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/appointments/create`, data, { withCredentials: true });
+        console.log(res);
     } catch (error) {
         console.log(error);
     }
