@@ -256,7 +256,7 @@ class EditAppointmentDialog extends Component {
                                     value={this.state.room}
                                     InputProps={{ readOnly: true }}/>
                             </Grid>
-                            {/* Practitioner */}
+                            {/* AppointmentByHour */}
                             { (this.props.user !== 'practitioner') && (
                                 (this.props.user === 'admin') ?
                                     <Grid item xs = {6}>
@@ -264,7 +264,7 @@ class EditAppointmentDialog extends Component {
                                             autoFocus fullWidth select
                                             variant       = "outlined"
                                             id            = "practitioner"
-                                            label         = "Practitioner"
+                                            label         = "AppointmentByHour"
                                             value         = { this.state.practitionerID }
                                             InputProps={{readOnly: this.daysFromToday(this.state.date) < 3}}
                                             onChange      = { this.handlePractitionerChange }>{
@@ -279,7 +279,7 @@ class EditAppointmentDialog extends Component {
                                             autoFocus fullWidth
                                             variant="outlined"
                                             id="practitioner"
-                                            label="Practitioner"
+                                            label="AppointmentByHour"
                                             value={this.props.appointment.practitioner.name}
                                             InputProps={{
                                                 readOnly: true,

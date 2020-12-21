@@ -11,7 +11,7 @@ import AppointmentTable from '../../../containers/Table/AppointmentTable';
 import PractitionerTable from '../../../containers/Table/PractitionerTable';
 import PatientTable from '../../../containers/Table/PatientTable';
 import DrawerAppBar from '../../../containers/Others/DrawerAppBar';
-import Dashboard from "../../../components/Others/Dashboard";
+import Dashboard from "../../../containers/Dashboard/Dashboard";
 import {authorizedUser} from "../../../components/API/Authenticated";
 import AuthContainer from "../../../containers/Authentication/AuthContainer";
 import MedicalServiceTable from "../../../containers/Table/MedicalServiceTable";

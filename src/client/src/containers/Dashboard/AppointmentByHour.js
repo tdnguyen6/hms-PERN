@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Label, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 import Typography from "@material-ui/core/Typography";
+import {numberOfAppointmentByHour} from "../../components/API/NumberOfAppointmentByHour";
 
 // Generate Sales Data
 function createData(time, Practitioners) {
@@ -19,16 +20,28 @@ const data = [
     createData('24:00', undefined),
 ];
 
-class Practitioner extends Component {
+class AppointmentByHour extends Component {
+    state = {
+        data: [],
+    }
+    async componentDidMount() {
+        let res = await numberOfAppointmentByHour();
+        res.forEach((data => {
+            data.time = `${data.time}:00`
+        }))
+        this.setState({ data: res });
+        console.log(this.state.data);
+    }
+
     render() {
         return (
             <React.Fragment>
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
-                    Practitioners
+                    Number of Appointments per Hour
                 </Typography>
                 <ResponsiveContainer>
                     <LineChart
-                        data={data}
+                        data={this.state.data}
                         margin={{top: 16, right: 16, bottom: 0, left: 24}}>
                         <XAxis dataKey="time" color="secondary"/>
                         <YAxis color="secondary">
@@ -37,11 +50,11 @@ class Practitioner extends Component {
                                 position="left"
                                 style={{textAnchor: 'middle', color: "primary"}}
                             >
-                                Practitioners
+                                Appointments
                             </Label>
                         </YAxis>
                         <Tooltip/>
-                        <Line type="monotone" dataKey="Practitioners" color="secondary"/>
+                        <Line type="monotone" dataKey="number" color="secondary"/>
                     </LineChart>
                 </ResponsiveContainer>
             </React.Fragment>
@@ -49,4 +62,4 @@ class Practitioner extends Component {
     }
 }
 
-export default Practitioner;
+export default AppointmentByHour;

@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 
 import AppointmentTable from '../../../containers/Table/AppointmentTable';
 import DrawerAppBar from '../../../containers/Others/DrawerAppBar';
-import Dashboard from "../../../components/Others/Dashboard";
+import Dashboard from "../../../containers/Dashboard/Dashboard";
 import {authorizedUser} from "../../../components/API/Authenticated";
 import AuthContainer from "../../../containers/Authentication/AuthContainer";
 import PractitionerTable from "../../../containers/Table/PractitionerTable";

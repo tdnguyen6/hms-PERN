@@ -26,7 +26,7 @@ if (want to sign in?) then (yes)
         elseif (pay for appointments)
             :Make Payments;
         endif
-    elseif (Practitioner) then (yes)
+    elseif (AppointmentByHour) then (yes)
         if (check appointments)
             :Get his Appointments;
          elseif (change appointments)
