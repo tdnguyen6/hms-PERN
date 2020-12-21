@@ -18,6 +18,19 @@ exports.createAppointment = async function (req, res) {
     }
 }
 
+exports.numberOfAppointments = async function (req, res) {
+    const queryStatement = `select count(id) as total 
+                            from appointments`
+
+    try {
+        const result = await db.query(queryStatement)
+        return res.status(200).json(result.rows)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({status: false})
+    }
+}
+
 exports.listAllAppointments = async function (req, res) {
     const queryStatement = `select t1.appointment_id, 
                                    t1.room_id,
@@ -444,7 +457,6 @@ exports.deleteAppointment = async function (req, res) {
     }
 }
 
-
 function recent30DatesArr() {
     const date_Arr = []
     for (let i=0; i<=30; i++) {
@@ -454,6 +466,8 @@ function recent30DatesArr() {
     }
     return date_Arr
 }
+
+
 
 
 
