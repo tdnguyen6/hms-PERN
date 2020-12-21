@@ -54,8 +54,8 @@ class EditAppointmentDialog extends Component {
         try {
             await this.setState({ loading: true });
             console.log('loading time');
-            const time = await availableTimeByPractitioner(this.state.practitionerID, this.state.date);
-            const practitioner = await practitionerByMedicalService(this.state.medicalServiceID)
+            const time = await availableTimeByPractitioner(this.state.practitionerID, this.state.date) || [];
+            const practitioner = await practitionerByMedicalService(this.state.medicalServiceID) || [];
             console.log('loaded time');
             await this.setState({
                 timeList: time.concat(this.state.time).sort(),
@@ -256,7 +256,7 @@ class EditAppointmentDialog extends Component {
                                     value={this.state.room}
                                     InputProps={{ readOnly: true }}/>
                             </Grid>
-                            {/* AppointmentByHour */}
+                            {/* Practitioner */}
                             { (this.props.user !== 'practitioner') && (
                                 (this.props.user === 'admin') ?
                                     <Grid item xs = {6}>
@@ -264,7 +264,7 @@ class EditAppointmentDialog extends Component {
                                             autoFocus fullWidth select
                                             variant       = "outlined"
                                             id            = "practitioner"
-                                            label         = "AppointmentByHour"
+                                            label         = "Practitioner"
                                             value         = { this.state.practitionerID }
                                             InputProps={{readOnly: this.daysFromToday(this.state.date) < 3}}
                                             onChange      = { this.handlePractitionerChange }>{
@@ -279,7 +279,7 @@ class EditAppointmentDialog extends Component {
                                             autoFocus fullWidth
                                             variant="outlined"
                                             id="practitioner"
-                                            label="AppointmentByHour"
+                                            label="Practitioner"
                                             value={this.props.appointment.practitioner.name}
                                             InputProps={{
                                                 readOnly: true,

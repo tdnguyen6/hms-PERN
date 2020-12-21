@@ -186,14 +186,14 @@ class NewAppointmentDialog extends Component {
                 </TextField>
               </Grid>
             }
-            {/* AppointmentByHour */}
+            {/* Practitioner */}
             { (this.props.user !== 'practitioner') &&
                 <Grid item xs = {6}>
                     <TextField
                         autoFocus fullWidth select
                         variant       = "outlined"
                         id            = "practitioner"
-                        label         = "AppointmentByHour"
+                        label         = "Practitioner"
                         value         = { this.state.practitioner }
                         onChange      = { this.handlePractitionerChange }>{
                         this.state.practitionerList.map((option) => (
