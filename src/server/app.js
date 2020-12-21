@@ -78,6 +78,7 @@ app.post("/user/account/update", auth.updateAccount);
 
 app.post("/admin/appointments/all", appointment.listAllAppointments);
 app.post("/admin/appointments/byHour", appointment.nAppointmentsByHour);
+app.post("/admin/appointments/recent", appointment.recentAppointments);
 app.post("/admin/appointments/update", appointment.updateAppointment);
 app.post("/admin/appointments/delete", appointment.deleteAppointment);
 
@@ -104,6 +105,7 @@ app.post("/admin/patients/account/delete", patient.deletePatientAccount);
 app.post("/patient/appointments/all", appointment.patientAppointments);
 app.post("/patient/appointments/create", appointment.createAppointment);
 app.post("/patient/appointments/getAvailableTime", appointment.getAvailableHours);
+app.post("/patient/appointments/hasAnotherAppointment", appointment.hasAnotherAppointment);
 app.post("/patient/appointments/findRoom", appointment.findRoom);
 app.post("/patient/appointments/last", appointment.findLastAppointment);
 app.post("/patient/appointments/makePayment", payment.makePayment);

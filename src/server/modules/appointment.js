@@ -243,7 +243,42 @@ exports.nAppointmentsByHour = async function (req, res) {
          console.log(err)
          return res.status(500).json({status: false})
      }
+}
+
+exports.recentAppointments = async function (req, res) {
+    const queryStatement = `
+    select to_char(at, 'DD/MM/YYYY') as date, 
+        count(id)
+    from appointments
+    where at > now() - '30 days'::interval and 
+    at < now()
+    group by date
+    order by date;
+    `
+
+ try {
+    const query_result = await db.query(queryStatement)
+    const _30RecentDates = recent30DatesArr()
+    const map = new Map()
+
+    _30RecentDates.forEach(element => map.set(element, 0))
+    query_result.rows.forEach(element => {
+        if (map.has(element.date)) map.set(element.date, element.count)
+    })
+
+    const result = []
+    map.forEach((value, key, map) => result.push({
+        date: key,
+        count: value
+    }))
+
+    return res.status(200).json(result)
+
+ } catch (err) {
+    console.log(err)
+    return res.status(500).json({status: false})
  }
+}
 
 exports.findRoom = async function (req, res) {
     if (!Number.isInteger(req.body.serviceID)) {
@@ -322,6 +357,34 @@ exports.getAvailableHours = async function (req, res) {
     }
 }
 
+/* api check if patient has the same appointment in specific hour */
+exports.hasAnotherAppointment = async function (req, res) {
+    if (!req.body.patientID || !req.body.day || !req.body.month || !req.body.year || !req.body.hour) {
+        return res.status(400).json({status: false})
+    }
+
+    const query = `
+    select at
+    from appointments
+    where patient_id = $1
+      and date_part('day', at) = $2
+      and date_part('month', at) = $3
+      and date_part('year', at) = $4
+      and date_part('hour', at) = $5;`
+     
+    const queryArr = [req.body.patientID, req.body.day, req.body.month, req.body.year, req.body.hour]
+
+    try {
+        const result = await db.query(query, queryArr)
+        hasAppointment = (result.rows.length == 1)
+
+        return res.status(200).json({hasAnotherAppointment: hasAppointment})
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(null)
+    }
+}
+
 exports.updateAppointment = async function (req, res) {
     if (!Number.isInteger(req.body.appointmentID)) {
         return res.status(400).json({status: false})
@@ -380,6 +443,24 @@ exports.deleteAppointment = async function (req, res) {
         return res.status(500).json({status: false})
     }
 }
+
+
+function recent30DatesArr() {
+    const date_Arr = []
+    for (let i=0; i<=30; i++) {
+        let date = new Date()
+        date.setDate(date.getDate() - i)
+        date_Arr.push(`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`) 
+    }
+    return date_Arr
+}
+
+
+
+
+
+
+
 
 
 
