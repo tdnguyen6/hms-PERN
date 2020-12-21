@@ -357,6 +357,34 @@ exports.getAvailableHours = async function (req, res) {
     }
 }
 
+/* api check if patient has the same appointment in specific hour */
+exports.hasAnotherAppointment = async function (req, res) {
+    if (!req.body.patientID || !req.body.day || !req.body.month || !req.body.year || !req.body.hour) {
+        return res.status(400).json({status: false})
+    }
+
+    const query = `
+    select at
+    from appointments
+    where patient_id = $1
+      and date_part('day', at) = $2
+      and date_part('month', at) = $3
+      and date_part('year', at) = $4
+      and date_part('hour', at) = $5;`
+     
+    const queryArr = [req.body.patientID, req.body.day, req.body.month, req.body.year, req.body.hour]
+
+    try {
+        const result = await db.query(query, queryArr)
+        hasAppointment = (result.rows.length == 1)
+
+        return res.status(200).json({hasAnotherAppointment: hasAppointment})
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(null)
+    }
+}
+
 exports.updateAppointment = async function (req, res) {
     if (!Number.isInteger(req.body.appointmentID)) {
         return res.status(400).json({status: false})

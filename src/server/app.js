@@ -105,6 +105,7 @@ app.post("/admin/patients/account/delete", patient.deletePatientAccount);
 app.post("/patient/appointments/all", appointment.patientAppointments);
 app.post("/patient/appointments/create", appointment.createAppointment);
 app.post("/patient/appointments/getAvailableTime", appointment.getAvailableHours);
+app.post("/patient/appointments/hasAnotherAppointment", appointment.hasAnotherAppointment);
 app.post("/patient/appointments/findRoom", appointment.findRoom);
 app.post("/patient/appointments/last", appointment.findLastAppointment);
 app.post("/patient/appointments/makePayment", payment.makePayment);
