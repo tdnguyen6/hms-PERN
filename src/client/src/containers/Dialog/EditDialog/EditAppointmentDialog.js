@@ -54,8 +54,8 @@ class EditAppointmentDialog extends Component {
         try {
             await this.setState({ loading: true });
             console.log('loading time');
-            const time = await availableTimeByPractitioner(this.state.practitionerID, this.state.date);
-            const practitioner = await practitionerByMedicalService(this.state.medicalServiceID)
+            const time = await availableTimeByPractitioner(this.state.practitionerID, this.state.date) || [];
+            const practitioner = await practitionerByMedicalService(this.state.medicalServiceID) || [];
             console.log('loaded time');
             await this.setState({
                 timeList: time.concat(this.state.time).sort(),
