@@ -3,23 +3,6 @@ import {Label, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from
 import Typography from "@material-ui/core/Typography";
 import {numberOfAppointmentByHour} from "../../components/API/NumberOfAppointmentByHour";
 
-// Generate Sales Data
-function createData(time, Practitioners) {
-    return {time, Practitioners};
-}
-
-const data = [
-    createData('00:00', 15),
-    createData('03:00', 15),
-    createData('06:00', 50),
-    createData('09:00', 180),
-    createData('12:00', 200),
-    createData('15:00', 170),
-    createData('18:00', 80),
-    createData('21:00', 40),
-    createData('24:00', undefined),
-];
-
 class AppointmentByHour extends Component {
     state = {
         data: [],
@@ -28,9 +11,9 @@ class AppointmentByHour extends Component {
         let res = await numberOfAppointmentByHour();
         res.forEach((data => {
             data.time = `${data.time}:00`
+            data.number = +data.number;
         }))
         this.setState({ data: res });
-        console.log(this.state.data);
     }
 
     render() {
@@ -48,8 +31,7 @@ class AppointmentByHour extends Component {
                             <Label
                                 angle={270}
                                 position="left"
-                                style={{textAnchor: 'middle', color: "primary"}}
-                            >
+                                style={{textAnchor: 'middle', color: "primary"}}>
                                 Appointments
                             </Label>
                         </YAxis>

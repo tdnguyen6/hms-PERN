@@ -13,7 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 let paymentMethod = [
     {
         name: "Bank"
-    },
+    }
 ];
 
 class PaymentDialog extends Component {
@@ -97,7 +97,7 @@ class PaymentDialog extends Component {
                                     label="CVV"
                                     autoFocus/>
                             </Grid>
-                        </React.Fragment>}
+                        </React.Fragment> }
                     </Grid>
 
                 </DialogContent>
