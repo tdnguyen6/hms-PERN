@@ -73,7 +73,12 @@ let forAdmin = [
         label: 'Date',
         align: 'right',
         compareFn: (a, b, dir) => {
-            const res = a.date > b.date ? 1 : -1;
+            function dateFromDDMMYYYY(dateString) {
+                const dateParts = dateString.split("/");
+                return new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+            }
+
+            const res = dateFromDDMMYYYY(a.date) > dateFromDDMMYYYY(b.date) ? 1 : -1;
             return dir === 'asc' ? res : -res;
         }
     }, {
