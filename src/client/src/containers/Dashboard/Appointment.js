@@ -1,7 +1,20 @@
 import React, {Component} from 'react';
 import Typography from "@material-ui/core/Typography";
+import {numberOfAppointment} from "../../components/API/NumberOfAppointment";
+import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 
 class Appointment extends Component {
+    state = {
+        numberOfAppointments: null,
+        loading: true
+    }
+    async componentDidMount() {
+        await this.setState({
+            numberOfAppointments: await numberOfAppointment(),
+            loading: false
+        });
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -9,11 +22,12 @@ class Appointment extends Component {
                     Appointments
                 </Typography>
                 <Typography component="p" variant="h3">
-                    1285
+                    { this.state.numberOfAppointments }
                 </Typography>
                 <Typography color="textSecondary">
                     was made.
                 </Typography>
+                <LoadingDialog open={this.state.loading}/>
             </React.Fragment>
         );
     }

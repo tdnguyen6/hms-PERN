@@ -7,7 +7,6 @@ import Grid from "@material-ui/core/Grid";
 import Patient from "./Patient";
 import Appointment from "./Appointment";
 import AppointmentByHour from "./AppointmentByHour";
-import Covid from "./Covid";
 
 const styles = (theme) => ({
     root: {
@@ -50,7 +49,7 @@ class Dashboard extends Component {
                         {/* Appointment */}
                         <Grid item xs={12} md={4} lg={3}>
                             <Paper className={fixedHeightPaper}>
-                                <Appointment/>
+                                <Appointment />
                             </Paper>
                         </Grid>
                         {/* Patient */}
