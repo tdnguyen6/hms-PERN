@@ -326,13 +326,11 @@ class AppointmentTable extends Component {
     handleDialogClose = async (close, type) => {
         if (type === "newAppointment") {
             await this.setState({ newAppointmentDialog: close });
+            await this.getAllAppointment();
         } else if (type === "symptoms") {
             await this.setState({ symptomsDialog: close });
         } else if (type === "editAppointment") {
             await this.setState({ editAppointmentDialog: close });
-            await this.getAllAppointment();
-        } else if (type === "payment") {
-            await this.setState({ paymentDialog: close });
             await this.getAllAppointment();
         }
     }

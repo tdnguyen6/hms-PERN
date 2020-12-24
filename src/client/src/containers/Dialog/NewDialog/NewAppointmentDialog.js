@@ -20,15 +20,16 @@ import {login} from "../../../components/API/Login";
 import PaymentDialog from "../OtherDialog/PaymentDialog";
 import LoadingDialog from "../OtherDialog/LoadingDialog";
 import {priceByMedicalService} from "../../../components/API/PriceByMedicalService";
+import ErrorDialog from "../OtherDialog/ErrorDialog";
 
 class NewAppointmentDialog extends Component {
     state = {
-        medicalService: [],
+        medicalServiceList: [],
         medicalServiceID: null,
         patientList: [],
-        patient: null,
+        patientID: null,
         practitionerList: [],
-        practitioner: null,
+        practitionerID: null,
         dateList: [],
         date: new Date(),
         timeList: [],
@@ -42,6 +43,10 @@ class NewAppointmentDialog extends Component {
             patientID: null,
             date: new Date(),
             time: null,
+        },
+        error: {
+            errorDialog: false,
+            errorMessage: null
         }
     };
 
@@ -59,24 +64,34 @@ class NewAppointmentDialog extends Component {
 
                 if (user.role === 'patient') {
                     await this.setState({
-                        patient: user.patientID
+                        patientID: user.patientID
                     });
                 } else if (user.role === 'practitioner') {
                     await this.setState({
-                        practitioner: user.practitionerID
+                        practitionerID: user.practitionerID
                     });
                 }
             }
             await this.setState({
-                medicalService: await allMedicalService()
+                medicalServiceList: await allMedicalService()
             })
         } finally {
             await this.setState({loading: false});
         }
     }
 
-    handleSubDialogClose = async () => {
-        await this.setState({paymentDialog: false});
+    handleSubDialogClose = async (close, type) => {
+        if (type === 'error') {
+            await this.setState({
+                error: {
+                    open: close,
+                    message: null
+                }
+            });
+        } else if (type === 'payment') {
+            await this.setState({ paymentDialog: close });
+            await this.handleDialogClose();
+        }
     }
     handleDialogClose = async () => {
         await this.setState({
@@ -86,33 +101,46 @@ class NewAppointmentDialog extends Component {
             date: new Date(),
             timeList: [],
             time: null,
-        })
-        // send close state back to parent: AppointmentTable
+        });
         this.props.close(false, "newAppointment");
     }
     handleSave = async () => {
-        await this.setState({
-            appointmentDetail: {
-                medicalServiceID: this.state.medicalServiceID,
-                practitionerID: this.state.practitioner,
-                patientID: this.state.patient,
-                date: this.state.date,
-                time: this.state.time,
-            },
-            price: await priceByMedicalService(this.state.medicalServiceID),
-            paymentDialog: true
-        });
-        await this.handleDialogClose();
+        if (this.state.medicalServiceID === null
+            || this.state.practitionerID === null
+            || this.state.patientID === null
+            || this.state.time === null) {
+            await this.setState({
+                error: {
+                    errorDialog: true,
+                    errorMessage: 'Information missing. Please fill in all information'
+                }
+            });
+            console.log(this.state);
+        } else {
+            await this.setState({
+                appointmentDetail: {
+                    medicalServiceID: this.state.medicalServiceID,
+                    practitionerID: this.state.practitionerID,
+                    patientID: this.state.patientID,
+                    date: this.state.date,
+                    time: this.state.time,
+                },
+                price: await priceByMedicalService(this.state.medicalServiceID),
+                paymentDialog: true
+            });
+        }
     };
     handlePatientChange = async (event) => {
         await this.setState({
-            patient: event.target.value
+            patientID: event.target.value
         });
     }
     handleMedicalServiceChange = async (event) => {
         await this.setState({
             medicalServiceID: event.target.value,
-            practitioner: null,
+            practitionerID: null,
+            date: new Date(),
+            time: null
         });
         try {
             await this.props.loading(true);
@@ -126,17 +154,19 @@ class NewAppointmentDialog extends Component {
     }
     handlePractitionerChange = async (event) => {
         await this.setState({
-            practitioner: event.target.value,
-            date: new Date()
+            practitionerID: event.target.value,
+            date: new Date(),
+            time: null
         });
     }
     handleDateChange = async (date) => {
         await this.setState({
-            date: date
+            date: date,
+            time: null,
         });
         try {
             await this.props.loading(true);
-            let res = await availableTimeByPractitioner(this.state.practitioner, this.state.date);
+            let res = await availableTimeByPractitioner(this.state.practitionerID, this.state.date);
             await this.setState({
                 timeList: res
             });
@@ -175,7 +205,7 @@ class NewAppointmentDialog extends Component {
                                 label="Medical Service"
                                 value={this.state.medicalServiceID}
                                 onChange={this.handleMedicalServiceChange}>{
-                                this.state.medicalService.map((option) => (
+                                this.state.medicalServiceList.map((option) => (
                                     <MenuItem key={option.id} value={option.id}>
                                         {option.name.charAt(0).toUpperCase() + option.name.slice(1)} - {option.price}
                                     </MenuItem>
@@ -190,7 +220,7 @@ class NewAppointmentDialog extends Component {
                                 variant       = "outlined"
                                 id            = "patient"
                                 label         = "Patient"
-                                value         = { this.state.patient }
+                                value         = { this.state.patientID }
                                 onChange      = { this.handlePatientChange }>{
                                 this.state.patientList.map((option) => (
                                     <MenuItem key = { option.id } value = { option.id }>
@@ -208,7 +238,7 @@ class NewAppointmentDialog extends Component {
                                 variant       = "outlined"
                                 id            = "practitioner"
                                 label         = "Practitioner"
-                                value         = { this.state.practitioner }
+                                value         = { this.state.practitionerID }
                                 onChange      = { this.handlePractitionerChange }>{
                                 this.state.practitionerList.map((option) => (
                                     <MenuItem key = { option.id } value = { option.id }>
@@ -222,7 +252,7 @@ class NewAppointmentDialog extends Component {
                         <Grid item xs = {6}>
                             <MuiPickersUtilsProvider utils = {DateFnsUtils}>
                                 <KeyboardDatePicker
-                                    disabled = {!this.state.medicalServiceID || !this.state.practitioner}
+                                    disabled = { !this.state.medicalServiceID || !this.state.practitionerID }
                                     disablePast fullWidth autoFocus
                                     variant               = "dialog"
                                     inputVariant          = "outlined"
@@ -258,7 +288,11 @@ class NewAppointmentDialog extends Component {
             </Dialog>
             <PaymentDialog open = { this.state.paymentDialog }
                            close = { this.handleSubDialogClose }
-                           price = {this.state.price}/>
+                           appointment = { this.state.appointmentDetail }
+                           price = {this.state.price} />
+            <ErrorDialog open = { this.state.error.errorDialog }
+                         close = { this.handleSubDialogClose }
+                         error = { this.state.error.errorMessage } />
             <LoadingDialog open={this.state.loading}/>
         </React.Fragment>
     );

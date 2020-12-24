@@ -9,6 +9,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
+import LoadingDialog from "./LoadingDialog";
+import {createAppointment} from "../../../components/API/CreateAppointment";
 
 let paymentMethod = [
     {
@@ -18,7 +20,8 @@ let paymentMethod = [
 
 class PaymentDialog extends Component {
     state = {
-        payment: null
+        payment: null,
+        loading: false
     };
     handleDialogClose = () => {
         // send close state back to parent: AppointmentTable
@@ -28,88 +31,99 @@ class PaymentDialog extends Component {
         await this.setState({ payment: event.target.value });
         console.log(this.state.payment);
     };
-    handlePay = async (event) => {
+    handlePay = async () => {
+        try {
+            await this.setState({ loading: true });
+            await createAppointment(this.props.appointment);
+        } finally {
+            await this.setState({ loading: false });
+        }
         this.handleDialogClose();
     }
+    handleCancel = async () => {
+        this.handleDialogClose();
+    };
 
     render() {
         return (
-            <Dialog
-                open={this.props.open}
-                onClose={this.handleDialogClose}
-                aria-labelledby="form-dialog-title">
-                <DialogContent>
-                    <DialogTitle id="form-dialog-title">Payment</DialogTitle>
-                    <Grid container spacing = {2}>
-                        <Grid item xs = {12}>
-                            <DialogContentText id="alert-dialog-description">
-                                You are about to pay ${this.props.price}, please choose payment method below.
-                            </DialogContentText>
-                        </Grid>
-                        <Grid item xs = {12}>
-                            <TextField
-                                autoFocus fullWidth select
-                                variant       = "outlined"
-                                id            = "payment"
-                                label         = "Payment Method"
-                                value         = { this.state.payment }
-                                onChange      = { this.handlePaymentChange }>{
-                                paymentMethod.map((option) => (
-                                    <MenuItem key = { option.name } value = { option.name }>
-                                        { option.name }
-                                    </MenuItem>
-                                ))}
-                            </TextField>
-                        </Grid>
-                        { (this.state.payment === 'Bank') &&
+            <React.Fragment>
+                <Dialog
+                    open={this.props.open}
+                    onClose={this.handleDialogClose}
+                    aria-labelledby="form-dialog-title">
+                    <DialogContent>
+                        <DialogTitle id="form-dialog-title">Payment</DialogTitle>
+                        <Grid container spacing = {2}>
+                            <Grid item xs = {12}>
+                                <DialogContentText id="alert-dialog-description">
+                                    You are about to pay ${this.props.price}, please choose payment method below.
+                                </DialogContentText>
+                            </Grid>
+                            <Grid item xs = {12}>
+                                <TextField
+                                    autoFocus fullWidth select
+                                    variant       = "outlined"
+                                    id            = "payment"
+                                    label         = "Payment Method"
+                                    value         = { this.state.payment }
+                                    onChange      = { this.handlePaymentChange }>{
+                                    paymentMethod.map((option) => (
+                                        <MenuItem key = { option.name } value = { option.name }>
+                                            { option.name }
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </Grid>
+                            { (this.state.payment === 'Bank') &&
                             <React.Fragment>
-                            <Grid item xs = {6}>
-                                <TextField
-                                    required fullWidth autoFocus
-                                    name="Name"
-                                    variant="outlined"
-                                    id="Name"
-                                    label="Name on Card" />
-                            </Grid>
-                            <Grid item xs = {6}>
-                                <TextField
-                                    required fullWidth
-                                    name="Account"
-                                    variant="outlined"
-                                    id="Account"
-                                    label="Account number"
-                                    autoFocus/>
-                            </Grid>
-                            <Grid item xs = {6}>
-                                <TextField
-                                    required fullWidth autoFocus
-                                    name="Valid thru"
-                                    variant="outlined"
-                                    id="Valid"
-                                    label="Valid thru" />
-                            </Grid>
-                            <Grid item xs = {6}>
-                                <TextField
-                                    required fullWidth
-                                    name="CVV"
-                                    variant="outlined"
-                                    id="CVV"
-                                    label="CVV"
-                                    autoFocus/>
-                            </Grid>
-                        </React.Fragment> }
-                    </Grid>
-
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick = { this.handlePay } color = "primary" align = "right">
-                        Pay
-                    </Button>
-                    <Button onClick = { this.handle } color = "primary" align = "right">
-                        Cancel
-                    </Button>
-                </DialogActions>
-            </Dialog>
+                                <Grid item xs = {6}>
+                                    <TextField
+                                        required fullWidth autoFocus
+                                        name="Name"
+                                        variant="outlined"
+                                        id="Name"
+                                        label="Name on Card" />
+                                </Grid>
+                                <Grid item xs = {6}>
+                                    <TextField
+                                        required fullWidth
+                                        name="Account"
+                                        variant="outlined"
+                                        id="Account"
+                                        label="Account number"
+                                        autoFocus/>
+                                </Grid>
+                                <Grid item xs = {6}>
+                                    <TextField
+                                        required fullWidth autoFocus
+                                        name="Valid thru"
+                                        variant="outlined"
+                                        id="Valid"
+                                        label="Valid thru" />
+                                </Grid>
+                                <Grid item xs = {6}>
+                                    <TextField
+                                        required fullWidth
+                                        name="CVV"
+                                        variant="outlined"
+                                        id="CVV"
+                                        label="CVV"
+                                        autoFocus/>
+                                </Grid>
+                            </React.Fragment> }
+                        </Grid>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick = { this.handleCancel } color = "primary" align = "right">
+                            Cancel
+                        </Button>
+                        <Button onClick = { this.handlePay } color = "primary" align = "right">
+                            Pay
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                <LoadingDialog open={this.state.loading}/>
+            </React.Fragment>
         );
     }
 }

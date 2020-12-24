@@ -242,8 +242,10 @@ class EditAppointmentDialog extends Component {
                                             variant="outlined"
                                             id="medical_service"
                                             label="Medical Service"
-                                            value={this.props.appointment.medicalService.name}
-                                            InputProps={{ readOnly: true }}/>
+                                            value = { `${this.props.appointment.medicalService.name} - ${this.props.appointment.medicalService.price}` }
+                                            InputProps={{ readOnly: true }}>
+
+                                        </TextField>
                                     </Grid>
                             }
                             {/* Room */}
