@@ -326,7 +326,6 @@ class AppointmentTable extends Component {
     handleDialogClose = async (close, type) => {
         if (type === "newAppointment") {
             await this.setState({ newAppointmentDialog: close });
-            if (this.state.user === "patient") await this.setState({ paymentDialog: true });
         } else if (type === "symptoms") {
             await this.setState({ symptomsDialog: close });
         } else if (type === "editAppointment") {
@@ -347,13 +346,6 @@ class AppointmentTable extends Component {
         await this.setState({
             appointment: await allAppointment(),
             loading: false
-        });
-        await this.setState({loading: false});
-    }
-    getPrice = async (price) => {
-        await this.setState({loading: true});
-        await this.setState({
-            price: price
         });
         await this.setState({loading: false});
     }
@@ -441,9 +433,6 @@ class AppointmentTable extends Component {
                                        appointment={this.state.appointmentDetail}
                                        user={this.state.user}
                                        key={this.state.appointmentDetail.id}/>}
-                <PaymentDialog open = { this.state.paymentDialog }
-                               close = { this.handleDialogClose }
-                               price = {this.state.price}/>
                 <LoadingDialog open={this.state.loading}/>
             </React.Fragment>
         );

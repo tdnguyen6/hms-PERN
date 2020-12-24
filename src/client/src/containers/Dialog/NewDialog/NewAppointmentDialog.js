@@ -17,6 +17,9 @@ import {createAppointment} from "../../../components/API/CreateAppointment";
 import {practitionerByMedicalService} from "../../../components/API/PractitionerByMedicalService";
 import {allMedicalService} from "../../../components/API/AllMedicalService";
 import {login} from "../../../components/API/Login";
+import PaymentDialog from "../OtherDialog/PaymentDialog";
+import LoadingDialog from "../OtherDialog/LoadingDialog";
+import {priceByMedicalService} from "../../../components/API/PriceByMedicalService";
 
 class NewAppointmentDialog extends Component {
     state = {
@@ -30,6 +33,16 @@ class NewAppointmentDialog extends Component {
         date: new Date(),
         timeList: [],
         time: null,
+        paymentDialog: false,
+        price: null,
+        loading: false,
+        appointmentDetail: {
+            medicalServiceID: null,
+            practitionerID: null,
+            patientID: null,
+            date: new Date(),
+            time: null,
+        }
     };
 
     async componentDidMount() {
@@ -62,6 +75,9 @@ class NewAppointmentDialog extends Component {
         }
     }
 
+    handleSubDialogClose = async () => {
+        await this.setState({paymentDialog: false});
+    }
     handleDialogClose = async () => {
         await this.setState({
             medicalServiceID: null,
@@ -75,20 +91,17 @@ class NewAppointmentDialog extends Component {
         this.props.close(false, "newAppointment");
     }
     handleSave = async () => {
-        let appointment = {
-            medicalServiceID: this.state.medicalServiceID,
-            practitionerID: this.state.practitioner,
-            patientID: this.state.patient,
-            date: this.state.date,
-            time: this.state.time,
-        }
-
-        try {
-            await this.props.loading(true);
-            await createAppointment(appointment);
-        } finally {
-            await this.props.loading(false);
-        }
+        await this.setState({
+            appointmentDetail: {
+                medicalServiceID: this.state.medicalServiceID,
+                practitionerID: this.state.practitioner,
+                patientID: this.state.patient,
+                date: this.state.date,
+                time: this.state.time,
+            },
+            price: await priceByMedicalService(this.state.medicalServiceID),
+            paymentDialog: true
+        });
         await this.handleDialogClose();
     };
     handlePatientChange = async (event) => {
@@ -139,109 +152,115 @@ class NewAppointmentDialog extends Component {
 
   render() {
     return (
-      <Dialog
-        open              = { this.props.open }
-        onClose           = { this.handleDialogClose }
-        aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Make new appointment</DialogTitle>
-        <DialogContent>
-          <Grid container spacing = {2}>
-            {/* Dialog Content */}
-            <Grid item xs = {12}>
-              <DialogContentText id = "alert-dialog-description">
-                To make new appointment, please enter your information here.
-              </DialogContentText>
-            </Grid>
-            {/* Medical service */}
-            <Grid item xs={(this.props.user === 'admin') ? 12 : 6}>
-              <TextField
-                  autoFocus fullWidth select
-                  variant="outlined"
-                  id="medical_service"
-                  label="Medical Service"
-                  value={this.state.medicalServiceID}
-                  onChange={this.handleMedicalServiceChange}>{
-                this.state.medicalService.map((option) => (
-                    <MenuItem key={option.id} value={option.id}>
-                      {option.name.charAt(0).toUpperCase() + option.name.slice(1)} - {option.price}
-                    </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-            {/* Patient */}
-            { (this.props.user !== 'patient') &&
-              <Grid item xs = {6}>
-                <TextField
-                    autoFocus fullWidth select
-                    variant       = "outlined"
-                    id            = "patient"
-                    label         = "Patient"
-                    value         = { this.state.patient }
-                    onChange      = { this.handlePatientChange }>{
-                      this.state.patientList.map((option) => (
-                          <MenuItem key = { option.id } value = { option.id }>
-                            { option.name }
-                          </MenuItem>
-                      ))}
-                </TextField>
-              </Grid>
-            }
-            {/* Practitioner */}
-            { (this.props.user !== 'practitioner') &&
-                <Grid item xs = {6}>
-                    <TextField
-                        autoFocus fullWidth select
-                        variant       = "outlined"
-                        id            = "practitioner"
-                        label         = "Practitioner"
-                        value         = { this.state.practitioner }
-                        onChange      = { this.handlePractitionerChange }>{
-                        this.state.practitionerList.map((option) => (
-                            <MenuItem key = { option.id } value = { option.id }>
-                                { option.name }
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                </Grid>
-            }
-            {/* Date */}
-            <Grid item xs = {6}>
-              <MuiPickersUtilsProvider utils = {DateFnsUtils}>
-                <KeyboardDatePicker
-                    disabled = {!this.state.medicalServiceID || !this.state.practitioner}
-                    disablePast fullWidth autoFocus
-                    variant               = "dialog"
-                    inputVariant          = "outlined"
-                    label                 = "Date of appointment"
-                    format                = "dd/MM/yyyy"
-                    value                 = { this.state.date }
-                    onChange              = { this.handleDateChange }/>
-              </MuiPickersUtilsProvider>
-            </Grid>
-            {/* Time */}
-            <Grid item xs = {6}>
-              <TextField
-                  autoFocus fullWidth select
-                  variant       = "outlined"
-                  id            = "time"
-                  label         = "Time"
-                  value         = { this.state.time }
-                  onChange      = { this.handleTimeChange }>{
-                this.state.timeList.map((option) => (
-                    <MenuItem key = { option } value = { option }>
-                      { option }
-                    </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick = { this.handleSave } color = "primary" align = "right">
-              Save
-          </Button>
-        </DialogActions>
-      </Dialog>
+        <React.Fragment>
+            <Dialog
+                open              = { this.props.open }
+                onClose           = { this.handleDialogClose }
+                aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Make new appointment</DialogTitle>
+                <DialogContent>
+                    <Grid container spacing = {2}>
+                        {/* Dialog Content */}
+                        <Grid item xs = {12}>
+                            <DialogContentText id = "alert-dialog-description">
+                                To make new appointment, please enter your information here.
+                            </DialogContentText>
+                        </Grid>
+                        {/* Medical service */}
+                        <Grid item xs={(this.props.user === 'admin') ? 12 : 6}>
+                            <TextField
+                                autoFocus fullWidth select
+                                variant="outlined"
+                                id="medical_service"
+                                label="Medical Service"
+                                value={this.state.medicalServiceID}
+                                onChange={this.handleMedicalServiceChange}>{
+                                this.state.medicalService.map((option) => (
+                                    <MenuItem key={option.id} value={option.id}>
+                                        {option.name.charAt(0).toUpperCase() + option.name.slice(1)} - {option.price}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        </Grid>
+                        {/* Patient */}
+                        { (this.props.user !== 'patient') &&
+                        <Grid item xs = {6}>
+                            <TextField
+                                autoFocus fullWidth select
+                                variant       = "outlined"
+                                id            = "patient"
+                                label         = "Patient"
+                                value         = { this.state.patient }
+                                onChange      = { this.handlePatientChange }>{
+                                this.state.patientList.map((option) => (
+                                    <MenuItem key = { option.id } value = { option.id }>
+                                        { option.name }
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        </Grid>
+                        }
+                        {/* Practitioner */}
+                        { (this.props.user !== 'practitioner') &&
+                        <Grid item xs = {6}>
+                            <TextField
+                                autoFocus fullWidth select
+                                variant       = "outlined"
+                                id            = "practitioner"
+                                label         = "Practitioner"
+                                value         = { this.state.practitioner }
+                                onChange      = { this.handlePractitionerChange }>{
+                                this.state.practitionerList.map((option) => (
+                                    <MenuItem key = { option.id } value = { option.id }>
+                                        { option.name }
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        </Grid>
+                        }
+                        {/* Date */}
+                        <Grid item xs = {6}>
+                            <MuiPickersUtilsProvider utils = {DateFnsUtils}>
+                                <KeyboardDatePicker
+                                    disabled = {!this.state.medicalServiceID || !this.state.practitioner}
+                                    disablePast fullWidth autoFocus
+                                    variant               = "dialog"
+                                    inputVariant          = "outlined"
+                                    label                 = "Date of appointment"
+                                    format                = "dd/MM/yyyy"
+                                    value                 = { this.state.date }
+                                    onChange              = { this.handleDateChange }/>
+                            </MuiPickersUtilsProvider>
+                        </Grid>
+                        {/* Time */}
+                        <Grid item xs = {6}>
+                            <TextField
+                                autoFocus fullWidth select
+                                variant       = "outlined"
+                                id            = "time"
+                                label         = "Time"
+                                value         = { this.state.time }
+                                onChange      = { this.handleTimeChange }>{
+                                this.state.timeList.map((option) => (
+                                    <MenuItem key = { option } value = { option }>
+                                        { option }
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        </Grid>
+                    </Grid>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick = { this.handleSave } color = "primary" align = "right">
+                        Save
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <PaymentDialog open = { this.state.paymentDialog }
+                           close = { this.handleSubDialogClose }
+                           price = {this.state.price}/>
+            <LoadingDialog open={this.state.loading}/>
+        </React.Fragment>
     );
   }
 }
