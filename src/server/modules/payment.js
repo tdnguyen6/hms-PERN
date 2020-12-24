@@ -1,18 +1,22 @@
 const db = require('../db');
 
 exports.generateInvoice = async function (req, res) {
+    if (!Number.isInteger(req.body.serviceID)) {
+        return res.status(400).json({status: false})
+    }
+    
     try {
-        const queryStatement = `select m.price 
-                              from medicalservices m, 
-                                   diseases d 
-                              where d.suggested_checkup = m.id and 
-                                    d.id = $1`
-        const arr = [req.body.diseaseID]
+        const queryStatement = `
+        select m.price 
+        from medicalservices m 
+        where m.id = $1`
+
+        const arr = [req.body.serviceID]
         const result = await db.query(queryStatement, arr)
-        res.status(200).json(result.rows)
+        return res.status(200).json(result.rows)
     } catch (err) {
         console.log(err)
-        res.status(500).json({status: false})
+        return res.status(500).json({status: false})
     }
 }
 
