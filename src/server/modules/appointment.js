@@ -372,20 +372,13 @@ exports.getAvailableHours = async function (req, res) {
 
 /* api check if patient has the same appointment in specific hour */
 exports.hasAnotherAppointment = async function (req, res) {
-    if (!req.body.patientID || !req.body.day || !req.body.month || !req.body.year || !req.body.hour) {
-        return res.status(400).json({status: false})
-    }
-
     const query = `
     select at
     from appointments
-    where patient_id = $1
-      and date_part('day', at) = $2
-      and date_part('month', at) = $3
-      and date_part('year', at) = $4
-      and date_part('hour', at) = $5;`
+    where patient_id = req.session.patientID
+      and at = $1`
      
-    const queryArr = [req.body.patientID, req.body.day, req.body.month, req.body.year, req.body.hour]
+    const queryArr = [req.body.at]
 
     try {
         const result = await db.query(query, queryArr)
