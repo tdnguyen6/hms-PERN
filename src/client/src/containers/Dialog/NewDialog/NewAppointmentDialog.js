@@ -21,6 +21,7 @@ import PaymentDialog from "../OtherDialog/PaymentDialog";
 import LoadingDialog from "../OtherDialog/LoadingDialog";
 import {priceByMedicalService} from "../../../components/API/PriceByMedicalService";
 import ErrorDialog from "../OtherDialog/ErrorDialog";
+import {checkAppointmentExist} from "../../../components/API/CheckAppointmentExist";
 
 class NewAppointmentDialog extends Component {
     state = {
@@ -105,17 +106,20 @@ class NewAppointmentDialog extends Component {
         this.props.close(false, "newAppointment");
     }
     handleSave = async () => {
-        if (this.state.medicalServiceID === null
-            || this.state.practitionerID === null
-            || this.state.patientID === null
-            || this.state.time === null) {
+        let medicalServiceID = this.state.medicalServiceID;
+        let practitionerID = this.state.practitionerID;
+        let patientID = this.state.patientID;
+        let date = this.state.date;
+        let time = this.state.time;
+        let res = await checkAppointmentExist(this.state.date, this.state.time);
+        console.log(res);
+        if (this.state.medicalServiceID === null || this.state.practitionerID === null || this.state.patientID === null || this.state.time === null) {
             await this.setState({
                 error: {
                     errorDialog: true,
                     errorMessage: 'Information missing. Please fill in all information'
                 }
             });
-            console.log(this.state);
         } else {
             await this.setState({
                 appointmentDetail: {
@@ -128,7 +132,6 @@ class NewAppointmentDialog extends Component {
                 price: await priceByMedicalService(this.state.medicalServiceID),
                 paymentDialog: true
             });
-            console.log(this.state.price);
         }
     };
     handlePatientChange = async (event) => {
