@@ -39,7 +39,7 @@ let forAdmin = [
         }
     }, {
         id: 'patient_name',
-        label: 'AppointmentIn30Day',
+        label: 'Patient',
         compareFn: (a, b, dir) => {
             const res = a.patient_name.toUpperCase() > b.patient_name.toUpperCase() ? 1 : -1;
             return dir === 'asc' ? res : -res;
@@ -144,7 +144,7 @@ let forPatient = [
 let forPractitioner = [
     {
         id: 'patient_name',
-        label: 'AppointmentIn30Day',
+        label: 'Patient',
         compareFn: (a, b, dir) => {
             const res = a.patient_name.toUpperCase() > b.patient_name.toUpperCase() ? 1 : -1;
             return dir === 'asc' ? res : -res;

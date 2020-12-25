@@ -301,7 +301,7 @@ class EditAppointmentDialog extends Component {
                                         autoFocus fullWidth
                                         variant="outlined"
                                         id="patient"
-                                        label="AppointmentIn30Day"
+                                        label="Patient"
                                         value={this.props.appointment.patient.name}
                                         InputProps={{
                                             readOnly: true,

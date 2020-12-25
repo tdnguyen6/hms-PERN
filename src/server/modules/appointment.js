@@ -382,7 +382,7 @@ exports.hasAnotherAppointment = async function (req, res) {
 
     try {
         const result = await db.query(query, queryArr)
-        let hasAppointment = (result.rows.length == 1)
+        let hasAppointment = (result.rows.length === 1)
         return res.status(200).json({hasAnotherAppointment: hasAppointment})
     } catch (err) {
         console.log(err)

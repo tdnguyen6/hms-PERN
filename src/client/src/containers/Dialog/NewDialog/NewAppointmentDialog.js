@@ -106,11 +106,6 @@ class NewAppointmentDialog extends Component {
         this.props.close(false, "newAppointment");
     }
     handleSave = async () => {
-        let medicalServiceID = this.state.medicalServiceID;
-        let practitionerID = this.state.practitionerID;
-        let patientID = this.state.patientID;
-        let date = this.state.date;
-        let time = this.state.time;
         let res = await checkAppointmentExist(this.state.date, this.state.time);
         console.log(res);
         if (this.state.medicalServiceID === null || this.state.practitionerID === null || this.state.patientID === null || this.state.time === null) {
@@ -223,7 +218,7 @@ class NewAppointmentDialog extends Component {
                                 autoFocus fullWidth select
                                 variant       = "outlined"
                                 id            = "patient"
-                                label         = "AppointmentIn30Day"
+                                label         = "Patient"
                                 value         = { this.state.patientID }
                                 onChange      = { this.handlePatientChange }>{
                                 this.state.patientList.map((option) => (

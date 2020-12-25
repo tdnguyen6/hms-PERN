@@ -13,7 +13,6 @@ import {allPatient} from "../../components/API/AllPatient";
 import EditPatientDialog from "../Dialog/EditDialog/EditPatientDialog";
 import Avatar from "@material-ui/core/Avatar";
 import CyclicSortButton from "../Others/CyclicSortButton";
-import FilterBox from "../Others/TableToolbar";
 import TableToolbar from "../Others/TableToolbar";
 
 let columns = [
