@@ -23,7 +23,7 @@ export const priceByMedicalService = async (id) => {
     };
     try {
         let res = await axios.post(`${process.env.REACT_APP_API_ADDR}/payment/invoice`, data, { withCredentials: true });
-        return res.data;
+        return res.data[0].price;
     } catch (error) {
         console.log(error);
     }

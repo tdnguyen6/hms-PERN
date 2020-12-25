@@ -56,7 +56,7 @@ class PaymentDialog extends Component {
                         <Grid container spacing = {2}>
                             <Grid item xs = {12}>
                                 <DialogContentText id="alert-dialog-description">
-                                    You are about to pay ${this.props.price}, please choose payment method below.
+                                    You are about to pay {this.props.price}, please choose payment method below.
                                 </DialogContentText>
                             </Grid>
                             <Grid item xs = {12}>

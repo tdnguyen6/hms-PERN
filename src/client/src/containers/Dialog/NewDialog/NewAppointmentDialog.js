@@ -128,6 +128,7 @@ class NewAppointmentDialog extends Component {
                 price: await priceByMedicalService(this.state.medicalServiceID),
                 paymentDialog: true
             });
+            console.log(this.state.price);
         }
     };
     handlePatientChange = async (event) => {
