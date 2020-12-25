@@ -13,7 +13,7 @@ if (want to sign in?) then (yes)
     endif
     :Sign In;
     :Dashboard;
-    if (Patient) then (yes)
+    if (AppointmentIn30Day) then (yes)
         if (new appointment) then (yes)
             if (do not know disease & service ?)
                 :Disease & Services by Symptoms;

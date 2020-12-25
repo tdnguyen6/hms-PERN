@@ -294,14 +294,14 @@ class EditAppointmentDialog extends Component {
                                         />
                                     </Grid>
                             )}
-                            {/* Patient */}
+                            {/* AppointmentIn30Day */}
                             { (this.props.user !== 'patient') &&
                                 <Grid item xs={6}>
                                     <TextField
                                         autoFocus fullWidth
                                         variant="outlined"
                                         id="patient"
-                                        label="Patient"
+                                        label="AppointmentIn30Day"
                                         value={this.props.appointment.patient.name}
                                         InputProps={{
                                             readOnly: true,

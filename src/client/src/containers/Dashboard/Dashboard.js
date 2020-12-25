@@ -4,9 +4,11 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import Patient from "./Patient";
+import AppointmentIn30Day from "./AppointmentIn30Day";
 import Appointment from "./Appointment";
 import AppointmentByHour from "./AppointmentByHour";
+import Covid from "./Covid";
+import {authorizedUser} from "../../components/API/Authenticated";
 
 const styles = (theme) => ({
     root: {
@@ -33,6 +35,18 @@ const styles = (theme) => ({
 });
 
 class Dashboard extends Component {
+    state = {
+        user: null
+    }
+
+    async componentDidMount() {
+        const user = await authorizedUser();
+        if (user) {
+            await this.setState({
+                user: user.role
+            });
+        }
+    }
     render() {
         const {classes} = this.props;
         const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -43,7 +57,7 @@ class Dashboard extends Component {
                         {/* AppointmentByHour */}
                         <Grid item xs={12} md={8} lg={9}>
                             <Paper className={fixedHeightPaper}>
-                                <AppointmentByHour />
+                                { this.state.user === 'admin' ? <AppointmentByHour /> : <Covid /> }
                             </Paper>
                         </Grid>
                         {/* Appointment */}
@@ -52,10 +66,10 @@ class Dashboard extends Component {
                                 <Appointment />
                             </Paper>
                         </Grid>
-                        {/* Patient */}
+                        {/* AppointmentIn30Day */}
                         <Grid item xs={12}>
                             <Paper className={fixedHeightPaper}>
-                                <Patient/>
+                                { this.state.user === 'admin' ? <AppointmentIn30Day /> : <AppointmentByHour /> }
                             </Paper>
                         </Grid>
                     </Grid>

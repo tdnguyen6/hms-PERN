@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/tidunguyen/hms-PERN#readme",
   "dependencies": {
+    "apify": "^0.22.2",
     "connect-pg-simple": "^6.2.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
