@@ -77,7 +77,6 @@ class NewAppointmentDialog extends Component {
             await this.setState({
                 medicalServiceList: await allMedicalService()
             })
-            console.log(this.state.medicalServiceList);
         } finally {
             await this.setState({loading: false});
         }
@@ -108,13 +107,26 @@ class NewAppointmentDialog extends Component {
         this.props.close(false, "newAppointment");
     }
     handleSave = async () => {
-        let res = await checkAppointmentExist(this.state.date, this.state.time);
-        console.log(res);
-        if (this.state.medicalServiceID === null || this.state.practitionerID === null || this.state.patientID === null || this.state.time === null) {
+        let hasAnotherAppointment;
+        try {
+            await this.setState({loading: true});
+            hasAnotherAppointment = await checkAppointmentExist(this.state.patientID, this.state.date, this.state.time);
+        } finally {
+            await this.setState({loading: false});
+        }
+
+        if (hasAnotherAppointment) {
             await this.setState({
                 error: {
                     errorDialog: true,
-                    errorMessage: 'Information missing. Please fill in all information'
+                    errorMessage: 'Another appointment is booked in this period.'
+                }
+            });
+        } else if (this.state.medicalServiceID === null || this.state.practitionerID === null || this.state.patientID === null || this.state.time === null) {
+            await this.setState({
+                error: {
+                    errorDialog: true,
+                    errorMessage: 'Information missing. Please fill in all information.'
                 }
             });
         } else {

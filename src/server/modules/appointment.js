@@ -375,10 +375,10 @@ exports.hasAnotherAppointment = async function (req, res) {
     const query = `
     select at
     from appointments
-    where patient_id = req.session.patientID
-      and at = $1`
+    where patient_id = $1
+      and at = $2`
      
-    const queryArr = [req.body.at]
+    const queryArr = [req.body.patientID, req.body.at]
 
     try {
         const result = await db.query(query, queryArr)

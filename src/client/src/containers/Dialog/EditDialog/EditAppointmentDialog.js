@@ -25,6 +25,8 @@ import {practitionerByMedicalService} from "../../../components/API/Practitioner
 import {checkinAppointment} from "../../../components/API/CheckinAppointment";
 import {roomByMedicalService} from "../../../components/API/RoomByMedicalService";
 import {capitalFirstChar} from "../../../components/Services/CapitalFirstChar";
+import {checkAppointmentExist} from "../../../components/API/CheckAppointmentExist";
+import ErrorDialog from "../OtherDialog/ErrorDialog";
 
 class EditAppointmentDialog extends Component {
     state = {
@@ -48,7 +50,11 @@ class EditAppointmentDialog extends Component {
         diseaseInfoDialog: false,
         userInfoDialog: false,
         userInfo: null,
-        loading: false
+        loading: false,
+        error: {
+            errorDialog: false,
+            errorMessage: null
+        }
     }
 
     async componentDidMount() {
@@ -85,22 +91,45 @@ class EditAppointmentDialog extends Component {
             await this.setState({
                 userInfoDialog: close
             });
+        } else if (type === 'error') {
+            await this.setState({
+                error: {
+                    open: close,
+                    message: null
+                }
+            });
         }
     }
     handleSave = async () => {
         await this.setState({ loading: true });
-        await editAppointment(this.props.appointment.id, this.state.date, this.state.time);
-        await this.setState({
-            date: new Date(this.props.appointment.date[2],
-                this.props.appointment.date[1] - 1,
-                this.props.appointment.date[0], 0, 0, 0),
-            timeList: [this.props.appointment.time],
-            time: this.props.appointment.time,
-            diseaseInfoDialog: false,
-            practitionerInfoDialog: false,
-            loading: false
-        })
-        await this.handleDialogClose();
+        let hasAnotherAppointment;
+        try {
+            await this.setState({ loading: true });
+            hasAnotherAppointment = await checkAppointmentExist(this.props.appointment.patient.id, this.state.date, this.state.time);
+        } finally {
+            await this.setState({ loading: false });
+        }
+        if (hasAnotherAppointment) {
+            await this.setState({
+                error: {
+                    errorDialog: true,
+                    errorMessage: 'Another appointment is booked in this period.'
+                }
+            });
+        } else {
+            await editAppointment(this.props.appointment.id, this.state.date, this.state.time);
+            await this.setState({
+                date: new Date(this.props.appointment.date[2],
+                    this.props.appointment.date[1] - 1,
+                    this.props.appointment.date[0], 0, 0, 0),
+                timeList: [this.props.appointment.time],
+                time: this.props.appointment.time,
+                diseaseInfoDialog: false,
+                practitionerInfoDialog: false,
+                loading: false
+            })
+            await this.handleDialogClose();
+        }
     };
     handleDelete = async () => {
         await deleteAppointment(this.props.appointment.id);
@@ -462,6 +491,9 @@ class EditAppointmentDialog extends Component {
                                         close={this.handleSubDialogClose}
                                         data={(this.state.userInfo === 'patient') ? this.props.appointment.patient : this.props.appointment.practitioner}
                                         user={this.state.userInfo}/>
+                <ErrorDialog open = { this.state.error.errorDialog }
+                             close = { this.handleSubDialogClose }
+                             error = { this.state.error.errorMessage } />
                 <LoadingDialog open={this.state.loading}/>
             </React.Fragment>
 

@@ -9,7 +9,6 @@ export const editAppointment = async (id, date, time) => {
         appointmentID: id,
         at: new Date(Date.UTC(year, month, day, timeArr[0], timeArr[1])),
     }
-    console.log('edit appointment', data);
     try {
         await axios.post(`${process.env.REACT_APP_API_ADDR}/admin/appointments/update`, data, { withCredentials: true });
     } catch (error) {
