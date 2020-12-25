@@ -12,7 +12,7 @@ import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 let admin = [
     {id: 'Dashboard', link: '/admin/dashboard', icon: <DashboardIcon/>},
     {id: 'Practitioner', link: '/admin/practitioner', icon: <PersonAddIcon/>},
-    {id: 'AppointmentIn30Day', link: '/admin/patient', icon: <AirlineSeatIndividualSuiteIcon/>},
+    {id: 'Patient', link: '/admin/patient', icon: <AirlineSeatIndividualSuiteIcon/>},
     {id: 'Appointment', link: '/admin/appointment', icon: <EventIcon/>},
     {id: 'Services', link: '/admin/medicalService', icon: <LocalHospitalIcon/>}
 ];

@@ -22,6 +22,7 @@ import LoadingDialog from "../OtherDialog/LoadingDialog";
 import {priceByMedicalService} from "../../../components/API/PriceByMedicalService";
 import ErrorDialog from "../OtherDialog/ErrorDialog";
 import {checkAppointmentExist} from "../../../components/API/CheckAppointmentExist";
+import {capitalFirstChar} from "../../../components/Services/CapitalFirstChar";
 
 class NewAppointmentDialog extends Component {
     state = {
@@ -76,6 +77,7 @@ class NewAppointmentDialog extends Component {
             await this.setState({
                 medicalServiceList: await allMedicalService()
             })
+            console.log(this.state.medicalServiceList);
         } finally {
             await this.setState({loading: false});
         }
@@ -147,6 +149,7 @@ class NewAppointmentDialog extends Component {
             await this.setState({
                 practitionerList: res
             });
+            console.log(this.state.practitionerList);
         } finally {
             await this.props.loading(false);
         }
@@ -206,7 +209,7 @@ class NewAppointmentDialog extends Component {
                                 onChange={this.handleMedicalServiceChange}>{
                                 this.state.medicalServiceList.map((option) => (
                                     <MenuItem key={option.id} value={option.id}>
-                                        {option.name.charAt(0).toUpperCase() + option.name.slice(1)} - {option.price}
+                                        {`${capitalFirstChar(option.name)} - ${option.price}`}
                                     </MenuItem>
                                 ))}
                             </TextField>

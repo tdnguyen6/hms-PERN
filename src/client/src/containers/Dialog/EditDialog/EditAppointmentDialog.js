@@ -24,6 +24,7 @@ import {allMedicalService} from "../../../components/API/AllMedicalService";
 import {practitionerByMedicalService} from "../../../components/API/PractitionerByMedicalService";
 import {checkinAppointment} from "../../../components/API/CheckinAppointment";
 import {roomByMedicalService} from "../../../components/API/RoomByMedicalService";
+import {capitalFirstChar} from "../../../components/Services/CapitalFirstChar";
 
 class EditAppointmentDialog extends Component {
     state = {
@@ -53,16 +54,14 @@ class EditAppointmentDialog extends Component {
     async componentDidMount() {
         try {
             await this.setState({ loading: true });
-            console.log('loading time');
-            const time = await availableTimeByPractitioner(this.state.practitionerID, this.state.date) || [];
-            const practitioner = await practitionerByMedicalService(this.state.medicalServiceID) || [];
-            console.log('loaded time');
+            const time = await availableTimeByPractitioner(this.state.practitionerID, this.state.date);
+            const practitioner = await practitionerByMedicalService(this.state.medicalServiceID);
             await this.setState({
                 timeList: time.concat(this.state.time).sort(),
                 practitionerList: practitioner.concat(this.state.practitionerList),
                 medicalServiceList: await allMedicalService(),
             });
-            console.log('finish set state', this.state.medicalServiceList);
+            console.log(this.state.medicalServiceList);
         } finally {
             await this.setState({loading: false});
         }
@@ -89,6 +88,7 @@ class EditAppointmentDialog extends Component {
         }
     }
     handleSave = async () => {
+        await this.setState({ loading: true });
         await editAppointment(this.props.appointment.id, this.state.date, this.state.time);
         await this.setState({
             date: new Date(this.props.appointment.date[2],
@@ -107,7 +107,6 @@ class EditAppointmentDialog extends Component {
         await this.handleDialogClose();
     };
     handleCheckin = async () => {
-        console.log(this.state);
         let appointment = {
             id: this.props.appointment.id,
             log: this.state.log,
@@ -129,6 +128,7 @@ class EditAppointmentDialog extends Component {
                 practitionerList: await practitionerByMedicalService(this.state.medicalServiceID),
                 room: await roomByMedicalService(this.state.medicalServiceID)
             });
+            console.log(this.state.practitionerList)
         } finally {
             await this.setState({ loading: false });
         }
@@ -136,7 +136,6 @@ class EditAppointmentDialog extends Component {
     handlePractitionerChange = async (event) => {
         await this.setState({
             practitionerID: event.target.value,
-            date: new Date()
         });
     }
     handleDateChange = async (date) => {
@@ -242,7 +241,7 @@ class EditAppointmentDialog extends Component {
                                             variant="outlined"
                                             id="medical_service"
                                             label="Medical Service"
-                                            value = { `${this.props.appointment.medicalService.name} - ${this.props.appointment.medicalService.price}` }
+                                            value = { `${capitalFirstChar(this.props.appointment.medicalService.name)} - ${this.props.appointment.medicalService.price}` }
                                             InputProps={{ readOnly: true }}>
 
                                         </TextField>
@@ -294,9 +293,9 @@ class EditAppointmentDialog extends Component {
                                         />
                                     </Grid>
                             )}
-                            {/* AppointmentIn30Day */}
+                            {/* Patient */}
                             { (this.props.user !== 'patient') &&
-                                <Grid item xs={6}>
+                                <Grid item xs={this.props.user === 'admin' ? 6 : 12}>
                                     <TextField
                                         autoFocus fullWidth
                                         variant="outlined"
@@ -415,7 +414,7 @@ class EditAppointmentDialog extends Component {
                                                     variant="outlined"
                                                     id="medical_service"
                                                     label="Medical Service"
-                                                    value={this.state.nextAppointment.service}
+                                                    value={ `${capitalFirstChar(this.props.appointment.medicalService.name)} - ${this.props.appointment.medicalService.price}` }
                                                     InputProps={{ readOnly: true }}/> :
                                                 <TextField
                                                     autoFocus fullWidth select
@@ -426,7 +425,7 @@ class EditAppointmentDialog extends Component {
                                                     onChange = { this.handleNextAppointmentServiceChange }>{
                                                     this.state.medicalServiceList.map((option) => (
                                                         <MenuItem key={option.id} value={option.id}>
-                                                            {option.name.charAt(0).toUpperCase() + option.name.slice(1)} - {option.price}
+                                                            {capitalFirstChar(option.name)} - {option.price}
                                                         </MenuItem>
                                                     ))}
                                                 </TextField>

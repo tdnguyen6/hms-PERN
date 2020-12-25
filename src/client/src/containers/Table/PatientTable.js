@@ -34,7 +34,7 @@ let columns = [
     }, {
         id: 'gender',
         label: 'Sex',
-        align: 'right',
+        align: 'left',
         compareFn: (a, b, dir) => {
             const res = a.gender.toUpperCase() > b.gender.toUpperCase() ? 1 : -1;
             return dir === 'asc' ? res : -res;
@@ -42,7 +42,7 @@ let columns = [
     }, {
         id: 'email',
         label: 'Email',
-        align: 'right',
+        align: 'left',
         compareFn: (a, b, dir) => {
             const res = a.email.toUpperCase() > b.email.toUpperCase() ? 1 : -1;
             return dir === 'asc' ? res : -res;
@@ -57,7 +57,7 @@ let columns = [
         }
     }, {
         id: 'ssn',
-        label: 'Social Security No.',
+        label: 'SSN',
         align: 'right',
         compareFn: (a, b, dir) => {
             const res = a.ssn.toUpperCase() > b.ssn.toUpperCase() ? 1 : -1;
@@ -231,7 +231,8 @@ class PatientTable extends Component {
                                         { columns.map((column) => {
                                             return (
                                                 <TableCell key = { column.id } align = { column.align }>
-                                                    { row[column.id] }
+                                                    { (column.id === 'gender') ?
+                                                        (row[column.id] === 'female') ? 'F' : 'M' :row[column.id] }
                                                 </TableCell>
                                             );
                                         })}

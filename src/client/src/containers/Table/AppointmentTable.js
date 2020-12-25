@@ -28,6 +28,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import InputBase from "@material-ui/core/InputBase";
 import TableToolbar from "../Others/TableToolbar";
 import PaymentDialog from "../Dialog/OtherDialog/PaymentDialog";
+import {capitalFirstChar} from "../../components/Services/CapitalFirstChar";
 
 let forAdmin = [
     {
@@ -152,7 +153,6 @@ let forPractitioner = [
     }, {
         id: 'medical_service',
         label: 'Medical Service',
-        align: 'right',
         compareFn: (a, b, dir) => {
             const res = a.medical_service.toUpperCase() > b.medical_service.toUpperCase() ? 1 : -1;
             return dir === 'asc' ? res : -res;
@@ -409,7 +409,7 @@ class AppointmentTable extends Component {
                                                 <TableCell key={column.id} align={column.align}>
                                                     {(column.id === 'status')
                                                         ? (row[column.id] === 'booked') ? Upcoming : Completed
-                                                        : row[column.id]}
+                                                        : (column.id === 'medical_service') ? capitalFirstChar(row[column.id]) : row[column.id]}
                                                 </TableCell>
                                             );
                                         })}

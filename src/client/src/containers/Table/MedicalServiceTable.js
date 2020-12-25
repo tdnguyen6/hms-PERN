@@ -11,9 +11,8 @@ import TableRow from '@material-ui/core/TableRow';
 import LoadingDialog from "../Dialog/OtherDialog/LoadingDialog";
 import {allMedicalService} from "../../components/API/AllMedicalService";
 import CyclicSortButton from "../Others/CyclicSortButton";
-import FilterBox from "../Others/TableToolbar";
-import {allAppointment} from "../../components/API/AllAppointment";
 import TableToolbar from "../Others/TableToolbar";
+import {capitalFirstChar} from "../../components/Services/CapitalFirstChar";
 
 let columns = [
     {
@@ -36,6 +35,7 @@ let columns = [
     {
         id: 'price',
         label: 'Price',
+        align: 'right',
         compareFn: (a, b, dir) => {
             const res = +a.price.slice(1) - +b.price.slice(1);
             return dir === 'asc' ? res : -res;
@@ -44,7 +44,6 @@ let columns = [
     {
         id: 'department',
         label: 'Department',
-        align: 'right',
         compareFn: (a, b, dir) => {
             const res = a.department.toUpperCase() > b.department.toUpperCase() ? 1 : -1;
             return dir === 'asc' ? res : -res;
@@ -126,7 +125,7 @@ class MedicalServiceTable extends Component {
                                         {columns.map((column) => {
                                             return (
                                                 <TableCell key={column.id} align={column.align}>
-                                                    {row[column.id]}
+                                                    { (column.id === 'name' || column.id === 'department') ? capitalFirstChar(row[column.id]) : row[column.id]}
                                                 </TableCell>
                                             );
                                         })}

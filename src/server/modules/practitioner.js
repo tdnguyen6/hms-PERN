@@ -100,7 +100,7 @@ exports.findPractitionerByMedicalService = async function (req, res) {
                 JOIN accounts a ON a.practitioner_id = p.id
                 JOIN departments d ON p.specialty = d.id
                 JOIN medicalservices m ON m.department_id = d.id
-                WHERE d.id = $1`
+                WHERE m.id = $1`
 
         const params = [req.body.medical_serviceID];
         const result = await db.query(queryStatement, params);

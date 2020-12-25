@@ -23,6 +23,7 @@ import Grid from "@material-ui/core/Grid";
 import CyclicSortButton from "../Others/CyclicSortButton";
 import FilterBox from "../Others/TableToolbar";
 import TableToolbar from "../Others/TableToolbar";
+import {capitalFirstChar} from "../../components/Services/CapitalFirstChar";
 
 let forAdmin = [
     {id: 'avatar', label: 'Avatar'},
@@ -44,7 +45,6 @@ let forAdmin = [
     }, {
         id: 'gender',
         label: 'Sex',
-        align: 'right',
         compareFn: (a, b, dir) => {
             const res = a.gender.toUpperCase() > b.gender.toUpperCase() ? 1 : -1;
             return dir === 'asc' ? res : -res;
@@ -52,7 +52,6 @@ let forAdmin = [
     }, {
         id: 'email',
         label: 'Email',
-        align: 'right',
         compareFn: (a, b, dir) => {
             const res = a.email.toUpperCase() > b.email.toUpperCase() ? 1 : -1;
             return dir === 'asc' ? res : -res;
@@ -68,7 +67,6 @@ let forAdmin = [
     }, {
         id: 'specialty',
         label: 'Specialty',
-        align: 'right',
         compareFn: (a, b, dir) => {
             const res = a.specialty.toUpperCase() > b.specialty.toUpperCase() ? 1 : -1;
             return dir === 'asc' ? res : -res;
@@ -104,7 +102,6 @@ let forPatient = [
     }, {
         id: 'gender',
         label: 'Sex',
-        align: 'right',
         compareFn: (a, b, dir) => {
             const res = a.gender.toUpperCase() > b.gender.toUpperCase() ? 1 : -1;
             return dir === 'asc' ? res : -res;
@@ -112,7 +109,6 @@ let forPatient = [
     }, {
         id: 'specialty',
         label: 'Specialty',
-        align: 'right',
         compareFn: (a, b, dir) => {
             const res = a.specialty.toUpperCase() > b.specialty.toUpperCase() ? 1 : -1;
             return dir === 'asc' ? res : -res;
@@ -186,12 +182,12 @@ class PractitionerTable extends Component {
             await this.setState({
                 editPractitionerDialog: close
             });
-            this.getAllPractitioner().then();
+            await this.getAllPractitioner();
         } else if (type === "newPractitioner") {
             await this.setState({
                 newPractitionerDialog: close
             });
-            this.getAllPractitioner().then();
+            await this.getAllPractitioner();
         } else if (type === 'error') {
             await this.setState({
                 errorDialog: close
@@ -313,7 +309,9 @@ class PractitionerTable extends Component {
                                                 <TableCell key={column.id} align={column.align}>
                                                     { (column.id === 'avatar') ?
                                                         <Avatar className = { classes.avatar } src = { row.avatar }/>
-                                                        : (column.id === 'experience') ? `${row[column.id]} years` : row[column.id]
+                                                        : (column.id === 'experience') ? `${row[column.id]} years`
+                                                        : (column.id === 'gender') ? (row[column.id] === 'female') ? 'F' : 'M'
+                                                        : (column.id === 'specialty') ? capitalFirstChar(row[column.id]) : row[column.id]
                                                     }
                                                 </TableCell>
                                             );
