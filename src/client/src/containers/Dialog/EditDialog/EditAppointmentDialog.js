@@ -27,6 +27,7 @@ import {roomByMedicalService} from "../../../components/API/RoomByMedicalService
 import {capitalFirstChar} from "../../../components/Services/CapitalFirstChar";
 import {checkAppointmentExist} from "../../../components/API/CheckAppointmentExist";
 import ErrorDialog from "../OtherDialog/ErrorDialog";
+import {authorizedUser} from "../../../components/API/Authenticated";
 
 class EditAppointmentDialog extends Component {
     state = {
@@ -102,10 +103,11 @@ class EditAppointmentDialog extends Component {
     }
     handleSave = async () => {
         await this.setState({ loading: true });
+        const user = await authorizedUser();
         let hasAnotherAppointment;
         try {
             await this.setState({ loading: true });
-            hasAnotherAppointment = await checkAppointmentExist(this.props.appointment.patient.id, this.state.date, this.state.time);
+            hasAnotherAppointment = await checkAppointmentExist(this.props.appointment.patient.id || user.patientID, this.state.date, this.state.time);
         } finally {
             await this.setState({ loading: false });
         }

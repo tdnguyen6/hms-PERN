@@ -252,6 +252,7 @@ class AppointmentTable extends Component {
     async componentDidMount() {
         this.setState({loading: true});
         const user = await authorizedUser();
+        console.log(user);
         if (user) {
             if (user.role === "admin") {
                 await this.setState({columns: forAdmin});
@@ -268,7 +269,6 @@ class AppointmentTable extends Component {
         // console.log(this.state.appointment);
     }
     handleRowClick = async (event, row) => {
-        console.log(row);
         await this.setState({
             appointmentDetail: {
                 id: row.appointment_id,
@@ -308,6 +308,7 @@ class AppointmentTable extends Component {
                 status: row.status
             }
         });
+        console.log('appointmentDetail', this.state.appointmentDetail);
         this.setState({editAppointmentDialog: true});
     };
     handleNewClick = async () => {

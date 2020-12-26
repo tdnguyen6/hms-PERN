@@ -29,6 +29,7 @@ export const checkAppointmentExist = async (id, date, time) => {
         patientID: id,
         at: new Date(Date.UTC(year, month, day, tmpTime[0], tmpTime[1])),
     };
+    console.log(data);
     let res;
     try {
         res = await axios.post(`${process.env.REACT_APP_API_ADDR}/patient/appointments/hasAnotherAppointment`, data, { withCredentials: true });

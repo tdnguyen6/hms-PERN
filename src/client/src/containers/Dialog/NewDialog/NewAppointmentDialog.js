@@ -108,8 +108,10 @@ class NewAppointmentDialog extends Component {
     }
     handleSave = async () => {
         let hasAnotherAppointment;
+        let user;
         try {
             await this.setState({loading: true});
+            user = await authorizedUser();
             hasAnotherAppointment = await checkAppointmentExist(this.state.patientID, this.state.date, this.state.time);
         } finally {
             await this.setState({loading: false});
@@ -129,7 +131,7 @@ class NewAppointmentDialog extends Component {
                     errorMessage: 'Information missing. Please fill in all information.'
                 }
             });
-        } else {
+        } else if (user.role === 'admin') {
             await this.setState({
                 appointmentDetail: {
                     medicalServiceID: this.state.medicalServiceID,
@@ -137,10 +139,22 @@ class NewAppointmentDialog extends Component {
                     patientID: this.state.patientID,
                     date: this.state.date,
                     time: this.state.time,
-                },
-                price: await priceByMedicalService(this.state.medicalServiceID),
-                paymentDialog: true
+                }
             });
+            await createAppointment(this.state.appointmentDetail);
+            await this.handleDialogClose();
+        } else {
+                await this.setState({
+                    appointmentDetail: {
+                        medicalServiceID: this.state.medicalServiceID,
+                        practitionerID: this.state.practitionerID,
+                        patientID: this.state.patientID,
+                        date: this.state.date,
+                        time: this.state.time,
+                    },
+                    price: await priceByMedicalService(this.state.medicalServiceID),
+                    paymentDialog: true
+                });
         }
     };
     handlePatientChange = async (event) => {
